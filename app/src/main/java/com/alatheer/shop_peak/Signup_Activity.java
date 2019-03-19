@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class SignupActivity extends AppCompatActivity {
+public class Signup_Activity extends AppCompatActivity {
      ImageView check,check2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

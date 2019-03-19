@@ -9,14 +9,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class Login_Activity extends AppCompatActivity {
     ImageView check,check2;
     Button Sign_up;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         check=findViewById(R.id.check_img);
         check2=findViewById(R.id.check_img2);
         Sign_up=findViewById(R.id.btn_sign);
@@ -36,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         Sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,SignupActivity.class));
+                startActivity(new Intent(Login_Activity.this, Signup_Activity.class));
             }
         });
-        hideKeyboard(MainActivity.this);
+        hideKeyboard(Login_Activity.this);
     }
 
 
