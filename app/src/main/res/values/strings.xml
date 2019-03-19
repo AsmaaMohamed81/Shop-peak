@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Shop-peak</string>
+    <string name="user_name">User Name</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="Terms">Terms &amp; Conditions</string>
+    <string name="url">www.shop-peak.com</string>
 </resources>

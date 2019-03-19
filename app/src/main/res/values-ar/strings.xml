@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">شبيك</string>
+    <string name="user_name">اسم المستخدم</string>
+    <string name="password">كلمة المرور</string>
+    <string name="log_in">تسجيل الدخول</string>
+    <string name="sign_up">انشاء حساب</string>
+    <string name="Terms">الاحكام والشروط</string>
+    <string name="phone">رقم الهاتف</string>
+    <string name="email">الحساب</string>
+    <string name="url">www.shop-peak.com</string>
+</resources>
