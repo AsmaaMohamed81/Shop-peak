@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class Login_Activity extends AppCompatActivity {
     ImageView check,check2;
-    Button Sign_up;
+    EditText name,password;
+    Button Sign_up,log_in;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,9 @@ public class Login_Activity extends AppCompatActivity {
         check=findViewById(R.id.check_img);
         check2=findViewById(R.id.check_img2);
         Sign_up=findViewById(R.id.btn_sign);
+        name=findViewById(R.id.user_name);
+        password=findViewById(R.id.user_password);
+        log_in=findViewById(R.id.btn_login);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,7 +45,24 @@ public class Login_Activity extends AppCompatActivity {
                 startActivity(new Intent(Login_Activity.this, Signup_Activity.class));
             }
         });
+        log_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validation();
+            }
+        });
         hideKeyboard(Login_Activity.this);
+    }
+
+    private void validation() {
+        if(name.getText().toString().isEmpty()||password.getText().toString().isEmpty()){
+            Toast.makeText(this, "all data field are required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if(password.getText().toString().length()<=8){
+            Toast.makeText(this, "password is short", Toast.LENGTH_SHORT).show();
+            return;
+        }
     }
 
 
