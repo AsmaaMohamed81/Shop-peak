@@ -10,8 +10,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 public class Splash_Activity extends AppCompatActivity {
-
-
     ImageView logo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
