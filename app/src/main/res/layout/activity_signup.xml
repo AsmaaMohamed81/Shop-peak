@@ -9,31 +9,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:gravity="center_horizontal">
+        android:paddingRight="30dp">
         <ImageView
             android:id="@+id/logo_img"
             android:layout_width="300dp"
             android:layout_height="80dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="70dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/logo"/>
         <LinearLayout
-            android:layout_width="match_parent"
+
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/layout"
             android:layout_below="@+id/logo_img"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:gravity="center">
             <EditText
                 android:id="@+id/user_name"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="30dp"
+                android:layout_height="45dp"
                 android:background="@drawable/txt_field"
                 android:hint="@string/user_name"
                 android:paddingRight="15dp"
@@ -42,10 +42,8 @@
             <EditText
                 android:id="@+id/user_password"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="30dp"
                 android:background="@drawable/txt_field"
                 android:hint="@string/password"
                 android:paddingRight="15dp"
@@ -54,10 +52,8 @@
             <EditText
                 android:id="@+id/user_email"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="30dp"
                 android:background="@drawable/txt_field"
                 android:hint="@string/email"
                 android:paddingRight="15dp"
@@ -66,10 +62,8 @@
             <EditText
                 android:id="@+id/user_phone"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="30dp"
                 android:background="@drawable/txt_field"
                 android:hint="@string/phone"
                 android:paddingRight="15dp"
