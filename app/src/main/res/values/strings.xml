@@ -11,6 +11,8 @@
     <string name="waitt">Please Waiting...</string>
     <string name="name_req">User Name Is Required</string>
     <string name="pass_req">PassWord Is Required</string>
+    <string name="email_req">Email is Required</string>
+    <string name="phone_req">Phone is Required</string>
     <string name="accept_terms">You cannot sign up without accepting terms and conditions</string>
     <string name="undo">undo</string>
 

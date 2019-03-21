@@ -122,14 +122,14 @@ public class Signup_Activity extends AppCompatActivity {
                 edt_password.setError(null);
             }
             if (TextUtils.isEmpty(Email)) {
-                edt_password.setError(getString(R.string.pass_req));
+                edt_email.setError(getString(R.string.email_req));
             } else {
-                edt_password.setError(null);
+                edt_email.setError(null);
             }
             if (TextUtils.isEmpty(Phone)) {
-                edt_password.setError(getString(R.string.pass_req));
+                edt_phone.setError(getString(R.string.phone_req));
             } else {
-                edt_password.setError(null);
+                edt_phone.setError(null);
             }
 
 
