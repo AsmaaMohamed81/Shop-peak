@@ -1,4 +1,4 @@
-package com.alatheer.shop_peak;
+package com.alatheer.shop_peak.Activities;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import com.alatheer.shop_peak.R;
 
 public class Splash_Activity extends AppCompatActivity {
     ImageView logo;
@@ -32,7 +34,7 @@ public class Splash_Activity extends AppCompatActivity {
                 logo.setVisibility(View.VISIBLE);
                 logo.startAnimation(animation);
             }
-        },300);
+        },200);
 
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override

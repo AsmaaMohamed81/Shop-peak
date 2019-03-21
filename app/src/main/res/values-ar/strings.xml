@@ -9,4 +9,15 @@
     <string name="phone">رقم الهاتف</string>
     <string name="email">الحساب</string>
     <string name="url">www.shop-peak.com</string>
+    <string name="waitt">Please Waiting...</string>
+    <string name="name_req">اسم المستخدم مطلوب اولا</string>
+    <string name="pass_req">كلمه المرور مطلوب اولا</string>
+    <string name="accept_terms">لا تستطيع تسجيل الدخول الابقبول الشروط والاحكام</string>
+    <string name="undo">تراجع</string>
+
+
+
+
+
+
 </resources>

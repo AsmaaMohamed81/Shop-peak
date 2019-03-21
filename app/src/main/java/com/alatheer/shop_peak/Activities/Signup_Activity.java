@@ -1,4 +1,4 @@
-package com.alatheer.shop_peak;
+package com.alatheer.shop_peak.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.alatheer.shop_peak.R;
 
 public class Signup_Activity extends AppCompatActivity {
      ImageView check,check2;

@@ -8,4 +8,13 @@
     <string name="sign_up">Sign Up</string>
     <string name="Terms">Terms &amp; Conditions</string>
     <string name="url">www.shop-peak.com</string>
+    <string name="waitt">Please Waiting...</string>
+    <string name="name_req">User Name Is Required</string>
+    <string name="pass_req">PassWord Is Required</string>
+    <string name="accept_terms">You cannot sign up without accepting terms and conditions</string>
+    <string name="undo">undo</string>
+
+
+
+
 </resources>
