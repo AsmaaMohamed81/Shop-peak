@@ -77,6 +77,8 @@ public class Login_Activity extends AppCompatActivity {
 
                         Intent intent =new Intent(Login_Activity.this, Signup_Activity.class);
                         startActivity(intent);
+
+
             }
         });
         log_in.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +116,7 @@ public class Login_Activity extends AppCompatActivity {
             edt_password.setError(null);
             edt_password.setError(null);
             Login(userName, passWord);
+
 
         } else {
 

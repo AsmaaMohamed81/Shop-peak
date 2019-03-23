@@ -12,6 +12,10 @@
     <string name="waitt">Please Waiting...</string>
     <string name="name_req">اسم المستخدم مطلوب اولا</string>
     <string name="pass_req">كلمه المرور مطلوب اولا</string>
+    <string name="email_req">رقم الحساب مطلوب</string>
+    <string name="phone_req">رقم التليفون مطلوب</string>
+    <string name="pass_len">كلمة المرور ضعيفة</string>
+    <string name="email_patt">رقم الحساب غير صحيح</string>
     <string name="accept_terms">لا تستطيع تسجيل الدخول الابقبول الشروط والاحكام</string>
     <string name="undo">تراجع</string>
 

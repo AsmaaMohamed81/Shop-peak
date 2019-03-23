@@ -24,40 +24,34 @@ import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
 
 public class Signup_Activity extends AppCompatActivity {
-     ImageView check,check2;
-     EditText edt_name,edt_email,edt_phone,edt_password;
+    EditText edt_name2, edt_email, edt_phone, edt_password;
     private CheckBox checkBox;
     private ProgressDialog dialog;
-     Button sign_up;
+    Button sign_up;
     private Boolean accepted = false;
-    private String userName, passWord,Phone,Email;
+    private String userName, passWord, Phone, Email;
     private View root;
     private Snackbar snackbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         initview();
 
-        sign_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validation();
-
-            }
-        });
-
     }
 
     private void initview() {
-        edt_name=findViewById(R.id.user_name);
-        edt_password=findViewById(R.id.user_password);
-        edt_email=findViewById(R.id.user_email);
-        edt_phone=findViewById(R.id.user_phone);
-        sign_up=findViewById(R.id.btn_sign);
-        root=findViewById(R.id.root);
-        checkBox=findViewById(R.id.check_box);
-        final Animation animation2= AnimationUtils.loadAnimation(this,R.anim.fade_in);
+        edt_name2 = findViewById(R.id.user_name);
+        edt_password = findViewById(R.id.user_password);
+        edt_email = findViewById(R.id.user_email);
+        edt_phone = findViewById(R.id.user_phone);
+        sign_up = findViewById(R.id.btn_sign);
+        root = findViewById(R.id.root);
+        checkBox = findViewById(R.id.check_box);
+        final Animation animation2 = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        final Animation animation = AnimationUtils.loadAnimation(this, R.anim.press_anim);
+        Common.CloseKeyBoard(this, edt_name2);
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +66,7 @@ public class Signup_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sign_up.clearAnimation();
-                sign_up.setAnimation(animation2);
+                sign_up.setAnimation(animation);
                 validation();
             }
         });
@@ -92,7 +86,7 @@ public class Signup_Activity extends AppCompatActivity {
 
 
     private void validation() {
-        userName = edt_name.getText().toString();
+        userName = edt_name2.getText().toString();
         passWord = edt_password.getText().toString();
         Email = edt_email.getText().toString();
         Phone = edt_phone.getText().toString();
@@ -100,20 +94,22 @@ public class Signup_Activity extends AppCompatActivity {
                 !TextUtils.isEmpty(passWord) &&
                 !TextUtils.isEmpty(Email) &&
                 !TextUtils.isEmpty(Phone) &&
+                passWord.length() >= 8 &&
+                android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches() &&
                 accepted) {
 
-            Common.CloseKeyBoard(this, edt_name);
-            edt_name.setError(null);
+            Common.CloseKeyBoard(this, edt_name2);
+            edt_name2.setError(null);
             edt_password.setError(null);
-            edt_password.setError(null);
+            edt_email.setError(null);
+            edt_phone.setError(null);
             Signup(userName, passWord, Email, Phone);
 
         } else {
-
             if (TextUtils.isEmpty(userName)) {
-                edt_name.setError(getString(R.string.name_req));
+                edt_name2.setError(getString(R.string.name_req));
             } else {
-                edt_name.setError(null);
+                edt_name2.setError(null);
             }
 
             if (TextUtils.isEmpty(passWord)) {
@@ -121,8 +117,18 @@ public class Signup_Activity extends AppCompatActivity {
             } else {
                 edt_password.setError(null);
             }
+            if (passWord.length() < 8) {
+                edt_password.setError(getString(R.string.pass_len));
+            } else {
+                edt_password.setError(null);
+            }
             if (TextUtils.isEmpty(Email)) {
                 edt_email.setError(getString(R.string.email_req));
+            } else {
+                edt_email.setError(null);
+            }
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
+                edt_email.setError(getString(R.string.email_patt));
             } else {
                 edt_email.setError(null);
             }
@@ -138,25 +144,26 @@ public class Signup_Activity extends AppCompatActivity {
                 CreateSnackBar(getString(R.string.accept_terms));
 
             }
+
         }
+
     }
-    private void Signup(String userName, String passWord,String email,String phone) {
+
+    private void Signup(String userName, String passWord, String email, String phone) {
         Intent intent = new Intent(Signup_Activity.this, MainActivity.class);
         startActivity(intent);
     }
 
-    private void CreateSnackBar(String msg)
-    {
-        snackbar = Common.CreateSnackBar(this,root,msg);
+    private void CreateSnackBar(String msg) {
+        snackbar = Common.CreateSnackBar(this, root, msg);
         snackbar.show();
     }
 
-    public void dismissSnackBar()
-    {
-        if (snackbar!=null)
-        {
+    public void dismissSnackBar() {
+        if (snackbar != null) {
             snackbar.dismiss();
 
         }
     }
+
 }
