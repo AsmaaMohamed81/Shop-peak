@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.alatheer.shop_peak.Model.Image2Model;
+import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
 
 import java.util.List;
@@ -21,10 +21,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by M.Hamada on 22/03/2019.
  */
 
-public class Image2Adapter extends RecyclerView.Adapter<Image2Adapter.Image2holder> {
-    List<Image2Model>image2Models;
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> {
+    List<HomeModel>image2Models;
     Context context;
-    public Image2Adapter(List<Image2Model> image2Models, Context context){
+    public HomeAdapter(List<HomeModel> image2Models, Context context){
         this.image2Models=image2Models;
         this.context=context;
     }

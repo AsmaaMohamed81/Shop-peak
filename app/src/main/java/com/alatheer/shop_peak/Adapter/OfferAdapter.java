@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alatheer.shop_peak.Model.ImageModel;
+import com.alatheer.shop_peak.Model.OfferModel;
 import com.alatheer.shop_peak.R;
 
 import java.util.List;
@@ -18,10 +18,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by M.Hamada on 21/03/2019.
  */
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageHolder> {
-    public List<ImageModel>imageModels;
+public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ImageHolder> {
+    public List<OfferModel>imageModels;
   public   Context context;
-    public ImageAdapter(List<ImageModel> imageModels, Context context){
+    public OfferAdapter(List<OfferModel> imageModels, Context context){
         this.imageModels=imageModels;
         this.context=context;
     }

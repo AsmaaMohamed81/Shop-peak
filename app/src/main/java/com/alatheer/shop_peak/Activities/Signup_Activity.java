@@ -123,9 +123,9 @@ public class Signup_Activity extends AppCompatActivity {
                 edt_password.setError(null);
             }
             if (TextUtils.isEmpty(Email)) {
-                edt_email.setError(getString(R.string.email_req));
+                edt_password.setError(getString(R.string.pass_req));
             } else {
-                edt_email.setError(null);
+                edt_password.setError(null);
             }
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
                 edt_email.setError(getString(R.string.email_patt));
@@ -133,13 +133,16 @@ public class Signup_Activity extends AppCompatActivity {
                 edt_email.setError(null);
             }
             if (TextUtils.isEmpty(Phone)) {
-                edt_phone.setError(getString(R.string.phone_req));
+                edt_password.setError(getString(R.string.pass_req));
             } else {
-                edt_phone.setError(null);
+                edt_password.setError(null);
             }
 
 
             if (!accepted) {
+
+
+
 
                 CreateSnackBar(getString(R.string.accept_terms));
 
