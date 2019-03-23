@@ -1,33 +1,30 @@
 package com.alatheer.shop_peak.Activities;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Fragments.HomeFragment;
-import com.alatheer.shop_peak.Adapter.ImageAdapter;
-import com.alatheer.shop_peak.Model.ImageModel;
+import com.alatheer.shop_peak.Fragments.NotificationFragment;
+import com.alatheer.shop_peak.Fragments.SettingFragment;
 import com.alatheer.shop_peak.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-     RecyclerView recyclerView;
-     RecyclerView.LayoutManager layoutManager;
-     List<ImageModel>imageModels;
+
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ImageView img_menu;
+    BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,42 +35,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initview() {
-        recyclerView=findViewById(R.id.recycler);
-        img_menu=findViewById(R.id.menu_img);
+
+        img_menu = findViewById(R.id.menu_img);
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.nav_view);
-        recyclerView.setHasFixedSize(true);
-        layoutManager =new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true);
-        recyclerView.setLayoutManager(layoutManager);
-        ImageModel imageModel1=new ImageModel();
-        imageModel1.setImage(R.drawable.logo);
-        ImageModel imageModel2=new ImageModel();
-        imageModel2.setImage(R.drawable.logo);
-        ImageModel imageModel3=new ImageModel();
-        imageModel3.setImage(R.drawable.logo);
-        ImageModel imageModel4=new ImageModel();
-        imageModel4.setImage(R.drawable.logo);
-        ImageModel imageModel5=new ImageModel();
-        imageModel5.setImage(R.drawable.logo);
-        ImageModel imageModel6=new ImageModel();
-        imageModel6.setImage(R.drawable.logo);
-        ImageModel imageModel7=new ImageModel();
-        imageModel7.setImage(R.drawable.logo);
-        imageModels=new ArrayList<>();
-        imageModels.add(imageModel1);
-        imageModels.add(imageModel2);
-        imageModels.add(imageModel3);
-        imageModels.add(imageModel4);
-        imageModels.add(imageModel5);
-        imageModels.add(imageModel6);
-        imageModels.add(imageModel7);
-        ImageAdapter imageAdapter=new ImageAdapter(imageModels,this);
-        recyclerView.setAdapter(imageAdapter);
-        HomeFragment homeFragment=new HomeFragment();
-        android.support.v4.app.FragmentManager fragmentManager=getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.frame1,homeFragment).commit();
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(nav_listner);
+
+        HomeFragment homeFragment = new HomeFragment();
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
+
 
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener nav_listner = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment selectedfragment= null;
+            switch (item.getItemId()){
+                case R.id.nav_notification:
+                    selectedfragment=new NotificationFragment();
+                    break;
+                case R.id.nav_home:
+                     selectedfragment=new HomeFragment();
+                     break;
+                case R.id.nav_setting:
+                     selectedfragment=new SettingFragment();
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
+            return true;
+        }
+    };
 
     @Override
     protected void onStart() {

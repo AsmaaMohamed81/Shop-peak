@@ -8,70 +8,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".Activities.MainActivity">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                >
-                <ImageView
-                    android:id="@+id/menu_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:onClick="showmenu"
-                    android:src="@drawable/ic_menu_black_24dp"/>
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/logo"/>
-            </LinearLayout>
-
-
-        </android.support.v7.widget.Toolbar>
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp">
-            <EditText
-                android:layout_marginTop="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/txt_field"
-                android:drawableRight="@drawable/ic_search_black_24dp"
-                android:textColorHint="#c7c6c5"
-                android:hint="عن ماذا تبحث" />
-        </LinearLayout>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
             android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    >
+                    <ImageView
+                        android:id="@+id/menu_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:onClick="showmenu"
+                        android:src="@drawable/ic_menu_black_24dp"/>
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/logo"/>
+                </LinearLayout>
 
-        </android.support.v7.widget.RecyclerView>
+
+            </android.support.v7.widget.Toolbar>
+
+        </LinearLayout>
         <FrameLayout
-            android:layout_marginTop="30dp"
-            android:id="@+id/frame1"
+            android:layout_marginTop="40dp"
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         </FrameLayout>
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="?android:attr/windowBackground"
+            app:menu="@menu/bottom_navigation">
+        </android.support.design.widget.BottomNavigationView>
 
-    </LinearLayout>
+    </RelativeLayout>
+
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="match_parent"
