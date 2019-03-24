@@ -1,10 +1,10 @@
 package com.alatheer.shop_peak.Model;
 
 /**
- * Created by M.Hamada on 22/03/2019.
+ * Created by M.Hamada on 23/03/2019.
  */
 
-public class HomeModel {
+public class HomeModel  {
     int image2;
 
     public HomeModel(int image2) {

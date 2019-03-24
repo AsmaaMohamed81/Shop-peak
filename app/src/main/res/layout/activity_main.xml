@@ -67,10 +67,20 @@
         android:layout_height="match_parent"
         app:itemTextColor="@color/colorPrimary"
         android:layout_gravity="start"
-        app:menu="@menu/home_menu"
         app:headerLayout="@layout/header">
 
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/navigation_recycler_list">
+
+        </android.support.v7.widget.RecyclerView>
+
+
     </android.support.design.widget.NavigationView>
+
+
 
 
     </android.support.v4.widget.DrawerLayout>

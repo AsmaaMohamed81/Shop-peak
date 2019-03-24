@@ -28,7 +28,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ImageHolder>
     @NonNull
     @Override
     public ImageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.list_item1,parent,false);
+        View view= LayoutInflater.from(context).inflate(R.layout.offer_item,parent,false);
         ImageHolder imageHolder=new ImageHolder(view);
         return  imageHolder;
     }

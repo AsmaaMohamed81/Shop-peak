@@ -1,5 +1,6 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -8,40 +9,57 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Adapter.NavigationAdapter;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.SettingFragment;
+import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.R;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+import java.util.List;
 
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ImageView img_menu;
     BottomNavigationView bottomNavigationView;
-
+    NavigationAdapter navigationAdapter;
+    RecyclerView.LayoutManager navigation_manager;
+    RecyclerView navigationrecycler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initview();
 
-
     }
 
     private void initview() {
-
         img_menu = findViewById(R.id.menu_img);
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.nav_view);
+        navigationrecycler=findViewById(R.id.navigation_recycler_list);
+        navigationrecycler.setHasFixedSize(true);
+        navigation_manager=new LinearLayoutManager(this);
+        navigationrecycler.setLayoutManager(navigation_manager);
+        navigationAdapter=new NavigationAdapter(navigationModelList(),this);
+        navigationrecycler.setAdapter(navigationAdapter);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(nav_listner);
-
         HomeFragment homeFragment = new HomeFragment();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
@@ -100,5 +118,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void openDrawer() {
         drawerLayout.openDrawer(GravityCompat.START);
     }
+    private List<NavigationModel> navigationModelList (){
+
+        List<NavigationModel>  navidationlist = new ArrayList<>();
+
+        navidationlist.add(new NavigationModel("share",R.drawable.ic_share));
+        navidationlist.add(new NavigationModel("favorite",R.drawable.ic_favorite));
+        navidationlist.add(new NavigationModel("search",R.drawable.ic_search));
+
+
+        return navidationlist;
+    }
+
 
 }

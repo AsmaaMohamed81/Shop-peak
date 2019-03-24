@@ -22,28 +22,28 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> {
-    List<HomeModel>image2Models;
+    List<HomeModel>listofhome;
     Context context;
-    public HomeAdapter(List<HomeModel> image2Models, Context context){
-        this.image2Models=image2Models;
+    public HomeAdapter(List<HomeModel> listofhome, Context context){
+        this.listofhome=listofhome;
         this.context=context;
     }
     @NonNull
     @Override
     public Image2holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.list_item2,parent,false);
+        View view= LayoutInflater.from(context).inflate(R.layout.home_item,parent,false);
         Image2holder image2holder=new Image2holder(view);
         return image2holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull Image2holder holder, int position) {
-     holder.imageView.setImageResource(image2Models.get(position).getImage2());
+     holder.imageView.setImageResource(listofhome.get(position).getImage2());
     }
 
     @Override
     public int getItemCount() {
-        return image2Models.size();
+        return listofhome.size();
     }
 
     class Image2holder extends RecyclerView.ViewHolder{

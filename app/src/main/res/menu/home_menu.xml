@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_share"
-            android:icon="@drawable/ic_share"
-            android:title="your share"/>
-        <item android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_settings"
-            android:title="settings"/>
-        <item android:id="@+id/nav_fav"
-            android:icon="@drawable/ic_favorite"
-            android:title="your favorite"/>
+    <item android:title="communicate">
+        <group android:checkableBehavior="single">
+            <item android:id="@+id/nav_share"
+                android:icon="@drawable/ic_share"
+                android:title="your share"/>
+            <item android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_settings"
+                android:title="settings"/>
+            <item android:id="@+id/nav_fav"
+                android:icon="@drawable/ic_favorite"
+                android:title="your favorite"/>
+            
 
+        </group>
 
-    </group>
+    </item>
+
 
 </menu>

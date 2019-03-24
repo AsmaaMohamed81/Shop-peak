@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alatheer.shop_peak.Adapter.HomeAdapter;
+
 import com.alatheer.shop_peak.Adapter.OfferAdapter;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.OfferModel;
@@ -36,7 +37,7 @@ public class HomeFragment extends Fragment {
 
 
         /////offer
-        recyclerView = v.findViewById(R.id.recycler);
+        recyclerView = v.findViewById(R.id.recycler_offer);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true);
         recyclerView.setLayoutManager(layoutManager);
@@ -45,7 +46,7 @@ public class HomeFragment extends Fragment {
 
         ////home
 
-        recyclerView2=v.findViewById(R.id.recycler2);
+        recyclerView2=v.findViewById(R.id.recycler_home);
         recyclerView2.setHasFixedSize(true);
         layoutManager2=new LinearLayoutManager(getActivity());
         recyclerView2.setLayoutManager(layoutManager2);
@@ -59,12 +60,12 @@ public class HomeFragment extends Fragment {
 
         List<OfferModel>  offerlist = new ArrayList<>();
 
-        offerlist.add(new OfferModel(R.drawable.logo));
-        offerlist.add(new OfferModel(R.drawable.logo));
-        offerlist.add(new OfferModel(R.drawable.logo));
-        offerlist.add(new OfferModel(R.drawable.logo));
-        offerlist.add(new OfferModel(R.drawable.logo));
-        offerlist.add(new OfferModel(R.drawable.logo));
+        offerlist.add(new OfferModel(R.drawable.mohamed_image));
+        offerlist.add(new OfferModel(R.drawable.mohamed_image));
+        offerlist.add(new OfferModel(R.drawable.mohamed_image));
+        offerlist.add(new OfferModel(R.drawable.mohamed_image));
+        offerlist.add(new OfferModel(R.drawable.mohamed_image));
+        offerlist.add(new OfferModel(R.drawable.mohamed_image));
 
 
         return offerlist;
@@ -84,7 +85,5 @@ public class HomeFragment extends Fragment {
 
         return homelist;
     }
-
-
 
 }
