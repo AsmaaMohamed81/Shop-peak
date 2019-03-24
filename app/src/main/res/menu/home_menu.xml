@@ -3,13 +3,13 @@
     <item android:title="communicate">
         <group android:checkableBehavior="single">
             <item android:id="@+id/nav_share"
-                android:icon="@drawable/ic_share"
+                android:icon="@drawable/ic_share_sold"
                 android:title="your share"/>
             <item android:id="@+id/nav_setting"
                 android:icon="@drawable/ic_settings"
                 android:title="settings"/>
             <item android:id="@+id/nav_fav"
-                android:icon="@drawable/ic_favorite"
+                android:icon="@drawable/ic_favorite_sold"
                 android:title="your favorite"/>
             
 

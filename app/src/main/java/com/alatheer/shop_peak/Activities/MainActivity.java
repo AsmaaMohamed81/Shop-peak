@@ -1,6 +1,5 @@
 package com.alatheer.shop_peak.Activities;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -11,21 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.NavigationAdapter;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.SettingFragment;
-import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.R;
 
@@ -121,8 +114,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         List<NavigationModel>  navidationlist = new ArrayList<>();
 
-        navidationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share));
-        navidationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite));
+        navidationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
+        navidationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
+        navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
+        navidationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
+        navidationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
+        navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
+        navidationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
+        navidationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
         navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
 
 

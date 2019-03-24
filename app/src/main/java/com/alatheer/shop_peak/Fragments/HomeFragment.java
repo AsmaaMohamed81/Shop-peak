@@ -60,12 +60,18 @@ public class HomeFragment extends Fragment {
 
         List<OfferModel>  offerlist = new ArrayList<>();
 
-        offerlist.add(new OfferModel(R.drawable.logo));
-        offerlist.add(new OfferModel(R.drawable.logo));
-        offerlist.add(new OfferModel(R.drawable.logo));
-        offerlist.add(new OfferModel(R.drawable.logo));
-        offerlist.add(new OfferModel(R.drawable.logo));
-        offerlist.add(new OfferModel(R.drawable.logo));
+        offerlist.add(new OfferModel(R.drawable.item2));
+        offerlist.add(new OfferModel(R.drawable.item1));
+        offerlist.add(new OfferModel(R.drawable.item3));
+        offerlist.add(new OfferModel(R.drawable.item1));
+        offerlist.add(new OfferModel(R.drawable.item2));
+        offerlist.add(new OfferModel(R.drawable.item3));
+        offerlist.add(new OfferModel(R.drawable.item2));
+        offerlist.add(new OfferModel(R.drawable.item1));
+        offerlist.add(new OfferModel(R.drawable.item3));
+        offerlist.add(new OfferModel(R.drawable.item1));
+        offerlist.add(new OfferModel(R.drawable.item2));
+        offerlist.add(new OfferModel(R.drawable.item3));
 
 
         return offerlist;
@@ -75,12 +81,12 @@ public class HomeFragment extends Fragment {
 
         List<HomeModel>  homelist = new ArrayList<>();
 
-        homelist.add(new HomeModel(R.drawable.logo));
-        homelist.add(new HomeModel(R.drawable.logo));
-        homelist.add(new HomeModel(R.drawable.logo));
-        homelist.add(new HomeModel(R.drawable.logo));
-        homelist.add(new HomeModel(R.drawable.logo));
-        homelist.add(new HomeModel(R.drawable.logo));
+        homelist.add(new HomeModel(R.drawable.item2));
+        homelist.add(new HomeModel(R.drawable.item1));
+        homelist.add(new HomeModel(R.drawable.item3));
+        homelist.add(new HomeModel(R.drawable.item1));
+        homelist.add(new HomeModel(R.drawable.item2));
+        homelist.add(new HomeModel(R.drawable.item3));
 
 
         return homelist;
