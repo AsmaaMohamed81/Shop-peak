@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.R;
@@ -34,9 +35,15 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NavigationHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NavigationHolder holder, final int position) {
      holder.txt_raw.setText(navigationModels.get(position).getItem_name());
      holder.image_raw.setImageResource(navigationModels.get(position).getItem_image());
+     holder.itemView.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+             Toast.makeText(context, navigationModels.get(position).getItem_name(), Toast.LENGTH_SHORT).show();
+         }
+     });
     }
 
     @Override
