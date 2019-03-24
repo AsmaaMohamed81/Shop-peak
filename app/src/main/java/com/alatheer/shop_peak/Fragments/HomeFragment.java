@@ -60,12 +60,12 @@ public class HomeFragment extends Fragment {
 
         List<OfferModel>  offerlist = new ArrayList<>();
 
-        offerlist.add(new OfferModel(R.drawable.mohamed_image));
-        offerlist.add(new OfferModel(R.drawable.mohamed_image));
-        offerlist.add(new OfferModel(R.drawable.mohamed_image));
-        offerlist.add(new OfferModel(R.drawable.mohamed_image));
-        offerlist.add(new OfferModel(R.drawable.mohamed_image));
-        offerlist.add(new OfferModel(R.drawable.mohamed_image));
+        offerlist.add(new OfferModel(R.drawable.logo));
+        offerlist.add(new OfferModel(R.drawable.logo));
+        offerlist.add(new OfferModel(R.drawable.logo));
+        offerlist.add(new OfferModel(R.drawable.logo));
+        offerlist.add(new OfferModel(R.drawable.logo));
+        offerlist.add(new OfferModel(R.drawable.logo));
 
 
         return offerlist;

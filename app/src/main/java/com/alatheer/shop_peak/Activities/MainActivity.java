@@ -122,9 +122,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         List<NavigationModel>  navidationlist = new ArrayList<>();
 
-        navidationlist.add(new NavigationModel("share",R.drawable.ic_share));
-        navidationlist.add(new NavigationModel("favorite",R.drawable.ic_favorite));
-        navidationlist.add(new NavigationModel("search",R.drawable.ic_search));
+        navidationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share));
+        navidationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite));
+        navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
 
 
         return navidationlist;
