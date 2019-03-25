@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.alatheer.shop_peak.Adapter.NavigationAdapter;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
+import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Fragments.SettingFragment;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.R;
@@ -72,6 +73,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                      break;
                 case R.id.nav_setting:
                      selectedfragment=new SettingFragment();
+                     break;
+                case R.id.nav_profile:
+                     selectedfragment=new ProfileFragment();
+                     break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
             return true;

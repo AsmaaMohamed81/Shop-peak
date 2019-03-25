@@ -7,6 +7,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:id="@+id/txtname"
+            android:layout_gravity="center"
+            android:src="@mipmap/icon_round"
+            android:layout_weight="1" />
         <TextView
             android:layout_marginLeft="15dp"
             android:layout_width="0dp"
@@ -14,9 +21,10 @@
             android:id="@+id/txtemail"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:text="Mohamed Hamada"
+            android:text="Vender"
             android:textColor="#fff"
-            android:textSize="14sp"/>
+            android:textStyle="bold"
+            android:textSize="22sp"/>
     </LinearLayout>
 
 </RelativeLayout>
