@@ -35,58 +35,66 @@
                    android:layout_height="wrap_content"
                    android:text="100"
                    android:gravity="center_horizontal"
-                   android:textSize="20sp"/>
+                   android:textSize="18sp"
+                   android:textColor="@color/black"
+                   android:textStyle="bold"/>
                <TextView
                    android:layout_width="50dp"
                    android:layout_height="wrap_content"
                    android:text="80"
-                   android:textSize="20sp"
+                   android:textSize="18sp"
                    android:gravity="center_horizontal"
                    android:layout_marginLeft="30dp"
-                   android:layout_marginRight="30dp"/>
+                   android:layout_marginRight="30dp"
+                   android:textColor="@color/black"
+                   android:textStyle="bold"/>
                <TextView
                    android:layout_width="50dp"
                    android:layout_height="wrap_content"
-                   android:textSize="20sp"
+                   android:textSize="18sp"
                    android:gravity="center_horizontal"
-                   android:text="200"/>
+                   android:text="200"
+                   android:textColor="@color/black"
+                   android:textStyle="bold"/>
            </LinearLayout>
            <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:orientation="horizontal"
+                  android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp"
                    android:layout_marginTop="5dp">
                    <TextView
                        android:layout_width="50dp"
                        android:layout_height="wrap_content"
                        android:text="سلع"
-                       android:textSize="20sp"
+                       android:textSize="17sp"
                        android:gravity="center_horizontal"/>
                    <TextView
                        android:layout_width="50dp"
                        android:layout_height="wrap_content"
                        android:text="تققيم"
-                       android:textSize="20sp"
+                       android:textSize="17sp"
                        android:layout_marginLeft="30dp"
                        android:layout_marginRight="30dp"
                        android:gravity="center_horizontal"/>
                    <TextView
                        android:layout_width="50dp"
                        android:layout_height="wrap_content"
-                       android:textSize="20sp"
+                       android:textSize="17sp"
                        android:text="العملاء"
                        android:gravity="center_horizontal"/>
 
          </LinearLayout>
            <LinearLayout
-               android:layout_width="150dp"
+               android:layout_width="200dp"
                android:layout_marginTop="10dp"
-               android:layout_height="wrap_content">
+               android:layout_height="30dp">
                <Button
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_gravity="center_horizontal"
-                   android:background="@android:color/white"
+                   android:background="@drawable/edite_profile"
                    android:text="تعديل الملف الشخصي"/>
            </LinearLayout>
        </LinearLayout>
