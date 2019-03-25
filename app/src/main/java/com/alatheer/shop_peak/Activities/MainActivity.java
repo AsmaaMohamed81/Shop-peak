@@ -1,5 +1,6 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Adapter.BottomNavigationViewHelper;
 import com.alatheer.shop_peak.Adapter.NavigationAdapter;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationAdapter=new NavigationAdapter(navigationModelList(),this);
         navigationrecycler.setAdapter(navigationAdapter);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(nav_listner);
         HomeFragment homeFragment = new HomeFragment();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                      selectedfragment=new SettingFragment();
                      break;
                 case R.id.nav_profile:
-                     selectedfragment=new ProfileFragment();
+                    selectedfragment=new ProfileFragment();
                      break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
@@ -98,11 +101,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_fav:
-                Toast.makeText(this, itemName, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, itemName, Toast.LENGTH_LONG).show();
+
             case R.id.nav_share :
                 Toast.makeText(this, itemName, Toast.LENGTH_LONG).show();
+
             case R.id.nav_setting :
                 Toast.makeText(this, itemName, Toast.LENGTH_LONG).show();
+
+
         }
 
         closeDrawer();
@@ -122,13 +129,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navidationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
         navidationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
         navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
-        navidationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
-        navidationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
-        navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
-        navidationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
-        navidationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
-        navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
-
 
         return navidationlist;
     }
