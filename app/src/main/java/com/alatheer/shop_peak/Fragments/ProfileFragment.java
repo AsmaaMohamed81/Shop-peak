@@ -57,6 +57,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void viewvertical() {
+        img_ver.setColorFilter(getResources().getColor(R.color.colorPrimary));
+        img_grid.setColorFilter(getResources().getColor(R.color.gray));
         menu_recycler.setHasFixedSize(true);
         verticalmanager=new LinearLayoutManager(getActivity());
         menu_recycler.setLayoutManager(verticalmanager);
@@ -66,6 +68,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void Viewgrid() {
+        img_grid.setColorFilter(getResources().getColor(R.color.colorPrimary));
+        img_ver.setColorFilter(getResources().getColor(R.color.gray));
         menu_recycler.setHasFixedSize(true);
         gridmanager=new GridLayoutManager(getActivity(),3);
         menu_recycler.setLayoutManager(gridmanager);

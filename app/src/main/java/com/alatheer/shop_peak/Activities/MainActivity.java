@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.BottomNavigationViewHelper;
 import com.alatheer.shop_peak.Adapter.NavigationAdapter;
+import com.alatheer.shop_peak.Fragments.Client_ProfileFragment;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationAdapter navigationAdapter;
     RecyclerView.LayoutManager navigation_manager;
     RecyclerView navigationrecycler;
+    Fragment selectedfragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +65,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener nav_listner = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener nav_listner= new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment selectedfragment= null;
+             selectedfragment= null;
             switch (item.getItemId()){
                 case R.id.nav_notification:
                     selectedfragment=new NotificationFragment();
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                      selectedfragment=new SettingFragment();
                      break;
                 case R.id.nav_profile:
-                    selectedfragment=new ProfileFragment();
+                    selectedfragment=new Client_ProfileFragment();
                      break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
@@ -86,11 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     };
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
     public void showmenu(View view) {
         navigationView.setNavigationItemSelectedListener(this);
         openDrawer();
@@ -129,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navidationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
         navidationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
         navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
-
         return navidationlist;
     }
 
