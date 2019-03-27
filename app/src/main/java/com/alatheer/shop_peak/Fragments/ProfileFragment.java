@@ -79,7 +79,7 @@ public class ProfileFragment extends Fragment {
 
     private List<ProfileModel> profileModelList (){
 
-        List<ProfileModel>  profilelist = new ArrayList<>();
+        List<ProfileModel> profilelist = new ArrayList<>();
 
         profilelist .add(new ProfileModel(R.drawable.item2));
         profilelist .add(new ProfileModel(R.drawable.item1));
@@ -87,7 +87,6 @@ public class ProfileFragment extends Fragment {
         profilelist .add(new ProfileModel(R.drawable.item1));
         profilelist .add(new ProfileModel(R.drawable.item2));
         profilelist .add(new ProfileModel(R.drawable.item3));
-
 
         return profilelist ;
 
