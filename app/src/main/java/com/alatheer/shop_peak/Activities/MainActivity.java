@@ -1,10 +1,13 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView.LayoutManager navigation_manager;
     RecyclerView navigationrecycler;
     Fragment selectedfragment;
+    ProfileFragment profileFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initview() {
+        final Fragment fragment1 = new HomeFragment();
+        final Fragment fragment2 = new NotificationFragment();
+        final Fragment fragment3 = new SettingFragment();
+        final Fragment fragment4 = new ProfileFragment();
+        final FragmentManager fm = getSupportFragmentManager();
+        Fragment active = fragment1;
         img_menu = findViewById(R.id.menu_img);
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.nav_view);
@@ -58,34 +69,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(nav_listner);
-        HomeFragment homeFragment = new HomeFragment();
+        HomeFragment homeFragment=new HomeFragment();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
 
-
+    }
+    public void setSelectProfile(){
+        if (profileFragment==null)
+        {
+            profileFragment = profileFragment.getInstance();
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener nav_listner= new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-             selectedfragment= null;
+            selectedfragment= null;
             switch (item.getItemId()){
                 case R.id.nav_notification:
                     selectedfragment=new NotificationFragment();
                     break;
                 case R.id.nav_home:
-                     selectedfragment=new HomeFragment();
-                     break;
+                    selectedfragment=new HomeFragment();
+                    break;
                 case R.id.nav_setting:
-                     selectedfragment=new SettingFragment();
-                     break;
+                    selectedfragment=new SettingFragment();
+                    break;
                 case R.id.nav_profile:
                     selectedfragment=new Client_ProfileFragment();
-                     break;
+                    break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
             return true;
         }
+
     };
 
     public void showmenu(View view) {

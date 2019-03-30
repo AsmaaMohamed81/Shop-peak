@@ -25,6 +25,11 @@ public class ProfileFragment extends Fragment {
     RecyclerView menu_recycler;
     RecyclerView.LayoutManager verticalmanager;
     GridLayoutManager gridmanager;
+
+    public static ProfileFragment getInstance() {
+        ProfileFragment fragment = new ProfileFragment();
+        return fragment;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
