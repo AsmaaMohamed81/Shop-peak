@@ -31,30 +31,30 @@
                         android:layout_centerInParent="true"
                         android:textColor="@color/black"
                         android:textSize="20sp"/>
-                       <FrameLayout
+                       <RelativeLayout
                           android:layout_alignParentRight="true"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_centerVertical="true"
                           android:layout_marginRight="15dp">
                            <ImageView
+                               android:layout_alignParentRight="true"
                                android:id="@+id/shopping_cart"
                                android:layout_width="wrap_content"
                                android:layout_height="wrap_content"
                                android:layout_gravity="center"
-                               android:src="@drawable/ic_add_shopping_cart" />
+                               android:src="@drawable/ic_shopping_cart" />
                            <TextView
                                android:id="@+id/cart_num"
                                android:layout_width="wrap_content"
                                android:layout_height="wrap_content"
-                               android:visibility="invisible"
-                               android:text="0"
-                               android:textSize="20sp"
-                               android:textStyle="bold"
-                               android:layout_gravity="center"
+                               android:padding="5dp"
+                               android:layout_alignParentRight="true"
+                               android:text="9"
                                android:textColor="@color/black"
+                               android:visibility="gone"
                                />
-                      </FrameLayout>
+                      </RelativeLayout>
 
                    </RelativeLayout>
 
