@@ -47,14 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/appbar">
-        <android.support.v7.widget.CardView
-            android:layout_alignParentLeft="true"
-            android:layout_width="20dp"
-            android:layout_height="300dp"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="15dp"
-            android:backgroundTint="@color/gray2">
-        </android.support.v7.widget.CardView>
+
         <android.support.v7.widget.CardView
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -85,14 +78,15 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         style="?android:attr/ratingBarStyleSmall"
-                        android:progressTint="@color/colorPrimary"
                         android:numStars="5"
+                        android:rating="3"
+                        android:stepSize=".5"
                         android:isIndicator="true"
                         android:layout_alignParentRight="true"/>
                     <Button
                         android:id="@+id/details_price"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:background="@drawable/btn_details"
@@ -104,17 +98,10 @@
                 </RelativeLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
-      <android.support.v7.widget.CardView
-        android:layout_width="20dp"
-        android:layout_height="300dp"
-        android:background="@color/gray2"
-        android:layout_alignParentRight="true"
-          android:layout_centerVertical="true"
-        android:layout_marginTop="15dp"
-          android:backgroundTint="@color/gray">
-      </android.support.v7.widget.CardView>
+
     </RelativeLayout>
     <LinearLayout
+        android:id="@+id/ln_plus"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -142,31 +129,65 @@
             android:src="@drawable/ic_remove_circle"/>
 
     </LinearLayout>
+    <com.borjabravo.readmoretextview.ReadMoreTextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ln_plus"
+        android:layout_above="@+id/relative"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        app:colorClickableText="@color/colorPrimary"
+        app:trimCollapsedText="Show Less"
+        app:trimExpandedText="Show More"
+        app:trimLength="4"
+        android:textColor="@color/black"
 
+        app:trimMode="trimModeLine"
+        android:padding="10dp"
+
+        android:text="Licensed under the Apache License, Version 2.0
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License atLicensed under the Apache License, Version 2.0
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License atcopy of the License atLicensed under the Apache License, Version 2.0
+you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
+you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
+you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
+you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
+you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
+you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
+you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
+you may not use this file except in compliance"
+
+      />
 
     <RelativeLayout
+        android:id="@+id/relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp">
+
+        android:layout_marginBottom="10dp"
+        >
         <Button
-            android:layout_marginLeft="20dp"
-            android:layout_alignParentLeft="true"
-            android:background="@color/colorPrimary"
-            android:text=" add to chart"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/btn_field2"
+            android:text="@string/add_cart"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:layout_marginBottom="10dp"
             android:layout_width="250dp"
-            android:layout_height="wrap_content" />
-        <android.support.design.widget.FloatingActionButton
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            />
+        <android.support.design.widget.FloatingActionButton
+            android:layout_alignParentEnd="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_favorite"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="@color/gray"
+            android:backgroundTint="@color/gray2"
+            android:layout_marginEnd="20dp"
             />
     </RelativeLayout>
 

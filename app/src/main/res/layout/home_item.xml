@@ -60,6 +60,7 @@
             android:layout_height="wrap_content"
             style="?android:attr/ratingBarStyleSmall"
             android:numStars="5"
+            android:rating="3.5"
             android:isIndicator="true"
             android:layout_alignParentLeft="true"
             />
