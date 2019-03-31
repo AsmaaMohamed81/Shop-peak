@@ -4,10 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="10dp"
     tools:context="com.alatheer.shop_peak.Fragments.ProfileFragment">
-
-   <RelativeLayout
+    <RelativeLayout
        android:id="@+id/relative"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"

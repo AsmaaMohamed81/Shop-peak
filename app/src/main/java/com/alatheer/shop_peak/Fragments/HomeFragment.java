@@ -81,12 +81,12 @@ public class HomeFragment extends Fragment {
 
         List<HomeModel>  homelist = new ArrayList<>();
 
-        homelist.add(new HomeModel(R.drawable.item2));
-        homelist.add(new HomeModel(R.drawable.item1));
-        homelist.add(new HomeModel(R.drawable.item3));
-        homelist.add(new HomeModel(R.drawable.item1));
-        homelist.add(new HomeModel(R.drawable.item2));
-        homelist.add(new HomeModel(R.drawable.item3));
+        homelist.add(new HomeModel(R.drawable.item2,"dress","a beautiful blue  address for girls ","$25.99"));
+        homelist.add(new HomeModel(R.drawable.item1,"jacket","a comfartable black jacket for boys","$30.00 "));
+        homelist.add(new HomeModel(R.drawable.item3,"shoes","a comfartable blue sportive shoes for playing football","$20.00"));
+        homelist.add(new HomeModel(R.drawable.item1,"jacket","a comfartable black jacket for boys","$30.00 "));
+        homelist.add(new HomeModel(R.drawable.item2,"dress","a beautiful blue  address for girls ","$25.99"));
+        homelist.add(new HomeModel(R.drawable.item3,"shoes","a comfartable blue sportive shoes for playing football","$20.00"));
 
 
         return homelist;

@@ -5,17 +5,48 @@ package com.alatheer.shop_peak.Model;
  */
 
 public class HomeModel  {
-    int image2;
+    int product_image;
+    String product_title;
+    String product_describtion;
 
-    public HomeModel(int image2) {
-        this.image2 = image2;
+    public HomeModel(int product_image, String product_title, String product_describtion, String Product_price) {
+        this.product_image = product_image;
+        this.product_title = product_title;
+        this.product_describtion = product_describtion;
+        this.Product_price = Product_price;
     }
 
-    public int getImage2() {
-        return image2;
+    String Product_price;
+
+    public int getProduct_image() {
+        return product_image;
     }
 
-    public void setImage2(int image2) {
-        this.image2 = image2;
+    public void setProduct_image(int product_image) {
+        this.product_image = product_image;
+    }
+
+    public String getProduct_title() {
+        return product_title;
+    }
+
+    public void setProduct_title(String product_title) {
+        this.product_title = product_title;
+    }
+
+    public String getProduct_describtion() {
+        return product_describtion;
+    }
+
+    public void setProduct_describtion(String product_describtion) {
+        this.product_describtion = product_describtion;
+    }
+
+    public String getProduct_price() {
+        return Product_price;
+    }
+
+    public void setProduct_price(String Product_price) {
+        this.Product_price = Product_price;
     }
 }

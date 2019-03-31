@@ -24,8 +24,9 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".Activities.Signup_Activity"
-            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
-        <activity android:name=".Activities.FullScreenImageActivity"></activity>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".Activities.FullScreenImageActivity" />
+        <activity android:name=".Activities.DetailsActivity"></activity>
     </application>
 
 </manifest>
