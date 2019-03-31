@@ -9,6 +9,7 @@
     <color name="black">#000</color>
     <color name="transparent">#00000000</color>
     <color name="gray">#F2B3B0AF</color>
+    <color name="gray2">#dedbdb</color>
     <color name="colortint">#939191</color>
 
 </resources>
