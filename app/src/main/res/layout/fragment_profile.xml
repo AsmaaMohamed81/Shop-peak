@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp"
     tools:context="com.alatheer.shop_peak.Fragments.ProfileFragment">
@@ -11,13 +12,35 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:layout_marginTop="10dp">
-       <de.hdodenhof.circleimageview.CircleImageView
-               android:layout_width="110dp"
-               android:layout_height="110dp"
+
+       <LinearLayout
+           android:id="@+id/layout"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_alignParentLeft="true">
+           <de.hdodenhof.circleimageview.CircleImageView
+               android:layout_width="90dp"
+               android:layout_height="90dp"
                android:id="@+id/profile_img"
                android:src="@mipmap/icon_round"
-           android:layout_alignParentLeft="true"
-                />
+               app:civ_border_color="@color/colorPrimary"
+               app:civ_border_width="2dp"
+
+               />
+
+           <TextView
+               android:id="@+id/profile_name"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="name shop"
+               android:textStyle="bold"
+               android:textSize="20sp"
+               android:textColor="@color/colorPrimary"
+               android:layout_gravity="center"
+               />
+       </LinearLayout>
+
 
        <LinearLayout
            android:id="@+id/linear_root"
@@ -98,46 +121,33 @@
                    android:text="تعديل الملف الشخصي"/>
            </LinearLayout>
        </LinearLayout>
-       <TextView
-           android:id="@+id/profile_name"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="20dp"
-           android:text="vender"
-           android:layout_marginLeft="15dp"
-           android:textStyle="bold"
-           android:layout_below="@+id/profile_img"
-           android:layout_alignParentLeft="true"
-           android:textSize="20sp"
-           />
-       <RelativeLayout
+
+       <LinearLayout
            android:id="@+id/menu_root"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_alignParentLeft="true"
-           android:layout_below="@+id/profile_name"
-           android:layout_margin="10dp">
+           android:layout_below="@+id/layout"
+           android:orientation="horizontal"
+           android:layout_marginTop="30dp">
            <ImageView
-               android:layout_alignParentLeft="true"
                android:id="@+id/menu_grid"
-               android:layout_width="wrap_content"
+               android:layout_width="0dp"
                android:layout_height="wrap_content"
-               android:layout_marginTop="20dp"
+               android:layout_weight="1"
                android:src="@drawable/ic_apps_black_24dp"
-               android:layout_centerVertical="true"/>
+            />
            <ImageView
                android:id="@+id/menu_vertical"
-               android:layout_width="wrap_content"
+               android:layout_width="0dp"
                android:layout_height="wrap_content"
-               android:layout_alignParentRight="true"
-               android:layout_marginTop="20dp"
-               android:layout_centerVertical="true"
+               android:layout_weight="1"
                android:src="@drawable/ic_crop_din"
                />
 
 
 
-       </RelativeLayout>
+       </LinearLayout>
        <RelativeLayout
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"

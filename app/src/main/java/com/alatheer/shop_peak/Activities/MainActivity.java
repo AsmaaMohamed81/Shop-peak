@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.alatheer.shop_peak.Adapter.BottomNavigationViewHelper;
 import com.alatheer.shop_peak.Adapter.NavigationAdapter;
 import com.alatheer.shop_peak.Fragments.Client_ProfileFragment;
+import com.alatheer.shop_peak.Fragments.Client_Profile_Fragment;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     selectedfragment=new SettingFragment();
                     break;
                 case R.id.nav_profile:
-                    selectedfragment=new Client_ProfileFragment();
+                    selectedfragment=new Client_Profile_Fragment();
                     break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();

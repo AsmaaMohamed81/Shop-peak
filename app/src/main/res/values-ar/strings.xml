@@ -25,10 +25,7 @@
     <string name="search">بحث</string>
     <string name="notifications">الاشعارات</string>
     <string name="profile">الشخصية</string>
-
-
-
-
+    <string name="update_your_profile">تحديث الملف الشخصي</string>
 
 
 </resources>
