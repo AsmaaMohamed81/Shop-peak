@@ -103,12 +103,23 @@ public class DetailsActivity extends AppCompatActivity {
         ratingBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Toast.makeText(DetailsActivity.this,"helll",Toast.LENGTH_SHORT).show();
-                return false;
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    float touchPositionX = event.getX();
+                    float width = ratingBar.getWidth();
+                    float starsf = (touchPositionX / width) * 5.0f;
+                    int stars = (int)starsf + 1;
+                    ratingBar.setRating(stars);
+                    v.setPressed(false);
+                }
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setPressed(true);
+                }
+
+                if (event.getAction() == MotionEvent.ACTION_CANCEL) {
+                    v.setPressed(false);
+                }
+                return true;
+            }});
             }
-        });
-
-
-    }
 
 }
