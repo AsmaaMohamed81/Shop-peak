@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     List<HomeModel>listofhome;
     Context context;
     MainActivity mainActivity;
+    boolean flag = true;
     public HomeAdapter(List<HomeModel> listofhome, Context context){
         this.listofhome=listofhome;
         this.context=context;
@@ -43,7 +45,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Image2holder holder, int position) {
+    public void onBindViewHolder(@NonNull final Image2holder holder, int position) {
         final int image= listofhome.get(position).getProduct_image();
         final String title=listofhome.get(position).getProduct_title();
         final String des=listofhome.get(position).getProduct_describtion();
@@ -71,6 +73,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
              intent.putExtra("des",des);
              intent.putExtra("price",price);
              context.startActivity(intent);
+         }
+     });
+     holder.fav.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+             if(flag){
+                 holder.fav.setImageDrawable(ContextCompat.getDrawable(context.getApplicationContext(),R.drawable.ic_favorite_sold));
+                 flag=false;
+             }else if(!flag){
+                 holder.fav.setImageDrawable(ContextCompat.getDrawable(context.getApplicationContext(),R.drawable.ic_favorite));
+                 flag=true;
+             }
          }
      });
     }

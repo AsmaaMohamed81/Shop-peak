@@ -31,13 +31,31 @@
                         android:layout_centerInParent="true"
                         android:textColor="@color/black"
                         android:textSize="20sp"/>
-                     <ImageView
-                         android:layout_marginRight="15dp"
-                         android:layout_centerVertical="true"
-                         android:layout_alignParentRight="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_add_shopping_cart" />
+                       <FrameLayout
+                          android:layout_alignParentRight="true"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_centerVertical="true"
+                          android:layout_marginRight="15dp">
+                           <ImageView
+                               android:id="@+id/shopping_cart"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_gravity="center"
+                               android:src="@drawable/ic_add_shopping_cart" />
+                           <TextView
+                               android:id="@+id/cart_num"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:visibility="invisible"
+                               android:text="0"
+                               android:textSize="20sp"
+                               android:textStyle="bold"
+                               android:layout_gravity="center"
+                               android:textColor="@color/black"
+                               />
+                      </FrameLayout>
+
                    </RelativeLayout>
 
 
@@ -72,10 +90,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
                     <RatingBar
-                        android:layout_marginRight="10dp"
                         android:id="@+id/ratbar2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
                         android:layout_centerVertical="true"
                         style="?android:attr/ratingBarStyleSmall"
                         android:numStars="5"
@@ -172,6 +190,7 @@ you may not use this file except in compliance"
         android:layout_marginBottom="10dp"
         >
         <Button
+            android:id="@+id/add_cart"
             android:layout_alignParentStart="true"
             android:background="@drawable/btn_field2"
             android:text="@string/add_cart"
@@ -182,6 +201,7 @@ you may not use this file except in compliance"
             android:layout_marginStart="20dp"
             />
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_favorite"
             android:layout_alignParentEnd="true"
             android:layout_width="50dp"
             android:layout_height="50dp"
