@@ -37,7 +37,7 @@ public class AddProductActivity extends AppCompatActivity {
         added_image=findViewById(R.id.added_image);
         added_post=findViewById(R.id.added_post);
         added_Description=findViewById(R.id.added_description);
-        myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"userdb").allowMainThreadQueries().build();
+        //myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"userdb").allowMainThreadQueries().build();
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,8 +72,8 @@ public class AddProductActivity extends AppCompatActivity {
             ProfileModel profileModel=new ProfileModel(image);
             myAppDatabase.dao().addproduct(profileModel);
             Toast.makeText(this, "data added successfully", Toast.LENGTH_SHORT).show();*/
-            Intent intent=new Intent(this,MainActivity.class);
-            startActivity(intent);
+            //Intent intent=new Intent(this,MainActivity.class);
+            //startActivity(intent);
 
         }
         else {
