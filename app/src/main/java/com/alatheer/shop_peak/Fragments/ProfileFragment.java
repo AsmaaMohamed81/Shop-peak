@@ -1,6 +1,11 @@
 package com.alatheer.shop_peak.Fragments;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,17 +20,24 @@ import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 
 public class ProfileFragment extends Fragment {
-    ImageView img_grid,img_ver;
+    ImageView img_grid,img_ver,add_product;
     RecyclerView menu_recycler;
     RecyclerView.LayoutManager verticalmanager;
     GridLayoutManager gridmanager;
-
+    Uri uri;
+    Bitmap bitmap;
+    int flag;
+    int PICK_IMAGE_REQUEST;
     public static ProfileFragment getInstance() {
         ProfileFragment fragment = new ProfileFragment();
         return fragment;
@@ -42,6 +54,7 @@ public class ProfileFragment extends Fragment {
     private void initview(final View view) {
          img_grid=view.findViewById(R.id.menu_grid);
          img_ver=view.findViewById(R.id.menu_vertical);
+         add_product=view.findViewById(R.id.add_product);
          menu_recycler=view.findViewById(R.id.recycler_menu);
          Viewgrid();
          img_grid.setOnClickListener(new View.OnClickListener() {
@@ -58,9 +71,35 @@ public class ProfileFragment extends Fragment {
 
              }
          });
+         add_product.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 chooseimage();
+             }
+         });
 
     }
 
+    private void chooseimage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            uri = data.getData();
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     private void viewvertical() {
         img_ver.setColorFilter(getResources().getColor(R.color.colorPrimary));
         img_grid.setColorFilter(getResources().getColor(R.color.gray));
@@ -83,18 +122,19 @@ public class ProfileFragment extends Fragment {
     }
 
     private List<ProfileModel> profileModelList (){
-
         List<ProfileModel> profilelist = new ArrayList<>();
-
         profilelist .add(new ProfileModel(R.drawable.item2));
         profilelist .add(new ProfileModel(R.drawable.item1));
         profilelist .add(new ProfileModel(R.drawable.item3));
         profilelist .add(new ProfileModel(R.drawable.item1));
         profilelist .add(new ProfileModel(R.drawable.item2));
         profilelist .add(new ProfileModel(R.drawable.item3));
+        //ProfileModel profileModel=new ProfileModel();
+        //Uri image=profileModel.getUpload_image();
 
         return profilelist ;
 
     }
+
 
 }

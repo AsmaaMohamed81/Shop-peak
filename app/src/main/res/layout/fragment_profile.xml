@@ -137,6 +137,12 @@
                android:src="@drawable/ic_apps_black_24dp"
             />
            <ImageView
+               android:id="@+id/add_product"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:src="@drawable/ic_add"/>
+           <ImageView
                android:id="@+id/menu_vertical"
                android:layout_width="0dp"
                android:layout_height="wrap_content"

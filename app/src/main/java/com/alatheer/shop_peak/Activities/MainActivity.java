@@ -2,6 +2,9 @@ package com.alatheer.shop_peak.Activities;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomSheetBehavior;
@@ -14,8 +17,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -28,8 +33,11 @@ import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Fragments.SettingFragment;
 import com.alatheer.shop_peak.Model.NavigationModel;
+import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +51,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView navigationrecycler;
     Fragment selectedfragment;
     ProfileFragment profileFragment;
-
+    private int PICK_IMAGE_FROM_GALEARY_REQUEST=0;
+    Uri uri;
+    Bitmap bitmap;
+    int flag=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initview() {
-        final Fragment fragment1 = new HomeFragment();
-        final Fragment fragment2 = new NotificationFragment();
-        final Fragment fragment3 = new SettingFragment();
-        final Fragment fragment4 = new ProfileFragment();
         final FragmentManager fm = getSupportFragmentManager();
-        Fragment active = fragment1;
         img_menu = findViewById(R.id.menu_img);
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.nav_view);
@@ -90,22 +96,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             switch (item.getItemId()){
                 case R.id.nav_notification:
                     selectedfragment=new NotificationFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
                 case R.id.nav_home:
                     selectedfragment=new HomeFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
                 case R.id.nav_setting:
+
                     selectedfragment=new SettingFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
                 case R.id.nav_profile:
                     selectedfragment=new Client_Profile_Fragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
+                    break;
+                case R.id.nav_add:
+                     startActivity(new Intent(MainActivity.this,AddProductActivity.class));
                     break;
             }
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
             return true;
         }
-
     };
+   /* public void chooseimage(){
+        Intent intent=new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"select image"),PICK_IMAGE_FROM_GALEARY_REQUEST);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==PICK_IMAGE_FROM_GALEARY_REQUEST&&resultCode==RESULT_OK&&data!=null) {
+            Log.v("kkkkkk","mohamed");
+            uri = data.getData();
+            /*Bundle bundle=new Bundle();
+            bundle.putString("imageUri",uri.toString());
+            bundle.putInt("flag",flag);
+            ProfileFragment profileFragment=new ProfileFragment();
+            profileFragment.setArguments(bundle);
+            try {
+                Log.v("sssss","mohamed");
+                bitmap=MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                ProfileModel profileModel = new ProfileModel(bitmap);
+                List<ProfileModel>profileModels=new ArrayList<>();
+                profileModels.add(profileModel);
+                ProfileFragment profileFragment=new ProfileFragment();
+                Prof
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }*/
+
 
     public void showmenu(View view) {
         navigationView.setNavigationItemSelectedListener(this);

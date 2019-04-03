@@ -1,5 +1,7 @@
 package com.alatheer.shop_peak.Model;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by M.Hamada on 25/03/2019.
  */

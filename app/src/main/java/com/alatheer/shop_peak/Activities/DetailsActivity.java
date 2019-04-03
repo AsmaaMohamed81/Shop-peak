@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -14,12 +15,19 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
+import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity {
     ImageView details_img,back_image,add_circle,remove_circle,shopping_cart;
     TextView details_title,details_des,counter,cart_num;
     Button details_price,addcart;
+    ViewPager viewPager;
+    CustomSwipeAdapter customSwipeAdapter;
     FloatingActionButton fab_favorite;
     RatingBar ratingBar;
     boolean flag=true;
@@ -44,14 +52,16 @@ public class DetailsActivity extends AppCompatActivity {
         //details_des=findViewById(R.id.details_des);
         details_price = findViewById(R.id.details_price);
         Intent intent = getIntent();
-        int image = intent.getIntExtra("homeimage", 0);
+        Bundle extras = getIntent().getExtras();
+        int[] image = extras.getIntArray("homeimage");
+        viewPager=findViewById(R.id.viewpager);
+        customSwipeAdapter=new CustomSwipeAdapter(image,this);
+        viewPager.setAdapter(customSwipeAdapter);
         String title = intent.getStringExtra("title");
         String des = intent.getStringExtra("des");
         String price = intent.getStringExtra("price");
-        details_img.setImageResource(image);
         details_title.setText(title);
         fab_favorite = findViewById(R.id.fab_favorite);
-//        details_des.setText(des);
         details_price.setText(price);
         back_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +89,7 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             }
         });
-        addcart.setOnClickListener(new View.OnClickListener() {
+       /* addcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int count_cart = Integer.parseInt(cart_num.getText().toString());
@@ -87,7 +97,7 @@ public class DetailsActivity extends AppCompatActivity {
                 cart_num.setText(count_cart++ + "");
                 cart_num.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
         fab_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,5 +131,6 @@ public class DetailsActivity extends AppCompatActivity {
                 return true;
             }});
             }
+
 
 }

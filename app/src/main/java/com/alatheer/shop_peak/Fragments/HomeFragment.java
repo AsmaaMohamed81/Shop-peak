@@ -20,7 +20,7 @@ import java.util.List;
 
 
 public class HomeFragment extends Fragment {
-    RecyclerView recyclerView,recyclerView2;
+    RecyclerView recyclerView,recyclerView2,recyclerView3;
     RecyclerView.LayoutManager layoutManager,layoutManager2;
 
     @Override
@@ -53,10 +53,9 @@ public class HomeFragment extends Fragment {
         HomeAdapter homeAdapter = new HomeAdapter(homeModelList(), getActivity());
         recyclerView2.setAdapter(homeAdapter);
 
-
     }
 
-    private List<OfferModel> offerModelList (){
+    public List<OfferModel> offerModelList (){
 
         List<OfferModel>  offerlist = new ArrayList<>();
 
@@ -77,18 +76,16 @@ public class HomeFragment extends Fragment {
         return offerlist;
     }
 
-    private List<HomeModel> homeModelList (){
+    public List<HomeModel> homeModelList (){
 
         List<HomeModel>  homelist = new ArrayList<>();
 
-        homelist.add(new HomeModel(R.drawable.item2,"dress","a beautiful blue  address for girls ","$25.99"));
-        homelist.add(new HomeModel(R.drawable.item1,"jacket","a comfartable black jacket for boys","$30.00 "));
-        homelist.add(new HomeModel(R.drawable.item3,"shoes","a comfartable blue sportive shoes for playing football","$20.00"));
-        homelist.add(new HomeModel(R.drawable.item1,"jacket","a comfartable black jacket for boys","$30.00 "));
-        homelist.add(new HomeModel(R.drawable.item2,"dress","a beautiful blue  address for girls ","$25.99"));
-        homelist.add(new HomeModel(R.drawable.item3,"shoes","a comfartable blue sportive shoes for playing football","$20.00"));
-
-
+        homelist.add(new HomeModel(new int[]{R.drawable.item3,R.drawable.item2,R.drawable.item1},"dress","a beautiful blue  address for girls ","$25.99"));
+        homelist.add(new HomeModel(new int[]{R.drawable.item2,R.drawable.item3},"jacket","a comfartable black jacket for boys","$30.00 "));
+        homelist.add(new HomeModel(new int[]{R.drawable.item3,R.drawable.item1},"shoes","a comfartable blue sportive shoes for playing football","$20.00"));
+        homelist.add(new HomeModel(new int[]{R.drawable.item3,R.drawable.item2},"jacket","a comfartable black jacket for boys","$30.00 "));
+        homelist.add(new HomeModel(new int[]{R.drawable.item1,R.drawable.item3},"dress","a beautiful blue  address for girls ","$25.99"));
+        homelist.add(new HomeModel(new int[]{R.drawable.item1,R.drawable.item2},"shoes","a comfartable blue sportive shoes for playing football","$20.00"));
         return homelist;
     }
 

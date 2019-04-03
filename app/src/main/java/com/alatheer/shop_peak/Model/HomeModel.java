@@ -1,31 +1,34 @@
 package com.alatheer.shop_peak.Model;
 
+import java.util.List;
+
 /**
  * Created by M.Hamada on 23/03/2019.
  */
 
-public class HomeModel  {
-    int product_image;
+public class HomeModel {
+    public HomeModel() {
+    }
+
+    public int[] getProduct_image() {
+        return product_image;
+    }
+
+    public void setProduct_image(int[] product_image) {
+        this.product_image = product_image;
+    }
+
+    int[] product_image;
     String product_title;
     String product_describtion;
 
-    public HomeModel(int product_image, String product_title, String product_describtion, String Product_price) {
+    public HomeModel(int[] product_image, String product_title, String product_describtion, String Product_price) {
         this.product_image = product_image;
         this.product_title = product_title;
         this.product_describtion = product_describtion;
         this.Product_price = Product_price;
     }
-
     String Product_price;
-
-    public int getProduct_image() {
-        return product_image;
-    }
-
-    public void setProduct_image(int product_image) {
-        this.product_image = product_image;
-    }
-
     public String getProduct_title() {
         return product_title;
     }
