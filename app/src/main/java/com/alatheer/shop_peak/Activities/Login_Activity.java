@@ -21,17 +21,26 @@ import android.widget.ScrollView;
 
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 public class Login_Activity extends AppCompatActivity {
     EditText edt_name, edt_password;
-    Button Sign_up, log_in;
+    Button Sign_up, log_in,facebook_login,gmail_login;
     private String userName, passWord;
     private ProgressDialog dialog;
     private CheckBox checkBox;
     private Boolean accepted = false;
     private View root;
     private Snackbar snackbar;
-
+    private CallbackManager callbackManager;
+    public GoogleSignInOptions gso;
+    GoogleSignInClient googleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +60,32 @@ public class Login_Activity extends AppCompatActivity {
         edt_password = findViewById(R.id.user_password);
         log_in = findViewById(R.id.btn_login);
         root=findViewById(R.id.root);
+        facebook_login=findViewById(R.id.btn_facebook_login);
+        //gmail_login=findViewById(R.id.btn_gmail_login);
+        callbackManager=CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+             startActivity(new Intent(Login_Activity.this,MainActivity.class));
+            }
 
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+        /*gmail_login.setOnClickListener(new View.OnClickListener() {
+           @Override
+            public void onClick(View v) {
+                Intent signin=googleSignInClient.getSignInIntent();
+                startActivityForResult(signin,0);
+            }
+        });*/
 
         final Animation animation=AnimationUtils.loadAnimation(this,R.anim.press_anim);
         final Animation animation2=AnimationUtils.loadAnimation(this,R.anim.fade_in);
@@ -90,6 +124,12 @@ public class Login_Activity extends AppCompatActivity {
             }
         });
         CreateProgressDialog();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void CreateProgressDialog() {

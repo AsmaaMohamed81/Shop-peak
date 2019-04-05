@@ -34,6 +34,9 @@ dependencies {
     implementation 'com.borjabravo:readmoretextview:2.1.0'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.5.1'
     implementation 'android.arch.persistence.room:runtime:1.1.1'
+    implementation 'com.facebook.android:facebook-login:[4,5)'
+    //noinspection GradleCompatible
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
 
 
