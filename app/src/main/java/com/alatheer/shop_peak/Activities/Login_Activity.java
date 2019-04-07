@@ -208,9 +208,9 @@ public class Login_Activity extends AppCompatActivity {
                 Uri personPhoto = account.getPhotoUrl();
                 //Toast.makeText(this,personPhoto.toString(), Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(this,MainActivity.class);
-                //String image_url=personPhoto.toString();
+                String image_url=personPhoto.toString();
                 intent.putExtra("personName",personName);
-                //intent.putExtra("image_url",image_url);
+                intent.putExtra("image_url",image_url);
                 startActivity(intent);
             }
 
