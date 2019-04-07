@@ -4,11 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -31,15 +33,21 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Login_Activity extends AppCompatActivity {
     EditText edt_name, edt_password;
-    Button Sign_up, log_in,facebook_login,gmail_login;
+    Button Sign_up, log_in,facebook_login;
+    SignInButton gmail_login;
     private String userName, passWord;
     private ProgressDialog dialog;
     private CheckBox checkBox;
@@ -49,7 +57,7 @@ public class Login_Activity extends AppCompatActivity {
     private CallbackManager callbackManager;
     public GoogleSignInOptions gso;
     GoogleSignInClient googleSignInClient;
-
+    int GmailSignInRequest=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +77,16 @@ public class Login_Activity extends AppCompatActivity {
         log_in = findViewById(R.id.btn_login);
         root=findViewById(R.id.root);
         facebook_login=findViewById(R.id.btn_facebook_login);
-        //gmail_login=findViewById(R.id.btn_gmail_login);
+        gmail_login=findViewById(R.id.btn_gmail_login);
+        gmail_login.setSize(SignInButton.SIZE_STANDARD);
         callbackManager=CallbackManager.Factory.create();
+        // Configure sign-in to request the user's ID, email address, and basic
+// profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -84,8 +100,8 @@ public class Login_Activity extends AppCompatActivity {
                             String id=object.getString("id");
                             String image_url="https://graph.facebook.com/"+id+"/picture?type=normal";
                             Intent i=new Intent(Login_Activity.this,MainActivity.class);
-                            i.putExtra("first_name",first_name);
-                            i.putExtra("image_url",image_url);
+                            i.putExtra("personName",first_name);
+                           // i.putExtra("image_url",image_url);
                             startActivity(i);
                             Toast.makeText(Login_Activity.this, "log in with facebook connected successfully", Toast.LENGTH_SHORT).show();
 
@@ -155,13 +171,60 @@ public class Login_Activity extends AppCompatActivity {
             }
         });
         CreateProgressDialog();
+        gmail_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = googleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, GmailSignInRequest);
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GmailSignInRequest) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> task) {
+        try {
+            GoogleSignInAccount account = task.getResult(ApiException.class);
+            //GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+            if (account != null) {
+                String personName = account.getDisplayName();
+                String personGivenName = account.getGivenName();
+                String personFamilyName = account.getFamilyName();
+                String personEmail = account.getEmail();
+                String personId = account.getId();
+
+                Uri personPhoto = account.getPhotoUrl();
+                Intent intent=new Intent(this,MainActivity.class);
+                //String image_url=personPhoto.toString();
+                intent.putExtra("personName",personName);
+                //intent.putExtra("image_url",image_url);
+                startActivity(intent);
+            }
+
+            // Signed in successfully, show authenticated UI.
+            updateUI(account);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+           // Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            updateUI(null);
+        }
+    }
+
+    private void updateUI(GoogleSignInAccount account) {
+
+    }
+
     AccessTokenTracker tokenTracker=new AccessTokenTracker() {
         @Override
         protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
@@ -248,5 +311,12 @@ public class Login_Activity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onStart() {
+        // Check for existing Google Sign In account, if the user is already signed in
+// the GoogleSignInAccount will be non-null.
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        updateUI(account);
+        super.onStart();
+    }
 }

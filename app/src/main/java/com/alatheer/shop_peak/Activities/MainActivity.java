@@ -75,11 +75,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         CircleImageView img=headview.findViewById(R.id.profile_img);
         TextView textView=headview.findViewById(R.id.txtname);
         Intent i=getIntent();
-        String first_name=i.getStringExtra("first_name");
         String image_url=i.getStringExtra("image_url");
+        String personname=i.getStringExtra("personName");
         Picasso.with(this).load(image_url).into(img);
-        Toast.makeText(this, first_name, Toast.LENGTH_SHORT).show();
-        textView.setText(first_name);
+        Toast.makeText(this, personname, Toast.LENGTH_SHORT).show();
+        textView.setText(personname);
         navigationrecycler=findViewById(R.id.navigation_recycler_list);
         navigationrecycler.setHasFixedSize(true);
         navigation_manager=new LinearLayoutManager(this);

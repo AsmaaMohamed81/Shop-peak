@@ -98,9 +98,10 @@
                 android:layout_marginTop="15dp"
                 android:id="@+id/btn_facebook_login"/>
             <com.google.android.gms.common.SignInButton
+
+                android:id="@+id/btn_gmail_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_gmail_login"
                 android:layout_marginTop="15dp"/>
 
             <Button
