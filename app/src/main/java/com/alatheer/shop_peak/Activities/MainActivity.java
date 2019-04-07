@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.BottomNavigationViewHelper;
@@ -35,11 +36,14 @@ import com.alatheer.shop_peak.Fragments.SettingFragment;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
@@ -67,6 +71,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         img_menu = findViewById(R.id.menu_img);
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.nav_view);
+        View headview=navigationView.getHeaderView(0);
+        CircleImageView img=headview.findViewById(R.id.profile_img);
+        TextView textView=headview.findViewById(R.id.txtname);
+        Intent i=getIntent();
+        String first_name=i.getStringExtra("first_name");
+        String image_url=i.getStringExtra("image_url");
+        Picasso.with(this).load(image_url).into(img);
+        Toast.makeText(this, first_name, Toast.LENGTH_SHORT).show();
+        textView.setText(first_name);
         navigationrecycler=findViewById(R.id.navigation_recycler_list);
         navigationrecycler.setHasFixedSize(true);
         navigation_manager=new LinearLayoutManager(this);

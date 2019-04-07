@@ -18,16 +18,24 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Login_Activity extends AppCompatActivity {
     EditText edt_name, edt_password;
@@ -66,7 +74,30 @@ public class Login_Activity extends AppCompatActivity {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-             startActivity(new Intent(Login_Activity.this,MainActivity.class));
+                final AccessToken accessToken=loginResult.getAccessToken();
+                GraphRequest request=GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        try {
+                            String first_name = object.getString("first_name");
+                            String last_name=object.getString("last_name");
+                            String id=object.getString("id");
+                            String image_url="https://graph.facebook.com/"+id+"/picture?type=normal";
+                            Intent i=new Intent(Login_Activity.this,MainActivity.class);
+                            i.putExtra("first_name",first_name);
+                            i.putExtra("image_url",image_url);
+                            startActivity(i);
+                            Toast.makeText(Login_Activity.this, "log in with facebook connected successfully", Toast.LENGTH_SHORT).show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                Bundle bundle=new Bundle();
+                bundle.putString("fields","first_name,last_name,email,id");
+                request.setParameters(bundle);
+                request.executeAsync();
             }
 
             @Override
@@ -76,7 +107,7 @@ public class Login_Activity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException error) {
-
+                Toast.makeText(Login_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
         /*gmail_login.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +161,18 @@ public class Login_Activity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    AccessTokenTracker tokenTracker=new AccessTokenTracker() {
+        @Override
+        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+            if (currentAccessToken==null){
+
+            }
+        }
+    };
+    private void loaduserprofile(AccessToken accessToken){
+
+
     }
 
     private void CreateProgressDialog() {
