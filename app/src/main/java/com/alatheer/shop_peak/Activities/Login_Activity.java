@@ -33,6 +33,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -46,8 +47,9 @@ import org.json.JSONObject;
 
 public class Login_Activity extends AppCompatActivity {
     EditText edt_name, edt_password;
-    Button Sign_up, log_in,facebook_login;
+    Button Sign_up, log_in;
     SignInButton gmail_login;
+    LoginButton facebook_login;
     private String userName, passWord;
     private ProgressDialog dialog;
     private CheckBox checkBox;
@@ -77,6 +79,7 @@ public class Login_Activity extends AppCompatActivity {
         log_in = findViewById(R.id.btn_login);
         root=findViewById(R.id.root);
         facebook_login=findViewById(R.id.btn_facebook_login);
+        facebook_login.setReadPermissions("email", "public_profile", "user_friends");
         gmail_login=findViewById(R.id.btn_gmail_login);
         gmail_login.setSize(SignInButton.SIZE_STANDARD);
         callbackManager=CallbackManager.Factory.create();
@@ -90,7 +93,7 @@ public class Login_Activity extends AppCompatActivity {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                final AccessToken accessToken=loginResult.getAccessToken();
+                AccessToken accessToken=loginResult.getAccessToken();
                 GraphRequest request=GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
@@ -123,7 +126,7 @@ public class Login_Activity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(Login_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                 Log.e("error",error.toString());
             }
         });
         /*gmail_login.setOnClickListener(new View.OnClickListener() {
@@ -202,8 +205,8 @@ public class Login_Activity extends AppCompatActivity {
                 String personFamilyName = account.getFamilyName();
                 String personEmail = account.getEmail();
                 String personId = account.getId();
-
                 Uri personPhoto = account.getPhotoUrl();
+                //Toast.makeText(this,personPhoto.toString(), Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(this,MainActivity.class);
                 //String image_url=personPhoto.toString();
                 intent.putExtra("personName",personName);
