@@ -56,10 +56,12 @@ public class Login_Activity extends AppCompatActivity {
     private Boolean accepted = false;
     private View root;
     private Snackbar snackbar;
+    private  int PICK_IMAGE_REQUEST=1;
     private CallbackManager callbackManager;
     public GoogleSignInOptions gso;
     GoogleSignInClient googleSignInClient;
     int GmailSignInRequest=0;
+    Uri image_path;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +81,7 @@ public class Login_Activity extends AppCompatActivity {
         log_in = findViewById(R.id.btn_login);
         root=findViewById(R.id.root);
         facebook_login=findViewById(R.id.btn_facebook_login);
-        facebook_login.setReadPermissions("email", "public_profile", "user_friends");
+       // facebook_login.setReadPermissions("email", "public_profile", "user_friends");
         gmail_login=findViewById(R.id.btn_gmail_login);
         gmail_login.setSize(SignInButton.SIZE_STANDARD);
         callbackManager=CallbackManager.Factory.create();
@@ -90,7 +92,7 @@ public class Login_Activity extends AppCompatActivity {
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         googleSignInClient = GoogleSignIn.getClient(this, gso);
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        facebook_login.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 AccessToken accessToken=loginResult.getAccessToken();
@@ -104,7 +106,7 @@ public class Login_Activity extends AppCompatActivity {
                             String image_url="https://graph.facebook.com/"+id+"/picture?type=normal";
                             Intent i=new Intent(Login_Activity.this,MainActivity.class);
                             i.putExtra("personName",first_name);
-                           // i.putExtra("image_url",image_url);
+                            i.putExtra("image_url",image_url);
                             startActivity(i);
                             Toast.makeText(Login_Activity.this, "log in with facebook connected successfully", Toast.LENGTH_SHORT).show();
 
@@ -198,7 +200,7 @@ public class Login_Activity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
-            //GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
             if (account != null) {
                 String personName = account.getDisplayName();
                 String personGivenName = account.getGivenName();
@@ -208,11 +210,21 @@ public class Login_Activity extends AppCompatActivity {
                 Uri personPhoto = account.getPhotoUrl();
                 //Toast.makeText(this,personPhoto.toString(), Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(this,MainActivity.class);
-                String image_url=personPhoto.toString();
-                intent.putExtra("personName",personName);
-                intent.putExtra("image_url",image_url);
-                startActivity(intent);
-            }
+                try {
+                    String image_url = acct.getPhotoUrl().toString(); //photo_url is String
+                    intent.putExtra("personName",personName);
+                    intent.putExtra("image_url",image_url);
+                    startActivity(intent);
+                }catch (Exception e){
+                    intent.putExtra("personName",personName);
+                    //intent.putExtra("image_url",image_path.toString());
+
+                    startActivity(intent);
+                }
+
+                }
+
+
 
             // Signed in successfully, show authenticated UI.
             updateUI(account);
@@ -236,10 +248,6 @@ public class Login_Activity extends AppCompatActivity {
             }
         }
     };
-    private void loaduserprofile(AccessToken accessToken){
-
-
-    }
 
     private void CreateProgressDialog() {
         dialog = new ProgressDialog(this);
