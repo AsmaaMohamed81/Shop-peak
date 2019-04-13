@@ -81,7 +81,7 @@ public class Login_Activity extends AppCompatActivity {
         log_in = findViewById(R.id.btn_login);
         root=findViewById(R.id.root);
         facebook_login=findViewById(R.id.btn_facebook_login);
-       // facebook_login.setReadPermissions("email", "public_profile", "user_friends");
+        facebook_login.setReadPermissions("email", "public_profile", "user_friends");
         gmail_login=findViewById(R.id.btn_gmail_login);
         gmail_login.setSize(SignInButton.SIZE_STANDARD);
         callbackManager=CallbackManager.Factory.create();

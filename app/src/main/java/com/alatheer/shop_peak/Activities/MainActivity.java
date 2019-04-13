@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ImageView img_menu;
+    Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
     NavigationAdapter navigationAdapter;
     RecyclerView.LayoutManager navigation_manager;
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final FragmentManager fm = getSupportFragmentManager();
         img_menu = findViewById(R.id.menu_img);
         drawerLayout = findViewById(R.id.drawer);
+        toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.nav_view);
         View headview=navigationView.getHeaderView(0);
         CircleImageView img=headview.findViewById(R.id.profile_img);
@@ -212,6 +215,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
         return navidationlist;
     }
-
-
 }

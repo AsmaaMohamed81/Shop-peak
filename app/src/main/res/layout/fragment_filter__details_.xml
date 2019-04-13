@@ -1,0 +1,14 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.alatheer.shop_peak.Fragments.Filter_Details_Fragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/filter_list_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp">
+    </android.support.v7.widget.RecyclerView>
+
+</FrameLayout>
