@@ -2,6 +2,7 @@ package com.alatheer.shop_peak.Activities;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView.LayoutManager navigation_manager;
     RecyclerView navigationrecycler;
     Fragment selectedfragment;
+    SharedPreferences mPrefs;
     ProfileFragment profileFragment;
     private int PICK_IMAGE_FROM_GALEARY_REQUEST=0;
     Uri uri;
@@ -83,8 +85,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.e("dddd",image_url);
             String personname=i.getStringExtra("personName");
             Toast.makeText(this, personname, Toast.LENGTH_SHORT).show();
-            Picasso.with(this).load(image_url).into(img);
-            textView.setText(personname);
+            mPrefs = getSharedPreferences("user_data", MODE_PRIVATE);
+            String name=mPrefs.getString("name",null);
+            String password=mPrefs.getString("password",null);
+            Picasso.with(this).load(password).into(img);
+            textView.setText(name);
         }catch (Exception e){
             String personname=i.getStringExtra("personName");
             img.setImageResource(R.mipmap.icon_round);

@@ -2,6 +2,7 @@ package com.alatheer.shop_peak.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -59,6 +60,7 @@ public class Login_Activity extends AppCompatActivity {
     private  int PICK_IMAGE_REQUEST=1;
     private CallbackManager callbackManager;
     public GoogleSignInOptions gso;
+    SharedPreferences preferences;
     GoogleSignInClient googleSignInClient;
     int GmailSignInRequest=0;
     Uri image_path;
@@ -85,6 +87,7 @@ public class Login_Activity extends AppCompatActivity {
         gmail_login=findViewById(R.id.btn_gmail_login);
         gmail_login.setSize(SignInButton.SIZE_STANDARD);
         callbackManager=CallbackManager.Factory.create();
+
         // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -104,6 +107,10 @@ public class Login_Activity extends AppCompatActivity {
                             String last_name=object.getString("last_name");
                             String id=object.getString("id");
                             String image_url="https://graph.facebook.com/"+id+"/picture?type=normal";
+                            SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
+                            editor.putString("name",first_name);
+                            editor.putString("password",image_url);
+                            editor.apply();
                             Intent i=new Intent(Login_Activity.this,MainActivity.class);
                             i.putExtra("personName",first_name);
                             i.putExtra("image_url",image_url);
@@ -173,6 +180,11 @@ public class Login_Activity extends AppCompatActivity {
                 log_in.clearAnimation();
                 log_in.setAnimation(animation);
                 validation();
+                SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
+                editor.putString("name",edt_name.getText().toString());
+                editor.putString("password",edt_password.getText().toString());
+                editor.apply();
+
             }
         });
         CreateProgressDialog();
@@ -208,6 +220,10 @@ public class Login_Activity extends AppCompatActivity {
                 String personEmail = account.getEmail();
                 String personId = account.getId();
                 Uri personPhoto = account.getPhotoUrl();
+                SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
+                editor.putString("name",personName);
+                editor.putString("password",personPhoto.toString());
+                editor.apply();
                 //Toast.makeText(this,personPhoto.toString(), Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(this,MainActivity.class);
                 try {
