@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Toast.makeText(this, personname, Toast.LENGTH_SHORT).show();
             mPrefs = getSharedPreferences("user_data", MODE_PRIVATE);
             String name=mPrefs.getString("name",null);
-            String password=mPrefs.getString("password",null);
-            Picasso.with(this).load(password).into(img);
+            String url=mPrefs.getString("image_url",null);
+            Picasso.with(this).load(url).into(img);
             textView.setText(name);
         }catch (Exception e){
             String personname=i.getStringExtra("personName");

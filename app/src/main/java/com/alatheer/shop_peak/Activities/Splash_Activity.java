@@ -54,15 +54,15 @@ public class Splash_Activity extends AppCompatActivity {
                     public void run() {
                         mPrefs = getSharedPreferences("user_data", MODE_PRIVATE);
                         String name=mPrefs.getString("name",null);
-                        String password=mPrefs.getString("password",null);
-                        Toast.makeText(Splash_Activity.this, "name"+password, Toast.LENGTH_SHORT).show();
-                        if(name == null && password==null){
+                        String image_url=mPrefs.getString("image_url",null);
+                        Toast.makeText(Splash_Activity.this, "name"+name, Toast.LENGTH_SHORT).show();
+                        if(name == null && image_url==null){
                             Intent intent=new Intent(Splash_Activity.this,Login_Activity.class);
                             startActivity(intent);
                         }else {
                             Intent intent=new Intent(Splash_Activity.this,MainActivity.class);
                             intent.putExtra("personName",name);
-                            intent.putExtra("image_url",password);
+                            intent.putExtra("image_url",image_url);
                             startActivity(intent);
                         }
 

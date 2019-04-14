@@ -109,7 +109,7 @@ public class Login_Activity extends AppCompatActivity {
                             String image_url="https://graph.facebook.com/"+id+"/picture?type=normal";
                             SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
                             editor.putString("name",first_name);
-                            editor.putString("password",image_url);
+                            editor.putString("image_url",image_url);
                             editor.apply();
                             Intent i=new Intent(Login_Activity.this,MainActivity.class);
                             i.putExtra("personName",first_name);
@@ -182,7 +182,7 @@ public class Login_Activity extends AppCompatActivity {
                 validation();
                 SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
                 editor.putString("name",edt_name.getText().toString());
-                editor.putString("password",edt_password.getText().toString());
+                editor.putString("image_url",edt_password.getText().toString());
                 editor.apply();
 
             }
@@ -222,7 +222,7 @@ public class Login_Activity extends AppCompatActivity {
                 Uri personPhoto = account.getPhotoUrl();
                 SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
                 editor.putString("name",personName);
-                editor.putString("password",personPhoto.toString());
+                editor.putString("image_url",personPhoto.toString());
                 editor.apply();
                 //Toast.makeText(this,personPhoto.toString(), Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(this,MainActivity.class);
