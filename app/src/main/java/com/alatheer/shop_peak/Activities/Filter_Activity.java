@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.alatheer.shop_peak.Adapter.FilterAdapter;
 import com.alatheer.shop_peak.Adapter.FilterAdapterDetails;
+import com.alatheer.shop_peak.Adapter.OnTextClickListener;
 import com.alatheer.shop_peak.Fragments.Filter_Details_Fragment;
 import com.alatheer.shop_peak.Model.FilterModel;
 import com.alatheer.shop_peak.Model.FilterModelDetails;
@@ -18,7 +19,7 @@ import com.alatheer.shop_peak.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Filter_Activity extends AppCompatActivity {
+public class Filter_Activity extends AppCompatActivity implements OnTextClickListener{
     Toolbar toolbar;
     RecyclerView recyclerView,recyclerView2;
     RecyclerView.LayoutManager layoutManager,layoutManager2;
@@ -39,17 +40,13 @@ public class Filter_Activity extends AppCompatActivity {
        // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Filter_Details_Fragment()).commit();
         toolbar=findViewById(R.id.toolbar);
         layoutManager=new LinearLayoutManager(this);
-        layoutManager2=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView2.setLayoutManager(layoutManager2);
-        filterAdapter=new FilterAdapter(getFilterModelist(),this);
+        filterAdapter=new FilterAdapter(getFilterModelist(),this,this,this);
         recyclerView.setAdapter(filterAdapter);
-        filterAdapterDetails=new FilterAdapterDetails(filterModelDetailsList(),this);
-        recyclerView2.setAdapter(filterAdapterDetails);
-        recyclerView2.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+
 
     }
-    private List<FilterModel>getFilterModelist(){
+    public List<FilterModel>getFilterModelist(){
         List<FilterModel>filterModelList=new ArrayList<>();
         filterModelList.add(new FilterModel("Brand",filterModelDetailsList()));
         filterModelList.add(new FilterModel("Price",filterModelDetailsList2()));
@@ -58,7 +55,7 @@ public class Filter_Activity extends AppCompatActivity {
         filterModelList.add(new FilterModel("Gender",filterModelDetailsList5()));
         return filterModelList;
     }
-    private List<FilterModelDetails>filterModelDetailsList(){
+    public List<FilterModelDetails>filterModelDetailsList(){
         List<FilterModelDetails>filterModelDetailsList=new ArrayList<>();
         filterModelDetailsList.add(new FilterModelDetails("Addidas"));
         filterModelDetailsList.add(new FilterModelDetails("Nike"));
@@ -96,4 +93,14 @@ public class Filter_Activity extends AppCompatActivity {
         return filterModelDetailsList;
     }
 
+    @Override
+    public void onTextClick(List<FilterModelDetails> filterModelDetailsList) {
+        filterAdapterDetails=new FilterAdapterDetails(filterModelDetailsList,this);
+        layoutManager2=new LinearLayoutManager(this);
+        recyclerView2.setHasFixedSize(true);
+        recyclerView2.setLayoutManager(layoutManager2);
+        recyclerView2.setAdapter(filterAdapterDetails);
+        recyclerView2.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+
+    }
 }
