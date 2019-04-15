@@ -218,6 +218,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navidationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
         navidationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
         navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
+        navidationlist.add(new NavigationModel("Logout",R.drawable.icons_exit));
         return navidationlist;
     }
 }

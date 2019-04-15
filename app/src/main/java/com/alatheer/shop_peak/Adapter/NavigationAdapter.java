@@ -1,6 +1,8 @@
 package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,10 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.R;
 
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by M.Hamada on 24/03/2019.
@@ -42,6 +47,12 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
          @Override
          public void onClick(View v) {
              Toast.makeText(context, navigationModels.get(position).getItem_name(), Toast.LENGTH_SHORT).show();
+             if (navigationModels.get(position).getItem_name().equals("Logout")){
+               SharedPreferences mPrefs = context.getSharedPreferences("user_data", MODE_PRIVATE);
+                 mPrefs.edit().clear().commit();
+                 context.startActivity(new Intent(context, Login_Activity.class));
+             }
+
          }
      });
     }

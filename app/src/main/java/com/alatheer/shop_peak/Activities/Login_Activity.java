@@ -180,10 +180,6 @@ public class Login_Activity extends AppCompatActivity {
                 log_in.clearAnimation();
                 log_in.setAnimation(animation);
                 validation();
-                SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
-                editor.putString("name",edt_name.getText().toString());
-                editor.putString("image_url",edt_password.getText().toString());
-                editor.apply();
 
             }
         });
@@ -228,8 +224,8 @@ public class Login_Activity extends AppCompatActivity {
                 Intent intent=new Intent(this,MainActivity.class);
                 try {
                     String image_url = acct.getPhotoUrl().toString(); //photo_url is String
-                    intent.putExtra("personName",personName);
-                    intent.putExtra("image_url",image_url);
+                     intent.putExtra("personName",personName);
+                     intent.putExtra("image_url",image_url);
                     startActivity(intent);
                 }catch (Exception e){
                     intent.putExtra("personName",personName);
@@ -320,6 +316,12 @@ public class Login_Activity extends AppCompatActivity {
 
 
         Intent intent = new Intent(Login_Activity.this, MainActivity.class);
+        SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
+        editor.putString("name",userName);
+        editor.putString("image_url",passWord);
+        editor.apply();
+        intent.putExtra("personName",userName);
+        intent.putExtra("image_url",passWord);
         startActivity(intent);
     }
 
