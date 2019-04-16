@@ -1,9 +1,7 @@
 package com.alatheer.shop_peak.Activities;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import com.alatheer.shop_peak.Adapter.FilterAdapter;
 import com.alatheer.shop_peak.Adapter.FilterAdapterDetails;
 import com.alatheer.shop_peak.Adapter.OnTextClickListener;
-import com.alatheer.shop_peak.Fragments.Filter_Details_Fragment;
 import com.alatheer.shop_peak.Model.FilterModel;
 import com.alatheer.shop_peak.Model.FilterModelDetails;
 import com.alatheer.shop_peak.R;
@@ -40,10 +37,10 @@ public class Filter_Activity extends AppCompatActivity implements OnTextClickLis
        // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Filter_Details_Fragment()).commit();
         toolbar=findViewById(R.id.toolbar);
         layoutManager=new LinearLayoutManager(this);
+        layoutManager2=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         filterAdapter=new FilterAdapter(getFilterModelist(),this,this,this);
         recyclerView.setAdapter(filterAdapter);
-
 
     }
     public List<FilterModel>getFilterModelist(){
@@ -96,11 +93,10 @@ public class Filter_Activity extends AppCompatActivity implements OnTextClickLis
     @Override
     public void onTextClick(List<FilterModelDetails> filterModelDetailsList) {
         filterAdapterDetails=new FilterAdapterDetails(filterModelDetailsList,this);
-        layoutManager2=new LinearLayoutManager(this);
         recyclerView2.setHasFixedSize(true);
         recyclerView2.setLayoutManager(layoutManager2);
         recyclerView2.setAdapter(filterAdapterDetails);
-        recyclerView2.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        //recyclerView2.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 
     }
 }

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Activities.Contact_Us_Activity;
 import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Local.MySharedPreference;
 import com.alatheer.shop_peak.Model.NavigationModel;
@@ -28,6 +29,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.NavigationHolder> {
     List<NavigationModel>navigationModels;
     Context context;
+    MySharedPreference mPrefs;
     public NavigationAdapter(List<NavigationModel> navigationModels, Context context){
         this.navigationModels=navigationModels;
         this.context=context;
@@ -48,10 +50,14 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
          @Override
          public void onClick(View v) {
              Toast.makeText(context, navigationModels.get(position).getItem_name(), Toast.LENGTH_SHORT).show();
-             if (navigationModels.get(position).getItem_name().equals("Logout")){
-               MySharedPreference mPrefs = new MySharedPreference(context);
+             if (navigationModels.get(position).getItem_name().equals(context.getString(R.string.logout))){
+                 mPrefs = new MySharedPreference(context);
                  mPrefs.DeleteallDatainSharedPreference();
                  context.startActivity(new Intent(context, Login_Activity.class));
+             }
+             if (navigationModels.get(position).getItem_name().equals(context.getString(R.string.contact))){
+                 Intent intent= new Intent(context, Contact_Us_Activity.class);
+                 context.startActivity(intent);
              }
 
          }

@@ -23,6 +23,8 @@
     <string name="share">مشاركة</string>
     <string name="favorite">المفضلات</string>
     <string name="search">بحث</string>
+    <string name="contact">اتصل بنا</string>
+    <string name="logout">خروج</string>
     <string name="notifications">الاشعارات</string>
     <string name="profile">الشخصية</string>
     <string name="update_your_profile">تحديث الملف الشخصي</string>

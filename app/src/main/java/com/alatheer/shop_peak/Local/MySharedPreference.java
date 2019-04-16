@@ -15,25 +15,29 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MySharedPreference {
     Context context;
-
+    SharedPreferences mPrefs;
     public MySharedPreference(Context context) {
         this.context = context;
     }
 
     public void PutDataInSharedPreference(String name, String image_url){
-        SharedPreferences.Editor editor=context.getSharedPreferences("user_data",MODE_PRIVATE).edit();
+        mPrefs =context.getSharedPreferences("user_data",MODE_PRIVATE);
+        SharedPreferences.Editor editor=mPrefs.edit();
         editor.putString("name",name);
         editor.putString("image_url",image_url);
         editor.apply();
     }
     public String[] getDataFromSharedPreference(){
-        SharedPreferences mPrefs = context.getSharedPreferences("user_data", MODE_PRIVATE);
+        mPrefs = context.getSharedPreferences("user_data", MODE_PRIVATE);
         String name=mPrefs.getString("name",null);
         String url=mPrefs.getString("image_url",null);
         return new String[]{name,url};
     }
     public void DeleteallDatainSharedPreference(){
-        SharedPreferences mPrefs = context.getSharedPreferences("user_data", MODE_PRIVATE);
-        mPrefs.edit().clear();
+        mPrefs = context.getSharedPreferences("user_data", MODE_PRIVATE);
+        SharedPreferences.Editor editor=mPrefs.edit();
+        editor.putString("name",null);
+        editor.putString("image_url",null);
+        editor.apply();
     }
 }
