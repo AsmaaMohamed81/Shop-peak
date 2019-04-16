@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Login_Activity;
+import com.alatheer.shop_peak.Local.MySharedPreference;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.R;
 
@@ -48,8 +49,8 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
          public void onClick(View v) {
              Toast.makeText(context, navigationModels.get(position).getItem_name(), Toast.LENGTH_SHORT).show();
              if (navigationModels.get(position).getItem_name().equals("Logout")){
-               SharedPreferences mPrefs = context.getSharedPreferences("user_data", MODE_PRIVATE);
-                 mPrefs.edit().clear().commit();
+               MySharedPreference mPrefs = new MySharedPreference(context);
+                 mPrefs.DeleteallDatainSharedPreference();
                  context.startActivity(new Intent(context, Login_Activity.class));
              }
 

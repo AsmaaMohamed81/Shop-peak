@@ -11,11 +11,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Local.MySharedPreference;
 import com.alatheer.shop_peak.R;
 
 public class Splash_Activity extends AppCompatActivity {
     ImageView logo;
-    SharedPreferences mPrefs;
+    MySharedPreference mPrefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +53,10 @@ public class Splash_Activity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mPrefs = getSharedPreferences("user_data", MODE_PRIVATE);
-                        String name=mPrefs.getString("name",null);
-                        String image_url=mPrefs.getString("image_url",null);
+                        mPrefs = new MySharedPreference(Splash_Activity.this);
+                        String []data=mPrefs.getDataFromSharedPreference();
+                        String name=data[0];
+                        String image_url=data[1];
                         Toast.makeText(Splash_Activity.this, "name"+name, Toast.LENGTH_SHORT).show();
                         if(name == null && image_url==null){
                             Intent intent=new Intent(Splash_Activity.this,Login_Activity.class);

@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Local.MySharedPreference;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
 import com.facebook.AccessToken;
@@ -57,6 +58,7 @@ public class Login_Activity extends AppCompatActivity {
     private Boolean accepted = false;
     private View root;
     private Snackbar snackbar;
+    MySharedPreference mySharedPreference;
     private  int PICK_IMAGE_REQUEST=1;
     private CallbackManager callbackManager;
     public GoogleSignInOptions gso;
@@ -87,7 +89,7 @@ public class Login_Activity extends AppCompatActivity {
         gmail_login=findViewById(R.id.btn_gmail_login);
         gmail_login.setSize(SignInButton.SIZE_STANDARD);
         callbackManager=CallbackManager.Factory.create();
-
+        mySharedPreference = new MySharedPreference(this);
         // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -107,10 +109,7 @@ public class Login_Activity extends AppCompatActivity {
                             String last_name=object.getString("last_name");
                             String id=object.getString("id");
                             String image_url="https://graph.facebook.com/"+id+"/picture?type=normal";
-                            SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
-                            editor.putString("name",first_name);
-                            editor.putString("image_url",image_url);
-                            editor.apply();
+                            mySharedPreference.PutDataInSharedPreference(first_name,image_url);
                             Intent i=new Intent(Login_Activity.this,MainActivity.class);
                             i.putExtra("personName",first_name);
                             i.putExtra("image_url",image_url);
@@ -216,10 +215,12 @@ public class Login_Activity extends AppCompatActivity {
                 String personEmail = account.getEmail();
                 String personId = account.getId();
                 Uri personPhoto = account.getPhotoUrl();
-                SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
-                editor.putString("name",personName);
-                editor.putString("image_url",personPhoto.toString());
-                editor.apply();
+                //SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
+                //editor.putString("name",personName);
+                //editor.putString("image_url",personPhoto.toString());
+                //editor.apply();
+
+                mySharedPreference.PutDataInSharedPreference(personName,personPhoto.toString());
                 //Toast.makeText(this,personPhoto.toString(), Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(this,MainActivity.class);
                 try {
@@ -314,15 +315,12 @@ public class Login_Activity extends AppCompatActivity {
 
     private void Login(String userName, String passWord) {
 
-
+        mySharedPreference.PutDataInSharedPreference(userName,passWord);
         Intent intent = new Intent(Login_Activity.this, MainActivity.class);
-        SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
-        editor.putString("name",userName);
-        editor.putString("image_url",passWord);
-        editor.apply();
         intent.putExtra("personName",userName);
         intent.putExtra("image_url",passWord);
         startActivity(intent);
+
     }
 
     public void CreateSnackBar(String msg)

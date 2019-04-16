@@ -35,6 +35,7 @@ import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Fragments.SettingFragment;
+import com.alatheer.shop_peak.Local.MySharedPreference;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView.LayoutManager navigation_manager;
     RecyclerView navigationrecycler;
     Fragment selectedfragment;
-    SharedPreferences mPrefs;
+    MySharedPreference mPrefs;
     ProfileFragment profileFragment;
     private int PICK_IMAGE_FROM_GALEARY_REQUEST=0;
     Uri uri;
@@ -85,11 +86,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.e("dddd",image_url);
             String personname=i.getStringExtra("personName");
             Toast.makeText(this, personname, Toast.LENGTH_SHORT).show();
-            mPrefs = getSharedPreferences("user_data", MODE_PRIVATE);
-            String name=mPrefs.getString("name",null);
-            String url=mPrefs.getString("image_url",null);
-            Picasso.with(this).load(url).into(img);
+            mPrefs = new MySharedPreference(this);
+            String[] data= mPrefs.getDataFromSharedPreference();
+            String name=data[0];
+            String url=data[1];
             textView.setText(name);
+            Picasso.with(this).load(url).into(img);
         }catch (Exception e){
             String personname=i.getStringExtra("personName");
             img.setImageResource(R.mipmap.icon_round);
