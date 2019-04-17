@@ -89,7 +89,7 @@ public class Contact_Us_Activity extends AppCompatActivity {
             }
             if (TextUtils.isEmpty(Subject)){
                 contact_subject.setError(getString(R.string.subject_req));
-            }else {
+            }else{
                 contact_subject.setError(null);
             }
             if (TextUtils.isEmpty(Message)){
