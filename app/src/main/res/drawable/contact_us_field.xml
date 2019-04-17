@@ -4,7 +4,6 @@
     tools:targetApi="lollipop"
     android:shape="rectangle">
     <stroke android:color="@color/colorPrimary" android:width="2dp">
-
     </stroke>
     <corners android:radius="10dp"></corners>
     <solid android:color="@color/white"/>

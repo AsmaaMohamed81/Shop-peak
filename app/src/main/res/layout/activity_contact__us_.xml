@@ -32,6 +32,7 @@
             android:layout_below="@+id/toolbar"
             android:orientation="vertical">
             <EditText
+                android:id="@+id/contact_name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/contact_us_field"
@@ -41,6 +42,7 @@
                 android:paddingRight="10dp"
                 android:textColorHint="@color/colorPrimary"/>
             <EditText
+                android:id="@+id/contact_email"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/contact_us_field"
@@ -51,6 +53,7 @@
                 android:paddingRight="10dp"
                 android:textColorHint="@color/colorPrimary"/>
             <EditText
+                android:id="@+id/contact_phone"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/contact_us_field"
@@ -61,6 +64,7 @@
                 android:paddingRight="10dp"
                 android:textColorHint="@color/colorPrimary"/>
             <EditText
+                android:id="@+id/contact_subject"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/contact_us_field"
@@ -71,6 +75,7 @@
                 android:paddingRight="10dp"
                 android:textColorHint="@color/colorPrimary"/>
             <EditText
+                android:id="@+id/contact_message"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:background="@drawable/contact_us_field"
@@ -83,6 +88,7 @@
                 android:textColorHint="@color/colorPrimary"
                 />
             <Button
+                android:id="@+id/contact_send"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="15dp"
