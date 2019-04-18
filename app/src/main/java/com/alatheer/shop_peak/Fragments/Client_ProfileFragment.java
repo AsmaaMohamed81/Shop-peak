@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -26,7 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.app.Activity.RESULT_OK;
 
 
-public class Client_ProfileFragment extends Fragment {
+public class Client_ProfileFragment extends Fragment{
     CircleImageView client_image;
     CardView cardView;
     TextView client_name,client_email;

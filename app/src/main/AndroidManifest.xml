@@ -60,7 +60,8 @@
         </activity>
         <activity android:name=".Activities.Search_Activity" />
         <activity android:name=".Activities.Filter_Activity" />
-        <activity android:name=".Activities.Contact_Us_Activity"></activity>
+        <activity android:name=".Activities.Contact_Us_Activity" />
+        <activity android:name=".Activities.Settings_Activity"></activity>
     </application>
 
 </manifest>

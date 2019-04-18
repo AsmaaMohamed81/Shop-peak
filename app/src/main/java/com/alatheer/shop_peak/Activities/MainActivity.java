@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView.LayoutManager navigation_manager;
     RecyclerView navigationrecycler;
     Fragment selectedfragment;
+
     MySharedPreference mPrefs;
     ProfileFragment profileFragment;
     private int PICK_IMAGE_FROM_GALEARY_REQUEST=0;
@@ -107,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(nav_listner);
         HomeFragment homeFragment=new HomeFragment();
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
 
     }
@@ -132,11 +136,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     selectedfragment=new HomeFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
-                case R.id.nav_setting:
-
+                /*case R.id.nav_setting:
                     selectedfragment=new SettingFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
-                    break;
+                    break;*/
                 case R.id.nav_profile:
                     selectedfragment=new Client_Profile_Fragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
@@ -220,8 +223,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navidationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
         navidationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
         navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
-        navidationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.icons_exit));
         navidationlist.add(new NavigationModel(getString(R.string.contact),R.drawable.ic_contact));
+        navidationlist.add(new NavigationModel(getString(R.string.setting),R.drawable.ic_settings));
+        navidationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.icons_exit));
         return navidationlist;
     }
 }

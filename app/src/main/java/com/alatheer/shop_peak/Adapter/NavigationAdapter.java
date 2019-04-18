@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Contact_Us_Activity;
 import com.alatheer.shop_peak.Activities.Login_Activity;
+import com.alatheer.shop_peak.Activities.Settings_Activity;
 import com.alatheer.shop_peak.Local.MySharedPreference;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.R;
@@ -57,6 +58,10 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
              }
              if (navigationModels.get(position).getItem_name().equals(context.getString(R.string.contact))){
                  Intent intent= new Intent(context, Contact_Us_Activity.class);
+                 context.startActivity(intent);
+             }
+             if ((navigationModels.get(position).getItem_name().equals(context.getString(R.string.setting)))){
+                 Intent intent= new Intent(context, Settings_Activity.class);
                  context.startActivity(intent);
              }
 
