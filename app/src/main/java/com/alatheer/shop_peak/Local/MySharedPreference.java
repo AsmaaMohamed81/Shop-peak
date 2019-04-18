@@ -20,24 +20,27 @@ public class MySharedPreference {
         this.context = context;
     }
 
-    public void PutDataInSharedPreference(String name, String image_url){
+    public void PutDataInSharedPreference(String name, String image_url,String email){
         mPrefs =context.getSharedPreferences("user_data",MODE_PRIVATE);
         SharedPreferences.Editor editor=mPrefs.edit();
         editor.putString("name",name);
         editor.putString("image_url",image_url);
+        editor.putString("email",email);
         editor.apply();
     }
     public String[] getDataFromSharedPreference(){
         mPrefs = context.getSharedPreferences("user_data", MODE_PRIVATE);
         String name=mPrefs.getString("name",null);
         String url=mPrefs.getString("image_url",null);
-        return new String[]{name,url};
+        String email=mPrefs.getString("email",null);
+        return new String[]{name,url,email};
     }
     public void DeleteallDatainSharedPreference(){
         mPrefs = context.getSharedPreferences("user_data", MODE_PRIVATE);
         SharedPreferences.Editor editor=mPrefs.edit();
         editor.putString("name",null);
         editor.putString("image_url",null);
+        editor.putString("email",null);
         editor.apply();
     }
 }

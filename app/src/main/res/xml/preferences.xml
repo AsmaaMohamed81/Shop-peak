@@ -3,15 +3,15 @@
     <PreferenceCategory
         android:key="user_category"
         android:title="Account Setting">
-        <EditTextPreference android:dialogTitle="your_name"
-            android:dialogMessage="Enter your full name"
+        <EditTextPreference
             android:inputType="textCapWords"
+            android:clickable="false"
             android:key="key_name"
             android:title="Name"
             android:summary="Mohamed hamada"/>
-        <EditTextPreference android:dialogTitle="your_email"
-            android:dialogMessage="Enter your email"
+        <EditTextPreference
             android:inputType="textEmailAddress"
+            android:clickable="false"
             android:key="key_email"
             android:title="Email"
             android:summary="Mohamedhamada2024@gmail.com"/>
@@ -33,11 +33,13 @@
         <EditTextPreference android:inputType="text"
             android:key="key_country"
             android:title="Country"
+            android:clickable="false"
             android:summary="Egypt"
             android:drawableRight="@drawable/whatsapp"/>
         <EditTextPreference android:inputType="text"
             android:key="key_data"
             android:title="Language"
+            android:clickable="false"
             android:summary="English"/>
     </PreferenceCategory>
 

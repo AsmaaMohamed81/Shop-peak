@@ -109,7 +109,7 @@ public class Login_Activity extends AppCompatActivity {
                             String last_name=object.getString("last_name");
                             String id=object.getString("id");
                             String image_url="https://graph.facebook.com/"+id+"/picture?type=normal";
-                            mySharedPreference.PutDataInSharedPreference(first_name,image_url);
+                            mySharedPreference.PutDataInSharedPreference(first_name,image_url,"mmmmmm@gmail.com");
                             Intent i=new Intent(Login_Activity.this,MainActivity.class);
                             i.putExtra("personName",first_name);
                             i.putExtra("image_url",image_url);
@@ -220,16 +220,18 @@ public class Login_Activity extends AppCompatActivity {
                 //editor.putString("image_url",personPhoto.toString());
                 //editor.apply();
 
-                mySharedPreference.PutDataInSharedPreference(personName,personPhoto.toString());
+                mySharedPreference.PutDataInSharedPreference(personName,personPhoto.toString(),personEmail);
                 //Toast.makeText(this,personPhoto.toString(), Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(this,MainActivity.class);
                 try {
                     String image_url = acct.getPhotoUrl().toString(); //photo_url is String
                      intent.putExtra("personName",personName);
                      intent.putExtra("image_url",image_url);
+                     intent.putExtra("personEmail",personEmail);
                     startActivity(intent);
                 }catch (Exception e){
                     intent.putExtra("personName",personName);
+                    intent.putExtra("personEmail",personEmail);
                     //intent.putExtra("image_url",image_path.toString());
 
                     startActivity(intent);
@@ -315,7 +317,7 @@ public class Login_Activity extends AppCompatActivity {
 
     private void Login(String userName, String passWord) {
 
-        mySharedPreference.PutDataInSharedPreference(userName,passWord);
+        mySharedPreference.PutDataInSharedPreference(userName,passWord,"mmmmm@gmail.com");
         Intent intent = new Intent(Login_Activity.this, MainActivity.class);
         intent.putExtra("personName",userName);
         intent.putExtra("image_url",passWord);
