@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
         navidationlist.add(new NavigationModel(getString(R.string.contact),R.drawable.ic_contact));
         navidationlist.add(new NavigationModel(getString(R.string.setting),R.drawable.ic_settings));
-        navidationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.icons_exit));
+        navidationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
         return navidationlist;
     }
 }
