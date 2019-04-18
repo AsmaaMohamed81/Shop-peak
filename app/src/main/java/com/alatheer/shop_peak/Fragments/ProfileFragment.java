@@ -30,7 +30,7 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends android.app.Fragment {
     ImageView img_grid,img_ver,add_product;
     RecyclerView menu_recycler;
     RecyclerView.LayoutManager verticalmanager;

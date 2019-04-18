@@ -27,7 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.app.Activity.RESULT_OK;
 
 
-public class Client_ProfileFragment extends Fragment{
+public class Client_ProfileFragment extends android.app.Fragment{
     CircleImageView client_image;
     CardView cardView;
     TextView client_name,client_email;

@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationAdapter navigationAdapter;
     RecyclerView.LayoutManager navigation_manager;
     RecyclerView navigationrecycler;
-    Fragment selectedfragment;
+    android.app.Fragment selectedfragment;
 
     MySharedPreference mPrefs;
     ProfileFragment profileFragment;
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(nav_listner);
         HomeFragment homeFragment=new HomeFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        android.app.FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
 
     }
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             profileFragment = profileFragment.getInstance();
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener nav_listner= new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -130,19 +130,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             switch (item.getItemId()){
                 case R.id.nav_notification:
                     selectedfragment=new NotificationFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
                 case R.id.nav_home:
                     selectedfragment=new HomeFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
-                /*case R.id.nav_setting:
+                case R.id.nav_setting:
                     selectedfragment=new SettingFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
-                    break;*/
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
+                    break;
                 case R.id.nav_profile:
                     selectedfragment=new Client_Profile_Fragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
                 case R.id.nav_add:
                      startActivity(new Intent(MainActivity.this,AddProductActivity.class));

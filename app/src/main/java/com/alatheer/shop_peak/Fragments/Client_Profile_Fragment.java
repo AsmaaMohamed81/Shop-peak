@@ -15,7 +15,7 @@ import com.alatheer.shop_peak.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Client_Profile_Fragment extends Fragment{
+public class Client_Profile_Fragment extends android.app.Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.zip.Inflater;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends android.app.Fragment {
     RecyclerView recyclerView,recyclerView2,recyclerView3;
     RecyclerView.LayoutManager layoutManager,layoutManager2;
     HomeAdapter homeAdapter;
