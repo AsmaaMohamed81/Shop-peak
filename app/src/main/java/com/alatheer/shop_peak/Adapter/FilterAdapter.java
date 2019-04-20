@@ -24,12 +24,10 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
     List<FilterModel>filterModelList;
     Context context;
     Filter_Activity filter_activity;
-    private OnTextClickListener onTextClickListener;
     public FilterAdapter(List<FilterModel> filterModelList, Context context) {
         this.filterModelList = filterModelList;
         this.context = context;
         this.filter_activity= (Filter_Activity) context;
-        this.onTextClickListener=onTextClickListener;
     }
 
     @NonNull
@@ -48,7 +46,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
 
              List<FilterModelDetails> filterModelDetailsList = filterModelList.get(position).getFilterModelDetailsList();
              filter_activity.sendlist(filterModelDetailsList);
-           //  onTextClickListener.onTextClick(filterModelDetailsList);
+
 
          }
      });
