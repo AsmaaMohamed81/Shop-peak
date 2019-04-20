@@ -26,15 +26,17 @@ import java.util.zip.Inflater;
 
 public class Search_Activity extends AppCompatActivity  {
  android.support.v7.widget.Toolbar toolbar;
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
+    RecyclerView recyclerView_search;
+    RecyclerView.LayoutManager layoutManager_search;
     SearchAdapter searchAdapter;
     HomeFragment homeFragment;
     ImageView filter_image;
+    Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_);
+        i=getIntent();
         initview();
     }
 
@@ -42,16 +44,10 @@ public class Search_Activity extends AppCompatActivity  {
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         homeFragment=new HomeFragment();
-        Intent i= getIntent();
-        List<HomeModel>list= (ArrayList<HomeModel>) i.getSerializableExtra("list");
         final String title=i.getStringExtra("title");
         filter_image=findViewById(R.id.filter_img);
-        recyclerView=findViewById(R.id.recycler_home);
-        recyclerView.setHasFixedSize(true);
-        layoutManager=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        searchAdapter = new SearchAdapter(list, this);
-        recyclerView.setAdapter(searchAdapter);
+        recyclerView_search=findViewById(R.id.recycler_home);
+        initRecyclerview();
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,6 +59,14 @@ public class Search_Activity extends AppCompatActivity  {
             }
         });
 
+    }
+    public void initRecyclerview(){
+        List<HomeModel>list= (ArrayList<HomeModel>) i.getSerializableExtra("list");
+        recyclerView_search.setHasFixedSize(true);
+        layoutManager_search=new LinearLayoutManager(this);
+        recyclerView_search.setLayoutManager(layoutManager_search);
+        searchAdapter = new SearchAdapter(list, this);
+        recyclerView_search.setAdapter(searchAdapter);
     }
 
 

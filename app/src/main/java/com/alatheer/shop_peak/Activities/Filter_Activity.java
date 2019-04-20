@@ -18,8 +18,8 @@ import java.util.List;
 
 public class Filter_Activity extends AppCompatActivity{
     Toolbar toolbar;
-    RecyclerView recyclerView,recyclerView2;
-    RecyclerView.LayoutManager layoutManager,layoutManager2;
+    RecyclerView recyclerView_filter,recyclerView_filterdetails;
+    RecyclerView.LayoutManager layoutManager_filter,layoutManager_filterdetails;
     FilterAdapter filterAdapter;
     FilterAdapterDetails filterAdapterDetails;
     @Override
@@ -30,20 +30,25 @@ public class Filter_Activity extends AppCompatActivity{
     }
 
     private void initview() {
-        recyclerView=findViewById(R.id.filter_list);
-        recyclerView2=findViewById(R.id.filter_list_details);
-        recyclerView.setHasFixedSize(true);
-        recyclerView2.setHasFixedSize(true);
-       // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Filter_Details_Fragment()).commit();
+        recyclerView_filter=findViewById(R.id.filter_list);
+        recyclerView_filterdetails=findViewById(R.id.filter_list_details);
+        initRecyclerview();
+
+    }
+    public void initRecyclerview(){
+        recyclerView_filter.setHasFixedSize(true);
+        recyclerView_filterdetails.setHasFixedSize(true);
+        // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Filter_Details_Fragment()).commit();
         toolbar=findViewById(R.id.toolbar);
-        layoutManager=new LinearLayoutManager(this);
-        layoutManager2=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView2.setLayoutManager(layoutManager2);
+        layoutManager_filter=new LinearLayoutManager(this);
+        layoutManager_filterdetails=new LinearLayoutManager(this);
+        recyclerView_filter.setLayoutManager(layoutManager_filter);
+        recyclerView_filterdetails.setLayoutManager(layoutManager_filterdetails);
         filterAdapter=new FilterAdapter(getFilterModelist(),this);
-        recyclerView.setAdapter(filterAdapter);
+        recyclerView_filter.setAdapter(filterAdapter);
         filterAdapterDetails=new FilterAdapterDetails(filterModelDetailsList(),this);
-        recyclerView2.setAdapter(filterAdapterDetails);
+        recyclerView_filterdetails.setAdapter(filterAdapterDetails);
+
     }
     public List<FilterModel>getFilterModelist(){
         List<FilterModel>filterModelList=new ArrayList<>();
@@ -104,8 +109,8 @@ public class Filter_Activity extends AppCompatActivity{
 
     public void sendlist(List<FilterModelDetails> filterModelDetailsList) {
         filterAdapterDetails=new FilterAdapterDetails(filterModelDetailsList,this);
-        recyclerView2.setHasFixedSize(true);
-        recyclerView2.setLayoutManager(layoutManager2);
-        recyclerView2.setAdapter(filterAdapterDetails);
+        recyclerView_filterdetails.setHasFixedSize(true);
+        recyclerView_filterdetails.setLayoutManager(layoutManager_filter);
+        recyclerView_filterdetails.setAdapter(filterAdapterDetails);
     }
 }

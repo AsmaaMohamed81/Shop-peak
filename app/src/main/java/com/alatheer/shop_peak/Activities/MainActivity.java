@@ -101,12 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             img.setImageResource(R.mipmap.icon_round);
             textView.setText(personname);
         }
-        navigationrecycler=findViewById(R.id.navigation_recycler_list);
-        navigationrecycler.setHasFixedSize(true);
-        navigation_manager=new LinearLayoutManager(this);
-        navigationrecycler.setLayoutManager(navigation_manager);
-        navigationAdapter=new NavigationAdapter(navigationModelList(),this);
-        navigationrecycler.setAdapter(navigationAdapter);
+        initRecyclerview();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(nav_listner);
@@ -121,6 +116,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             profileFragment = profileFragment.getInstance();
         }
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
+    }
+    public void initRecyclerview(){
+        navigationrecycler=findViewById(R.id.navigation_recycler_list);
+        navigationrecycler.setHasFixedSize(true);
+        navigation_manager=new LinearLayoutManager(this);
+        navigationrecycler.setLayoutManager(navigation_manager);
+        navigationAdapter=new NavigationAdapter(navigationModelList(),this);
+        navigationrecycler.setAdapter(navigationAdapter);
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener nav_listner= new BottomNavigationView.OnNavigationItemSelectedListener() {
