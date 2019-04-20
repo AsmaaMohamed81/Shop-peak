@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity {
-    ImageView details_img,back_image,add_circle,remove_circle,shopping_cart;
+    ImageView details_img,back_image,plus_circle,minus_circle,shopping_cart;
     TextView details_title,details_des,counter,cart_num;
     Button details_price,addcart;
     ViewPager viewPager;
@@ -43,8 +43,8 @@ public class DetailsActivity extends AppCompatActivity {
         details_img = findViewById(R.id.details_image);
         ratingBar = findViewById(R.id.ratbar2);
         details_title = findViewById(R.id.details_title);
-        add_circle = findViewById(R.id.add_circle);
-        remove_circle = findViewById(R.id.remove_circle);
+        plus_circle = findViewById(R.id.add_circle);
+        minus_circle = findViewById(R.id.remove_circle);
         counter = findViewById(R.id.counter);
         shopping_cart = findViewById(R.id.shopping_cart);
         cart_num = findViewById(R.id.cart_num);
@@ -69,7 +69,7 @@ public class DetailsActivity extends AppCompatActivity {
                 finish();
             }
         });
-        add_circle.setOnClickListener(new View.OnClickListener() {
+        plus_circle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int count = Integer.parseInt(counter.getText().toString());
@@ -77,7 +77,7 @@ public class DetailsActivity extends AppCompatActivity {
                 counter.setText(count++ + "");
             }
         });
-        remove_circle.setOnClickListener(new View.OnClickListener() {
+        minus_circle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int count = Integer.parseInt(counter.getText().toString());
