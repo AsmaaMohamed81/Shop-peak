@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -94,7 +95,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     };*/
 
     class  SearchHolder extends RecyclerView.ViewHolder{
-        ImageView share,fav;
+        ImageView share;
+        CheckBox fav;
         ViewPager viewPager;
         CircleImageView img;
         TextView textView;
@@ -102,7 +104,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         public SearchHolder(View itemView) {
             super(itemView);
             viewPager=itemView.findViewById(R.id.viewpager);
-            fav=itemView.findViewById(R.id.fav_img);
+            fav=itemView.findViewById(R.id.fav_check);
             share=itemView.findViewById(R.id.img_share);
             img=itemView.findViewById(R.id.img_c);
             textView=itemView.findViewById(R.id.txt_name);

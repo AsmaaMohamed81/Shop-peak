@@ -16,7 +16,7 @@ import com.alatheer.shop_peak.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Filter_Activity extends AppCompatActivity implements OnTextClickListener{
+public class Filter_Activity extends AppCompatActivity{
     Toolbar toolbar;
     RecyclerView recyclerView,recyclerView2;
     RecyclerView.LayoutManager layoutManager,layoutManager2;
@@ -39,9 +39,11 @@ public class Filter_Activity extends AppCompatActivity implements OnTextClickLis
         layoutManager=new LinearLayoutManager(this);
         layoutManager2=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        filterAdapter=new FilterAdapter(getFilterModelist(),this,this,this);
+        recyclerView2.setLayoutManager(layoutManager2);
+        filterAdapter=new FilterAdapter(getFilterModelist(),this);
         recyclerView.setAdapter(filterAdapter);
-
+        filterAdapterDetails=new FilterAdapterDetails(filterModelDetailsList(),this);
+        recyclerView2.setAdapter(filterAdapterDetails);
     }
     public List<FilterModel>getFilterModelist(){
         List<FilterModel>filterModelList=new ArrayList<>();
@@ -90,7 +92,7 @@ public class Filter_Activity extends AppCompatActivity implements OnTextClickLis
         return filterModelDetailsList;
     }
 
-    @Override
+   /* @Override
     public void onTextClick(List<FilterModelDetails> filterModelDetailsList) {
         filterAdapterDetails=new FilterAdapterDetails(filterModelDetailsList,this);
         recyclerView2.setHasFixedSize(true);
@@ -98,5 +100,12 @@ public class Filter_Activity extends AppCompatActivity implements OnTextClickLis
         recyclerView2.setAdapter(filterAdapterDetails);
         //recyclerView2.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 
+    }*/
+
+    public void sendlist(List<FilterModelDetails> filterModelDetailsList) {
+        filterAdapterDetails=new FilterAdapterDetails(filterModelDetailsList,this);
+        recyclerView2.setHasFixedSize(true);
+        recyclerView2.setLayoutManager(layoutManager2);
+        recyclerView2.setAdapter(filterAdapterDetails);
     }
 }

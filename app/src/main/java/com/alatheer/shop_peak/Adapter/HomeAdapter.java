@@ -10,11 +10,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.DetailsActivity;
 import com.alatheer.shop_peak.Activities.MainActivity;
@@ -35,7 +38,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     Context context;
     MainActivity mainActivity;
     List<HomeModel> full_list_ofhome;
-    boolean flag = true;
+    boolean accepted = false;
     CustomSwipeAdapter customSwipeAdapter;
     public HomeAdapter(List<HomeModel> listofhome, Context context) {
         this.listofhome = listofhome;
@@ -52,57 +55,33 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         return image2holder;
     }
     @Override
-    public void onBindViewHolder(@NonNull final Image2holder holder, int position) {
+    public void onBindViewHolder(@NonNull final Image2holder holder, final int position) {
         final int[] image = listofhome.get(position).getProduct_image();
         final String title = listofhome.get(position).getProduct_title();
         final String des = listofhome.get(position).getProduct_describtion();
         final String price = listofhome.get(position).getProduct_price();
         customSwipeAdapter = new CustomSwipeAdapter(image, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
-        holder.viewPager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DetailsActivity.class);
-                intent.putExtra("homeimage", image);
-                intent.putExtra("title", title);
-                intent.putExtra("des", des);
-                intent.putExtra("price", price);
-                context.startActivity(intent);
-            }
-        });
-        holder.img.setOnClickListener(new View.OnClickListener() {
+        holder.home_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mainActivity.setSelectProfile();
 
             }
         });
-        holder.textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.setSelectProfile();
-            }
-        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, DetailsActivity.class);
-                intent.putExtra("homeimage", image);
-                intent.putExtra("title", title);
-                intent.putExtra("des", des);
-                intent.putExtra("price", price);
-                context.startActivity(intent);
+            mainActivity.sendHomeItem(image,title,des,price);
             }
         });
         holder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (flag) {
-                    holder.fav.setImageDrawable(ContextCompat.getDrawable(context.getApplicationContext(), R.drawable.ic_favorite_sold));
-                    flag = false;
-                } else if (!flag) {
-                    holder.fav.setImageDrawable(ContextCompat.getDrawable(context.getApplicationContext(), R.drawable.ic_favorite));
-                    flag = true;
+                if (holder.fav.isChecked()) {
+                    accepted = true;
+                } else {
+                    accepted = false;
                 }
             }
         });
@@ -115,6 +94,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                     float starsf = (touchPositionX / width) * 5.0f;
                     int stars = (int) starsf + 1;
                     holder.ratbar.setRating(stars);
+                    Toast.makeText(context,stars+"", Toast.LENGTH_SHORT).show();
                     v.setPressed(false);
                 }
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -167,19 +147,22 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         }
     };
     class Image2holder extends RecyclerView.ViewHolder{
-        ImageView share,fav;
+        ImageView share;
+        CheckBox fav;
         ViewPager viewPager;
         CircleImageView img;
         TextView textView;
         RatingBar ratbar;
+        LinearLayout home_linear;
         public Image2holder(View itemView) {
             super(itemView);
             viewPager=itemView.findViewById(R.id.viewpager);
-            fav=itemView.findViewById(R.id.fav_img);
+            fav=itemView.findViewById(R.id.fav_check);
             share=itemView.findViewById(R.id.img_share);
             img=itemView.findViewById(R.id.img_c);
             textView=itemView.findViewById(R.id.txt_name);
             ratbar=itemView.findViewById(R.id.ratbar);
+            home_linear=itemView.findViewById(R.id.home_linear);
         }
     }
 

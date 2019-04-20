@@ -23,12 +23,12 @@ import java.util.List;
 public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHolder> {
     List<FilterModel>filterModelList;
     Context context;
-    Filter_Activity activity;
+    Filter_Activity filter_activity;
     private OnTextClickListener onTextClickListener;
-    public FilterAdapter(List<FilterModel> filterModelList, Context context,Filter_Activity activity,OnTextClickListener onTextClickListener) {
+    public FilterAdapter(List<FilterModel> filterModelList, Context context) {
         this.filterModelList = filterModelList;
         this.context = context;
-        this.activity=activity;
+        this.filter_activity= (Filter_Activity) context;
         this.onTextClickListener=onTextClickListener;
     }
 
@@ -47,7 +47,8 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
          public void onClick(View v) {
 
              List<FilterModelDetails> filterModelDetailsList = filterModelList.get(position).getFilterModelDetailsList();
-             onTextClickListener.onTextClick(filterModelDetailsList);
+             filter_activity.sendlist(filterModelDetailsList);
+           //  onTextClickListener.onTextClick(filterModelDetailsList);
 
          }
      });

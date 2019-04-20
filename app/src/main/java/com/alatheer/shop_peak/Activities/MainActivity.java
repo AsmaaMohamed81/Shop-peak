@@ -218,14 +218,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private List<NavigationModel> navigationModelList (){
 
-        List<NavigationModel>  navidationlist = new ArrayList<>();
+        List<NavigationModel>  navigationlist = new ArrayList<>();
 
-        navidationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
-        navidationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
-        navidationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
-        navidationlist.add(new NavigationModel(getString(R.string.contact),R.drawable.ic_contact));
-        navidationlist.add(new NavigationModel(getString(R.string.setting),R.drawable.ic_settings));
-        navidationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
-        return navidationlist;
+        navigationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
+        navigationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
+        navigationlist.add(new NavigationModel(getString(R.string.contact),R.drawable.ic_contact));
+        navigationlist.add(new NavigationModel(getString(R.string.setting),R.drawable.ic_settings));
+        navigationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
+        return navigationlist;
+    }
+    public void sendHomeItem(int [] image,String title,String des,String price){
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra("homeimage", image);
+        intent.putExtra("title", title);
+        intent.putExtra("des", des);
+        intent.putExtra("price", price);
+        startActivity(intent);
     }
 }
