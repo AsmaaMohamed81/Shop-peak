@@ -8,22 +8,13 @@ import java.util.List;
  */
 
 public class HomeModel implements Serializable {
-    public HomeModel() {
-    }
-
-    public int[] getProduct_image() {
-        return product_image;
-    }
-
-    public void setProduct_image(int[] product_image) {
-        this.product_image = product_image;
-    }
 
     int[] product_image;
     String product_title;
     String product_describtion;
     String size;
     String gender;
+
     public String getSize() {
         return size;
     }
@@ -74,4 +65,16 @@ public class HomeModel implements Serializable {
     public void setProduct_price(String Product_price) {
         this.Product_price = Product_price;
     }
+    public HomeModel() {
+    }
+
+    public int[] getProduct_image() {
+        return product_image;
+    }
+
+    public void setProduct_image(int[] product_image) {
+        this.product_image = product_image;
+    }
+
+
 }

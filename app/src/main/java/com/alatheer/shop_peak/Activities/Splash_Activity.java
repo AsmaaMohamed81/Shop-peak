@@ -61,11 +61,13 @@ public class Splash_Activity extends AppCompatActivity {
                         if(name == null && image_url==null){
                             Intent intent=new Intent(Splash_Activity.this,Login_Activity.class);
                             startActivity(intent);
+                            finish();
                         }else {
                             Intent intent=new Intent(Splash_Activity.this,MainActivity.class);
                             intent.putExtra("personName",name);
                             intent.putExtra("image_url",image_url);
                             startActivity(intent);
+                            finish();
                         }
 
 
