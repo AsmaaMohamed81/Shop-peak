@@ -14,7 +14,7 @@ public class HomeModel implements Serializable {
     String product_describtion;
     String size;
     String gender;
-
+    String Product_price;
     public String getSize() {
         return size;
     }
@@ -33,7 +33,7 @@ public class HomeModel implements Serializable {
         this.gender=gender;
 
     }
-    String Product_price;
+
     public String getProduct_title() {
         return product_title;
     }

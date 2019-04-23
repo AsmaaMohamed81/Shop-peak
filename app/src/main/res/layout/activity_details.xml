@@ -122,12 +122,63 @@
 
     </RelativeLayout>
     <LinearLayout
+        android:id="@+id/relative_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:layout_below="@+id/relative_card">
+        <TextView
+            android:id="@+id/color_red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="red"
+            android:textSize="20sp"
+            android:textColor="@android:color/holo_red_light" />
+        <CheckBox
+            android:id="@+id/checkbox_red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_check_gray"
+            android:layout_marginLeft="5dp" />
+        <TextView
+            android:id="@+id/color_blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="blue"
+            android:textSize="20sp"
+            android:textColor="@android:color/holo_blue_dark" />
+        <CheckBox
+            android:id="@+id/checkbox_blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_check_gray"
+            android:layout_marginLeft="5dp" />
+        <TextView
+            android:id="@+id/color_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="black"
+            android:textSize="20sp"
+            android:textColor="@android:color/black" />
+        <CheckBox
+            android:id="@+id/checkbox_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_check_gray"
+
+            android:layout_marginLeft="5dp" />
+
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/ln_plus"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relative_card"
-        android:layout_marginTop="15dp"
+        android:layout_below="@+id/relative_color"
+        android:layout_marginTop="10dp"
         android:gravity="center">
         <ImageView
             android:id="@+id/add_circle"
@@ -174,13 +225,7 @@ You may obtain a copy of the License atLicensed under the Apache License, Versio
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License atcopy of the License atLicensed under the Apache License, Version 2.0
 you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
-you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
-you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
-you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
-you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
-you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
-you may not use this file except in compliancecopy of the License atLicensed under the Apache License, Version 2.0
-you may not use this file except in compliance"
+you me"
 
       />
 
@@ -199,10 +244,32 @@ you may not use this file except in compliance"
             android:text="@string/add_cart"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             />
+        <LinearLayout
+            android:id="@+id/linear_edit"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/edit_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_field2"
+                android:text="edit cart"
+                android:textColor="@color/white"
+                android:layout_marginLeft="20dp"
+                android:layout_centerInParent="true"/>
+            <EditText
+                android:id="@+id/order_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="0"/>
+        </LinearLayout>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_favorite"
             android:layout_alignParentEnd="true"
