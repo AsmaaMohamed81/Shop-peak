@@ -30,9 +30,9 @@ public class Details_two_Activity extends AppCompatActivity {
     CustomSwipeAdapter customSwipeAdapter;
     FloatingActionButton fab_favorite;
     RatingBar ratingBar;
-    boolean red = false;
-    boolean blue = false;
-    boolean black = false;
+    boolean red ;
+    boolean blue ;
+    boolean black ;
     int count;
      int id_intent;
      String count_intent ;
@@ -41,6 +41,7 @@ public class Details_two_Activity extends AppCompatActivity {
      boolean red_intent ;
      boolean blue_intent ;
      boolean black_intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,18 +154,24 @@ public class Details_two_Activity extends AppCompatActivity {
        details_title.setText(title_intent);
        if (red_intent == true) {
            c_red.setButtonDrawable(R.drawable.ic_check);
+           red =true;
        } else {
            c_red.setButtonDrawable(R.drawable.ic_check_gray);
+           red=false;
        }
        if (blue_intent == true) {
            c_blue.setButtonDrawable(R.drawable.ic_check);
+           blue =true;
        } else {
            c_blue.setButtonDrawable(R.drawable.ic_check_gray);
+           blue=false;
        }
        if (black_intent == true) {
            c_black.setButtonDrawable(R.drawable.ic_check);
+           black=true;
        } else {
            c_black.setButtonDrawable(R.drawable.ic_check_gray);
+           black=false;
        }
     }
 }
