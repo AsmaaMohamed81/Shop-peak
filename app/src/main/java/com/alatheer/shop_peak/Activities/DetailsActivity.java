@@ -63,7 +63,6 @@ public class DetailsActivity extends AppCompatActivity {
         back_image = findViewById(R.id.back_image);
         details_img = findViewById(R.id.details_image);
         ratingBar = findViewById(R.id.ratbar2);
-        editcart=findViewById(R.id.edit_cart);
         details_title = findViewById(R.id.details_title);
         plus_circle = findViewById(R.id.add_circle);
         minus_circle = findViewById(R.id.remove_circle);
@@ -147,7 +146,7 @@ public class DetailsActivity extends AppCompatActivity {
         minus_circle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    count = Integer.parseInt(counter.getText().toString());
+                count = Integer.parseInt(counter.getText().toString());
                 if (count != 0) {
                     count--;
                     counter.setText(count-- + "");
@@ -158,31 +157,21 @@ public class DetailsActivity extends AppCompatActivity {
         addcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    try {
-                        id=Integer.parseInt(order_num.getText().toString());
-                        basketModel=new BasketModel(id,title,counter.getText().toString(),red,blue,black,first_item);
-                        myAppDatabase.dao().addproduct(basketModel);
-                    }catch (Exception e){
-                        Toast.makeText(DetailsActivity.this, "order number took before", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        });
-        editcart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(DetailsActivity.this, "data updated successfully", Toast.LENGTH_LONG).show();
+                try {
                     id=Integer.parseInt(order_num.getText().toString());
-                    basketModel = new BasketModel(id,title, counter.getText().toString(), red, blue, black, first_item);
-                     Log.e("ID",basketModel.getId()+"");
-                     myAppDatabase.dao().editproduct(basketModel);
-
+                    basketModel=new BasketModel(id,title,counter.getText().toString(),red,blue,black,first_item);
+                    myAppDatabase.dao().addproduct(basketModel);
+                }catch (Exception e){
+                    Toast.makeText(DetailsActivity.this, "order number took before", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
         shopping_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(DetailsActivity.this,Basket_Activity.class);
-                 startActivity(intent);
+                startActivity(intent);
             }
         });
         fab_favorite.setOnClickListener(new View.OnClickListener() {
@@ -217,7 +206,8 @@ public class DetailsActivity extends AppCompatActivity {
                 }
                 return true;
             }});
-            }
+    }
+
 
 
 }

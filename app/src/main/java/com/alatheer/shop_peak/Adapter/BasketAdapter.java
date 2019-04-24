@@ -1,7 +1,9 @@
 package com.alatheer.shop_peak.Adapter;
 
+import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.Basket_Activity;
+import com.alatheer.shop_peak.Activities.DetailsActivity;
+import com.alatheer.shop_peak.Activities.Details_two_Activity;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.R;
@@ -31,6 +35,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
     MyAppDatabase myAppDatabase;
     CustomSwipeAdapter customSwipeAdapter;
     int count;
+    int id;
     public BasketAdapter(Context context, List<BasketModel> basketModelList) {
         this.context = context;
         this.basketModelList = basketModelList;
@@ -48,25 +53,13 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
     public void onBindViewHolder(@NonNull final BasketHolder holder, final int position) {
         holder.basket_title.setText(basketModelList.get(position).getTitle());
         holder.counter.setText(basketModelList.get(position).getNum_of_cart());
-        count =Integer.parseInt(basketModelList.get(position).getNum_of_cart());
-        holder.plus_circle.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count=count+1;
-                holder.counter.setText(count +"");
+                basket_activity.senddata(position);
             }
         });
-        holder.minus_circle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (count != 0) {
-                    count=count-1;
-                    holder.counter.setText(count + "");
-                }
-            }
-        });
-        final int image = basketModelList.get(position).getImg();
-        int id = basketModelList.get(position).getId();
+        holder.title_img.setImageResource(basketModelList.get(position).getImg());
         boolean red=basketModelList.get(position).isRed_flag();
         boolean blue=basketModelList.get(position).isBlue_flag();
         boolean black=basketModelList.get(position).isBlack_flag();
@@ -85,8 +78,11 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
         }else {
             holder.c_black.setButtonDrawable(R.drawable.ic_check_gray);
         }
-         holder.img.setImageResource(image);
-        basket_activity.senddata(id,basketModelList.get(position).getTitle(),holder.counter.getText().toString(),red,blue,black);
+
+
+    }
+    public void startActivity(){
+
     }
 
     @Override
@@ -95,7 +91,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
     }
 
     class  BasketHolder extends RecyclerView.ViewHolder{
-       ImageView plus_circle,minus_circle,img;
+       ImageView plus_circle,minus_circle,title_img;
        TextView basket_title,counter;
        CheckBox c_red,c_blue,c_black;
         public BasketHolder(View itemView) {
@@ -107,7 +103,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
             c_red=itemView.findViewById(R.id.checkbox_red);
             c_blue=itemView.findViewById(R.id.checkbox_blue);
             c_black=itemView.findViewById(R.id.checkbox_black);
-            img=itemView.findViewById(R.id.img);
+            title_img=itemView.findViewById(R.id.img);
 
         }
     }

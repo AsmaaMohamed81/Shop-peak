@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 @Entity(tableName = "products")
 public class BasketModel  {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     @ColumnInfo(name = "title")
     String title;
