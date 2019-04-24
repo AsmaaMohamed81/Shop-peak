@@ -34,12 +34,13 @@ public class Details_two_Activity extends AppCompatActivity {
     boolean blue = false;
     boolean black = false;
     int count;
-
-
-
-    public Details_two_Activity() {
-    }
-
+     int id_intent;
+     String count_intent ;
+     String title_intent ;
+     int image_intent ;
+     boolean red_intent ;
+     boolean blue_intent ;
+     boolean black_intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,33 +64,7 @@ public class Details_two_Activity extends AppCompatActivity {
         c_blue = findViewById(R.id.checkbox_blue);
         c_black = findViewById(R.id.checkbox_black);
         myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"productdb").allowMainThreadQueries().build();
-        Intent intent = getIntent();
-        final int id_intent = intent.getIntExtra("id", 0);
-        final String count_intent = intent.getStringExtra("counter");
-        final String title_intent = intent.getStringExtra("title");
-        final int image_intent =  intent.getIntExtra("img", 0);
-        final boolean red_intent = intent.getBooleanExtra("red", false);
-        final  boolean blue_intent = intent.getBooleanExtra("blue", false);
-        final boolean black_intent = intent.getBooleanExtra("black", false);
-        img_title.setImageResource(image_intent);
-        counter.setText(count_intent);
-        details_title.setText(title_intent);
-        if (red_intent == true) {
-            c_red.setButtonDrawable(R.drawable.ic_check);
-        } else {
-            c_red.setButtonDrawable(R.drawable.ic_check_gray);
-        }
-        if (blue_intent == true) {
-            c_blue.setButtonDrawable(R.drawable.ic_check);
-        } else {
-            c_blue.setButtonDrawable(R.drawable.ic_check_gray);
-        }
-        if (black_intent == true) {
-            c_black.setButtonDrawable(R.drawable.ic_check);
-        } else {
-            c_black.setButtonDrawable(R.drawable.ic_check_gray);
-        }
-
+        getDatafromIntent();
         plus_circle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +76,7 @@ public class Details_two_Activity extends AppCompatActivity {
         c_red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (c_red.isChecked()) {
+                if(c_red.isChecked()){
                     c_red.setButtonDrawable(R.drawable.ic_check);
                     red = true;
                 } else {
@@ -114,7 +89,7 @@ public class Details_two_Activity extends AppCompatActivity {
         c_blue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (c_blue.isChecked()) {
+                if(c_blue.isChecked()){
                     c_blue.setButtonDrawable(R.drawable.ic_check);
                     blue = true;
                 } else {
@@ -127,7 +102,7 @@ public class Details_two_Activity extends AppCompatActivity {
         c_black.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (c_black.isChecked()) {
+                if(c_black.isChecked()){
                     c_black.setButtonDrawable(R.drawable.ic_check);
                     black = true;
                 } else {
@@ -152,7 +127,7 @@ public class Details_two_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                basketModel = new BasketModel(id_intent, title_intent, counter.getText().toString(), red, blue, black, image_intent);
+                basketModel= new BasketModel(id_intent, title_intent,counter.getText().toString(), red, blue, black,image_intent);
                 myAppDatabase.dao().editproduct(basketModel);
             }
         });
@@ -164,5 +139,33 @@ public class Details_two_Activity extends AppCompatActivity {
             }
         });
     }
-
+   public void getDatafromIntent(){
+       Intent intent = getIntent();
+       id_intent = intent.getIntExtra("id", 0);
+       count_intent = intent.getStringExtra("counter");
+       title_intent = intent.getStringExtra("title");
+       image_intent = intent.getIntExtra("img", 0);
+       red_intent = intent.getBooleanExtra("red", false);
+       blue_intent = intent.getBooleanExtra("blue", false);
+       black_intent = intent.getBooleanExtra("black", false);
+       img_title.setImageResource(image_intent);
+       counter.setText(count_intent);
+       details_title.setText(title_intent);
+       if (red_intent == true) {
+           c_red.setButtonDrawable(R.drawable.ic_check);
+       } else {
+           c_red.setButtonDrawable(R.drawable.ic_check_gray);
+       }
+       if (blue_intent == true) {
+           c_blue.setButtonDrawable(R.drawable.ic_check);
+       } else {
+           c_blue.setButtonDrawable(R.drawable.ic_check_gray);
+       }
+       if (black_intent == true) {
+           c_black.setButtonDrawable(R.drawable.ic_check);
+       } else {
+           c_black.setButtonDrawable(R.drawable.ic_check_gray);
+       }
+    }
 }
+

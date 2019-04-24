@@ -45,13 +45,15 @@ public class DetailsActivity extends AppCompatActivity {
     boolean red=false;
     boolean blue=false;
     boolean black=false;
-    String title;
     int count;
     int id;
     EditText order_num;
     BasketModel basketModel;
-    BasketModel basketModel2;
-    BasketModel basketModel3;
+    int[] image;
+    int first_item;
+    String price;
+    String des;
+    String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,22 +76,11 @@ public class DetailsActivity extends AppCompatActivity {
         c_blue=findViewById(R.id.checkbox_blue);
         c_black=findViewById(R.id.checkbox_black);
         order_num=findViewById(R.id.order_num);
-        myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"productdb").allowMainThreadQueries().build();
         //details_des=findViewById(R.id.details_des);
         details_price = findViewById(R.id.details_price);
-        Intent intent = getIntent();
-        Bundle extras = getIntent().getExtras();
-        final int[] image = extras.getIntArray("homeimage");
-        final int first_item=image[0];
-        viewPager=findViewById(R.id.viewpager);
-        customSwipeAdapter=new CustomSwipeAdapter(image,this);
-        viewPager.setAdapter(customSwipeAdapter);
-        title = intent.getStringExtra("title");
-        String des = intent.getStringExtra("des");
-        String price = intent.getStringExtra("price");
-        details_title.setText(title);
         fab_favorite = findViewById(R.id.fab_favorite);
-        details_price.setText(price);
+        myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"productdb").allowMainThreadQueries().build();
+        getDataFromIntent();
         back_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,7 +198,20 @@ public class DetailsActivity extends AppCompatActivity {
                 return true;
             }});
     }
-
+    public void getDataFromIntent(){
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        image = extras.getIntArray("homeimage");
+        first_item=image[0];
+        title = intent.getStringExtra("title");
+        des = intent.getStringExtra("des");
+        price = intent.getStringExtra("price");
+        details_price.setText(price);
+        details_title.setText(title);
+        viewPager=findViewById(R.id.viewpager);
+        customSwipeAdapter=new CustomSwipeAdapter(image,this);
+        viewPager.setAdapter(customSwipeAdapter);
+    }
 
 
 }

@@ -20,14 +20,10 @@ import java.util.List;
 
 public class Basket_Activity extends AppCompatActivity {
     RecyclerView recyclerView_basket;
-    Button edit;
     RecyclerView.LayoutManager basket_manager;
     BasketAdapter basketAdapter;
     MyAppDatabase myAppDatabase;
-    BasketModel basketModel;
     List<BasketModel>basketModelList;
-    ViewPager viewPager;
-    CustomSwipeAdapter customSwipeAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +35,6 @@ public class Basket_Activity extends AppCompatActivity {
         recyclerView_basket=findViewById(R.id.basket_recycler);
         myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"productdb").allowMainThreadQueries().build();
         initRecyclerview();
-        edit=findViewById(R.id.btn_editcart);
     }
      public void initRecyclerview(){
          basketModelList=myAppDatabase.dao().getdata();
