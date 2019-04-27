@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.alatheer.shop_peak">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -17,7 +18,8 @@
         <activity
             android:name=".Activities.MainActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".Activities.Splash_Activity">
+        <activity android:name=".Activities.Splash_Activity"
+            tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
