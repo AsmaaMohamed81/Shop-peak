@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.alatheer.shop_peak.Adapter.BasketAdapter;
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
+import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.R;
@@ -23,6 +24,7 @@ public class Basket_Activity extends AppCompatActivity {
     RecyclerView.LayoutManager basket_manager;
     BasketAdapter basketAdapter;
     MyAppDatabase myAppDatabase;
+    Favorite_Database favorite_database;
     List<BasketModel>basketModelList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class Basket_Activity extends AppCompatActivity {
     private void initview() {
         recyclerView_basket=findViewById(R.id.basket_recycler);
         myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"productdb").allowMainThreadQueries().build();
+        favorite_database = Room.databaseBuilder(getApplicationContext(),Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
+
         initRecyclerview();
     }
      public void initRecyclerview(){

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
+import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;
@@ -37,6 +38,7 @@ public class DetailsActivity extends AppCompatActivity {
     CheckBox c_red,c_blue,c_black;
     Button details_price,addcart,editcart;
     MyAppDatabase myAppDatabase;
+    Favorite_Database favorite_database;
     ViewPager viewPager;
     CustomSwipeAdapter customSwipeAdapter;
     FloatingActionButton fab_favorite;
@@ -79,7 +81,8 @@ public class DetailsActivity extends AppCompatActivity {
         //details_des=findViewById(R.id.details_des);
         details_price = findViewById(R.id.details_price);
         fab_favorite = findViewById(R.id.fab_favorite);
-        myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"productdb").allowMainThreadQueries().build();
+        myAppDatabase = Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"productdb").allowMainThreadQueries().build();
+        favorite_database = Room.databaseBuilder(getApplicationContext(),Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         getDataFromIntent();
         back_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,11 +171,18 @@ public class DetailsActivity extends AppCompatActivity {
         fab_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                basketModel=new BasketModel(0,title,counter.getText().toString(),red,blue,black,first_item);
+                int id2=basketModel.getId();
                 if (flag) {
                     fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_sold));
+                    favorite_database.dao_favorite().add_favorite(basketModel);
+                    Log.e("add_to_favorite","true");
                     flag = false;
                 } else if (!flag) {
                     fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite));
+                    basketModel=new BasketModel(id2,title,counter.getText().toString(),red,blue,black,first_item);
+                    favorite_database.dao_favorite().delete_all_favorite();
+                    Log.e("delete_from_favorite","true");
                     flag = true;
                 }
             }

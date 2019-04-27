@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Basket_Activity;
 import com.alatheer.shop_peak.Activities.DetailsActivity;
@@ -56,6 +57,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(context, "id"+basketModelList.get(position).getId()+"", Toast.LENGTH_SHORT).show();
                 basket_activity.senddata(position);
             }
         });
