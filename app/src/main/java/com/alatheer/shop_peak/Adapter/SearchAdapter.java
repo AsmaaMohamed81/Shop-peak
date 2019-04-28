@@ -1,6 +1,7 @@
 package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,11 +49,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
     @Override
     public void onBindViewHolder(@NonNull SearchHolder holder, int position) {
-        final int[] image = listofhome.get(position).getProduct_image();
+        Uri uri = Uri.parse(listofhome.get(position).getProduct_image());
+
+        File file =new File(uri.getPath());
+        File[]path=new File[]{file,file,file};
+        customSwipeAdapter = new CustomSwipeAdapter(path, context);
+        holder.viewPager.setAdapter(customSwipeAdapter);
         final String title = listofhome.get(position).getProduct_title();
         final String des = listofhome.get(position).getProduct_describtion();
         final String price = listofhome.get(position).getProduct_price();
-        customSwipeAdapter = new CustomSwipeAdapter(image, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
     }
 

@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.Adapter;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -29,6 +30,7 @@ import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,12 +64,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     }
     @Override
     public void onBindViewHolder(@NonNull final Image2holder holder, final int position) {
-        final int[] image = listofhome.get(position).getProduct_image();
+        Uri uri = Uri.parse(listofhome.get(position).getProduct_image());
+        final File path = new File(uri.getPath());
         favorite_database = Room.databaseBuilder(context,Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         final String title = listofhome.get(position).getProduct_title();
         final String des = listofhome.get(position).getProduct_describtion();
         final String price = listofhome.get(position).getProduct_price();
-        customSwipeAdapter = new CustomSwipeAdapter(image, context);
+        customSwipeAdapter = new CustomSwipeAdapter(new File[]{path,path,path}, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
         holder.home_linear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +82,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            mainActivity.sendHomeItem(image,title,des,price);
+            mainActivity.sendHomeItem(new File[]{path,path,path},title,des,price);
             }
         });
         holder.fav.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +91,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                 if (holder.fav.isChecked()) {
                     accepted = true;
                     int id=Integer.parseInt(holder.order_num.getText().toString());
-                    BasketModel basketModel=new BasketModel(id,title,0+"",false,false,false,image[0]);
+                    BasketModel basketModel=new BasketModel(id,title,0+"",false,false,false,path.toString());
                     favorite_database.dao_favorite().add_favorite(basketModel);
                     Log.e("add_to_favorite","true");
                 } else {

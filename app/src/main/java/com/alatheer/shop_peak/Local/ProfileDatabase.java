@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.Local;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
+import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.ProfileModel;
 
 /**
@@ -11,4 +12,5 @@ import com.alatheer.shop_peak.Model.ProfileModel;
 @Database(entities = {ProfileModel.class},version = 1)
 public abstract class ProfileDatabase extends RoomDatabase {
     public abstract Dao_Profile dao();
+
 }

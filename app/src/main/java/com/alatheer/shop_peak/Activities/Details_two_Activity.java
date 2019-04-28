@@ -2,6 +2,7 @@ package com.alatheer.shop_peak.Activities;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,8 @@ import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.R;
+
+import java.io.File;
 
 public class Details_two_Activity extends AppCompatActivity {
     ImageView details_img, back_image, plus_circle, minus_circle, shopping_cart;
@@ -36,9 +39,10 @@ public class Details_two_Activity extends AppCompatActivity {
     boolean black ;
     int count;
      int id_intent;
+     String image_intent_String;
      String count_intent ;
      String title_intent ;
-     int image_intent ;
+     String image_intent ;
      boolean red_intent ;
      boolean blue_intent ;
      boolean black_intent;
@@ -129,7 +133,7 @@ public class Details_two_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                basketModel= new BasketModel(id_intent, title_intent,counter.getText().toString(), red, blue, black,image_intent);
+                basketModel= new BasketModel(id_intent, title_intent,counter.getText().toString(), red, blue, black,image_intent_String);
                 myAppDatabase.dao().editproduct(basketModel);
             }
         });
@@ -143,14 +147,19 @@ public class Details_two_Activity extends AppCompatActivity {
     }
    public void getDatafromIntent(){
        Intent intent = getIntent();
+       Bundle extras = intent.getExtras();
        id_intent = intent.getIntExtra("id", 0);
        count_intent = intent.getStringExtra("counter");
        title_intent = intent.getStringExtra("title");
-       image_intent = intent.getIntExtra("img", 0);
+       image_intent =  intent.getStringExtra("img");
+       image_intent_String=image_intent.toString();
+       Uri uri=Uri.parse(image_intent_String);
+       File file =new File(uri.getPath());
+       File[]path=new File[]{file,file,file};
        red_intent = intent.getBooleanExtra("red", false);
        blue_intent = intent.getBooleanExtra("blue", false);
        black_intent = intent.getBooleanExtra("black", false);
-       customSwipeAdapter = new CustomSwipeAdapter(new int[]{image_intent,image_intent,image_intent}, this);
+       customSwipeAdapter = new CustomSwipeAdapter(path, this);
        viewPager.setAdapter(customSwipeAdapter);
        counter.setText(count_intent);
        details_title.setText(title_intent);

@@ -2,10 +2,7 @@ package com.alatheer.shop_peak.Model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
-
-import java.io.Serializable;
 
 /**
  * Created by M.Hamada on 22/04/2019.
@@ -19,7 +16,7 @@ public class BasketModel  {
     @ColumnInfo(name = "num_of_cart")
     String num_of_cart;
     @ColumnInfo(name = "img")
-    int img;
+    String img;
     @ColumnInfo(name = "red")
     boolean red_flag;
     @ColumnInfo(name = "blue")
@@ -34,11 +31,11 @@ public class BasketModel  {
         this.id = id;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
@@ -68,7 +65,7 @@ public class BasketModel  {
 
 
 
-    public BasketModel(int id,String title, String num_of_cart, boolean red_flag, boolean blue_flag, boolean black_flag,int img) {
+    public BasketModel(int id, String title, String num_of_cart, boolean red_flag, boolean blue_flag, boolean black_flag, String img) {
         this.title = title;
         this.num_of_cart = num_of_cart;
         this.red_flag = red_flag;

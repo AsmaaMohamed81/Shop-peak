@@ -14,8 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
+import com.alatheer.shop_peak.Local.HomeDatabase;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
+import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -26,6 +28,7 @@ public class AddProductActivity extends AppCompatActivity {
      EditText added_TiTle,product_num;
      Uri Image_Uri;
      ProfileDatabase profileDatabase;
+     HomeDatabase homeDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,7 @@ public class AddProductActivity extends AppCompatActivity {
         added_TiTle=findViewById(R.id.added_description);
         product_num=findViewById(R.id.order_num);
         profileDatabase = Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
+        homeDatabase= Room.databaseBuilder(getApplicationContext(),HomeDatabase.class,"home_db").allowMainThreadQueries().build();
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +89,9 @@ public class AddProductActivity extends AppCompatActivity {
      String image = Image_Uri.toString();
      int id= Integer.parseInt(product_num.getText().toString());
      ProfileModel profileModel=new ProfileModel(id,title,image);
+     HomeModel homeModel=new HomeModel(id,image,title,"dfkldlfks","50$","XXL","male");
      profileDatabase.dao().addproductItem(profileModel);
+     homeDatabase.dao_home().addproductItem(homeModel);
      Toast.makeText(this, "data added successfully", Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(this,MainActivity.class);
         startActivity(intent);

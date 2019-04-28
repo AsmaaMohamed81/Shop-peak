@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +22,9 @@ import com.alatheer.shop_peak.Activities.Details_two_Activity;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.R;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -61,7 +64,9 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
                 basket_activity.senddata(position);
             }
         });
-        holder.title_img.setImageResource(basketModelList.get(position).getImg());
+        Uri uri= Uri.parse(basketModelList.get(position).getImg());
+        File file =new File(uri.getPath());
+        Picasso.with(context).load(file).into(holder.title_img);
         boolean red=basketModelList.get(position).isRed_flag();
         boolean blue=basketModelList.get(position).isBlue_flag();
         boolean black=basketModelList.get(position).isBlack_flag();

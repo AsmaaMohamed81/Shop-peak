@@ -45,6 +45,7 @@ import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -232,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
         return navigationlist;
     }
-    public void sendHomeItem(int [] image,String title,String des,String price){
+    public void sendHomeItem(File[] image, String title, String des, String price){
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtra("homeimage", image);
         intent.putExtra("title", title);

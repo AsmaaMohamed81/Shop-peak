@@ -11,23 +11,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alatheer.shop_peak.R;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 /**
  * Created by M.Hamada on 02/04/2019.
  */
 
 public class CustomSwipeAdapter extends PagerAdapter{
-    private int[] image_resources;
+    private File[] images_url;
     private Context context;
 
-    public CustomSwipeAdapter(int[] image_resources, Context context) {
-        this.image_resources = image_resources;
+    public CustomSwipeAdapter(File[] images_url, Context context) {
+        this.images_url = images_url;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return image_resources.length;
+        return images_url.length;
     }
 
     @Override
@@ -41,8 +44,8 @@ public class CustomSwipeAdapter extends PagerAdapter{
         View view = LayoutInflater.from(context).inflate(R.layout.swipe_layout,container,false);
         ImageView imageView=view.findViewById(R.id.details_image);
         TextView textView=view.findViewById(R.id.image_number);
-        imageView.setImageResource(image_resources[position]);
-        textView.setText(position+1 +"/"+image_resources.length);
+        Picasso.with(context).load(images_url[position]).into(imageView);
+        textView.setText(position+1 +"/"+images_url.length);
         container.addView(view);
         return view;
     }

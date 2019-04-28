@@ -1,6 +1,7 @@
 package com.alatheer.shop_peak.Fragments;
 
 import android.app.SearchManager;
+import android.arch.persistence.room.Room;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +33,8 @@ import com.alatheer.shop_peak.Activities.Search_Activity;
 import com.alatheer.shop_peak.Adapter.HomeAdapter;
 
 import com.alatheer.shop_peak.Adapter.OfferAdapter;
+import com.alatheer.shop_peak.Local.HomeDatabase;
+import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.OfferModel;
 import com.alatheer.shop_peak.R;
@@ -41,6 +44,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 
 public class HomeFragment extends android.app.Fragment {
     RecyclerView recyclerView,recyclerView2,recyclerView3;
@@ -49,6 +54,7 @@ public class HomeFragment extends android.app.Fragment {
     OfferAdapter offerAdapter;
     EditText search;
     List<HomeModel>  homelist;
+    HomeDatabase homeDatabase;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,6 +67,7 @@ public class HomeFragment extends android.app.Fragment {
     private void initView(View v) {
 
         search = v.findViewById(R.id.txt_search);
+        homeDatabase= Room.databaseBuilder(getApplicationContext(),HomeDatabase.class,"home_db").allowMainThreadQueries().build();
         //final String title=search.getText().toString();
         setHasOptionsMenu(true);
        // ((AppCompatActivity)getActivity()).setSupportActionBar(search);
@@ -74,12 +81,11 @@ public class HomeFragment extends android.app.Fragment {
         recyclerView.setAdapter(offerAdapter);
 
         ////home
-        homeModelList();
         recyclerView2=v.findViewById(R.id.recycler_home);
         recyclerView2.setHasFixedSize(true);
         layoutManager2=new LinearLayoutManager(getActivity());
         recyclerView2.setLayoutManager(layoutManager2);
-         homeAdapter = new HomeAdapter(homelist, getActivity());
+         homeAdapter = new HomeAdapter(homeDatabase.dao_home().get_profile_data(), getActivity());
         recyclerView2.setAdapter(homeAdapter);
          search.addTextChangedListener(new TextWatcher() {
                        @Override
@@ -132,7 +138,7 @@ public class HomeFragment extends android.app.Fragment {
         return offerlist;
     }
 
-    public void homeModelList (){
+    /*public void homeModelList (){
 
         homelist = new ArrayList<>();
         homelist.add(new HomeModel(new int[]{R.drawable.item2,R.drawable.item2,R.drawable.item2},"dress","a beautiful blue  address for girls ","$25.99","XL","female"));
@@ -142,7 +148,7 @@ public class HomeFragment extends android.app.Fragment {
         homelist.add(new HomeModel(new int[]{R.drawable.item2,R.drawable.item2},"dress","a beautiful blue  address for girls ","$25.99","XXL","female"));
         homelist.add(new HomeModel(new int[]{R.drawable.item3,R.drawable.item3},"shoes","a comfartable blue sportive shoes for playing football","$20.00","M","female"));
 
-    }
+    }*/
 
    /* @Override
     public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {

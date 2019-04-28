@@ -28,6 +28,7 @@ import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +52,12 @@ public class DetailsActivity extends AppCompatActivity {
     int id;
     EditText order_num;
     BasketModel basketModel;
-    int[] image;
-    int first_item;
+    File[] image;
+    File first_item;
     String price;
     String des;
     String title;
+    String first_item_String;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,7 +155,7 @@ public class DetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     id=Integer.parseInt(order_num.getText().toString());
-                    basketModel=new BasketModel(id,title,counter.getText().toString(),red,blue,black,first_item);
+                    basketModel=new BasketModel(id,title,counter.getText().toString(),red,blue,black,first_item_String);
                     myAppDatabase.dao().addproduct(basketModel);
                 }catch (Exception e){
                     Toast.makeText(DetailsActivity.this, "order number took before", Toast.LENGTH_SHORT).show();
@@ -171,7 +173,7 @@ public class DetailsActivity extends AppCompatActivity {
         fab_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                basketModel=new BasketModel(0,title,counter.getText().toString(),red,blue,black,first_item);
+                basketModel=new BasketModel(0,title,counter.getText().toString(),red,blue,black,first_item_String);
                 int id2=basketModel.getId();
                 if (flag) {
                     fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_sold));
@@ -180,7 +182,7 @@ public class DetailsActivity extends AppCompatActivity {
                     flag = false;
                 } else if (!flag) {
                     fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite));
-                    basketModel=new BasketModel(id2,title,counter.getText().toString(),red,blue,black,first_item);
+                    basketModel=new BasketModel(id2,title,counter.getText().toString(),red,blue,black,first_item_String);
                     favorite_database.dao_favorite().delete_all_favorite();
                     Log.e("delete_from_favorite","true");
                     flag = true;
@@ -211,8 +213,9 @@ public class DetailsActivity extends AppCompatActivity {
     public void getDataFromIntent(){
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        image = extras.getIntArray("homeimage");
+        image = (File[]) extras.getSerializable("homeimage");
         first_item=image[0];
+         first_item_String = first_item.toString();
         title = intent.getStringExtra("title");
         des = intent.getStringExtra("des");
         price = intent.getStringExtra("price");
