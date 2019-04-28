@@ -45,6 +45,7 @@
                     android:layout_height="wrap_content"
                     android:text="red"
                     android:textSize="20sp"
+                    android:layout_marginLeft="10dp"
                     android:textColor="@android:color/holo_red_light" />
                 <CheckBox
                     android:id="@+id/checkbox_red"
@@ -79,7 +80,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@drawable/ic_check_gray"
-
                     android:layout_marginLeft="5dp" />
 
             </LinearLayout>

@@ -22,6 +22,7 @@ import com.alatheer.shop_peak.R;
 public class Details_two_Activity extends AppCompatActivity {
     ImageView details_img, back_image, plus_circle, minus_circle, shopping_cart;
     TextView details_title, details_des, counter, cart_num;
+    ViewPager viewPager;
     CheckBox c_red, c_blue, c_black;
     Button details_price, addcart;
     MyAppDatabase myAppDatabase;
@@ -50,7 +51,7 @@ public class Details_two_Activity extends AppCompatActivity {
     }
 
     private void initview() {
-        img_title = findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager);
         back_image = findViewById(R.id.back_image);
         details_img = findViewById(R.id.details_image);
         ratingBar = findViewById(R.id.ratbar2);
@@ -149,7 +150,8 @@ public class Details_two_Activity extends AppCompatActivity {
        red_intent = intent.getBooleanExtra("red", false);
        blue_intent = intent.getBooleanExtra("blue", false);
        black_intent = intent.getBooleanExtra("black", false);
-       img_title.setImageResource(image_intent);
+       customSwipeAdapter = new CustomSwipeAdapter(new int[]{image_intent,image_intent,image_intent}, this);
+       viewPager.setAdapter(customSwipeAdapter);
        counter.setText(count_intent);
        details_title.setText(title_intent);
        if (red_intent == true) {

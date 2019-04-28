@@ -101,7 +101,7 @@ public class HomeFragment extends android.app.Fragment {
              @Override
              public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                  if(actionId==EditorInfo.IME_ACTION_SEARCH){
-                     Intent i=new Intent(getContext(),Search_Activity.class);
+                     Intent i=new Intent(getActivity(),Search_Activity.class);
                      i.putExtra("title",search.getText().toString());
                      i.putExtra("list",(Serializable) homelist);
                      startActivity(i);

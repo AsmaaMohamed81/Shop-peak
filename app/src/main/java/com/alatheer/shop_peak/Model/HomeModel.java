@@ -9,6 +9,7 @@ import java.util.List;
 
 public class HomeModel implements Serializable {
 
+    int id;
     int[] product_image;
     String product_title;
     String product_describtion;

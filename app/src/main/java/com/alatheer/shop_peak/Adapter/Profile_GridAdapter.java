@@ -11,7 +11,9 @@ import android.widget.ImageView;
 
 import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -36,7 +38,9 @@ public class Profile_GridAdapter extends RecyclerView.Adapter<Profile_GridAdapte
 
     @Override
     public void onBindViewHolder(@NonNull Profile_GridHolder holder, int position) {
-     holder.imageView.setImageResource(profileModels.get(position).getImage());
+     Uri uri = Uri.parse(profileModels.get(position).getImage());
+     Picasso.with(context).load(new File(uri.getPath())).into(holder.imageView);
+
     }
 
     @Override

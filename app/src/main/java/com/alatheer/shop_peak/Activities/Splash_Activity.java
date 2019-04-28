@@ -78,9 +78,22 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
                     public void onCompletion(MediaPlayer mp) {
                         mp.stop();
                         mp.release();
-                        Intent intent = new Intent(Splash_Activity.this,Login_Activity.class);
-                        startActivity(intent);
-                        finish();
+                        mPrefs = new MySharedPreference(Splash_Activity.this);
+                        String []data=mPrefs.getDataFromSharedPreference();
+                        String name=data[0];
+                        String image_url=data[1];
+                        Toast.makeText(Splash_Activity.this, "name"+name, Toast.LENGTH_SHORT).show();
+                        if(name == null && image_url==null){
+                            Intent intent=new Intent(Splash_Activity.this,Login_Activity.class);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            Intent intent=new Intent(Splash_Activity.this,MainActivity.class);
+                            intent.putExtra("personName",name);
+                            intent.putExtra("image_url",image_url);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
                 });
             }catch (IllegalStateException e){}

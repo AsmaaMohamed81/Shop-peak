@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
+import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -22,9 +23,9 @@ import com.theartofdev.edmodo.cropper.CropImage;
 public class AddProductActivity extends AppCompatActivity {
      ImageView close,added_image;
      TextView added_post;
-     EditText added_Description;
+     EditText added_TiTle,product_num;
      Uri Image_Uri;
-    public static MyAppDatabase myAppDatabase;;
+     ProfileDatabase profileDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +37,9 @@ public class AddProductActivity extends AppCompatActivity {
         close=findViewById(R.id.close);
         added_image=findViewById(R.id.added_image);
         added_post=findViewById(R.id.added_post);
-        added_Description=findViewById(R.id.added_description);
-        //myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"userdb").allowMainThreadQueries().build();
+        added_TiTle=findViewById(R.id.added_description);
+        product_num=findViewById(R.id.order_num);
+        profileDatabase = Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,10 +70,7 @@ public class AddProductActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             Image_Uri = result.getUri();
             added_image.setImageURI(Image_Uri);
-            /*String image=Image_Uri.toString();
-            ProfileModel profileModel=new ProfileModel(image);
-            myAppDatabase.dao().addproduct(profileModel);
-            Toast.makeText(this, "data added successfully", Toast.LENGTH_SHORT).show();*/
+            Toast.makeText(this, "data added successfully", Toast.LENGTH_SHORT).show();
             //Intent intent=new Intent(this,MainActivity.class);
             //startActivity(intent);
 
@@ -82,7 +81,14 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void uploadimage() {
-
+     String title = added_TiTle.getText().toString();
+     String image = Image_Uri.toString();
+     int id= Integer.parseInt(product_num.getText().toString());
+     ProfileModel profileModel=new ProfileModel(id,title,image);
+     profileDatabase.dao().addproductItem(profileModel);
+     Toast.makeText(this, "data added successfully", Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
 
     }
 }

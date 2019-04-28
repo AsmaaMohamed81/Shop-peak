@@ -1,5 +1,6 @@
 package com.alatheer.shop_peak.Fragments;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +19,8 @@ import android.widget.ImageView;
 
 import com.alatheer.shop_peak.Adapter.Profile_GridAdapter;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
+import com.alatheer.shop_peak.Local.MyAppDatabase;
+import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
@@ -28,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class ProfileFragment extends android.app.Fragment {
@@ -35,6 +39,7 @@ public class ProfileFragment extends android.app.Fragment {
     RecyclerView menu_recycler;
     RecyclerView.LayoutManager verticalmanager;
     GridLayoutManager gridmanager;
+    ProfileDatabase profileDatabase;
     Uri uri;
     Bitmap bitmap;
     int flag;
@@ -53,6 +58,7 @@ public class ProfileFragment extends android.app.Fragment {
     }
 
     private void initview(final View view) {
+        profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
          img_grid=view.findViewById(R.id.menu_grid);
          img_ver=view.findViewById(R.id.menu_vertical);
          add_product=view.findViewById(R.id.add_product);
@@ -94,7 +100,7 @@ public class ProfileFragment extends android.app.Fragment {
             uri = data.getData();
 
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -107,7 +113,7 @@ public class ProfileFragment extends android.app.Fragment {
         menu_recycler.setHasFixedSize(true);
         verticalmanager=new LinearLayoutManager(getActivity());
         menu_recycler.setLayoutManager(verticalmanager);
-        Profile_verticalAdapter profile_verticalAdapter=new Profile_verticalAdapter(profileModelList(),getActivity());
+        Profile_verticalAdapter profile_verticalAdapter=new Profile_verticalAdapter(profileDatabase.dao().get_profile_data(),getActivity());
         menu_recycler.setAdapter(profile_verticalAdapter);
 
     }
@@ -118,11 +124,11 @@ public class ProfileFragment extends android.app.Fragment {
         menu_recycler.setHasFixedSize(true);
         gridmanager=new GridLayoutManager(getActivity(),3);
         menu_recycler.setLayoutManager(gridmanager);
-        Profile_GridAdapter profile_gridAdapter=new Profile_GridAdapter(profileModelList(),getActivity());
+        Profile_GridAdapter profile_gridAdapter=new Profile_GridAdapter(profileDatabase.dao().get_profile_data(),getActivity());
         menu_recycler.setAdapter(profile_gridAdapter);
     }
 
-    private List<ProfileModel> profileModelList (){
+   /* private List<ProfileModel> profileModelList (){
         List<ProfileModel> profilelist = new ArrayList<>();
         profilelist .add(new ProfileModel(R.drawable.item2));
         profilelist .add(new ProfileModel(R.drawable.item1));
@@ -133,9 +139,9 @@ public class ProfileFragment extends android.app.Fragment {
         //ProfileModel profileModel=new ProfileModel();
         //Uri image=profileModel.getUpload_image();
 
-        return profilelist ;
+        return profilelist ;*/
 
     }
 
 
-}
+

@@ -1,16 +1,19 @@
 package com.alatheer.shop_peak.Adapter;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -21,6 +24,8 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.DetailsActivity;
 import com.alatheer.shop_peak.Activities.MainActivity;
+import com.alatheer.shop_peak.Local.Favorite_Database;
+import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
 
@@ -38,6 +43,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     Context context;
     MainActivity mainActivity;
     List<HomeModel> full_list_ofhome;
+    Favorite_Database favorite_database;
     boolean accepted = false;
     CustomSwipeAdapter customSwipeAdapter;
     public HomeAdapter(List<HomeModel> listofhome, Context context) {
@@ -57,6 +63,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     @Override
     public void onBindViewHolder(@NonNull final Image2holder holder, final int position) {
         final int[] image = listofhome.get(position).getProduct_image();
+        favorite_database = Room.databaseBuilder(context,Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         final String title = listofhome.get(position).getProduct_title();
         final String des = listofhome.get(position).getProduct_describtion();
         final String price = listofhome.get(position).getProduct_price();
@@ -80,8 +87,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             public void onClick(View v) {
                 if (holder.fav.isChecked()) {
                     accepted = true;
+                    int id=Integer.parseInt(holder.order_num.getText().toString());
+                    BasketModel basketModel=new BasketModel(id,title,0+"",false,false,false,image[0]);
+                    favorite_database.dao_favorite().add_favorite(basketModel);
+                    Log.e("add_to_favorite","true");
                 } else {
                     accepted = false;
+                    favorite_database.dao_favorite().delete_all_favorite();
+                    Log.e("delete_from_favorite","true");
                 }
             }
         });
@@ -154,6 +167,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         TextView textView;
         RatingBar ratbar;
         LinearLayout home_linear;
+        EditText order_num;
         public Image2holder(View itemView) {
             super(itemView);
             viewPager=itemView.findViewById(R.id.viewpager);
@@ -163,6 +177,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             textView=itemView.findViewById(R.id.txt_name);
             ratbar=itemView.findViewById(R.id.ratbar);
             home_linear=itemView.findViewById(R.id.home_linear);
+            order_num=itemView.findViewById(R.id.order_num);
         }
     }
 
