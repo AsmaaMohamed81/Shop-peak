@@ -210,6 +210,7 @@ public class DetailsActivity extends AppCompatActivity {
                 return true;
             }});
     }
+
     public void getDataFromIntent(){
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -221,8 +222,6 @@ public class DetailsActivity extends AppCompatActivity {
         price = intent.getStringExtra("price");
         details_price.setText(price);
         details_title.setText(title);
-
-
         viewPager=findViewById(R.id.viewpager);
         customSwipeAdapter=new CustomSwipeAdapter(image,this);
         viewPager.setAdapter(customSwipeAdapter);
