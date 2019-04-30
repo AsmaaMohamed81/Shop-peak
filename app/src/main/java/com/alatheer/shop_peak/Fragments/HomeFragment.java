@@ -48,18 +48,19 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class HomeFragment extends android.app.Fragment {
-    RecyclerView recyclerView,recyclerView2,recyclerView3;
-    RecyclerView.LayoutManager layoutManager,layoutManager2;
+    RecyclerView recyclerView, recyclerView2, recyclerView3;
+    RecyclerView.LayoutManager layoutManager, layoutManager2;
     HomeAdapter homeAdapter;
     OfferAdapter offerAdapter;
     EditText search;
-    List<HomeModel>  homelist;
+    List<HomeModel> homelist;
     HomeDatabase homeDatabase;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
         initView(v);
         return v;
     }
@@ -67,10 +68,10 @@ public class HomeFragment extends android.app.Fragment {
     private void initView(View v) {
 
         search = v.findViewById(R.id.txt_search);
-        homeDatabase= Room.databaseBuilder(getApplicationContext(),HomeDatabase.class,"home_db").allowMainThreadQueries().build();
+        homeDatabase = Room.databaseBuilder(getApplicationContext(), HomeDatabase.class, "home_db").allowMainThreadQueries().build();
         //final String title=search.getText().toString();
         setHasOptionsMenu(true);
-       // ((AppCompatActivity)getActivity()).setSupportActionBar(search);
+        // ((AppCompatActivity)getActivity()).setSupportActionBar(search);
         //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         /////offer
         recyclerView = v.findViewById(R.id.recycler_offer);
@@ -81,47 +82,47 @@ public class HomeFragment extends android.app.Fragment {
         recyclerView.setAdapter(offerAdapter);
 
         ////home
-        recyclerView2=v.findViewById(R.id.recycler_home);
+        recyclerView2 = v.findViewById(R.id.recycler_home);
         recyclerView2.setHasFixedSize(true);
-        layoutManager2=new LinearLayoutManager(getActivity());
+        layoutManager2 = new LinearLayoutManager(getActivity());
         recyclerView2.setLayoutManager(layoutManager2);
-         homeAdapter = new HomeAdapter(homeDatabase.dao_home().get_profile_data(), getActivity());
+        homeAdapter = new HomeAdapter(homeDatabase.dao_home().get_profile_data(), getActivity());
         recyclerView2.setAdapter(homeAdapter);
-         search.addTextChangedListener(new TextWatcher() {
-                       @Override
-                       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                       }
+            }
 
-                       @Override
-                       public void onTextChanged(CharSequence s, int start, int before, int count) {
-                           homeAdapter.getFilter().filter(s.toString());
-                       }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                homeAdapter.getFilter().filter(s.toString());
+            }
 
-                       @Override
-                       public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
-                       }
-                   });
-         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-             @Override
-             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                 if(actionId==EditorInfo.IME_ACTION_SEARCH){
-                     Intent i=new Intent(getActivity(),Search_Activity.class);
-                     i.putExtra("title",search.getText().toString());
-                     i.putExtra("list",(Serializable) homelist);
-                     startActivity(i);
-                     return true;
-                 }
-                 return false;
-             }
-         });
+            }
+        });
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    Intent i = new Intent(getActivity(), Search_Activity.class);
+                    i.putExtra("title", search.getText().toString());
+                    i.putExtra("list", (Serializable) homelist);
+                    startActivity(i);
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 
-    public List<OfferModel> offerModelList (){
+    public List<OfferModel> offerModelList() {
 
-        List<OfferModel>  offerlist = new ArrayList<>();
+        List<OfferModel> offerlist = new ArrayList<>();
 
         offerlist.add(new OfferModel(R.drawable.item2));
         offerlist.add(new OfferModel(R.drawable.item1));

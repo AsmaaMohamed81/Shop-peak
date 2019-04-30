@@ -67,7 +67,7 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
         @Override
         protected Void doInBackground(SurfaceHolder... voids) {
             try {
-                String path = "android.resource://"+getPackageName()+"/"+R.raw.sp;
+                String path = "android.resource://"+getPackageName()+"/"+R.raw.shop_logo;
                 mp = MediaPlayer.create(Splash_Activity.this, Uri.parse(path));
                 mp.setDisplay(voids[0]);
                 mp.setLooping(false);
