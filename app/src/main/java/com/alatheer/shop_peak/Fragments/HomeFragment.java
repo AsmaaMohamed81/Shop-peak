@@ -33,7 +33,7 @@ import com.alatheer.shop_peak.Activities.Search_Activity;
 import com.alatheer.shop_peak.Adapter.HomeAdapter;
 
 import com.alatheer.shop_peak.Adapter.OfferAdapter;
-import com.alatheer.shop_peak.Local.HomeDatabase;
+
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.OfferModel;
@@ -54,7 +54,7 @@ public class HomeFragment extends android.app.Fragment {
     OfferAdapter offerAdapter;
     EditText search;
     List<HomeModel> homelist;
-    HomeDatabase homeDatabase;
+    //HomeDatabase homeDatabase;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,7 +68,7 @@ public class HomeFragment extends android.app.Fragment {
     private void initView(View v) {
 
         search = v.findViewById(R.id.txt_search);
-        homeDatabase = Room.databaseBuilder(getApplicationContext(), HomeDatabase.class, "home_db").allowMainThreadQueries().build();
+       // homeDatabase = Room.databaseBuilder(getApplicationContext(), HomeDatabase.class, "home_db").allowMainThreadQueries().build();
         //final String title=search.getText().toString();
         setHasOptionsMenu(true);
         // ((AppCompatActivity)getActivity()).setSupportActionBar(search);
@@ -86,7 +86,7 @@ public class HomeFragment extends android.app.Fragment {
         recyclerView2.setHasFixedSize(true);
         layoutManager2 = new LinearLayoutManager(getActivity());
         recyclerView2.setLayoutManager(layoutManager2);
-        homeAdapter = new HomeAdapter(homeDatabase.dao_home().get_profile_data(), getActivity());
+        homeAdapter = new HomeAdapter(homeModelList(), getActivity());
         recyclerView2.setAdapter(homeAdapter);
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -139,7 +139,7 @@ public class HomeFragment extends android.app.Fragment {
         return offerlist;
     }
 
-    /*public void homeModelList (){
+    public List<HomeModel> homeModelList (){
 
         homelist = new ArrayList<>();
         homelist.add(new HomeModel(new int[]{R.drawable.item2,R.drawable.item2,R.drawable.item2},"dress","a beautiful blue  address for girls ","$25.99","XL","female"));
@@ -148,8 +148,8 @@ public class HomeFragment extends android.app.Fragment {
         homelist.add(new HomeModel(new int[]{R.drawable.item1,R.drawable.item1},"jacket","a comfartable black jacket for boys","$30.00 ","XXL","male"));
         homelist.add(new HomeModel(new int[]{R.drawable.item2,R.drawable.item2},"dress","a beautiful blue  address for girls ","$25.99","XXL","female"));
         homelist.add(new HomeModel(new int[]{R.drawable.item3,R.drawable.item3},"shoes","a comfartable blue sportive shoes for playing football","$20.00","M","female"));
-
-    }*/
+        return homelist;
+    }
 
    /* @Override
     public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {

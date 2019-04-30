@@ -43,6 +43,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.shaishavgandhi.loginbuttons.FacebookButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,7 +86,7 @@ public class Login_Activity extends AppCompatActivity {
         log_in = findViewById(R.id.btn_login);
         root=findViewById(R.id.root);
         facebook_login=findViewById(R.id.btn_facebook_login);
-        facebook_login.setReadPermissions("email", "public_profile", "user_friends");
+        //facebook_login.setReadPermissions("email", "public_profile", "user_friends");
         gmail_login=findViewById(R.id.btn_gmail_login);
         gmail_login.setSize(SignInButton.SIZE_STANDARD);
         callbackManager=CallbackManager.Factory.create();
