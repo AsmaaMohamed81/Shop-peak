@@ -16,7 +16,7 @@ public class BasketModel  {
     @ColumnInfo(name = "num_of_cart")
     String num_of_cart;
     @ColumnInfo(name = "img")
-    String img;
+    int img;
     @ColumnInfo(name = "red")
     boolean red_flag;
     @ColumnInfo(name = "blue")
@@ -31,11 +31,11 @@ public class BasketModel  {
         this.id = id;
     }
 
-    public String getImg() {
+    public int getImg() {
         return img;
     }
 
-    public void setImg(String img) {
+    public void setImg(int img) {
         this.img = img;
     }
 
@@ -65,7 +65,7 @@ public class BasketModel  {
 
 
 
-    public BasketModel(int id, String title, String num_of_cart, boolean red_flag, boolean blue_flag, boolean black_flag, String img) {
+    public BasketModel(int id, String title, String num_of_cart, boolean red_flag, boolean blue_flag, boolean black_flag, int img) {
         this.title = title;
         this.num_of_cart = num_of_cart;
         this.red_flag = red_flag;

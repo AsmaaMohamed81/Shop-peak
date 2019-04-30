@@ -56,6 +56,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
     @Override
     public void onBindViewHolder(@NonNull final BasketHolder holder, final int position) {
         holder.basket_title.setText(basketModelList.get(position).getTitle());
+        holder.title_img.setImageResource(basketModelList.get(position).getImg());
         holder.counter.setText(basketModelList.get(position).getNum_of_cart());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,9 +65,9 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
                 basket_activity.senddata(position);
             }
         });
-        Uri uri= Uri.parse(basketModelList.get(position).getImg());
-        File file =new File(uri.getPath());
-        Picasso.with(context).load(file).into(holder.title_img);
+        //Uri uri= Uri.parse(basketModelList.get(position).getImg());
+       // File file =new File(uri.getPath());
+        //Picasso.with(context).load(file).into(holder.title_img);
         boolean red=basketModelList.get(position).isRed_flag();
         boolean blue=basketModelList.get(position).isBlue_flag();
         boolean black=basketModelList.get(position).isBlack_flag();

@@ -49,11 +49,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
     @Override
     public void onBindViewHolder(@NonNull SearchHolder holder, int position) {
-        Uri uri = Uri.parse(listofhome.get(position).getProduct_image());
+        //Uri uri = Uri.parse(listofhome.get(position).getProduct_image());
 
-        File file =new File(uri.getPath());
-        File[]path=new File[]{file,file,file};
-        customSwipeAdapter = new CustomSwipeAdapter(path, context);
+       // File file =new File(uri.getPath());
+        //File[]path=new File[]{file,file,file};
+        int[] image=listofhome.get(position).getImage_resources();
+        customSwipeAdapter = new CustomSwipeAdapter(image, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
         final String title = listofhome.get(position).getProduct_title();
         final String des = listofhome.get(position).getProduct_describtion();

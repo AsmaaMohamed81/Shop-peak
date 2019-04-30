@@ -64,13 +64,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     }
     @Override
     public void onBindViewHolder(@NonNull final Image2holder holder, final int position) {
-        Uri uri = Uri.parse(listofhome.get(position).getProduct_image());
-        final File path = new File(uri.getPath());
+       // Uri uri = Uri.parse(listofhome.get(position).getProduct_image());
+        //final File path = new File(uri.getPath());
+
         favorite_database = Room.databaseBuilder(context,Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
+        final int[] image_resources = listofhome.get(position).getImage_resources();
+        final int image = image_resources[0];
         final String title = listofhome.get(position).getProduct_title();
         final String des = listofhome.get(position).getProduct_describtion();
         final String price = listofhome.get(position).getProduct_price();
-        customSwipeAdapter = new CustomSwipeAdapter(new File[]{path,path,path}, context);
+        customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
         holder.home_linear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +85,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            mainActivity.sendHomeItem(new File[]{path,path,path},title,des,price);
+            mainActivity.sendHomeItem(image_resources,title,des,price);
             }
         });
         holder.fav.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +94,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                 if (holder.fav.isChecked()) {
                     accepted = true;
                     int id=Integer.parseInt(holder.order_num.getText().toString());
-                    BasketModel basketModel=new BasketModel(id,title,0+"",false,false,false,path.toString());
+                    BasketModel basketModel=new BasketModel(id,title,0+"",false,false,false,image);
                     favorite_database.dao_favorite().add_favorite(basketModel);
                     Log.e("add_to_favorite","true");
                 } else {

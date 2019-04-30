@@ -10,10 +10,11 @@ import java.util.List;
 /**
  * Created by M.Hamada on 28/04/2019.
  */
+/*
 @android.arch.persistence.room.Dao
 public interface Dao_Home {
     @Insert
     void addproductItem(HomeModel homeModel);
     @Query("select * from home_products")
     List<HomeModel> get_profile_data();
-}
+}*/

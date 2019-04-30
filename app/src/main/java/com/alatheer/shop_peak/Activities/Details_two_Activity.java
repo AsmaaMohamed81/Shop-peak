@@ -42,7 +42,7 @@ public class Details_two_Activity extends AppCompatActivity {
      String image_intent_String;
      String count_intent ;
      String title_intent ;
-     String image_intent ;
+     int image_intent ;
      boolean red_intent ;
      boolean blue_intent ;
      boolean black_intent;
@@ -133,7 +133,7 @@ public class Details_two_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                basketModel= new BasketModel(id_intent, title_intent,counter.getText().toString(), red, blue, black,image_intent_String);
+                basketModel= new BasketModel(id_intent, title_intent,counter.getText().toString(), red, blue, black,image_intent);
                 myAppDatabase.dao().editproduct(basketModel);
             }
         });
@@ -151,15 +151,15 @@ public class Details_two_Activity extends AppCompatActivity {
        id_intent = intent.getIntExtra("id", 0);
        count_intent = intent.getStringExtra("counter");
        title_intent = intent.getStringExtra("title");
-       image_intent =  intent.getStringExtra("img");
-       image_intent_String=image_intent.toString();
-       Uri uri=Uri.parse(image_intent_String);
-       File file =new File(uri.getPath());
-       File[]path=new File[]{file,file,file};
+       image_intent =  intent.getIntExtra("img",0);
+       //image_intent_String=image_intent.toString();
+       //Uri uri=Uri.parse(image_intent_String);
+       //File file =new File(uri.getPath());
+       //File[]path=new File[]{file,file,file};
        red_intent = intent.getBooleanExtra("red", false);
        blue_intent = intent.getBooleanExtra("blue", false);
        black_intent = intent.getBooleanExtra("black", false);
-       customSwipeAdapter = new CustomSwipeAdapter(path, this);
+       customSwipeAdapter = new CustomSwipeAdapter(new int[]{image_intent, image_intent, image_intent}, this);
        viewPager.setAdapter(customSwipeAdapter);
        counter.setText(count_intent);
        details_title.setText(title_intent);

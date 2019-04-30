@@ -10,56 +10,31 @@ import java.util.List;
 /**
  * Created by M.Hamada on 23/03/2019.
  */
-@Entity(tableName = "Home_Products")
-public class HomeModel {
-    @PrimaryKey(autoGenerate = true)
-    int id;
-    @ColumnInfo(name = "product_image_url")
-    String product_image_url;
-    @ColumnInfo(name = "product_title")
+
+public class HomeModel implements Serializable{
+    int[]    image_resources;
     String product_title;
-    @ColumnInfo(name = "product_describtion")
     String product_describtion;
-    @ColumnInfo(name = "size")
     String size;
-    @ColumnInfo(name = "gender")
     String gender;
-    @ColumnInfo(name = "Product_price")
-    String Product_price;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getProduct_image_url() {
-        return product_image_url;
-    }
-
-    public void setProduct_image_url(String product_image_url) {
-        this.product_image_url = product_image_url;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public HomeModel(int id,String product_image_url, String product_title, String product_describtion, String Product_price, String size
-    ,String gender) {
-        this.product_image_url = product_image_url;
+    public HomeModel(int[] image_resources, String product_title, String product_describtion, String size, String gender, String product_price) {
+        this.image_resources = image_resources;
         this.product_title = product_title;
         this.product_describtion = product_describtion;
-        this.Product_price = Product_price;
-        this.size=size;
-        this.gender=gender;
-        this.id=id;
+        this.size = size;
+        this.gender = gender;
+        Product_price = product_price;
+    }
+
+    String Product_price;
+
+    public int[] getImage_resources() {
+        return image_resources;
+    }
+
+    public void setImage_resources(int[] image_resources) {
+        this.image_resources = image_resources;
     }
 
     public String getProduct_title() {
@@ -78,6 +53,14 @@ public class HomeModel {
         this.product_describtion = product_describtion;
     }
 
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
     public String getGender() {
         return gender;
     }
@@ -90,19 +73,7 @@ public class HomeModel {
         return Product_price;
     }
 
-    public void setProduct_price(String Product_price) {
-        this.Product_price = Product_price;
+    public void setProduct_price(String product_price) {
+        Product_price = product_price;
     }
-    public HomeModel() {
-    }
-
-    public String getProduct_image() {
-        return product_image_url;
-    }
-
-    public void setProduct_image(String product_image) {
-        this.product_image_url = product_image;
-    }
-
-
 }

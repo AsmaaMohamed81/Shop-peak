@@ -52,8 +52,8 @@ public class DetailsActivity extends AppCompatActivity {
     int id;
     EditText order_num;
     BasketModel basketModel;
-    File[] image;
-    File first_item;
+    int[] image;
+    int first_item;
     String price;
     String des;
     String title;
@@ -155,7 +155,7 @@ public class DetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     id=Integer.parseInt(order_num.getText().toString());
-                    basketModel=new BasketModel(id,title,counter.getText().toString(),red,blue,black,first_item_String);
+                    basketModel=new BasketModel(id,title,counter.getText().toString(),red,blue,black,first_item);
                     myAppDatabase.dao().addproduct(basketModel);
                 }catch (Exception e){
                     Toast.makeText(DetailsActivity.this, "order number took before", Toast.LENGTH_SHORT).show();
@@ -173,7 +173,7 @@ public class DetailsActivity extends AppCompatActivity {
         fab_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                basketModel=new BasketModel(0,title,counter.getText().toString(),red,blue,black,first_item_String);
+                basketModel=new BasketModel(0,title,counter.getText().toString(),red,blue,black,first_item);
                 int id2=basketModel.getId();
                 if (flag) {
                     fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_sold));
@@ -182,7 +182,7 @@ public class DetailsActivity extends AppCompatActivity {
                     flag = false;
                 } else if (!flag) {
                     fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite));
-                    basketModel=new BasketModel(id2,title,counter.getText().toString(),red,blue,black,first_item_String);
+                    basketModel=new BasketModel(id2,title,counter.getText().toString(),red,blue,black,first_item);
                     favorite_database.dao_favorite().delete_all_favorite();
                     Log.e("delete_from_favorite","true");
                     flag = true;
@@ -213,9 +213,9 @@ public class DetailsActivity extends AppCompatActivity {
     public void getDataFromIntent(){
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        image = (File[]) extras.getSerializable("homeimage");
+        image = intent.getIntArrayExtra("homeimage");
         first_item=image[0];
-         first_item_String = first_item.toString();
+         //first_item_String = first_item.toString();
         title = intent.getStringExtra("title");
         des = intent.getStringExtra("des");
         price = intent.getStringExtra("price");
