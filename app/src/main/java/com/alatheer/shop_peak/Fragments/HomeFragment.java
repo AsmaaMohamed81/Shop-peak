@@ -142,12 +142,12 @@ public class HomeFragment extends android.app.Fragment {
     public List<HomeModel> homeModelList (){
 
         homelist = new ArrayList<>();
-        homelist.add(new HomeModel(new int[]{R.drawable.item2,R.drawable.item2,R.drawable.item2},"dress","a beautiful blue  address for girls ","$25.99","XL","female"));
-        homelist.add(new HomeModel(new int[]{R.drawable.item1,R.drawable.item1},"jacket","a comfartable black jacket for boys","$30.00 ","L","male"));
-        homelist.add(new HomeModel(new int[]{R.drawable.item3,R.drawable.item3},"shoes","a comfartable blue sportive shoes for playing football","$20.00","L","male"));
-        homelist.add(new HomeModel(new int[]{R.drawable.item1,R.drawable.item1},"jacket","a comfartable black jacket for boys","$30.00 ","XXL","male"));
-        homelist.add(new HomeModel(new int[]{R.drawable.item2,R.drawable.item2},"dress","a beautiful blue  address for girls ","$25.99","XXL","female"));
-        homelist.add(new HomeModel(new int[]{R.drawable.item3,R.drawable.item3},"shoes","a comfartable blue sportive shoes for playing football","$20.00","M","female"));
+        homelist.add(new HomeModel(new int[]{R.drawable.item2,R.drawable.item2,R.drawable.item2},"dress","a beautiful blue  address for girls ","$25.99","XL","female","POLO",R.drawable.vender_image1));
+        homelist.add(new HomeModel(new int[]{R.drawable.item1,R.drawable.item1},"jacket","a comfartable black jacket for boys","$30.00 ","L","male","TownTeam",R.drawable.vender_image2));
+        homelist.add(new HomeModel(new int[]{R.drawable.item3,R.drawable.item3},"shoes","a comfartable blue sportive shoes for playing football","$20.00","L","male","Nike",R.drawable.vender_image3));
+        homelist.add(new HomeModel(new int[]{R.drawable.item1,R.drawable.item1},"jacket","a comfartable black jacket for boys","$30.00 ","XXL","male","Puma",R.drawable.vender_image4));
+        homelist.add(new HomeModel(new int[]{R.drawable.item2,R.drawable.item2},"dress","a beautiful blue  address for girls ","$25.99","XXL","female","Addidas",R.drawable.vender_image5));
+        homelist.add(new HomeModel(new int[]{R.drawable.item3,R.drawable.item3},"shoes","a comfartable blue sportive shoes for playing football","$20.00","M","female","POLO",R.drawable.vender_image1));
         return homelist;
     }
 

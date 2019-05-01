@@ -73,12 +73,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         final String title = listofhome.get(position).getProduct_title();
         final String des = listofhome.get(position).getProduct_describtion();
         final String price = listofhome.get(position).getProduct_price();
+        final String vender_name=listofhome.get(position).getVender_name();
+        final int vender_image=listofhome.get(position).getVender_image();
+        holder.img_profile.setImageResource(vender_image);
+        holder.text_profile.setText(vender_name);
         customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
         holder.home_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity.setSelectProfile();
+                mainActivity.setSelectProfile(vender_name,vender_image);
 
             }
         });
@@ -169,8 +173,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         ImageView share;
         CheckBox fav;
         ViewPager viewPager;
-        CircleImageView img;
-        TextView textView;
+        CircleImageView img_profile;
+        TextView text_profile;
         RatingBar ratbar;
         LinearLayout home_linear;
         EditText order_num;
@@ -179,8 +183,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             viewPager=itemView.findViewById(R.id.viewpager);
             fav=itemView.findViewById(R.id.fav_check);
             share=itemView.findViewById(R.id.img_share);
-            img=itemView.findViewById(R.id.img_c);
-            textView=itemView.findViewById(R.id.txt_name);
+            img_profile=itemView.findViewById(R.id.img_c);
+            text_profile=itemView.findViewById(R.id.txt_name);
             ratbar=itemView.findViewById(R.id.ratbar);
             home_linear=itemView.findViewById(R.id.home_linear);
             order_num=itemView.findViewById(R.id.order_num);

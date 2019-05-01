@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alatheer.shop_peak.Adapter.Profile_GridAdapter;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
@@ -35,7 +36,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class ProfileFragment extends android.app.Fragment {
-    ImageView img_grid,img_ver,add_product;
+    ImageView img_grid,img_ver,add_product,profile_image;
+    TextView profile_name;
     RecyclerView menu_recycler;
     RecyclerView.LayoutManager verticalmanager;
     GridLayoutManager gridmanager;
@@ -58,7 +60,9 @@ public class ProfileFragment extends android.app.Fragment {
     }
 
     private void initview(final View view) {
-        profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
+         profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
+         profile_name=view.findViewById(R.id.profile_name);
+         profile_image=view.findViewById(R.id.profile_img);
          img_grid=view.findViewById(R.id.menu_grid);
          img_ver=view.findViewById(R.id.menu_vertical);
          add_product=view.findViewById(R.id.add_product);
@@ -84,6 +88,11 @@ public class ProfileFragment extends android.app.Fragment {
                  chooseimage();
              }
          });
+         Bundle bundle=getArguments();
+         String vender_name=bundle.getString("name");
+         int image =bundle.getInt("image");
+         profile_image.setImageResource(image);
+         profile_name.setText(vender_name);
 
     }
 

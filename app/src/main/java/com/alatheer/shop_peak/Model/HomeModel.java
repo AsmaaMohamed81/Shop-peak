@@ -16,19 +16,22 @@ public class HomeModel implements Serializable{
     String product_title;
     String product_describtion;
     String size;
+    String Product_price;
     String gender;
+    String vender_name;
+    int vender_image;
 
-    public HomeModel(int[] image_resources, String product_title, String product_describtion, String size, String gender, String product_price) {
+    public HomeModel(int[] image_resources, String product_title, String product_describtion, String size, String gender, String product_price, String vender_name, int vender_image) {
         this.image_resources = image_resources;
         this.product_title = product_title;
         this.product_describtion = product_describtion;
         this.size = size;
         this.gender = gender;
-        Product_price = product_price;
+        this.Product_price = product_price;
+        this.vender_name=vender_name;
+
+        this.vender_image=vender_image;
     }
-
-    String Product_price;
-
     public int[] getImage_resources() {
         return image_resources;
     }
@@ -75,5 +78,20 @@ public class HomeModel implements Serializable{
 
     public void setProduct_price(String product_price) {
         Product_price = product_price;
+    }
+    public String getVender_name() {
+        return vender_name;
+    }
+
+    public void setVender_name(String vender_name) {
+        this.vender_name = vender_name;
+    }
+
+    public int getVender_image() {
+        return vender_image;
+    }
+
+    public void setVender_image(int vender_image) {
+        this.vender_image = vender_image;
     }
 }

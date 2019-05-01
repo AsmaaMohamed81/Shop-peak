@@ -111,12 +111,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
 
     }
-    public void setSelectProfile(){
+    public void setSelectProfile(String vender_name,int vender_image){
         if (profileFragment==null)
         {
             profileFragment = profileFragment.getInstance();
         }
+        Bundle bundle =new Bundle();
+        bundle.putString("name",vender_name);
+        bundle.putInt("image",vender_image);
+        profileFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
+
     }
     public void initRecyclerview(){
         navigationrecycler=findViewById(R.id.navigation_recycler_list);
