@@ -226,7 +226,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<NavigationModel> navigationModelList (){
 
         List<NavigationModel>  navigationlist = new ArrayList<>();
-
         navigationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
         navigationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
         navigationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
