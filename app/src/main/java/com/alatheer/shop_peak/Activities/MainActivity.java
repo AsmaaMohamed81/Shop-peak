@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bundle.putInt("image",vender_image);
         profileFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
-
     }
     public void initRecyclerview(){
         navigationrecycler=findViewById(R.id.navigation_recycler_list);
@@ -130,9 +129,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationrecycler.setLayoutManager(navigation_manager);
         navigationAdapter=new NavigationAdapter(navigationModelList(),this);
         navigationrecycler.setAdapter(navigationAdapter);
-
     }
-
     private BottomNavigationView.OnNavigationItemSelectedListener nav_listner= new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
