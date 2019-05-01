@@ -110,7 +110,7 @@ public class Filter_Activity extends AppCompatActivity{
     public void sendlist(List<FilterModelDetails> filterModelDetailsList) {
         filterAdapterDetails=new FilterAdapterDetails(filterModelDetailsList,this);
         recyclerView_filterdetails.setHasFixedSize(true);
-        recyclerView_filterdetails.setLayoutManager(layoutManager_filter);
+        recyclerView_filterdetails.setLayoutManager(layoutManager_filterdetails);
         recyclerView_filterdetails.setAdapter(filterAdapterDetails);
     }
 }

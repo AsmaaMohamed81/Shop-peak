@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toolbar;
 
 import com.alatheer.shop_peak.Adapter.HomeAdapter;
@@ -31,6 +32,7 @@ public class Search_Activity extends AppCompatActivity  {
     SearchAdapter searchAdapter;
     HomeFragment homeFragment;
     ImageView filter_image;
+    LinearLayout linear_filter;
     Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +48,13 @@ public class Search_Activity extends AppCompatActivity  {
         homeFragment=new HomeFragment();
         final String title=i.getStringExtra("title");
         filter_image=findViewById(R.id.filter_img);
+        linear_filter=findViewById(R.id.linear_filter);
         recyclerView_search=findViewById(R.id.recycler_home);
         initRecyclerview();
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        filter_image.setOnClickListener(new View.OnClickListener() {
+        linear_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(Search_Activity.this,Filter_Activity.class);
