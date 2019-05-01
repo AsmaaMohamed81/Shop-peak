@@ -43,7 +43,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     @Override
     public SearchHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.home_item, parent, false);
-       SearchHolder searchHolder =new SearchHolder(view);
+        SearchHolder searchHolder =new SearchHolder(view);
         return searchHolder;
     }
 
@@ -59,7 +59,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         final String title = listofhome.get(position).getProduct_title();
         final String des = listofhome.get(position).getProduct_describtion();
         final String price = listofhome.get(position).getProduct_price();
+        final String vender_name=listofhome.get(position).getVender_name();
+        final int vender_image=listofhome.get(position).getVender_image();
         holder.viewPager.setAdapter(customSwipeAdapter);
+        holder.img.setImageResource(vender_image);
+        holder.textView.setText(vender_name);
     }
 
     @Override
