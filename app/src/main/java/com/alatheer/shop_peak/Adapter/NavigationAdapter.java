@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Contact_Us_Activity;
+import com.alatheer.shop_peak.Activities.Favorite_Activity;
 import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Activities.Settings_Activity;
 import com.alatheer.shop_peak.Local.MySharedPreference;
@@ -62,6 +63,10 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
              }
              if ((navigationModels.get(position).getItem_name().equals(context.getString(R.string.setting)))){
                  Intent intent= new Intent(context, Settings_Activity.class);
+                 context.startActivity(intent);
+             }
+             if((navigationModels.get(position).getItem_name().equals(context.getString(R.string.favorite)))){
+                 Intent intent = new Intent(context, Favorite_Activity.class);
                  context.startActivity(intent);
              }
 

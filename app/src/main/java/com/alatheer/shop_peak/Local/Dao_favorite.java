@@ -11,8 +11,8 @@ import java.util.List;
  */
 @android.arch.persistence.room.Dao
 public interface Dao_favorite {
-    @Insert
-    void add_favorite(BasketModel basketModel);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long add_favorite(BasketModel basketModel);
     @Query("delete from products")
     void delete_all_favorite();
     @Delete

@@ -48,6 +48,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     Favorite_Database favorite_database;
     boolean accepted = false;
     CustomSwipeAdapter customSwipeAdapter;
+    long id;
     public HomeAdapter(List<HomeModel> listofhome, Context context) {
         this.listofhome = listofhome;
         this.context = context;
@@ -73,6 +74,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         final String title = listofhome.get(position).getProduct_title();
         final String des = listofhome.get(position).getProduct_describtion();
         final String price = listofhome.get(position).getProduct_price();
+        final String gender = listofhome.get(position).getGender();
         final String vender_name=listofhome.get(position).getVender_name();
         final int vender_image=listofhome.get(position).getVender_image();
         holder.img_profile.setImageResource(vender_image);
@@ -89,7 +91,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            mainActivity.sendHomeItem(image_resources,title,des,price);
+            mainActivity.sendHomeItem(image_resources,title,des,price,gender);
             }
         });
         holder.fav.setOnClickListener(new View.OnClickListener() {
@@ -97,13 +99,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             public void onClick(View v) {
                 if (holder.fav.isChecked()) {
                     accepted = true;
-                    int id=Integer.parseInt(holder.order_num.getText().toString());
-                    BasketModel basketModel=new BasketModel(id,title,0+"",false,false,false,image);
-                    favorite_database.dao_favorite().add_favorite(basketModel);
+                    int id2=Integer.parseInt(holder.order_num.getText().toString());
+                    BasketModel basketModel=new BasketModel(id2,title,0+"",gender,price,des,false,false,false,image);
+                     id =favorite_database.dao_favorite().add_favorite(basketModel);
                     Log.e("add_to_favorite","true");
                 } else {
                     accepted = false;
-                    favorite_database.dao_favorite().delete_all_favorite();
+                    BasketModel basketModel2=new BasketModel();
+                    basketModel2.setId((int) id);
+                    favorite_database.dao_favorite().delete_favorite(basketModel2);
                     Log.e("delete_from_favorite","true");
                 }
             }

@@ -18,7 +18,8 @@
         <activity
             android:name=".Activities.MainActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".Activities.Splash_Activity"
+        <activity
+            android:name=".Activities.Splash_Activity"
             tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,12 +61,25 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.Search_Activity" />
+        <activity
+            android:name=".Activities.Search_Activity"
+            android:parentActivityName=".Activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.alatheer.shop_peak.Activities.Search_Activity" />
+        </activity>
         <activity android:name=".Activities.Filter_Activity" />
         <activity android:name=".Activities.Contact_Us_Activity" />
         <activity android:name=".Activities.Settings_Activity" />
-        <activity android:name=".Activities.Basket_Activity" />
-        <activity android:name=".Activities.Details_two_Activity"></activity>
+        <activity
+            android:name=".Activities.Basket_Activity"
+            android:parentActivityName=".Activities.DetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.alatheer.shop_peak.Activities.Basket_Activity" />
+        </activity>
+        <activity android:name=".Activities.Details_two_Activity" />
+        <activity android:name=".Activities.Favorite_Activity"></activity>
     </application>
 
 </manifest>

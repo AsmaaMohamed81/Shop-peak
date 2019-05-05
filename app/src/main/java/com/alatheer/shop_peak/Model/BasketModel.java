@@ -13,6 +13,12 @@ public class BasketModel  {
     private int id;
     @ColumnInfo(name = "title")
     String title;
+    @ColumnInfo(name = "gender")
+    String gender;
+    @ColumnInfo(name = "price")
+    String price;
+    @ColumnInfo(name = "des")
+    String description;
     @ColumnInfo(name = "num_of_cart")
     String num_of_cart;
     @ColumnInfo(name = "img")
@@ -21,7 +27,13 @@ public class BasketModel  {
     boolean red_flag;
     @ColumnInfo(name = "blue")
     boolean blue_flag;
+
+    public BasketModel() {
+
+    }
+
     @ColumnInfo(name = "black")
+
     boolean black_flag;
     public int getId() {
         return id;
@@ -64,8 +76,31 @@ public class BasketModel  {
     }
 
 
+    public String getGender() {
+        return gender;
+    }
 
-    public BasketModel(int id, String title, String num_of_cart, boolean red_flag, boolean blue_flag, boolean black_flag, int img) {
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BasketModel(int id, String title, String num_of_cart, String gender, String price, String description, boolean red_flag, boolean blue_flag, boolean black_flag, int img) {
         this.title = title;
         this.num_of_cart = num_of_cart;
         this.red_flag = red_flag;
@@ -73,6 +108,10 @@ public class BasketModel  {
         this.black_flag = black_flag;
         this.img=img;
         this.id=id;
+        this.gender=gender;
+        this.price=price;
+        this.description=description;
+
     }
 
     public String getTitle() {

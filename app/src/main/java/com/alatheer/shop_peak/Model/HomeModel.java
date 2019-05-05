@@ -12,14 +12,14 @@ import java.util.List;
  */
 
 public class HomeModel implements Serializable{
-    int[]    image_resources;
+    int[]  image_resources;
     String product_title;
     String product_describtion;
     String size;
     String Product_price;
     String gender;
     String vender_name;
-    int vender_image;
+    int    vender_image;
 
     public HomeModel(int[] image_resources, String product_title, String product_describtion, String size, String gender, String product_price, String vender_name, int vender_image) {
         this.image_resources = image_resources;
@@ -35,7 +35,6 @@ public class HomeModel implements Serializable{
     public int[] getImage_resources() {
         return image_resources;
     }
-
     public void setImage_resources(int[] image_resources) {
         this.image_resources = image_resources;
     }

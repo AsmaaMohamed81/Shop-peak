@@ -52,7 +52,7 @@ public class DetailsActivity extends AppCompatActivity {
     boolean blue=false;
     boolean black=false;
     int count;
-    int id;
+    long id;
     EditText order_num;
     BasketModel basketModel;
     int[] image;
@@ -60,6 +60,7 @@ public class DetailsActivity extends AppCompatActivity {
     String price;
     String des;
     String title;
+    String gender;
     String first_item_String;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,7 +165,7 @@ public class DetailsActivity extends AppCompatActivity {
                 try {
                     makeFlyAnimation(viewPager);
                     id=Integer.parseInt(order_num.getText().toString());
-                    basketModel=new BasketModel(id,title,counter.getText().toString(),red,blue,black,first_item);
+                    basketModel=new BasketModel((int) id,title,counter.getText().toString(),gender,price,des,red,blue,black,first_item);
                     myAppDatabase.dao().addproduct(basketModel);
 
                     if (myAppDatabase.dao().getdata().size() > 0) {
@@ -190,19 +191,22 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
         fab_favorite.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                basketModel=new BasketModel(0,title,counter.getText().toString(),red,blue,black,first_item);
-                int id2=basketModel.getId();
+                int id2=Integer.parseInt(order_num.getText().toString());
+                basketModel=new BasketModel(id2,title,counter.getText().toString(),gender,price,des,red,blue,black,first_item);
                 if (flag) {
-                    fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_sold));
-                    favorite_database.dao_favorite().add_favorite(basketModel);
+                     id =favorite_database.dao_favorite().add_favorite(basketModel);
+                    Toast.makeText(DetailsActivity.this, "id"+id, Toast.LENGTH_SHORT).show();
                     Log.e("add_to_favorite","true");
+                    fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_sold));
                     flag = false;
                 } else if (!flag) {
                     fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite));
-                    basketModel=new BasketModel(id2,title,counter.getText().toString(),red,blue,black,first_item);
-                    favorite_database.dao_favorite().delete_all_favorite();
+                    BasketModel basketModel2=new BasketModel();
+                    basketModel2.setId((int) id);
+                    favorite_database.dao_favorite().delete_favorite(basketModel2);
                     Log.e("delete_from_favorite","true");
                     flag = true;
                 }
@@ -246,6 +250,7 @@ public class DetailsActivity extends AppCompatActivity {
         title = intent.getStringExtra("title");
         des = intent.getStringExtra("des");
         price = intent.getStringExtra("price");
+        gender = intent.getStringExtra("gender");
         details_price.setText(price);
         details_title.setText(title);
         viewPager=findViewById(R.id.viewpager);

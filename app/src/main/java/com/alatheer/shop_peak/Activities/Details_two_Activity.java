@@ -38,14 +38,17 @@ public class Details_two_Activity extends AppCompatActivity {
     boolean blue ;
     boolean black ;
     int count;
-     int id_intent;
-     String image_intent_String;
-     String count_intent ;
-     String title_intent ;
-     int image_intent ;
-     boolean red_intent ;
-     boolean blue_intent ;
-     boolean black_intent;
+    int id_intent;
+    String image_intent_String;
+    String count_intent ;
+    String title_intent ;
+    String gender_intent;
+    String price_intent ;
+    String des_intent;
+    int image_intent ;
+    boolean red_intent ;
+    boolean blue_intent ;
+    boolean black_intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,12 @@ public class Details_two_Activity extends AppCompatActivity {
         c_black = findViewById(R.id.checkbox_black);
         myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"productdb").allowMainThreadQueries().build();
         getDatafromIntent();
+        back_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         plus_circle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +142,7 @@ public class Details_two_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                basketModel= new BasketModel(id_intent, title_intent,counter.getText().toString(), red, blue, black,image_intent);
+                basketModel= new BasketModel(id_intent, title_intent,counter.getText().toString(),gender_intent,price_intent,des_intent, red, blue, black,image_intent);
                 myAppDatabase.dao().editproduct(basketModel);
             }
         });
@@ -152,6 +161,9 @@ public class Details_two_Activity extends AppCompatActivity {
        count_intent = intent.getStringExtra("counter");
        title_intent = intent.getStringExtra("title");
        image_intent =  intent.getIntExtra("img",0);
+       gender_intent= intent.getStringExtra("gender");
+       price_intent =intent.getStringExtra("price");
+       des_intent =intent.getStringExtra("des");
        //image_intent_String=image_intent.toString();
        //Uri uri=Uri.parse(image_intent_String);
        //File file =new File(uri.getPath());

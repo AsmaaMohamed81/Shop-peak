@@ -1,10 +1,6 @@
 package com.alatheer.shop_peak.Adapter;
 
-import android.app.Activity;
-import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -17,57 +13,44 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Basket_Activity;
-import com.alatheer.shop_peak.Activities.DetailsActivity;
-import com.alatheer.shop_peak.Activities.Details_two_Activity;
 import com.alatheer.shop_peak.Activities.Favorite_Activity;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.R;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
- * Created by M.Hamada on 22/04/2019.
+ * Created by M.Hamada on 05/05/2019.
  */
 
-public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteHolder> {
     Context context;
-    List<BasketModel>basketModelList;
-    Basket_Activity basket_activity;
+    List<BasketModel> basketModelList;
+    Favorite_Activity favorite_activity;
     MyAppDatabase myAppDatabase;
     CustomSwipeAdapter customSwipeAdapter;
-    int count;
-    int id;
-    public BasketAdapter(Context context, List<BasketModel> basketModelList) {
+
+    public FavoriteAdapter(Context context, List<BasketModel> basketModelList) {
         this.context = context;
         this.basketModelList = basketModelList;
-        this.basket_activity= (Basket_Activity) context;
+        this.favorite_activity = (Favorite_Activity) context;
     }
 
     @NonNull
     @Override
-    public BasketHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FavoriteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.basket_raw,parent,false);
-        return new BasketHolder(view);
+        return new FavoriteHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final BasketHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull FavoriteHolder holder, int position) {
         holder.basket_title.setText(basketModelList.get(position).getTitle());
         holder.title_img.setImageResource(basketModelList.get(position).getImg());
         holder.counter.setText(basketModelList.get(position).getNum_of_cart());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "id"+basketModelList.get(position).getId()+"", Toast.LENGTH_SHORT).show();
-                basket_activity.senddata(position);
-            }
-        });
         //Uri uri= Uri.parse(basketModelList.get(position).getImg());
-       // File file =new File(uri.getPath());
+        // File file =new File(uri.getPath());
         //Picasso.with(context).load(file).into(holder.title_img);
         boolean red=basketModelList.get(position).isRed_flag();
         boolean blue=basketModelList.get(position).isBlue_flag();
@@ -87,11 +70,6 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
         }else {
             holder.c_black.setButtonDrawable(R.drawable.ic_check_gray);
         }
-
-
-    }
-    public void startActivity(){
-
     }
 
     @Override
@@ -99,11 +77,11 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
         return basketModelList.size();
     }
 
-    class  BasketHolder extends RecyclerView.ViewHolder{
-       ImageView plus_circle,minus_circle,title_img;
-       TextView basket_title,counter;
-       CheckBox c_red,c_blue,c_black;
-        public BasketHolder(View itemView) {
+    class FavoriteHolder extends RecyclerView.ViewHolder{
+        ImageView plus_circle,minus_circle,title_img;
+        TextView basket_title,counter;
+        CheckBox c_red,c_blue,c_black;
+        public FavoriteHolder(View itemView) {
             super(itemView);
             plus_circle=itemView.findViewById(R.id.plus_circle);
             minus_circle=itemView.findViewById(R.id.minus_circle);
@@ -113,7 +91,6 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
             c_blue=itemView.findViewById(R.id.checkbox_blue);
             c_black=itemView.findViewById(R.id.checkbox_black);
             title_img=itemView.findViewById(R.id.img);
-
         }
     }
 }
