@@ -37,13 +37,36 @@
                           android:layout_height="wrap_content"
                           android:layout_centerVertical="true"
                           android:layout_marginRight="15dp">
-                           <ImageView
+
+                           <FrameLayout
+                               android:id="@+id/frame_cart"
+
                                android:layout_alignParentRight="true"
-                               android:id="@+id/shopping_cart"
                                android:layout_width="wrap_content"
-                               android:layout_height="wrap_content"
                                android:layout_gravity="center"
-                               android:src="@drawable/ic_shopping_cart" />
+
+                               android:layout_height="wrap_content">
+                               <ImageView
+                                   android:id="@+id/shopping_cart"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:src="@drawable/ic_shopping_cart" />
+
+                               <TextView
+                                   android:id="@+id/tv_not_budget"
+                                   android:layout_width="15dp"
+                                   android:layout_height="15dp"
+                                   android:layout_gravity="right"
+                                   android:layout_margin="7dp"
+                                   android:background="@drawable/not_budget_bg"
+                                   android:gravity="center"
+                                   android:singleLine="true"
+                                   android:textColor="@color/white"
+                                   android:textSize="10dp"
+                                   android:textStyle="bold"
+                                   android:visibility="visible" />
+
+                           </FrameLayout>
                            <TextView
                                android:id="@+id/cart_num"
                                android:layout_width="wrap_content"
@@ -73,7 +96,7 @@
             android:layout_marginTop="15dp"
             android:layout_width="300dp"
             android:layout_centerHorizontal="true"
-            android:layout_height="400dp"
+            android:layout_height="350dp"
             android:backgroundTint="@color/gray2">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,7 +107,7 @@
                     android:src="@drawable/item2"
                     android:scaleType="fitXY"
                     android:layout_width="match_parent"
-                    android:layout_height="320dp" />
+                    android:layout_height="300dp" />
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

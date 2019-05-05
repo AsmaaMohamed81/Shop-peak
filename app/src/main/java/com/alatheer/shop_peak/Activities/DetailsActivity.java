@@ -1,5 +1,6 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.animation.Animator;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.util.CircleAnimationUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -35,7 +38,7 @@ import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity {
     ImageView details_img,back_image,plus_circle,minus_circle,shopping_cart;
-    TextView details_title,details_des,counter,cart_num;
+    TextView details_title,details_des,counter,cart_num,tv_not_budget;
     CheckBox c_red,c_blue,c_black;
     Button details_price,addcart,editcart;
     MyAppDatabase myAppDatabase;
@@ -86,6 +89,11 @@ public class DetailsActivity extends AppCompatActivity {
         myAppDatabase = Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"productdb").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(),Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         getDataFromIntent();
+
+        tv_not_budget = findViewById(R.id.tv_not_budget);
+
+
+
         back_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,12 +162,23 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    makeFlyAnimation(viewPager);
                     id=Integer.parseInt(order_num.getText().toString());
                     basketModel=new BasketModel(id,title,counter.getText().toString(),red,blue,black,first_item);
                     myAppDatabase.dao().addproduct(basketModel);
+
+                    if (myAppDatabase.dao().getdata().size() > 0) {
+                        tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
+                    } else {
+                        tv_not_budget.setText("0");
+
+                    }
                 }catch (Exception e){
                     Toast.makeText(DetailsActivity.this, "order number took before", Toast.LENGTH_SHORT).show();
                 }
+
+
+
             }
         });
 
@@ -209,6 +228,13 @@ public class DetailsActivity extends AppCompatActivity {
                 }
                 return true;
             }});
+
+        if (myAppDatabase.dao().getdata().size() > 0) {
+            tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
+        } else {
+            tv_not_budget.setText("0");
+
+        }
     }
 
     public void getDataFromIntent(){
@@ -225,6 +251,37 @@ public class DetailsActivity extends AppCompatActivity {
         viewPager=findViewById(R.id.viewpager);
         customSwipeAdapter=new CustomSwipeAdapter(image,this);
         viewPager.setAdapter(customSwipeAdapter);
+    }
+
+    private void makeFlyAnimation(ViewPager targetView) {
+
+        FrameLayout destView = (FrameLayout) findViewById(R.id.frame_cart);
+
+        new CircleAnimationUtil().attachActivity(this).setTargetView(targetView).setMoveDuration(1000).setDestView(destView).setAnimationListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+//                CreateUserNotSignInAlertDialog(DetailsFoodActivity.this,getString(R.string.go_cart));
+//                Toast.makeText(DetailsFoodActivity.this, "تم اضافه الاكله للسله بنجاح ...", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        }).startAnimation();
+
+
     }
 
 
