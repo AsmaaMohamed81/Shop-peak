@@ -53,7 +53,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
        // File file =new File(uri.getPath());
         //File[]path=new File[]{file,file,file};
-        int[] image=listofhome.get(position).getImage_resources();
+       List<Integer> image=listofhome.get(position).getImage_resources();
         customSwipeAdapter = new CustomSwipeAdapter(image, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
         final String title = listofhome.get(position).getProduct_title();
@@ -104,7 +104,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
             notifyDataSetChanged();
         }
     };*/
-
     class  SearchHolder extends RecyclerView.ViewHolder{
         ImageView share;
         CheckBox fav;

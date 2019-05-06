@@ -55,7 +55,7 @@ public class DetailsActivity extends AppCompatActivity {
     long id;
     EditText order_num;
     BasketModel basketModel;
-    int[] image;
+    List<Integer> image;
     int first_item;
     String price;
     String des;
@@ -244,8 +244,8 @@ public class DetailsActivity extends AppCompatActivity {
     public void getDataFromIntent(){
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        image = intent.getIntArrayExtra("homeimage");
-        first_item=image[0];
+        image = intent.getIntegerArrayListExtra("homeimage");
+        first_item=image.get(0);
          //first_item_String = first_item.toString();
         title = intent.getStringExtra("title");
         des = intent.getStringExtra("des");

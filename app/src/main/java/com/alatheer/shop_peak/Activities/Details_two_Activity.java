@@ -21,6 +21,8 @@ import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.R;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Details_two_Activity extends AppCompatActivity {
     ImageView details_img, back_image, plus_circle, minus_circle, shopping_cart;
@@ -171,7 +173,10 @@ public class Details_two_Activity extends AppCompatActivity {
        red_intent = intent.getBooleanExtra("red", false);
        blue_intent = intent.getBooleanExtra("blue", false);
        black_intent = intent.getBooleanExtra("black", false);
-       customSwipeAdapter = new CustomSwipeAdapter(new int[]{image_intent, image_intent, image_intent}, this);
+       List<Integer>list =new ArrayList<>();
+       list.add(image_intent);
+       list.add(image_intent);
+       customSwipeAdapter = new CustomSwipeAdapter(list, this);
        viewPager.setAdapter(customSwipeAdapter);
        counter.setText(count_intent);
        details_title.setText(title_intent);

@@ -142,20 +142,42 @@ public class HomeFragment extends android.app.Fragment {
     public List<HomeModel> homeModelList (){
 
         homelist = new ArrayList<>();
-        homelist.add(new HomeModel(
-                new int[]{R.drawable.item2,R.drawable.item2,R.drawable.item2},
-                "dress",
-                "a beautiful blue  address for girls ",
-                "$25.99",
-                "XL",
-                "female",
-                "POLO",
-                R.drawable.vender_image1));
-        homelist.add(new HomeModel(new int[]{R.drawable.item1,R.drawable.item1},"jacket","a comfartable black jacket for boys","$30.00 ","L","male","TownTeam",R.drawable.vender_image2));
-        homelist.add(new HomeModel(new int[]{R.drawable.item3,R.drawable.item3},"shoes","a comfartable blue sportive shoes for playing football","$20.00","L","male","Nike",R.drawable.vender_image3));
-        homelist.add(new HomeModel(new int[]{R.drawable.item1,R.drawable.item1},"jacket","a comfartable black jacket for boys","$30.00 ","XXL","male","Puma",R.drawable.vender_image4));
-        homelist.add(new HomeModel(new int[]{R.drawable.item2,R.drawable.item2},"dress","a beautiful blue  address for girls ","$25.99","XXL","female","Addidas",R.drawable.vender_image5));
-        homelist.add(new HomeModel(new int[]{R.drawable.item3,R.drawable.item3},"shoes","a comfartable blue sportive shoes for playing football","$20.00","M","female","POLO",R.drawable.vender_image1));
+        int []item1 = {R.drawable.item2,R.drawable.item2,R.drawable.item2};
+        int []item2 ={R.drawable.item1,R.drawable.item1};
+        int []item3 ={R.drawable.item3,R.drawable.item3};
+        int []item4 ={R.drawable.item1,R.drawable.item1};
+        int []item5 ={R.drawable.item2,R.drawable.item2};
+        int []item6 ={R.drawable.item3,R.drawable.item3};
+        List<Integer>list1 =new ArrayList<>(item1.length);
+        for(int i: item1){
+            list1.add(Integer.valueOf(i));
+        }
+        List<Integer>list2 =new ArrayList<>(item2.length);
+        for (int i : item2){
+            list2.add(Integer.valueOf(i));
+        }
+        List<Integer>list3 =new ArrayList<>(item3.length);
+        for (int i : item3){
+            list3.add(Integer.valueOf(i));
+        }
+        List<Integer>list4 =new ArrayList<>(item4.length);
+        for (int i : item4){
+            list4.add(Integer.valueOf(i));
+        }
+        List<Integer>list5 =new ArrayList<>(item5.length);
+        for (int i : item5){
+            list5.add(Integer.valueOf(i));
+        }
+        List<Integer>list6 =new ArrayList<>(item6.length);
+        for (int i : item6){
+            list6.add(Integer.valueOf(i));
+        }
+        homelist.add(new HomeModel(list1, "dress", "a beautiful blue  address for girls ", "$25.99", "XL", "female", "POLO", R.drawable.vender_image1));
+        homelist.add(new HomeModel(list2,"jacket","a comfartable black jacket for boys","$30.00 ","L","male","TownTeam",R.drawable.vender_image2));
+        homelist.add(new HomeModel(list3,"shoes","a comfartable blue sportive shoes for playing football","$20.00","L","male","Nike",R.drawable.vender_image3));
+        homelist.add(new HomeModel(list4,"jacket","a comfartable black jacket for boys","$30.00 ","XXL","male","Puma",R.drawable.vender_image4));
+        homelist.add(new HomeModel(list5,"dress","a beautiful blue  address for girls ","$25.99","XXL","female","Addidas",R.drawable.vender_image5));
+        homelist.add(new HomeModel(list6,"shoes","a comfartable blue sportive shoes for playing football","$20.00","M","female","POLO",R.drawable.vender_image1));
         return homelist;
     }
 

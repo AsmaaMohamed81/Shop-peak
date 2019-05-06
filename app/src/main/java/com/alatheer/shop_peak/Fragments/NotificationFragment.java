@@ -6,20 +6,50 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alatheer.shop_peak.Adapter.Notification_Adapter;
+import com.alatheer.shop_peak.Model.NotificationModel;
 import com.alatheer.shop_peak.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class NotificationFragment extends android.app.Fragment {
-
+    RecyclerView notification_recycler;
+    Notification_Adapter notification_adapter;
+    RecyclerView.LayoutManager notificationManager;
+    List<NotificationModel>list;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_notification, container, false);
+        View view= inflater.inflate(R.layout.fragment_notification, container, false);
+        initview(view);
+        return view;
+    }
+
+    private void initview(View view) {
+        notification_recycler=view.findViewById(R.id.notification_recycler);
+        notification_recycler.setHasFixedSize(true);
+        notification_adapter=new Notification_Adapter(notificationModelList(),getActivity());
+        notification_recycler.setAdapter(notification_adapter);
+        notificationManager=new LinearLayoutManager(getActivity());
+        notification_recycler.setLayoutManager(notificationManager);
+
+    }
+    private List<NotificationModel>notificationModelList(){
+        list=new ArrayList<>();
+        list.add(new NotificationModel("aaaaaa","bbbbbbbbb"));
+        list.add(new NotificationModel("cccccc","ddddddddd"));
+        list.add(new NotificationModel("eeeeee","fffffffff"));
+        list.add(new NotificationModel("gggggg","hhhhhhhhh"));
+        return list;
     }
 
 

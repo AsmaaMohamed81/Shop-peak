@@ -69,8 +69,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         //final File path = new File(uri.getPath());
 
         favorite_database = Room.databaseBuilder(context,Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
-        final int[] image_resources = listofhome.get(position).getImage_resources();
-        final int image = image_resources[0];
+        final List<Integer> image_resources = listofhome.get(position).getImage_resources();
+        final int image = image_resources.get(0);
         final String title = listofhome.get(position).getProduct_title();
         final String des = listofhome.get(position).getProduct_describtion();
         final String price = listofhome.get(position).getProduct_price();

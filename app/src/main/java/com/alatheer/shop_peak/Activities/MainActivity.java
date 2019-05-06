@@ -234,9 +234,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
         return navigationlist;
     }
-    public void sendHomeItem(int[] image, String title, String des, String price,String gender){
+    public void sendHomeItem(List<Integer> image, String title, String des, String price,String gender){
         Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtra("homeimage", image);
+        intent.putIntegerArrayListExtra("homeimage", (ArrayList<Integer>) image);
         intent.putExtra("title", title);
         intent.putExtra("des", des);
         intent.putExtra("price", price);

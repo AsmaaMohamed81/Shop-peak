@@ -27,13 +27,7 @@ public class BasketModel  {
     boolean red_flag;
     @ColumnInfo(name = "blue")
     boolean blue_flag;
-
-    public BasketModel() {
-
-    }
-
     @ColumnInfo(name = "black")
-
     boolean black_flag;
     public int getId() {
         return id;
@@ -112,6 +106,9 @@ public class BasketModel  {
         this.price=price;
         this.description=description;
 
+    }
+
+    public BasketModel() {
     }
 
     public String getTitle() {

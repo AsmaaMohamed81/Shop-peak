@@ -45,6 +45,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
         this.context = context;
         this.basketModelList = basketModelList;
         this.basket_activity= (Basket_Activity) context;
+
     }
 
     @NonNull

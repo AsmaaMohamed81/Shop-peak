@@ -3,7 +3,9 @@ package com.alatheer.shop_peak.Activities;
 import android.arch.persistence.room.Room;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +28,7 @@ public class AddProductActivity extends AppCompatActivity {
      ImageView close,added_image;
      TextView added_post;
      EditText added_TiTle,product_num;
+     int PICK_IMAGE_MULTIPLE = 2 ;
      Uri Image_Uri;
      ProfileDatabase profileDatabase;
     @Override
@@ -52,20 +55,26 @@ public class AddProductActivity extends AppCompatActivity {
         added_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadimage();
+                chooseimage();
+               // uploadimage();
             }
         });
-        CropImage.activity()
-                .setAspectRatio(1,1)
-                .start(AddProductActivity.this);
-
     }
+
+    private void chooseimage() {
+        Intent intent =new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Picture"),PICK_IMAGE_MULTIPLE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            Image_Uri = result.getUri();
+        if(/*requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE&& */requestCode==PICK_IMAGE_MULTIPLE && resultCode == RESULT_OK){
+           // CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            String [] filepath ={MediaStore.Images.Media.DATA};
             added_image.setImageURI(Image_Uri);
             Toast.makeText(this, "data added successfully", Toast.LENGTH_SHORT).show();
             //Intent intent=new Intent(this,MainActivity.class);
