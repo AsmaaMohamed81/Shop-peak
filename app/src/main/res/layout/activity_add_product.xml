@@ -48,7 +48,7 @@
             android:id="@+id/added_image"
             android:scaleType="centerInside"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:src="@mipmap/icon"
             />
@@ -59,6 +59,17 @@
             android:text="0"
             android:visibility="gone"/>
         <EditText
+            android:id="@+id/added_title"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/txt_field"
+            android:hint="title"
+            android:paddingLeft="15dp"
+            android:textColorHint="@color/colorPrimary"
+            android:maxLines="1"
+            />
+        <EditText
             android:id="@+id/added_description"
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -68,6 +79,37 @@
             android:paddingLeft="15dp"
             android:textColorHint="@color/colorPrimary"
             android:maxLines="3"/>
+        <EditText
+            android:id="@+id/added_size"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/txt_field"
+            android:hint="Size"
+            android:paddingLeft="15dp"
+            android:textColorHint="@color/colorPrimary"
+            android:maxLines="3"/>
+        <EditText
+            android:id="@+id/added_price"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/txt_field"
+            android:hint="price"
+            android:paddingLeft="15dp"
+            android:textColorHint="@color/colorPrimary"
+            android:maxLines="3"/>
+        <EditText
+            android:id="@+id/added_gender"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/txt_field"
+            android:hint="Gender"
+            android:paddingLeft="15dp"
+            android:textColorHint="@color/colorPrimary"
+            android:maxLines="3"/>
+
 
     </LinearLayout>
 

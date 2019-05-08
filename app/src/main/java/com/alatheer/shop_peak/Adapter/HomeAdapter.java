@@ -69,8 +69,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         //final File path = new File(uri.getPath());
 
         favorite_database = Room.databaseBuilder(context,Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
-        final List<Integer> image_resources = listofhome.get(position).getImage_resources();
-        final int image = image_resources.get(0);
+        final String image1 = listofhome.get(position).getImage1();
+        final String image2 = listofhome.get(position).getImage2();
+        final String[] image_resources = {image1,image2};
         final String title = listofhome.get(position).getProduct_title();
         final String des = listofhome.get(position).getProduct_describtion();
         final String price = listofhome.get(position).getProduct_price();
@@ -100,7 +101,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                 if (holder.fav.isChecked()) {
                     accepted = true;
                     int id2=Integer.parseInt(holder.order_num.getText().toString());
-                    BasketModel basketModel=new BasketModel(id2,title,0+"",gender,price,des,false,false,false,image);
+                    BasketModel basketModel=new BasketModel(id2,title,0+"",gender,price,des,false,false,false,image1);
                      id =favorite_database.dao_favorite().add_favorite(basketModel);
                     Log.e("add_to_favorite","true");
                 } else {

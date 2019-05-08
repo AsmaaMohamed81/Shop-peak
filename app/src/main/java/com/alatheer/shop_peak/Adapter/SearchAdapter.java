@@ -53,8 +53,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
        // File file =new File(uri.getPath());
         //File[]path=new File[]{file,file,file};
-       List<Integer> image=listofhome.get(position).getImage_resources();
-        customSwipeAdapter = new CustomSwipeAdapter(image, context);
+       String image1=listofhome.get(position).getImage1();
+       String image2=listofhome.get(position).getImage2();
+       String[]images={image1,image2};
+        customSwipeAdapter = new CustomSwipeAdapter(images, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
         final String title = listofhome.get(position).getProduct_title();
         final String des = listofhome.get(position).getProduct_describtion();

@@ -58,7 +58,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHold
     @Override
     public void onBindViewHolder(@NonNull final BasketHolder holder, final int position) {
         holder.basket_title.setText(basketModelList.get(position).getTitle());
-        holder.title_img.setImageResource(basketModelList.get(position).getImg());
+        Picasso.with(context).load(basketModelList.get(position).getImg()).into(holder.title_img);
         holder.counter.setText(basketModelList.get(position).getNum_of_cart());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -21,17 +21,17 @@ import java.util.List;
  */
 
 public class CustomSwipeAdapter extends PagerAdapter{
-    private List<Integer> images_resources;
+    private String[] images_resources;
     private Context context;
 
-    public CustomSwipeAdapter(List<Integer> images_resources, Context context) {
+    public CustomSwipeAdapter(String[] images_resources, Context context) {
         this.images_resources = images_resources;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return images_resources.size();
+        return images_resources.length;
     }
 
     @Override
@@ -46,8 +46,9 @@ public class CustomSwipeAdapter extends PagerAdapter{
         ImageView imageView=view.findViewById(R.id.details_image);
         TextView textView=view.findViewById(R.id.image_number);
         //Picasso.with(context).load(images_url[position]).into(imageView);
-        imageView.setImageResource(images_resources.get(position));
-        textView.setText(position+1 +"/"+images_resources.size());
+        //imageView.setImageURI(images_resources[position]);
+        Picasso.with(context).load(images_resources[position]).into(imageView);
+        textView.setText(position+1 +"/"+images_resources.length);
         container.addView(view);
         return view;
     }

@@ -17,6 +17,7 @@ import com.alatheer.shop_peak.Activities.Favorite_Activity;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -47,7 +48,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     @Override
     public void onBindViewHolder(@NonNull FavoriteHolder holder, int position) {
         holder.basket_title.setText(basketModelList.get(position).getTitle());
-        holder.title_img.setImageResource(basketModelList.get(position).getImg());
+        //holder.title_img.setImageResource(basketModelList.get(position).getImg());
+        Picasso.with(context).load(basketModelList.get(position).getImg()).into(holder.title_img);
         holder.counter.setText(basketModelList.get(position).getNum_of_cart());
         //Uri uri= Uri.parse(basketModelList.get(position).getImg());
         // File file =new File(uri.getPath());
