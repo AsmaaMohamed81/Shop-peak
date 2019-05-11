@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.Activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Local.MySharedPreference;
@@ -67,6 +69,7 @@ public class Login_Activity extends AppCompatActivity {
     GoogleSignInClient googleSignInClient;
     int GmailSignInRequest=0;
     Uri image_path;
+    TextView Skip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +94,8 @@ public class Login_Activity extends AppCompatActivity {
         gmail_login.setSize(SignInButton.SIZE_STANDARD);
         callbackManager=CallbackManager.Factory.create();
         mySharedPreference = new MySharedPreference(this);
+        Skip=findViewById(R.id.skip);
+        Skip.setPaintFlags(Skip.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
         // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -189,6 +194,15 @@ public class Login_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent signInIntent = googleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, GmailSignInRequest);
+            }
+        });
+
+        Skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login_Activity.this, MainActivity.class);
+
+                startActivity(intent);
             }
         });
     }

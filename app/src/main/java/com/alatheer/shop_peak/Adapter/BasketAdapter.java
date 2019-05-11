@@ -33,7 +33,7 @@ import java.util.zip.Inflater;
  * Created by M.Hamada on 22/04/2019.
  */
 
-public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHolder> {
+public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHolder> {
     Context context;
     List<BasketModel>basketModelList;
     Basket_Activity basket_activity;
