@@ -14,13 +14,32 @@ public class ProfileModel {
     private int id;
     @ColumnInfo(name = "TiTle")
     String title;
-    @ColumnInfo(name = "Image")
-    String Image;
+    @ColumnInfo(name = "Image1")
+    String Image1;
+    @ColumnInfo(name = "Image2")
+    String Image2;
 
-    public ProfileModel(int id, String title, String Image) {
+    public String getImage1() {
+        return Image1;
+    }
+
+    public void setImage1(String image1) {
+        Image1 = image1;
+    }
+
+    public String getImage2() {
+        return Image2;
+    }
+
+    public void setImage2(String image2) {
+        Image2 = image2;
+    }
+
+    public ProfileModel(int id, String title, String Image1,String Image2) {
         this.id = id;
         this.title = title;
-        this.Image = Image;
+        this.Image1 = Image1;
+        this.Image2 = Image2;
     }
 
     public int getId() {
@@ -40,9 +59,9 @@ public class ProfileModel {
     }
 
     public String getImage() {
-        return Image;
+        return Image1;
     }
     public void setImage(String image) {
-        Image = image;
+        Image1 = image;
     }
 }

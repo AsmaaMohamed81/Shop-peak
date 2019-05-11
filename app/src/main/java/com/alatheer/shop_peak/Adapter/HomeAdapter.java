@@ -193,6 +193,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             ratbar=itemView.findViewById(R.id.ratbar);
             home_linear=itemView.findViewById(R.id.home_linear);
             order_num=itemView.findViewById(R.id.order_num);
+
         }
     }
 

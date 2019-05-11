@@ -106,7 +106,7 @@ public class HomeModel implements Serializable {
     }
 
     public void setProduct_price(String product_price) {
-        product_price = product_price;
+        this.product_price = product_price;
     }
     public String getVender_name() {
         return vender_name;

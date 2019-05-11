@@ -31,6 +31,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="update_your_profile">تحديث الملف الشخصي</string>
     <string name="add_cart">Add To Cart</string>
+    <string name="details">show more details</string>
     <string name="facebook_app_id">713163185768231</string>
     <string name="fb_login_protocol_scheme">fb713163185768231</string>
 </resources>
