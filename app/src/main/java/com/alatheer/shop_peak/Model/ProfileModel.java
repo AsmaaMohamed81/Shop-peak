@@ -14,11 +14,22 @@ public class ProfileModel {
     private int id;
     @ColumnInfo(name = "TiTle")
     String title;
+    @ColumnInfo(name = "Image_title")
+    String Image_title;
+
+    public String getImage_title() {
+        return Image_title;
+    }
+
+    public void setImage_title(String image_title) {
+        Image_title = image_title;
+    }
+
     @ColumnInfo(name = "Image1")
+
     String Image1;
     @ColumnInfo(name = "Image2")
     String Image2;
-
     public String getImage1() {
         return Image1;
     }
@@ -35,11 +46,12 @@ public class ProfileModel {
         Image2 = image2;
     }
 
-    public ProfileModel(int id, String title, String Image1,String Image2) {
+    public ProfileModel( String title, String Image_title,String Image1,String Image2) {
         this.id = id;
         this.title = title;
         this.Image1 = Image1;
         this.Image2 = Image2;
+        this.Image_title=Image_title;
     }
 
     public int getId() {

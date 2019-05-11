@@ -91,6 +91,8 @@ public class ProfileFragment extends android.app.Fragment {
          Bundle bundle=getArguments();
          String vender_name=bundle.getString("name");
          int image =bundle.getInt("image");
+         String image1=bundle.getString("image1");
+         String image2=bundle.getString("image2");
          profile_image.setImageResource(image);
          profile_name.setText(vender_name);
 

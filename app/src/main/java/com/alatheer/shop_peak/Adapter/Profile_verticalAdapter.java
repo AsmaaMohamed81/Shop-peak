@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.Adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class Profile_verticalAdapter extends RecyclerView.Adapter<Profile_verticalAdapter.Profile_verticalHolder> {
     List<ProfileModel> profileModels;
+    CustomSwipeAdapter customSwipeAdapter;
     Context context;
     public Profile_verticalAdapter(List<ProfileModel> profileModels, Context context){
         this.profileModels=profileModels;
@@ -37,8 +39,13 @@ public class Profile_verticalAdapter extends RecyclerView.Adapter<Profile_vertic
 
     @Override
     public void onBindViewHolder(@NonNull Profile_verticalHolder holder, int position) {
-        Uri uri = Uri.parse(profileModels.get(position).getImage());
-        Picasso.with(context).load(new File(uri.getPath())).into(holder.imageView);
+        final String image1 = profileModels.get(position).getImage1();
+        final String image2 = profileModels.get(position).getImage2();
+        final String[] image_resources = {image1,image2};
+        customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
+        holder.viewPager.setAdapter(customSwipeAdapter);
+        //Uri uri = Uri.parse(profileModels.get(position).getImage());
+        //Picasso.with(context).load(new File(uri.getPath())).into(holder.imageView);
     }
 
     @Override
@@ -47,10 +54,10 @@ public class Profile_verticalAdapter extends RecyclerView.Adapter<Profile_vertic
     }
 
     class Profile_verticalHolder extends RecyclerView.ViewHolder{
-     ImageView imageView;
+     ViewPager viewPager;
         public Profile_verticalHolder(View itemView) {
             super(itemView);
-            imageView=itemView.findViewById(R.id.img);
+            viewPager=itemView.findViewById(R.id.viewpager);
         }
     }
 }

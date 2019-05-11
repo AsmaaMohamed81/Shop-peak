@@ -26,8 +26,10 @@ import android.widget.Toast;
 import com.alatheer.shop_peak.Activities.DetailsActivity;
 import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Local.Favorite_Database;
+import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
 
 import java.io.File;
@@ -35,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by M.Hamada on 22/03/2019.
@@ -46,6 +50,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     MainActivity mainActivity;
     List<HomeModel> full_list_ofhome;
     Favorite_Database favorite_database;
+    ProfileDatabase profileDatabase;
     boolean accepted = false;
     CustomSwipeAdapter customSwipeAdapter;
     long id;
@@ -67,7 +72,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     public void onBindViewHolder(@NonNull final Image2holder holder, final int position) {
        // Uri uri = Uri.parse(listofhome.get(position).getProduct_image());
         //final File path = new File(uri.getPath());
-
+        profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(context,Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         final String image1 = listofhome.get(position).getImage1();
         final String image2 = listofhome.get(position).getImage2();
@@ -82,10 +87,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         holder.text_profile.setText(vender_name);
         customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
+        ProfileModel profileModel=new ProfileModel(vender_name,vender_name,image1,image2);
+        profileDatabase.dao().addproductItem(profileModel);
         holder.home_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity.setSelectProfile(vender_name,vender_image);
+                mainActivity.setSelectProfile(vender_name,vender_image,image1,image2);
 
             }
         });

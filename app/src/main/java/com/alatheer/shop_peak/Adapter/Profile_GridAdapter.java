@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.Adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import java.util.List;
 public class Profile_GridAdapter extends RecyclerView.Adapter<Profile_GridAdapter.Profile_GridHolder> {
     List<ProfileModel>profileModels;
     Context context;
+    CustomSwipeAdapter customSwipeAdapter;
     public Profile_GridAdapter(List<ProfileModel> profileModels, Context context){
         this.profileModels=profileModels;
         this.context=context;
@@ -38,8 +40,13 @@ public class Profile_GridAdapter extends RecyclerView.Adapter<Profile_GridAdapte
 
     @Override
     public void onBindViewHolder(@NonNull Profile_GridHolder holder, int position) {
-     Uri uri = Uri.parse(profileModels.get(position).getImage());
-     Picasso.with(context).load(new File(uri.getPath())).into(holder.imageView);
+        final String image1 = profileModels.get(position).getImage1();
+        final String image2 = profileModels.get(position).getImage2();
+        final String[] image_resources = {image1,image2};
+        customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
+        holder.viewPager.setAdapter(customSwipeAdapter);
+     //Uri uri = Uri.parse(profileModels.get(position).getImage());
+     //Picasso.with(context).load(new File(uri.getPath())).into(holder.imageView);
 
     }
 
@@ -49,10 +56,10 @@ public class Profile_GridAdapter extends RecyclerView.Adapter<Profile_GridAdapte
     }
 
     class Profile_GridHolder extends RecyclerView.ViewHolder{
-        ImageView imageView;
+        ViewPager viewPager;
         public Profile_GridHolder(View itemView) {
             super(itemView);
-            imageView=itemView.findViewById(R.id.img);
+            viewPager=itemView.findViewById(R.id.viewpager);
         }
     }
 }

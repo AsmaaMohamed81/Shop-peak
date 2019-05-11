@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
 
     }
-    public void setSelectProfile(String vender_name,int vender_image){
+    public void setSelectProfile(String vender_name,int vender_image,String image1,String image2){
         if (profileFragment==null)
         {
             profileFragment = profileFragment.getInstance();
@@ -119,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Bundle bundle =new Bundle();
         bundle.putString("name",vender_name);
         bundle.putInt("image",vender_image);
+        bundle.putString("image1",image1);
+        bundle.putString("image2",image2);
         profileFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
     }
