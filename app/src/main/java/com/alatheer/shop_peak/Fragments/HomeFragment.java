@@ -119,7 +119,6 @@ public class HomeFragment extends android.app.Fragment {
                 return false;
             }
         });
-
     }
 
     public List<OfferModel> offerModelList() {

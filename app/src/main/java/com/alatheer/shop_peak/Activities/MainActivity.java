@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
@@ -22,10 +23,15 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +45,7 @@ import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Fragments.SettingFragment;
 import com.alatheer.shop_peak.Local.MySharedPreference;
+import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
@@ -47,6 +54,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,9 +70,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView.LayoutManager navigation_manager;
     RecyclerView navigationrecycler;
     android.app.Fragment selectedfragment;
-
+    HomeFragment homeFragment;
     MySharedPreference mPrefs;
     ProfileFragment profileFragment;
+    EditText search;
+    String title1;
+    List<HomeModel> homeModels;
     private int PICK_IMAGE_FROM_GALEARY_REQUEST=0;
     Uri uri;
     Bitmap bitmap;
@@ -82,9 +93,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.nav_view);
+        search = findViewById(R.id.txt_search);
         View headview=navigationView.getHeaderView(0);
         CircleImageView img=headview.findViewById(R.id.profile_img);
         TextView textView=headview.findViewById(R.id.txtname);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, Search_Activity.class);
+                i.putExtra("title", search.getText().toString());
+                i.putExtra("list", (Serializable) homeModels);
+                startActivity(i);
+            }
+        });
+
         Intent i=getIntent();
         try{
             String image_url=i.getStringExtra("image_url");
@@ -131,6 +153,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationrecycler.setLayoutManager(navigation_manager);
         navigationAdapter=new NavigationAdapter(navigationModelList(),this);
         navigationrecycler.setAdapter(navigationAdapter);
+    }
+
+    public void passdata(final String title, final List<HomeModel> homeModelList) {
+        title1 = title;
+        homeModels = homeModelList;
     }
     private BottomNavigationView.OnNavigationItemSelectedListener nav_listner= new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -234,9 +261,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationlist.add(new NavigationModel(getString(R.string.contact),R.drawable.ic_contact));
         navigationlist.add(new NavigationModel(getString(R.string.setting),R.drawable.ic_settings));
         navigationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
+        navigationlist.add(new NavigationModel(getString(R.string.join_us), R.drawable.ic_contact));
         return navigationlist;
     }
-    public void sendHomeItem(String[] image, String title, String des, String price,String gender){
+
+    public void sendHomeItem(String[] image, String title, String des, String price, String gender) {
         Bundle bundle=new Bundle();
         bundle.putStringArray("homeimage", image);
         Intent intent = new Intent(this, DetailsActivity.class);
@@ -246,5 +275,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra("price", price);
         intent.putExtra("gender",gender);
         startActivity(intent);
+
     }
 }
