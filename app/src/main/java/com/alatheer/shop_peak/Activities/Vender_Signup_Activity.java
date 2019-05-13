@@ -96,6 +96,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
                 !TextUtils.isEmpty(Address) &&
                 !TextUtils.isEmpty(Category)) {
 
+
             Common.CloseKeyBoard(this, shop_email);
             shop_name.setError(null);
             shop_email.setError(null);
