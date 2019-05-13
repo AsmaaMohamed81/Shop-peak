@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="communicate">
-        <group android:checkableBehavior="single">
+        <group
+            android:id="@+id/menu_bottom"
+            android:checkableBehavior="none">
+
             <item android:id="@+id/nav_share"
                 android:icon="@drawable/ic_share_sold"
                 android:title="your share"/>
