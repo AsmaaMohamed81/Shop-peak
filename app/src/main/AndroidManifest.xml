@@ -79,7 +79,8 @@
                 android:value="com.alatheer.shop_peak.Activities.Basket_Activity" />
         </activity>
         <activity android:name=".Activities.Details_two_Activity" />
-        <activity android:name=".Activities.Favorite_Activity"></activity>
+        <activity android:name=".Activities.Favorite_Activity" />
+        <activity android:name=".Activities.Vender_Signup_Activity"></activity>
     </application>
 
 </manifest>

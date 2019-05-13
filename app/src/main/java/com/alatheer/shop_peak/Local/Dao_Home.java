@@ -13,10 +13,12 @@ import java.util.List;
 
 @android.arch.persistence.room.Dao
 public interface Dao_Home {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addproductItem(HomeModel homeModel);
-    @Query("select * from myproducts")
+    @Query("select * from myproducts where id IN (1,2,3,4,5,6)")
     List<HomeModel> get_profile_data();
+    @Query("select * from myproducts")
+    List<HomeModel>get_profile_data2();
     @Query("delete from myproducts")
     void delete_all();
 }

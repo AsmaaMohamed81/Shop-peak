@@ -44,6 +44,8 @@ public class ProfileFragment extends android.app.Fragment {
     ProfileDatabase profileDatabase;
     Uri uri;
     Bitmap bitmap;
+    String vender_name;
+    int image;
     int flag;
     int PICK_IMAGE_REQUEST;
     public static ProfileFragment getInstance() {
@@ -67,7 +69,6 @@ public class ProfileFragment extends android.app.Fragment {
          img_ver=view.findViewById(R.id.menu_vertical);
          add_product=view.findViewById(R.id.add_product);
          menu_recycler=view.findViewById(R.id.recycler_menu);
-         Viewgrid();
          img_grid.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -89,13 +90,13 @@ public class ProfileFragment extends android.app.Fragment {
              }
          });
          Bundle bundle=getArguments();
-         String vender_name=bundle.getString("name");
-         int image =bundle.getInt("image");
+         vender_name=bundle.getString("name");
+         image =bundle.getInt("image");
          String image1=bundle.getString("image1");
          String image2=bundle.getString("image2");
          profile_image.setImageResource(image);
          profile_name.setText(vender_name);
-
+         Viewgrid();
     }
 
     private void chooseimage() {
@@ -124,7 +125,7 @@ public class ProfileFragment extends android.app.Fragment {
         menu_recycler.setHasFixedSize(true);
         verticalmanager=new LinearLayoutManager(getActivity());
         menu_recycler.setLayoutManager(verticalmanager);
-        Profile_verticalAdapter profile_verticalAdapter=new Profile_verticalAdapter(profileDatabase.dao().get_profile_data(),getActivity());
+        Profile_verticalAdapter profile_verticalAdapter=new Profile_verticalAdapter(profileDatabase.dao().getdata1(vender_name),getActivity());
         menu_recycler.setAdapter(profile_verticalAdapter);
 
     }
@@ -135,7 +136,7 @@ public class ProfileFragment extends android.app.Fragment {
         menu_recycler.setHasFixedSize(true);
         gridmanager=new GridLayoutManager(getActivity(),3);
         menu_recycler.setLayoutManager(gridmanager);
-        Profile_GridAdapter profile_gridAdapter=new Profile_GridAdapter(profileDatabase.dao().get_profile_data(),getActivity());
+        Profile_GridAdapter profile_gridAdapter=new Profile_GridAdapter(profileDatabase.dao().getdata1(vender_name),getActivity());
         menu_recycler.setAdapter(profile_gridAdapter);
     }
 

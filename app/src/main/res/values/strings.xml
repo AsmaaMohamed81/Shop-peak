@@ -5,6 +5,11 @@
     <string name="log_in">Log In</string>
     <string name="phone">Phone</string>
     <string name="email">Email</string>
+    <string name="shopname">Shop Name</string>
+    <string name="governate">Governate</string>
+    <string name="city">City</string>
+    <string name="category">Category</string>
+    <string name="address">Address</string>
     <string name="sign_up">Sign Up</string>
     <string name="Terms">Terms &amp; Conditions</string>
     <string name="url">www.shop-peak.com</string>
@@ -15,6 +20,11 @@
     <string name="phone_req">Phone is Required</string>
     <string name="subject_req">Subject is required</string>
     <string name="message_req">Message is required</string>
+    <string name="shopname_req">Shop name is required</string>
+    <string name="governate_req">Governate is required</string>
+    <string name="city_req">City is required</string>
+    <string name="address_req">Address is required</string>
+    <string name="category_req">category is required</string>
     <string name="pass_len">password is week</string>
     <string name="email_patt">email is not correct</string>
     <string name="accept_terms">You cannot sign up without accepting terms and conditions</string>
@@ -26,6 +36,7 @@
     <string name="search">Search</string>
     <string name="contact">Contact Us</string>
     <string name="logout">Logout</string>
+    <string name="addlogo">Add Logo</string>
     <string name="notifications">Notifications</string>
     <string name="profile">Profile</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -169,7 +169,7 @@ public class AddProductActivity extends AppCompatActivity {
      //homeDatabase.dao_home().addproductItem(homeModel);
      Toast.makeText(this, "data added successfully", Toast.LENGTH_SHORT).show();
      Intent intent=new Intent(this,MainActivity.class);
-        Log.v("list", String.valueOf(homeDatabase.dao_home().get_profile_data()));
+        Log.v("list", String.valueOf(homeDatabase.dao_home().get_profile_data2()));
      startActivity(intent);
 
     }

@@ -173,7 +173,7 @@ public class Login_Activity extends AppCompatActivity {
                 Sign_up.setAnimation(animation2);
 
 
-                        Intent intent =new Intent(Login_Activity.this, Signup_Activity.class);
+                        Intent intent =new Intent(Login_Activity.this, Vender_Signup_Activity.class);
                         startActivity(intent);
 
 

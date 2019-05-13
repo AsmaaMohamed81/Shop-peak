@@ -16,4 +16,6 @@ public interface Dao_Profile {
     void addproductItem(ProfileModel profileModel);
     @Query("select * from profile_products")
     List<ProfileModel> get_profile_data();
+    @Query("select * from profile_products where id IN (1,2,3,4,5,6) and TiTle=:name ")
+    List<ProfileModel>getdata1(String name);
 }
