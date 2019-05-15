@@ -19,7 +19,7 @@ import com.alatheer.shop_peak.R;
 import java.util.List;
 
 public class Favorite_Activity extends AppCompatActivity {
-    ImageView image_title;
+    /*ImageView image_title;
     TextView text_title;
     RecyclerView recyclerView_favorite;
     RecyclerView.LayoutManager basket_manager;
@@ -56,6 +56,6 @@ public class Favorite_Activity extends AppCompatActivity {
         recyclerView_favorite.setLayoutManager(basket_manager);
         favoriteAdapter=new FavoriteAdapter(this,basketModelList);
         recyclerView_favorite.setAdapter(favoriteAdapter);
-    }
+    }*/
 
 }

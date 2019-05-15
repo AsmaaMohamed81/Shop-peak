@@ -22,6 +22,9 @@ public interface Dao {
      List<BasketModel> getdata();
     @Query("delete from products")
      void deleteproduct();
+
+    @Query("delete from products where id=:id")
+    void Delete_Item(int id);
     @Update
      void editproduct(BasketModel basketModel);
 }

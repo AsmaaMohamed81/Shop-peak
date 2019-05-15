@@ -20,6 +20,7 @@ import android.widget.VideoView;
 
 import com.alatheer.shop_peak.Local.MySharedPreference;
 import com.alatheer.shop_peak.R;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.Callback{
     ImageView logo;
@@ -86,12 +87,14 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
                         if(name == null && image_url==null){
                             Intent intent=new Intent(Splash_Activity.this,Login_Activity.class);
                             startActivity(intent);
+                            Animatoo.animateDiagonal(Splash_Activity.this);
                             finish();
                         }else {
                             Intent intent=new Intent(Splash_Activity.this,MainActivity.class);
                             intent.putExtra("personName",name);
                             intent.putExtra("image_url",image_url);
                             startActivity(intent);
+                            Animatoo.animateSpin(Splash_Activity.this);
                             finish();
                         }
                     }

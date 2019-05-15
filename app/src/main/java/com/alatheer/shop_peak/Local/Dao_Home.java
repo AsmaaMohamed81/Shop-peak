@@ -19,6 +19,9 @@ public interface Dao_Home {
     List<HomeModel> get_profile_data();
     @Query("select * from myproducts")
     List<HomeModel>get_profile_data2();
+
+    @Query("select * from myproducts where id IN (1,2,3,4,5,6) and product_title=:title")
+    List<HomeModel> getdatasearch(String title);
     @Query("delete from myproducts")
     void delete_all();
 }

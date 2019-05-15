@@ -79,4 +79,8 @@ public class Basket_Activity extends AppCompatActivity {
     }
 
 
+    public void senddata2(int position) {
+        myAppDatabase.dao().Delete_Item(basketModelList.get(position).getId());
+        initRecyclerview();
+    }
 }

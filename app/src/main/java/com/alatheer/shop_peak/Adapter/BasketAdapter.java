@@ -29,6 +29,8 @@ import java.io.File;
 import java.util.List;
 import java.util.zip.Inflater;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 /**
  * Created by M.Hamada on 22/04/2019.
  */
@@ -57,14 +59,22 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
 
     @Override
     public void onBindViewHolder(@NonNull final BasketHolder holder, final int position) {
+        myAppDatabase = Room.databaseBuilder(getApplicationContext(), MyAppDatabase.class, "productdb").allowMainThreadQueries().build();
         holder.basket_title.setText(basketModelList.get(position).getTitle());
         Picasso.with(context).load(basketModelList.get(position).getImg()).into(holder.title_img);
         holder.counter.setText(basketModelList.get(position).getNum_of_cart());
+        holder.delete_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                basket_activity.senddata2(position);
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "id"+basketModelList.get(position).getId()+"", Toast.LENGTH_SHORT).show();
                 basket_activity.senddata(position);
+
             }
         });
         //Uri uri= Uri.parse(basketModelList.get(position).getImg());
@@ -101,7 +111,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
     }
 
     class  BasketHolder extends RecyclerView.ViewHolder{
-       ImageView plus_circle,minus_circle,title_img;
+        ImageView plus_circle, minus_circle, title_img, delete_image;
        TextView basket_title,counter;
        CheckBox c_red,c_blue,c_black;
         public BasketHolder(View itemView) {
@@ -114,7 +124,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
             c_blue=itemView.findViewById(R.id.checkbox_blue);
             c_black=itemView.findViewById(R.id.checkbox_black);
             title_img=itemView.findViewById(R.id.img);
-
+            delete_image = itemView.findViewById(R.id.img_delete);
         }
     }
 }

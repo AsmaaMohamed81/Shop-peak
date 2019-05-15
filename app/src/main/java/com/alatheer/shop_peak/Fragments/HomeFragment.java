@@ -56,7 +56,7 @@ public class HomeFragment extends android.app.Fragment {
     EditText search;
     List<HomeModel> homelist;
     HomeDatabase homeDatabase;
-
+    String name;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,9 +67,7 @@ public class HomeFragment extends android.app.Fragment {
         return v;
     }
     private void initView(View v) {
-
         search = v.findViewById(R.id.txt_search);
-
         //final String title=search.getText().toString();
         setHasOptionsMenu(true);
         addproduct();
@@ -112,7 +110,6 @@ public class HomeFragment extends android.app.Fragment {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     Intent i = new Intent(getActivity(), Search_Activity.class);
                     i.putExtra("title", search.getText().toString());
-                    i.putExtra("list", (Serializable) homelist);
                     startActivity(i);
                     return true;
                 }

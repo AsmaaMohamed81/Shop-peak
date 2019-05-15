@@ -30,6 +30,7 @@ import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.util.CircleAnimationUtil;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.io.File;
 import java.io.Serializable;
@@ -188,6 +189,7 @@ public class DetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(DetailsActivity.this,Basket_Activity.class);
                 startActivity(intent);
+                Animatoo.animateDiagonal(DetailsActivity.this);
             }
         });
         fab_favorite.setOnClickListener(new View.OnClickListener() {

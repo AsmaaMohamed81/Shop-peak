@@ -1,6 +1,7 @@
 package com.alatheer.shop_peak.Activities;
 
 import android.app.Notification;
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -37,18 +38,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.BottomNavigationViewHelper;
+import com.alatheer.shop_peak.Adapter.HomeAdapter;
 import com.alatheer.shop_peak.Adapter.NavigationAdapter;
+import com.alatheer.shop_peak.Adapter.Search_Navigation_Adapter;
 import com.alatheer.shop_peak.Fragments.Client_ProfileFragment;
 import com.alatheer.shop_peak.Fragments.Client_Profile_Fragment;
+import com.alatheer.shop_peak.Fragments.Favorite_Fragment;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Fragments.SettingFragment;
+import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MySharedPreference;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -67,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
     NavigationAdapter navigationAdapter;
+    Search_Navigation_Adapter search_navigation_adapter;
     RecyclerView.LayoutManager navigation_manager;
     RecyclerView navigationrecycler;
     android.app.Fragment selectedfragment;
@@ -74,12 +81,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     MySharedPreference mPrefs;
     ProfileFragment profileFragment;
     EditText search;
+    HomeAdapter homeAdapter;
     String title1;
     List<HomeModel> homeModels;
     private int PICK_IMAGE_FROM_GALEARY_REQUEST=0;
     Uri uri;
     Bitmap bitmap;
     int flag=0;
+    Favorite_Database favoriteDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(i);
             }
         });
-
         Intent i=getIntent();
         try{
             String image_url=i.getStringExtra("image_url");
@@ -126,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         initRecyclerview();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
+        //BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(nav_listner);
         HomeFragment homeFragment=new HomeFragment();
         android.app.FragmentManager fragmentManager = getFragmentManager();
@@ -172,17 +180,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     selectedfragment=new HomeFragment();
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
-                case R.id.nav_setting:
-                    selectedfragment=new SettingFragment();
+                case R.id.nav_favorite:
+                    selectedfragment = new Favorite_Fragment();
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
                 case R.id.nav_profile:
                     selectedfragment=new Client_Profile_Fragment();
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
-                case R.id.nav_add:
-                     startActivity(new Intent(MainActivity.this,AddProductActivity.class));
-                    break;
+                // case R.id.nav_add:
+                //startActivity(new Intent(MainActivity.this,AddProductActivity.class));
+                //break;
             }
             return true;
         }
@@ -275,6 +283,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra("price", price);
         intent.putExtra("gender",gender);
         startActivity(intent);
+        Animatoo.animateSpin(MainActivity.this);
 
     }
+
+
 }
