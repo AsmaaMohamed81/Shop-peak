@@ -2,16 +2,10 @@ package com.alatheer.shop_peak.Fragments;
 
 import android.os.Bundle;
 import android.preference.EditTextPreference;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.alatheer.shop_peak.Local.MySharedPreference;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.R;
 
 

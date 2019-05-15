@@ -2,7 +2,6 @@ package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,14 +16,12 @@ import com.alatheer.shop_peak.Activities.Favorite_Activity;
 import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Activities.Settings_Activity;
 import com.alatheer.shop_peak.Activities.Vender_Signup_Activity;
-import com.alatheer.shop_peak.Local.MySharedPreference;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.R;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by M.Hamada on 24/03/2019.

@@ -2,7 +2,6 @@ package com.alatheer.shop_peak.Activities;
 
 import android.arch.persistence.room.Room;
 import android.content.ClipData;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,28 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alatheer.shop_peak.Fragments.ProfileFragment;
-
 import com.alatheer.shop_peak.Local.HomeDatabase;
-import com.alatheer.shop_peak.Local.MyAppDatabase;
-import com.alatheer.shop_peak.Local.MySharedPreference;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
-import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
-import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class AddProductActivity extends AppCompatActivity {
      ImageView close,added_image;

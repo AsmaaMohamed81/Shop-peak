@@ -47,5 +47,6 @@
     <string name="details">لمزيد من التفاصيل</string>
     <string name="facebook_app_id">713163185768231</string>
     <string name="fb_login_protocol_scheme">fb713163185768231</string>
+    <string name="login_create">تسجيل الدخول/إنشاء حساب</string>
 
 </resources>

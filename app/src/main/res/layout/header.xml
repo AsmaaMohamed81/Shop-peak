@@ -13,6 +13,8 @@
             android:id="@+id/profile_img"
             android:layout_gravity="center"
             android:src="@mipmap/icon_round"
+            android:visibility="gone"
+
             android:layout_weight="1" />
         <TextView
             android:layout_marginLeft="15dp"
@@ -24,7 +26,21 @@
             android:text="Vender"
             android:textColor="#fff"
             android:textStyle="bold"
+            android:visibility="gone"
             android:textSize="22sp"/>
     </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_login_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/login_create"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:textSize="16sp" />
 
 </RelativeLayout>
