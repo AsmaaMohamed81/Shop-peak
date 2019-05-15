@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Local.HomeDatabase;
+import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
@@ -151,8 +152,8 @@ public class AddProductActivity extends AppCompatActivity {
      String image1 = Image_Uri1.toString();
      String image2 = Image_Uri2.toString();
      int id= Integer.parseInt(product_num.getText().toString());
-     String []data = mprefs.getDataFromSharedPreference();
-     String name =data[0];
+     UserModel userModel = mprefs.Get_UserData(AddProductActivity.this);
+     String name =userModel.getName();
      HomeModel homeModel=new HomeModel(image1,image2,title,des,size,price,gender,name,R.drawable.vender_image2);
     // HomeModel homeModel=new HomeModel(id,image,title,"dfkldlfks","50$","XXL","male");
      homeDatabase.dao_home().addproductItem(homeModel);

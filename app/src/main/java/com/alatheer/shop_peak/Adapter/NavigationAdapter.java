@@ -53,7 +53,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
              Toast.makeText(context, navigationModels.get(position).getItem_name(), Toast.LENGTH_SHORT).show();
              if (navigationModels.get(position).getItem_name().equals(context.getString(R.string.logout))){
                  mPrefs = new MySharedPreference(context);
-                 mPrefs.DeleteallDatainSharedPreference();
+                 mPrefs.ClearData(context);
                  context.startActivity(new Intent(context, Login_Activity.class));
                  Animatoo.animateSlideLeft(context);
              }

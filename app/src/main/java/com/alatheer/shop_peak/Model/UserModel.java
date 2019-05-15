@@ -6,6 +6,12 @@ private String name;
 private String image_url;
 private String email;
 
+    public UserModel(String name, String image_url, String email) {
+        this.name = name;
+        this.image_url = image_url;
+        this.email = email;
+    }
+
     public String getName() {
         return name;
     }

@@ -11,6 +11,7 @@ import android.view.SurfaceView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.R;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
@@ -73,19 +74,27 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
                         mp.stop();
                         mp.release();
                         mPrefs = new MySharedPreference(Splash_Activity.this);
-                        String []data=mPrefs.getDataFromSharedPreference();
-                        String name=data[0];
-                        String image_url=data[1];
-                        Toast.makeText(Splash_Activity.this, "name"+name, Toast.LENGTH_SHORT).show();
-                        if(name == null && image_url==null){
+                        UserModel userModel =mPrefs.Get_UserData(Splash_Activity.this);
+
+
+
+
+
+
+                        if(userModel==null){
+
+
+
                             Intent intent=new Intent(Splash_Activity.this,Login_Activity.class);
                             startActivity(intent);
                             Animatoo.animateDiagonal(Splash_Activity.this);
                             finish();
                         }else {
+                            Toast.makeText(Splash_Activity.this, "name"+userModel.getName(), Toast.LENGTH_SHORT).show();
+
                             Intent intent=new Intent(Splash_Activity.this,MainActivity.class);
-                            intent.putExtra("personName",name);
-                            intent.putExtra("image_url",image_url);
+                            intent.putExtra("personName",userModel.getName());
+                            intent.putExtra("image_url",userModel.getImage_url());
                             startActivity(intent);
                             Animatoo.animateDiagonal(Splash_Activity.this);
                             finish();

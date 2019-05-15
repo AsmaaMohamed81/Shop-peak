@@ -63,7 +63,7 @@ public class MySharedPreference {
         Create_Update_Session(context,Tags.session_logout);
     }
 
-
+//
 //    public void PutDataInSharedPreference(String name, String image_url,String email){
 //        mPrefs =context.getSharedPreferences("user_data",MODE_PRIVATE);
 //        SharedPreferences.Editor editor=mPrefs.edit();

@@ -5,6 +5,7 @@ import android.preference.EditTextPreference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 
+import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.R;
 
@@ -16,10 +17,14 @@ public class SettingFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
         mySharedPreference=new MySharedPreference(getActivity());
-        String[] data= mySharedPreference.getDataFromSharedPreference();
-        String name=data[0];
-        String url=data[1];
-        String email=data[2];
+
+        UserModel userModel = mySharedPreference.Get_UserData(getActivity());
+
+        String name=userModel.getName();
+        String url=userModel.getImage_url();
+        String email=userModel.getEmail();
+
+
         EditTextPreference editTextPreference= (EditTextPreference) findPreference("key_name");
         editTextPreference.setSummary(name);
         EditTextPreference editTextPreference1= (EditTextPreference) findPreference("key_email");

@@ -31,6 +31,7 @@ import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Local.Favorite_Database;
+import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.NavigationModel;
@@ -100,9 +101,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             String personname=i.getStringExtra("personName");
             Toast.makeText(this, personname, Toast.LENGTH_SHORT).show();
             mPrefs = new MySharedPreference(this);
-            String[] data= mPrefs.getDataFromSharedPreference();
-            String name=data[0];
-            String url=data[1];
+            UserModel userModel = mPrefs.Get_UserData(MainActivity.this);
+            String name=userModel.getName();
+            String url=userModel.getImage_url();
             textView.setText(name);
             Picasso.with(this).load(url).into(img);
         }catch (Exception e){
