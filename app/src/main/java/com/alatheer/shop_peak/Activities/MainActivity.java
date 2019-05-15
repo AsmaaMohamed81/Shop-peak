@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra("price", price);
         intent.putExtra("gender",gender);
         startActivity(intent);
-        Animatoo.animateDiagonal(MainActivity.this);
+        Animatoo.animateInAndOut(MainActivity.this);
 
     }
 
