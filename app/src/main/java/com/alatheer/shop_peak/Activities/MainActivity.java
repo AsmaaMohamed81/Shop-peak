@@ -159,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationrecycler.setHasFixedSize(true);
         navigation_manager=new LinearLayoutManager(this);
         navigationrecycler.setLayoutManager(navigation_manager);
+        navigationrecycler.setNestedScrollingEnabled(false);
         navigationAdapter=new NavigationAdapter(navigationModelList(),this);
         navigationrecycler.setAdapter(navigationAdapter);
     }
@@ -270,10 +271,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationlist.add(new NavigationModel(getString(R.string.setting),R.drawable.ic_settings));
         navigationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
         navigationlist.add(new NavigationModel(getString(R.string.join_us), R.drawable.ic_contact));
-        navigationlist.add(new NavigationModel(getString(R.string.contact),R.drawable.ic_contact));
         navigationlist.add(new NavigationModel(getString(R.string.setting),R.drawable.ic_settings));
         navigationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
         navigationlist.add(new NavigationModel(getString(R.string.join_us), R.drawable.ic_contact));
+        navigationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
+        navigationlist.add(new NavigationModel(getString(R.string.join_us), R.drawable.ic_contact));
+        navigationlist.add(new NavigationModel(getString(R.string.setting),R.drawable.ic_settings));
+        navigationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
         return navigationlist;
     }
 
