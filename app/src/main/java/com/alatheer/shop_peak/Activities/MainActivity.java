@@ -243,20 +243,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<NavigationModel> navigationModelList (){
 
         List<NavigationModel>  navigationlist = new ArrayList<>();
-        navigationlist.add(new NavigationModel(getString(R.string.share),R.drawable.ic_share_sold));
-        navigationlist.add(new NavigationModel(getString(R.string.favorite),R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel(getString(R.string.search),R.drawable.ic_search));
-        navigationlist.add(new NavigationModel(getString(R.string.contact),R.drawable.ic_contact));
-        navigationlist.add(new NavigationModel(getString(R.string.setting),R.drawable.ic_settings));
-        navigationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
-        navigationlist.add(new NavigationModel(getString(R.string.join_us), R.drawable.ic_contact));
-        navigationlist.add(new NavigationModel(getString(R.string.setting),R.drawable.ic_settings));
-        navigationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
-        navigationlist.add(new NavigationModel(getString(R.string.join_us), R.drawable.ic_contact));
-        navigationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
-        navigationlist.add(new NavigationModel(getString(R.string.join_us), R.drawable.ic_contact));
-        navigationlist.add(new NavigationModel(getString(R.string.setting),R.drawable.ic_settings));
-        navigationlist.add(new NavigationModel(getString(R.string.logout),R.drawable.ic_out));
+        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("سوبر ماركت",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("كمبوتر واكسسورات",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("المطبخ والسفره",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("المنزل والديكور",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("سوبر ماركت",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("كمبوتر واكسسورات",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("المطبخ والسفره",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("المنزل والديكور",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("سوبر ماركت",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("كمبوتر واكسسورات",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("المطبخ والسفره",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("المنزل والديكور",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("سوبر ماركت",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("كمبوتر واكسسورات",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("المطبخ والسفره",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
+        navigationlist.add(new NavigationModel("المنزل والديكور",R.drawable.ic_favorite_sold));
+
         return navigationlist;
     }
 
