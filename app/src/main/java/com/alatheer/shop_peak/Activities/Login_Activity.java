@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.alatheer.shop_peak.Local.MySharedPreference;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -173,8 +174,9 @@ public class Login_Activity extends AppCompatActivity {
                 Sign_up.setAnimation(animation2);
 
 
-                        Intent intent =new Intent(Login_Activity.this, Vender_Signup_Activity.class);
+                Intent intent = new Intent(Login_Activity.this, Signup_Activity.class);
                         startActivity(intent);
+                Animatoo.animateSlideRight(Login_Activity.this);
 
 
             }

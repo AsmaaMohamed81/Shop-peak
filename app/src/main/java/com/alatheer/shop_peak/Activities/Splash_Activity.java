@@ -94,7 +94,7 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
                             intent.putExtra("personName",name);
                             intent.putExtra("image_url",image_url);
                             startActivity(intent);
-                            Animatoo.animateSpin(Splash_Activity.this);
+                            Animatoo.animateDiagonal(Splash_Activity.this);
                             finish();
                         }
                     }

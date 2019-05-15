@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra("price", price);
         intent.putExtra("gender",gender);
         startActivity(intent);
-        Animatoo.animateSpin(MainActivity.this);
+        Animatoo.animateDiagonal(MainActivity.this);
 
     }
 

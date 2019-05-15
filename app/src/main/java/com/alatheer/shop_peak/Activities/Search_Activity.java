@@ -23,6 +23,7 @@ import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Local.HomeDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,7 @@ public class Search_Activity extends AppCompatActivity  {
             public void onClick(View v) {
                 Intent i=new Intent(Search_Activity.this,Filter_Activity.class);
                 startActivity(i);
+                Animatoo.animateSlideRight(Search_Activity.this);
             }
         });
 

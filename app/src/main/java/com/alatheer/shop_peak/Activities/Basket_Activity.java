@@ -19,6 +19,7 @@ import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.R;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.util.List;
 
@@ -76,6 +77,7 @@ public class Basket_Activity extends AppCompatActivity {
         intent.putExtra("des",basketModelList.get(pos).getDescription());
         intent.putExtra("gender",basketModelList.get(pos).getGender());
         startActivity(intent);
+        Animatoo.animateDiagonal(Basket_Activity.this);
     }
 
 

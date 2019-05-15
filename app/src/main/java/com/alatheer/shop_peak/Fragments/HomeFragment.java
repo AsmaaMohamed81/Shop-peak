@@ -39,6 +39,7 @@ import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.OfferModel;
 import com.alatheer.shop_peak.R;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -111,6 +112,7 @@ public class HomeFragment extends android.app.Fragment {
                     Intent i = new Intent(getActivity(), Search_Activity.class);
                     i.putExtra("title", search.getText().toString());
                     startActivity(i);
+                    Animatoo.animateSlideRight(getActivity());
                     return true;
                 }
                 return false;

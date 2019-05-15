@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 public class Signup_Activity extends AppCompatActivity {
     EditText edt_name2, edt_email, edt_phone, edt_password;
@@ -155,6 +156,7 @@ public class Signup_Activity extends AppCompatActivity {
     private void Signup(String userName, String passWord, String email, String phone) {
         Intent intent = new Intent(Signup_Activity.this, MainActivity.class);
         startActivity(intent);
+        Animatoo.animateDiagonal(Signup_Activity.this);
     }
 
     private void CreateSnackBar(String msg) {
