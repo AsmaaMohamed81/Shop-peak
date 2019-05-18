@@ -1,9 +1,11 @@
 package com.alatheer.shop_peak.Activities;
 
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,11 +16,13 @@ import android.widget.Toolbar;
 
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 public class Contact_Us_Activity extends AppCompatActivity {
     android.support.v7.widget.Toolbar toolbar;
     EditText contact_name,contact_email,contact_phone,contact_subject,contact_message;
     Button send;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,16 +53,16 @@ public class Contact_Us_Activity extends AppCompatActivity {
     }
 
     private void validation() {
-       String Name = contact_name.getText().toString();
-       String Email = contact_email.getText().toString();
-       String Phone=contact_phone.getText().toString();
-       String Subject=contact_subject.getText().toString();
-       String Message=contact_message.getText().toString();
+        String Name = contact_name.getText().toString();
+        String Email = contact_email.getText().toString();
+        String Phone=contact_phone.getText().toString();
+        String Subject=contact_subject.getText().toString();
+        String Message=contact_message.getText().toString();
         if (!TextUtils.isEmpty(Name) &&
                 !TextUtils.isEmpty(Email) &&
                 !TextUtils.isEmpty(Phone) &&
                 !TextUtils.isEmpty(Subject) &&
-        !TextUtils.isEmpty(Message)) {
+                !TextUtils.isEmpty(Message)) {
 
             Common.CloseKeyBoard(this, contact_name);
             contact_name.setError(null);
@@ -97,10 +101,27 @@ public class Contact_Us_Activity extends AppCompatActivity {
             }else {
                 contact_message.setError(null);
             }
-    }
+        }
 }
 
     private void Send_Contact(String name, String email, String phone, String subject, String message) {
         Toast.makeText(this, "data send completed", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
+        Animatoo.animateInAndOut(this);
+    }
+}

@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.MainActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".Activities.Splash_Activity"
             tools:ignore="InnerclassSeparator">
@@ -69,7 +69,9 @@
                 android:value="com.alatheer.shop_peak.Activities.Search_Activity" />
         </activity>
         <activity android:name=".Activities.Filter_Activity" />
-        <activity android:name=".Activities.Contact_Us_Activity" />
+        <activity
+            android:name=".Activities.Contact_Us_Activity"
+            android:parentActivityName=".Activities.MainActivity" />
         <activity android:name=".Activities.Settings_Activity" />
         <activity
             android:name=".Activities.Basket_Activity"
@@ -80,7 +82,9 @@
         </activity>
         <activity android:name=".Activities.Details_two_Activity" />
         <activity android:name=".Activities.Favorite_Activity" />
-        <activity android:name=".Activities.Vender_Signup_Activity"></activity>
+        <activity
+            android:name=".Activities.Vender_Signup_Activity"
+            android:parentActivityName=".Activities.MainActivity" />
     </application>
 
 </manifest>

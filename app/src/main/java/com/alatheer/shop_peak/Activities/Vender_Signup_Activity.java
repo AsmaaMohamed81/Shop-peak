@@ -4,18 +4,22 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -25,6 +29,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     Button add_logo, signup;
     private String Name, Email, Governate, City, Address, Category;
     int PICK_IMAGE_REQUEST = 1 ;
+    android.support.v7.widget.Toolbar toolbar;
     Uri filePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     }
 
     private void initview() {
+        toolbar = findViewById(R.id.toolbar);
         shop_name = findViewById(R.id.shop_name);
         shop_email = findViewById(R.id.shop_email);
         governate = findViewById(R.id.governate);
@@ -42,6 +48,9 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         category = findViewById(R.id.category);
         add_logo = findViewById(R.id.add_logo);
         signup = findViewById(R.id.btn_sign);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.press_anim);
         Common.CloseKeyBoard(this, shop_name);
 
@@ -146,5 +155,22 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     private void Signup(String name, String email, String governate, String city, String address, String category) {
         Intent intent = new Intent(Vender_Signup_Activity.this, MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
+        Animatoo.animateInAndOut(this);
     }
 }

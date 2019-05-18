@@ -23,10 +23,10 @@ public class MySharedPreference {
 
     public void Create_Update_UserData(Context context, UserModel userModel)
     {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("user",Context.MODE_PRIVATE);
+        mPrefs = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String userData = gson.toJson(userModel);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = mPrefs.edit();
         editor.putString("user_data",userData);
         editor.apply();
         Create_Update_Session(context, Tags.session_login);
@@ -35,32 +35,32 @@ public class MySharedPreference {
 
     public void Create_Update_Session(Context context,String session)
     {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("session",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        mPrefs = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mPrefs.edit();
         editor.putString("state",session);
         editor.apply();
     }
 
     public UserModel Get_UserData(Context context){
 
-        SharedPreferences sharedPreferences=context.getSharedPreferences("user",Context.MODE_PRIVATE);
+        mPrefs = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         Gson gson=new Gson();
-        String userData=sharedPreferences.getString("user_data","");
+        String userData = mPrefs.getString("user_data", "");
         UserModel userModel=gson.fromJson(userData,UserModel.class);
         return userModel;
 
 
     }
 
-    public void ClearData(Context context)
-    {
+    public void ClearData(Context context) {
+        UserModel userModel = null;
+        mPrefs = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         Gson gson = new Gson();
-        String user_data = gson.toJson("0");
-        SharedPreferences preferences = context.getSharedPreferences("user",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("user_data",user_data);
+        String userData = gson.toJson(userModel);
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putString("user_data", userData);
         editor.apply();
-        Create_Update_Session(context,Tags.session_logout);
+        Create_Update_Session(context, Tags.session_login);
     }
 
 //

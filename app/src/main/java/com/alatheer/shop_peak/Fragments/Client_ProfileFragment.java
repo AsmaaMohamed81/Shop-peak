@@ -1,5 +1,6 @@
 package com.alatheer.shop_peak.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.FullScreenImageActivity;
+import com.alatheer.shop_peak.Activities.MainActivity;
+import com.alatheer.shop_peak.Adapter.OnBackPressedListener;
 import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
 
@@ -34,11 +38,14 @@ public class Client_ProfileFragment extends android.app.Fragment{
     Button edit;
     int PICK_IMAGE_REQUEST;
     Uri filePath;
+    Activity activity;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_client__profile, container, false);
+        // activity = getActivity();
+        //((MainActivity)activity).setOnBackPressedListener(new OnBackPressedListener((FragmentActivity) activity) );
         initview(view);
         return view;
     }

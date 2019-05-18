@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.HomeAdapter;
 import com.alatheer.shop_peak.Adapter.NavigationAdapter;
+import com.alatheer.shop_peak.Adapter.OnBackPressedListener;
 import com.alatheer.shop_peak.Adapter.Search_Navigation_Adapter;
 import com.alatheer.shop_peak.Fragments.Client_Profile_Fragment;
 import com.alatheer.shop_peak.Fragments.Favorite_Fragment;
@@ -47,7 +49,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
-    NavigationView navigationView;
+    NavigationView navigationView, navigationView2;
     ImageView img_menu;
     Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Search_Navigation_Adapter search_navigation_adapter;
     RecyclerView.LayoutManager navigation_manager;
     RecyclerView navigationrecycler;
+    CircleImageView img;
     android.app.Fragment selectedfragment;
     HomeFragment homeFragment;
     MySharedPreference mPrefs;
@@ -62,7 +65,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     EditText search;
     HomeAdapter homeAdapter;
     String title1;
+    TextView login_register, tv_username;
     List<HomeModel> homeModels;
+    OnBackPressedListener onBackPressedListener;
     private int PICK_IMAGE_FROM_GALEARY_REQUEST=0;
     Uri uri;
     Bitmap bitmap;
@@ -81,10 +86,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.nav_view);
+        navigationView2 = findViewById(R.id.nav_view2);
         search = findViewById(R.id.txt_search);
+        login_register = findViewById(R.id.tv_login_register);
         View headview=navigationView.getHeaderView(0);
-        CircleImageView img=headview.findViewById(R.id.profile_img);
-        TextView textView=headview.findViewById(R.id.txtname);
+        img = headview.findViewById(R.id.profile_img);
+        tv_username = headview.findViewById(R.id.txtname);
+        login_register = headview.findViewById(R.id.tv_login_register);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,20 +104,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         Intent i=getIntent();
         try{
-            String image_url=i.getStringExtra("image_url");
-            Log.e("dddd",image_url);
-            String personname=i.getStringExtra("personName");
-            Toast.makeText(this, personname, Toast.LENGTH_SHORT).show();
+            // String image_url=i.getStringExtra("image_url");
+            //Log.e("dddd",image_url);
+            //String personname=i.getStringExtra("personName");
+            //Toast.makeText(this, personname, Toast.LENGTH_SHORT).show();
             mPrefs = new MySharedPreference(this);
             UserModel userModel = mPrefs.Get_UserData(MainActivity.this);
             String name=userModel.getName();
             String url=userModel.getImage_url();
-            textView.setText(name);
+            tv_username.setText(name);
             Picasso.with(this).load(url).into(img);
+            tv_username.setVisibility(View.VISIBLE);
+            img.setVisibility(View.VISIBLE);
+            login_register.setVisibility(View.GONE);
+
         }catch (Exception e){
-            String personname=i.getStringExtra("personName");
-            img.setImageResource(R.mipmap.icon_round);
-            textView.setText(personname);
+            //String personname=i.getStringExtra("personName");
+            //img.setImageResource(R.mipmap.icon_round);
+            //textView.setText(personname);
         }
         initRecyclerview();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -210,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     public void showmenu(View view) {
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView2.setNavigationItemSelectedListener(this);
         openDrawer();
     }
     @Override
@@ -218,16 +230,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String itemName = (String) item.getTitle();
         int id = item.getItemId();
         switch (id) {
-            case R.id.nav_fav:
-                Toast.makeText(this, itemName, Toast.LENGTH_LONG).show();
+            case R.id.nav_logout:
+                mPrefs.ClearData(MainActivity.this);
+                startActivity(new Intent(MainActivity.this, Login_Activity.class));
 
-            case R.id.nav_share :
-                Toast.makeText(this, itemName, Toast.LENGTH_LONG).show();
-
-            case R.id.nav_setting :
-                Toast.makeText(this, itemName, Toast.LENGTH_LONG).show();
-
-
+                Animatoo.animateInAndOut(MainActivity.this);
+                break;
+            case R.id.nav_join_us:
+                startActivity(new Intent(MainActivity.this, Vender_Signup_Activity.class));
+                Animatoo.animateInAndOut(MainActivity.this);
+                break;
+            case R.id.nav_contact_us:
+                startActivity(new Intent(MainActivity.this, Contact_Us_Activity.class));
+                Animatoo.animateInAndOut(MainActivity.this);
+                break;
         }
 
         closeDrawer();
@@ -285,5 +301,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MainActivity.this, Splash_Activity.class));
+        Animatoo.animateInAndOut(this);
+        super.onBackPressed();
+    }
 }

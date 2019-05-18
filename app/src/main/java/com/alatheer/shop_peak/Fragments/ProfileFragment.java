@@ -1,5 +1,6 @@
 package com.alatheer.shop_peak.Fragments;
 
+import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alatheer.shop_peak.Activities.MainActivity;
+import com.alatheer.shop_peak.Adapter.OnBackPressed;
+import com.alatheer.shop_peak.Adapter.OnBackPressedListener;
 import com.alatheer.shop_peak.Adapter.Profile_GridAdapter;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
@@ -42,6 +47,7 @@ public class ProfileFragment extends android.app.Fragment {
     RecyclerView.LayoutManager verticalmanager;
     GridLayoutManager gridmanager;
     ProfileDatabase profileDatabase;
+    Activity activity;
     Uri uri;
     Bitmap bitmap;
     String vender_name;
@@ -57,6 +63,8 @@ public class ProfileFragment extends android.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
+        // activity = getActivity();
+        // ((MainActivity)activity).setOnBackPressedListener(new  OnBackPressedListener((FragmentActivity) activity) );
         initview(view);
         return view;
     }
@@ -140,6 +148,7 @@ public class ProfileFragment extends android.app.Fragment {
         menu_recycler.setAdapter(profile_gridAdapter);
     }
 
+
    /* private List<ProfileModel> profileModelList (){
         List<ProfileModel> profilelist = new ArrayList<>();
         profilelist .add(new ProfileModel(R.drawable.item2));
@@ -153,7 +162,8 @@ public class ProfileFragment extends android.app.Fragment {
 
         return profilelist ;*/
 
-    }
+
+}
 
 
 

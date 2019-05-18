@@ -118,8 +118,8 @@ public class Login_Activity extends AppCompatActivity {
 
                             mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
                             Intent i=new Intent(Login_Activity.this,MainActivity.class);
-                            i.putExtra("personName",first_name);
-                            i.putExtra("image_url",image_url);
+                            //i.putExtra("personName",first_name);
+                            //i.putExtra("image_url",image_url);
                             startActivity(i);
                             Toast.makeText(Login_Activity.this, "log in with facebook connected successfully", Toast.LENGTH_SHORT).show();
 
@@ -237,13 +237,15 @@ public class Login_Activity extends AppCompatActivity {
                 //editor.putString("image_url",personPhoto.toString());
                 //editor.apply();
 
-                UserModel userModel=new UserModel(personName,personPhoto.toString(),personEmail);
+                UserModel userModel = new UserModel(personName, personPhoto.toString(), personEmail);
 
-                mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
+                mySharedPreference.Create_Update_UserData(Login_Activity.this, userModel);
 
                 //Toast.makeText(this,personPhoto.toString(), Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(this,MainActivity.class);
-                try {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+
+                /*try {
                     String image_url = acct.getPhotoUrl().toString(); //photo_url is String
                      intent.putExtra("personName",personName);
                      intent.putExtra("image_url",image_url);
@@ -255,7 +257,7 @@ public class Login_Activity extends AppCompatActivity {
                     //intent.putExtra("image_url",image_path.toString());
 
                     startActivity(intent);
-                }
+                }*/
 
                 }
 
@@ -342,8 +344,8 @@ public class Login_Activity extends AppCompatActivity {
         mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
 
         Intent intent = new Intent(Login_Activity.this, MainActivity.class);
-        intent.putExtra("personName",userName);
-        intent.putExtra("image_url",passWord);
+        //intent.putExtra("personName",userName);
+        //intent.putExtra("image_url",passWord);
         startActivity(intent);
 
     }

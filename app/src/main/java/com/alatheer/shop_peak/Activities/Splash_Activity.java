@@ -10,10 +10,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.alatheer.shop_peak.Model.UserModel;
-import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
+
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.Callback{
@@ -75,16 +75,7 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
                         mp.release();
                         mPrefs = new MySharedPreference(Splash_Activity.this);
                         UserModel userModel =mPrefs.Get_UserData(Splash_Activity.this);
-
-
-
-
-
-
                         if(userModel==null){
-
-
-
                             Intent intent=new Intent(Splash_Activity.this,Login_Activity.class);
                             startActivity(intent);
                             Animatoo.animateDiagonal(Splash_Activity.this);

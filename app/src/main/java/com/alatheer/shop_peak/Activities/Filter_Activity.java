@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.alatheer.shop_peak.Adapter.FilterAdapter;
 import com.alatheer.shop_peak.Adapter.FilterAdapterDetails;
-import com.alatheer.shop_peak.Adapter.OnTextClickListener;
 import com.alatheer.shop_peak.Model.FilterModel;
 import com.alatheer.shop_peak.Model.FilterModelDetails;
 import com.alatheer.shop_peak.R;

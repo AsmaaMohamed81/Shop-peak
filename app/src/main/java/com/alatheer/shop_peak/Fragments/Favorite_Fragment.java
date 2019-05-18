@@ -1,10 +1,12 @@
 package com.alatheer.shop_peak.Fragments;
 
+import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Adapter.FavoriteAdapter;
+import com.alatheer.shop_peak.Adapter.OnBackPressedListener;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
@@ -30,12 +34,15 @@ public class Favorite_Fragment extends android.app.Fragment {
     MyAppDatabase myAppDatabase;
     Favorite_Database favorite_database;
     List<BasketModel> basketModelList;
+    Activity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorite_, container, false);
+        //activity = getActivity();
+        //((MainActivity)activity).setOnBackPressedListener(new OnBackPressedListener((FragmentActivity) activity) );
         initview(view);
         return view;
     }

@@ -4,6 +4,7 @@
     android:layout_height="150dp"
     android:background="@color/colorPrimary">
     <LinearLayout
+        android:id="@+id/linear_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -41,6 +42,7 @@
             android:text="@string/login_create"
             android:textColor="@color/white"
             android:layout_alignParentBottom="true"
+            android:visibility="visible"
             android:textSize="16sp" />
 
 </RelativeLayout>
