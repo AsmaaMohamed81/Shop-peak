@@ -12,7 +12,8 @@
             <item
                 android:id="@+id/nav_join_us"
                 android:icon="@drawable/ic_person_add"
-                android:title="@string/join" />
+                android:title="@string/join_us" />
+
             <item android:id="@+id/nav_share"
                 android:icon="@drawable/ic_share_sold"
                 android:title="@string/share" />

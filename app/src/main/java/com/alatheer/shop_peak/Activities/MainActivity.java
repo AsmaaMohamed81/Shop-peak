@@ -27,6 +27,7 @@ import com.alatheer.shop_peak.Adapter.HomeAdapter;
 import com.alatheer.shop_peak.Adapter.NavigationAdapter;
 import com.alatheer.shop_peak.Adapter.OnBackPressedListener;
 import com.alatheer.shop_peak.Adapter.Search_Navigation_Adapter;
+import com.alatheer.shop_peak.BuildConfig;
 import com.alatheer.shop_peak.Fragments.Client_Profile_Fragment;
 import com.alatheer.shop_peak.Fragments.Favorite_Fragment;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
@@ -244,6 +245,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, Contact_Us_Activity.class));
                 Animatoo.animateInAndOut(MainActivity.this);
                 break;
+
+            case R.id.nav_share:
+                try {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "SHOP_PEAK");
+                    String shareMessage= "\nLet me recommend you this application\n\n";
+                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    startActivity(Intent.createChooser(shareIntent, "choose one"));
+                } catch(Exception e) {
+                    //e.toString();
+                }
+                break;
         }
 
         closeDrawer();
@@ -303,8 +318,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(MainActivity.this, Splash_Activity.class));
-        Animatoo.animateInAndOut(this);
-        super.onBackPressed();
+        selectedfragment=new HomeFragment();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
     }
 }
