@@ -1,9 +1,14 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
@@ -23,14 +28,21 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mp;
+    UserModel userModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         surfaceView = findViewById(R.id.surfaceView);
         surfaceHolder = surfaceView.getHolder();
+
     }
 
+    private boolean isConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -74,14 +86,26 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
                         mp.stop();
                         mp.release();
                         mPrefs = new MySharedPreference(Splash_Activity.this);
-                        UserModel userModel =mPrefs.Get_UserData(Splash_Activity.this);
+                        userModel = mPrefs.Get_UserData(Splash_Activity.this);
                         if(userModel==null){
                             Intent intent=new Intent(Splash_Activity.this,Login_Activity.class);
                             startActivity(intent);
                             Animatoo.animateDiagonal(Splash_Activity.this);
                             finish();
                         }else {
-                            Toast.makeText(Splash_Activity.this, "name"+userModel.getName(), Toast.LENGTH_SHORT).show();
+                            if (!isConnected()) {
+                                new AlertDialog.Builder(Splash_Activity.this).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
+                                        .setMessage(getString(R.string.check_connection))
+                                        .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                finish();
+                                            }
+                                        }).show();
+                            } else {
+                                Toast.makeText(Splash_Activity.this, "welcom" + userModel.getName(), Toast.LENGTH_SHORT).show();
+                            }
+                            //Toast.makeText(Splash_Activity.this, "name"+userModel.getName(), Toast.LENGTH_SHORT).show();
 
                             Intent intent=new Intent(Splash_Activity.this,MainActivity.class);
                             intent.putExtra("personName",userModel.getName());

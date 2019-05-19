@@ -66,6 +66,7 @@ public class Login_Activity extends AppCompatActivity {
     SharedPreferences preferences;
     GoogleSignInClient googleSignInClient;
     int GmailSignInRequest=0;
+    UserModel userModel;
     Uri image_path;
     TextView Skip;
     @Override
@@ -114,7 +115,7 @@ public class Login_Activity extends AppCompatActivity {
                             String id=object.getString("id");
                             String image_url="https://graph.facebook.com/"+id+"/picture?type=normal";
 
-                            UserModel userModel=new UserModel(first_name,image_url,"asasa@sdaskd");
+                            userModel = new UserModel(first_name, image_url, "asasa@sdaskd");
 
                             mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
                             Intent i=new Intent(Login_Activity.this,MainActivity.class);
@@ -236,9 +237,12 @@ public class Login_Activity extends AppCompatActivity {
                 //editor.putString("name",personName);
                 //editor.putString("image_url",personPhoto.toString());
                 //editor.apply();
+                try {
+                    userModel = new UserModel(personName, personPhoto.toString(), personEmail);
 
-                UserModel userModel = new UserModel(personName, personPhoto.toString(), personEmail);
-
+                } catch (Exception e) {
+                    userModel = new UserModel(personName, "https://www.wpclipart.com/buildings/shop.png", personEmail);
+                }
                 mySharedPreference.Create_Update_UserData(Login_Activity.this, userModel);
 
                 //Toast.makeText(this,personPhoto.toString(), Toast.LENGTH_SHORT).show();
@@ -339,7 +343,7 @@ public class Login_Activity extends AppCompatActivity {
 
     private void Login(String userName, String passWord) {
 
-        UserModel userModel=new UserModel(userName,passWord,"mmmmm@gmail.com");
+        userModel = new UserModel(userName, "https://www.wpclipart.com/buildings/shop.png", "mmmmm@gmail.com");
 
         mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
 

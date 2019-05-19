@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         //holder.title_img.setImageResource(basketModelList.get(position).getImg());
         Picasso.with(context).load(basketModelList.get(position).getImg()).into(holder.title_img);
         holder.counter.setText(basketModelList.get(position).getNum_of_cart());
+        setFadeAnimation(holder.itemView);
         //Uri uri= Uri.parse(basketModelList.get(position).getImg());
         // File file =new File(uri.getPath());
         //Picasso.with(context).load(file).into(holder.title_img);
@@ -89,6 +91,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             holder.c_black.setButtonDrawable(R.drawable.ic_check_gray);
         }
     }
+
+    private void setFadeAnimation(View itemView) {
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(3000);
+        itemView.startAnimation(anim);
+    }
+
 
     @Override
     public int getItemCount() {

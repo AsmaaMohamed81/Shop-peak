@@ -20,8 +20,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 public class Signup_Activity extends AppCompatActivity {
@@ -154,9 +156,13 @@ public class Signup_Activity extends AppCompatActivity {
     }
 
     private void Signup(String userName, String passWord, String email, String phone) {
+        UserModel userModel = new UserModel(userName, "https://www.wpclipart.com/buildings/shop.png", email);
+        MySharedPreference mprefs = new MySharedPreference(this);
+        mprefs.Create_Update_UserData(Signup_Activity.this, userModel);
+
         Intent intent = new Intent(Signup_Activity.this, MainActivity.class);
         startActivity(intent);
-        Animatoo.animateDiagonal(Signup_Activity.this);
+        Animatoo.animateSwipeRight(Signup_Activity.this);
     }
 
     private void CreateSnackBar(String msg) {

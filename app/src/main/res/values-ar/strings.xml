@@ -48,5 +48,7 @@
     <string name="facebook_app_id">713163185768231</string>
     <string name="fb_login_protocol_scheme">fb713163185768231</string>
     <string name="login_create">تسجيل الدخول/إنشاء حساب</string>
+    <string name="check_connection">من فضلك تحقق من الاتصال بالانترنت</string>
+    <string name="networkconnectionAlert">تنبيه الاتصال بالشبكة </string>
 
 </resources>

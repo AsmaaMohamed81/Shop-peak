@@ -1,7 +1,11 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -73,12 +78,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Uri uri;
     Bitmap bitmap;
     int flag=0;
+    UserModel userModel;
     Favorite_Database favoriteDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initview();
+    }
+
+    private boolean isConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     private void initview() {
@@ -103,14 +115,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(i);
             }
         });
-        Intent i=getIntent();
+        login_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, Login_Activity.class));
+            }
+        });
         try{
             // String image_url=i.getStringExtra("image_url");
             //Log.e("dddd",image_url);
             //String personname=i.getStringExtra("personName");
             //Toast.makeText(this, personname, Toast.LENGTH_SHORT).show();
             mPrefs = new MySharedPreference(this);
-            UserModel userModel = mPrefs.Get_UserData(MainActivity.this);
+            userModel = mPrefs.Get_UserData(MainActivity.this);
             String name=userModel.getName();
             String url=userModel.getImage_url();
             tv_username.setText(name);
@@ -118,12 +135,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             tv_username.setVisibility(View.VISIBLE);
             img.setVisibility(View.VISIBLE);
             login_register.setVisibility(View.GONE);
-
+            if (!isConnected()) {
+                new AlertDialog.Builder(this).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
+                        .setMessage(getString(R.string.check_connection))
+                        .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        }).show();
+            } else {
+                Toast.makeText(this, "welcom" + userModel.getName(), Toast.LENGTH_SHORT).show();
+            }
         }catch (Exception e){
             //String personname=i.getStringExtra("personName");
             //img.setImageResource(R.mipmap.icon_round);
             //textView.setText(personname);
         }
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseimage();
+            }
+        });
         initRecyclerview();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         //BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
@@ -133,6 +167,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
 
     }
+
+    private void chooseimage() {
+
+    }
+
     public void setSelectProfile(String vender_name,int vender_image,String image1,String image2){
         if (profileFragment==null)
         {
