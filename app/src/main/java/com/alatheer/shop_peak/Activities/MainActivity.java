@@ -45,6 +45,7 @@ import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.R;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -272,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id) {
             case R.id.nav_logout:
                 mPrefs.ClearData(MainActivity.this);
+                LoginManager.getInstance().logOut();
                 startActivity(new Intent(MainActivity.this, Login_Activity.class));
 
                 Animatoo.animateInAndOut(MainActivity.this);

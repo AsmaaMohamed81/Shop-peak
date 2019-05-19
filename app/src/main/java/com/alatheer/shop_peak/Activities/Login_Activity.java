@@ -281,14 +281,7 @@ public class Login_Activity extends AppCompatActivity {
 
     }
 
-    AccessTokenTracker tokenTracker=new AccessTokenTracker() {
-        @Override
-        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-            if (currentAccessToken==null){
 
-            }
-        }
-    };
 
     private void CreateProgressDialog() {
         dialog = new ProgressDialog(this);
