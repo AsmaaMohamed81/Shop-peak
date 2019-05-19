@@ -124,18 +124,30 @@ public class HomeFragment extends android.app.Fragment {
 
         List<OfferModel> offerlist = new ArrayList<>();
 
-        offerlist.add(new OfferModel(R.drawable.item2));
-        offerlist.add(new OfferModel(R.drawable.item1));
-        offerlist.add(new OfferModel(R.drawable.item3));
-        offerlist.add(new OfferModel(R.drawable.item1));
-        offerlist.add(new OfferModel(R.drawable.item2));
-        offerlist.add(new OfferModel(R.drawable.item3));
-        offerlist.add(new OfferModel(R.drawable.item2));
-        offerlist.add(new OfferModel(R.drawable.item1));
-        offerlist.add(new OfferModel(R.drawable.item3));
-        offerlist.add(new OfferModel(R.drawable.item1));
-        offerlist.add(new OfferModel(R.drawable.item2));
-        offerlist.add(new OfferModel(R.drawable.item3));
+        offerlist.add(new OfferModel("https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/12/21/goods-img/1547683385158389308.jpg",
+                "https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/12/21/goods-img/1547683385158389308.jpg", "dress", "a beautiful blue  address for girls ", "$25.99", "XL", "female", "POLO", R.drawable.vender_image1));
+        offerlist.add(new OfferModel("https://www.kuiu.com/dw/image/v2/AAYP_PRD/on/demandware.static/-/Sites-master-catalog/default/dw7d8ead9b/images/hi-res/Outerwear/RubiconHoodedJacket/Gunmetal/RubiconHooded_GM_FR02_1425x1825.jpg?sw=270&sh=330&sm=fit",
+                "https://www.kuiu.com/dw/image/v2/AAYP_PRD/on/demandware.static/-/Sites-master-catalog/default/dw7d8ead9b/images/hi-res/Outerwear/RubiconHoodedJacket/Gunmetal/RubiconHooded_GM_FR02_1425x1825.jpg?sw=270&sh=330&sm=fit", "jacket", "a comfartable black jacket for boys", "$30.00 ", "L", "male", "TownTeam", R.drawable.vender_image2));
+        offerlist.add(new OfferModel("https://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1524509473/cole-haan-DRESSSNEAK0418.jpg?itok=goYT20F6",
+                "https://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1524509473/cole-haan-DRESSSNEAK0418.jpg?itok=goYT20F6", "shoes", "a comfartable blue sportive shoes for playing football", "$20.00", "L", "male", "Nike", R.drawable.vender_image3));
+        offerlist.add(new OfferModel("https://c.76.my/Malaysia/nian-jeep-cotton-jacket-men-coat-men-jacket-j8028-aeioumall-1603-08-aeioumall@1.jpg",
+                "https://c.76.my/Malaysia/nian-jeep-cotton-jacket-men-coat-men-jacket-j8028-aeioumall-1603-08-aeioumall@1.jpg", "jacket", "a comfartable black jacket for boys", "$30.00 ", "XXL", "male", "Puma", R.drawable.vender_image4));
+        offerlist.add(new OfferModel("https://di2ponv0v5otw.cloudfront.net/posts/2018/11/10/5be723f9819e9005c39a3991/s_5be72424409c152de27b26e8.jpg",
+                "https://di2ponv0v5otw.cloudfront.net/posts/2018/11/10/5be723f9819e9005c39a3991/s_5be72424409c152de27b26e8.jpg", "dress", "a beautiful blue  address for girls ", "$25.99", "XXL", "female", "Addidas", R.drawable.vender_image5));
+        offerlist.add(new OfferModel("https://www.cartersoshkosh.ca/dw/image/v2/AAMK_PRD/on/demandware.static/-/Sites-carters_master_catalog/default/dw851223ce/productimages/OF160441.jpg?sw=2000",
+                "https://www.cartersoshkosh.ca/dw/image/v2/AAMK_PRD/on/demandware.static/-/Sites-carters_master_catalog/default/dw851223ce/productimages/OF160441.jpg?sw=2000", "shoes", "a comfartable blue sportive shoes for playing football", "$20.00", "M", "female", "POLO", R.drawable.vender_image1));
+        offerlist.add(new OfferModel("https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/12/21/goods-img/1547683385158389308.jpg",
+                "https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/12/21/goods-img/1547683385158389308.jpg", "dress", "a beautiful blue  address for girls ", "$25.99", "XL", "female", "POLO", R.drawable.vender_image1));
+        offerlist.add(new OfferModel("https://www.kuiu.com/dw/image/v2/AAYP_PRD/on/demandware.static/-/Sites-master-catalog/default/dw7d8ead9b/images/hi-res/Outerwear/RubiconHoodedJacket/Gunmetal/RubiconHooded_GM_FR02_1425x1825.jpg?sw=270&sh=330&sm=fit",
+                "https://www.kuiu.com/dw/image/v2/AAYP_PRD/on/demandware.static/-/Sites-master-catalog/default/dw7d8ead9b/images/hi-res/Outerwear/RubiconHoodedJacket/Gunmetal/RubiconHooded_GM_FR02_1425x1825.jpg?sw=270&sh=330&sm=fit", "jacket", "a comfartable black jacket for boys", "$30.00 ", "L", "male", "TownTeam", R.drawable.vender_image2));
+        offerlist.add(new OfferModel("https://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1524509473/cole-haan-DRESSSNEAK0418.jpg?itok=goYT20F6",
+                "https://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1524509473/cole-haan-DRESSSNEAK0418.jpg?itok=goYT20F6", "shoes", "a comfartable blue sportive shoes for playing football", "$20.00", "L", "male", "Nike", R.drawable.vender_image3));
+        offerlist.add(new OfferModel("https://c.76.my/Malaysia/nian-jeep-cotton-jacket-men-coat-men-jacket-j8028-aeioumall-1603-08-aeioumall@1.jpg",
+                "https://c.76.my/Malaysia/nian-jeep-cotton-jacket-men-coat-men-jacket-j8028-aeioumall-1603-08-aeioumall@1.jpg", "jacket", "a comfartable black jacket for boys", "$30.00 ", "XXL", "male", "Puma", R.drawable.vender_image4));
+        offerlist.add(new OfferModel("https://di2ponv0v5otw.cloudfront.net/posts/2018/11/10/5be723f9819e9005c39a3991/s_5be72424409c152de27b26e8.jpg",
+                "https://di2ponv0v5otw.cloudfront.net/posts/2018/11/10/5be723f9819e9005c39a3991/s_5be72424409c152de27b26e8.jpg", "dress", "a beautiful blue  address for girls ", "$25.99", "XXL", "female", "Addidas", R.drawable.vender_image5));
+        offerlist.add(new OfferModel("https://www.cartersoshkosh.ca/dw/image/v2/AAMK_PRD/on/demandware.static/-/Sites-carters_master_catalog/default/dw851223ce/productimages/OF160441.jpg?sw=2000",
+                "https://www.cartersoshkosh.ca/dw/image/v2/AAMK_PRD/on/demandware.static/-/Sites-carters_master_catalog/default/dw851223ce/productimages/OF160441.jpg?sw=2000", "shoes", "a comfartable blue sportive shoes for playing football", "$20.00", "M", "female", "POLO", R.drawable.vender_image1));
         return offerlist;
     }
 

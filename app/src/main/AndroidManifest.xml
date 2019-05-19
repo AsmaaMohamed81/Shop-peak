@@ -87,6 +87,7 @@
         <activity
             android:name=".Activities.Vender_Signup_Activity"
             android:parentActivityName=".Activities.MainActivity" />
+        <activity android:name=".Activities.Offer_Details_Activity"></activity>
     </application>
 
 </manifest>

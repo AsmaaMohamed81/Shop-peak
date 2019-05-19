@@ -36,7 +36,6 @@
     <string name="favorite">Favorite</string>
     <string name="search">Search</string>
     <string name="contact">Contact Us</string>
-    <string name="join">Join Us</string>
     <string name="logout">Logout</string>
     <string name="addlogo">Add Logo</string>
     <string name="notifications">Notifications</string>
@@ -49,6 +48,9 @@
     <string name="fb_login_protocol_scheme">fb713163185768231</string>
     <string name="login_create">Log in / Create account</string>
     <string name="check_connection">please check your Connection</string>
-    <string name="networkconnectionAlert">NetworkConnectionAlert</string>
+    <string name="networkconnectionAlert">Network Connection Alert</string>
     <string name="close">Close</string>
+    <string name="subject">Subject</string>
+    <string name="message">Message</string>
+    <string name="send">Send</string>
 </resources>

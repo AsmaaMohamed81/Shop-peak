@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -27,6 +28,7 @@ import java.io.IOException;
 public class Vender_Signup_Activity extends AppCompatActivity {
     EditText shop_name, shop_email, governate, city, address, category;
     Button add_logo, signup;
+    ImageView seller_image;
     private String Name, Email, Governate, City, Address, Category;
     int PICK_IMAGE_REQUEST = 1 ;
     android.support.v7.widget.Toolbar toolbar;
@@ -49,6 +51,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         add_logo = findViewById(R.id.add_logo);
         signup = findViewById(R.id.btn_sign);
         setSupportActionBar(toolbar);
+        seller_image = findViewById(R.id.seller_image);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.press_anim);
@@ -84,6 +87,9 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                add_logo.setVisibility(View.GONE);
+                seller_image.setImageBitmap(bitmap);
+                seller_image.setVisibility(View.VISIBLE);
                 Toast.makeText(Vender_Signup_Activity.this, "image added successfully", Toast.LENGTH_SHORT).show();
 
             } catch (IOException e) {

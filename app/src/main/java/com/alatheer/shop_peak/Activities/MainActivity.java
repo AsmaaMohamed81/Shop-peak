@@ -357,10 +357,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void sendOfferItem(String[] image_resources, String title, String des, String price, String gender) {
+        Bundle bundle = new Bundle();
+        bundle.putStringArray("homeimage", image_resources);
+        Intent intent = new Intent(this, Offer_Details_Activity.class);
+        intent.putExtras(bundle);
+        intent.putExtra("title", title);
+        intent.putExtra("des", des);
+        intent.putExtra("price", price);
+        intent.putExtra("gender", gender);
+        startActivity(intent);
+        Animatoo.animateInAndOut(MainActivity.this);
+    }
     @Override
     public void onBackPressed() {
         selectedfragment=new HomeFragment();
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
     }
+
+
 }

@@ -50,5 +50,9 @@
     <string name="login_create">تسجيل الدخول/إنشاء حساب</string>
     <string name="check_connection">من فضلك تحقق من الاتصال بالانترنت</string>
     <string name="networkconnectionAlert">تنبيه الاتصال بالشبكة </string>
+    <string name="subject">المادة</string>
+    <string name="message">الرسالة</string>
+    <string name="close">اغلاق</string>
+    <string name="send">ارسال</string>
 
 </resources>
