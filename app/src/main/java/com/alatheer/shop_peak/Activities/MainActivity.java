@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView, navigationView2;
     ImageView img_menu;
     Toolbar toolbar;
-    BottomNavigationView bottomNavigationView;
+    BottomNavigationView bottomNavigationView, bottomNavigationView2;
     NavigationAdapter navigationAdapter;
     Search_Navigation_Adapter search_navigation_adapter;
     RecyclerView.LayoutManager navigation_manager;
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private int PICK_IMAGE_FROM_GALEARY_REQUEST=0;
     Uri uri;
     Bitmap bitmap;
-    int flag=0;
+    int flag;
     UserModel userModel;
     Favorite_Database favoriteDatabase;
     @Override
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initview();
+
     }
 
     private boolean isConnected() {
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initview() {
+
         final FragmentManager fm = getSupportFragmentManager();
         img_menu = findViewById(R.id.menu_img);
         drawerLayout = findViewById(R.id.drawer);
@@ -161,8 +163,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         initRecyclerview();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView2 = findViewById(R.id.bottom_navigation2);
         //BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(nav_listner);
+        bottomNavigationView2.setOnNavigationItemSelectedListener(nav_listner2);
+        getDataIntent();
         HomeFragment homeFragment=new HomeFragment();
         android.app.FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
@@ -221,9 +226,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     selectedfragment=new Client_Profile_Fragment();
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
-                // case R.id.nav_add:
+                //case R.id.nav_add:
                 //startActivity(new Intent(MainActivity.this,AddProductActivity.class));
                 //break;
+            }
+            return true;
+        }
+    };
+    private BottomNavigationView.OnNavigationItemSelectedListener nav_listner2 = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            selectedfragment = null;
+            switch (item.getItemId()) {
+                case R.id.nav_notification:
+                    selectedfragment = new NotificationFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                    break;
+                case R.id.nav_home:
+                    selectedfragment = new HomeFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                    break;
+                case R.id.nav_favorite:
+                    selectedfragment = new Favorite_Fragment();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                    break;
+                case R.id.nav_profile:
+                    selectedfragment = new Client_Profile_Fragment();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                    break;
+                case R.id.nav_add:
+                    startActivity(new Intent(MainActivity.this, AddProductActivity.class));
+                    break;
             }
             return true;
         }
@@ -374,6 +407,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         selectedfragment=new HomeFragment();
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
+    }
+
+    void getDataIntent() {
+        Intent intent = getIntent();
+        flag = intent.getIntExtra("flag", 0);
+        if (flag == 1) {
+            bottomNavigationView2.setVisibility(View.VISIBLE);
+            bottomNavigationView.setVisibility(View.GONE);
+        }
+
     }
 
 

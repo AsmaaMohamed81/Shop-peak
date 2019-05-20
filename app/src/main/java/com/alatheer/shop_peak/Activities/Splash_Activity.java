@@ -20,6 +20,7 @@ import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.facebook.login.LoginManager;
 
 public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.Callback{
     ImageView logo;
@@ -102,6 +103,7 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
                             }
                             Intent intent=new Intent(Splash_Activity.this,Login_Activity.class);
                             startActivity(intent);
+                            LoginManager.getInstance().logOut();
                             Animatoo.animateDiagonal(Splash_Activity.this);
                             finish();
                         }else {

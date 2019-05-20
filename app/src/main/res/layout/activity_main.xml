@@ -56,18 +56,37 @@
 
             </FrameLayout>
 
-            <android.support.design.widget.BottomNavigationView
-                android:id="@+id/bottom_navigation"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
-                android:layout_alignParentBottom="true"
-                android:background="?android:attr/windowBackground"
-                app:labelVisibilityMode="labeled"
-                app:menu="@menu/bottom_navigation"
-                app:itemTextColor="@drawable/bottom_nav_color"
-                app:itemIconTint="@drawable/bottom_nav_color">
+                android:layout_alignParentBottom="true">
 
-            </android.support.design.widget.BottomNavigationView>
+                <android.support.design.widget.BottomNavigationView
+                    android:id="@+id/bottom_navigation2"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:background="?android:attr/windowBackground"
+                    app:labelVisibilityMode="labeled"
+                    app:menu="@menu/seller_home_menu"
+                    android:visibility="gone"
+                    app:itemTextColor="@drawable/bottom_nav_color"
+                    app:itemIconTint="@drawable/bottom_nav_color">
+
+                </android.support.design.widget.BottomNavigationView>
+
+                <android.support.design.widget.BottomNavigationView
+                    android:id="@+id/bottom_navigation"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:background="?android:attr/windowBackground"
+                    app:labelVisibilityMode="labeled"
+                    app:menu="@menu/bottom_navigation"
+                    app:itemTextColor="@drawable/bottom_nav_color"
+                    app:itemIconTint="@drawable/bottom_nav_color">
+
+                </android.support.design.widget.BottomNavigationView>
+
+            </FrameLayout>
 
         </RelativeLayout>
 

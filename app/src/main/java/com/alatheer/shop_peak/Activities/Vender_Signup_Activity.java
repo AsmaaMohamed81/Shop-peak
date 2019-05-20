@@ -124,7 +124,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
             address.setError(null);
             city.setError(null);
             governate.setError(null);
-            Signup(Name, Email, Governate, City, Address, Category);
+            Signup(Name, Email, Governate, City, Address, Category, filePath);
 
         } else {
             if (TextUtils.isEmpty(Name)) {
@@ -164,9 +164,11 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
     }
 
-    private void Signup(String name, String email, String governate, String city, String address, String category) {
+    private void Signup(String name, String email, String governate, String city, String address, String category, Uri filePath) {
         Intent intent = new Intent(Vender_Signup_Activity.this, MainActivity.class);
+        intent.putExtra("flag", 1);
         startActivity(intent);
+        Animatoo.animateInAndOut(this);
     }
 
     @Override
