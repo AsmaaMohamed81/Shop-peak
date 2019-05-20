@@ -71,6 +71,12 @@ public class Vender_Signup_Activity extends AppCompatActivity {
                 chooseImage();
             }
         });
+        seller_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage();
+            }
+        });
     }
 
     private void chooseImage() {
