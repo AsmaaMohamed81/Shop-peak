@@ -18,7 +18,7 @@
             android:layout_width="300dp"
             android:layout_height="80dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="60dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/logo"/>
         <LinearLayout
@@ -29,7 +29,7 @@
             android:id="@+id/layout"
             android:layout_below="@+id/logo_img"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:gravity="center">
             <EditText
                 android:id="@+id/user_name"
@@ -42,21 +42,10 @@
                 android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"/>
             <EditText
-                android:id="@+id/user_password"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/txt_field"
-                android:hint="@string/password"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp"
-                android:textColor="@color/colorPrimary"
-                android:textColorHint="@color/colorPrimary"/>
-            <EditText
                 android:id="@+id/user_email"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/txt_field"
                 android:hint="@string/email"
                 android:paddingRight="15dp"
@@ -67,7 +56,7 @@
                 android:id="@+id/user_phone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/txt_field"
                 android:hint="@string/phone"
                 android:paddingRight="15dp"
@@ -75,13 +64,92 @@
                 android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"/>
 
+            <LinearLayout
+                android:id="@+id/linear_address"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/governate"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/governate"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:hint="@string/governate"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/city"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/city"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:hint="@string/city"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary" />
+            </LinearLayout>
+            <EditText
+                android:id="@+id/user_password"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/txt_field"
+                android:hint="@string/password"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"/>
+
+            <EditText
+                android:id="@+id/user_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/txt_field"
+                android:hint="@string/confirm_password"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/btn_sign"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_field"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/sign_up"
                 android:textColor="@android:color/white"
                 />

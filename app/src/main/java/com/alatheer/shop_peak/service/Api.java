@@ -44,7 +44,7 @@ public class Api {
 
     public static Services getService()
     {
-        Retrofit retrofit = getRetrofit();
+        retrofit = getRetrofit();
         return retrofit.create(Services.class);
 
     }

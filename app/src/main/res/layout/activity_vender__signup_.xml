@@ -67,24 +67,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:orientation="horizontal"
-                android:weightSum="3">
-                <EditText
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/governate"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:layout_weight="1" />
+
+                <Spinner
                     android:id="@+id/governate"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="45dp"
-                    android:background="@drawable/txt_field"
                     android:layout_weight="1"
                     android:hint="@string/governate"
                     android:paddingRight="15dp"
                     android:paddingLeft="15dp"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary"/>
-                <EditText
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="2"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/city"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:layout_weight="1" />
+
+                <Spinner
                     android:id="@+id/city"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="45dp"
-                    android:background="@drawable/txt_field"
                     android:layout_weight="1"
                     android:hint="@string/city"
                     android:paddingRight="15dp"
@@ -92,21 +122,21 @@
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary"/>
-                <EditText
-                    android:id="@+id/address"
-                    android:layout_width="100dp"
-                    android:layout_height="45dp"
-                    android:background="@drawable/txt_field"
-                    android:layout_weight="1"
-                    android:hint="@string/address"
-                    android:paddingRight="15dp"
-                    android:paddingLeft="15dp"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="@color/colorPrimary"/>
-
-
             </LinearLayout>
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/txt_field"
+                android:layout_weight="1"
+                android:hint="@string/address"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
             <EditText
                 android:id="@+id/category"
                 android:layout_width="match_parent"
@@ -115,6 +145,7 @@
                 android:hint="@string/category"
                 android:paddingRight="15dp"
                 android:paddingLeft="15dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary"/>
@@ -144,6 +175,16 @@
                     android:layout_gravity="center"
                     android:visibility="gone" />
             </FrameLayout>
+
+            <Button
+                android:id="@+id/addlat_lon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="ADD lat &amp; lon"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/txt_field" />
 
             <Button
                 android:id="@+id/btn_sign"

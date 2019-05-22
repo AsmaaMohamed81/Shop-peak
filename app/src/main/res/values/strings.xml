@@ -53,4 +53,23 @@
     <string name="subject">Subject</string>
     <string name="message">Message</string>
     <string name="send">Send</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="Product_Number">Product Number</string>
+    <string name="product_name">Product Name</string>
+    <string name="Main_Category">Main Category</string>
+    <string name="SubCategory">SubCategory</string>
+    <string name="price_after_discount">Price After Discount</string>
+    <string name="price_before_discount">Price Before Discount</string>
+    <string name="element_name">Element</string>
+    <string name="element_description">Element Description</string>
+    <string name="element_color">Element Color</string>
+    <string name="Add_product">Add product</string>
+    <string name="productname_req">Product name is required</string>
+    <string name="productnumber_req">Product Number is required</string>
+    <string name="price_before_discount__req">Price before Discount is required</string>
+    <string name="price_after_discount_req">Price After Discount is required</string>
+    <string name="element_name_req">Element  is required</string>
+    <string name="element_description_req">Element Description  is required</string>
+    <string name="element_color_req">Element Color is required</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

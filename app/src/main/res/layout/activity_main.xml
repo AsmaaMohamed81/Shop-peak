@@ -68,6 +68,7 @@
                     android:background="?android:attr/windowBackground"
                     app:labelVisibilityMode="labeled"
                     app:menu="@menu/seller_home_menu"
+
                     android:visibility="gone"
                     app:itemTextColor="@drawable/bottom_nav_color"
                     app:itemIconTint="@drawable/bottom_nav_color">

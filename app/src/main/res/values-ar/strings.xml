@@ -54,5 +54,22 @@
     <string name="message">الرسالة</string>
     <string name="close">اغلاق</string>
     <string name="send">ارسال</string>
-
+    <string name="confirm_password">تاكيد كلمة المرور</string>
+    <string name="Product_Number">كود الصنف</string>
+    <string name="product_name">اسم الصنف</string>
+    <string name="Main_Category">التصنيف الرئيسي</string>
+    <string name="SubCategory">التصنيف الفرعي</string>
+    <string name="price_after_discount">السعر بعد الخصم</string>
+    <string name="price_before_discount">السعر قبل الخصم</string>
+    <string name="element_name">ايم العنصر</string>
+    <string name="element_description">مواصفات العنصر</string>
+    <string name="element_color">لون العنصر</string>
+    <string name="Add_product">اضافة منتج</string>
+    <string name="productname_req">ادخل اسم المنتج</string>
+    <string name="productnumber_req">ادخل رقم المنتج</string>
+    <string name="price_before_discount__req">ادخل السعر قبل الخصم</string>
+    <string name="price_after_discount_req">ادخل الاسم بعد الخصم</string>
+    <string name="element_name_req">ادخل اسم العنصر</string>
+    <string name="element_description_req">ادخل تفاصيل العنصر</string>
+    <string name="element_color_req">ادخل لون العنصر</string>
 </resources>
