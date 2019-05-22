@@ -73,16 +73,6 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:weightSum="2">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/governate"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    android:layout_weight="1" />
-
                 <Spinner
                     android:id="@+id/governate"
                     android:layout_width="0dp"
@@ -91,26 +81,6 @@
                     android:hint="@string/governate"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_marginTop="15dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/city"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    android:layout_weight="1" />
-
                 <Spinner
                     android:id="@+id/city"
                     android:layout_width="0dp"
@@ -119,7 +89,9 @@
                     android:hint="@string/city"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary" />
+
             </LinearLayout>
+
             <EditText
                 android:id="@+id/user_password"
                 android:layout_width="match_parent"
