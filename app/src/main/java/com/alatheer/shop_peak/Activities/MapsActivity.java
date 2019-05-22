@@ -52,5 +52,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.makeText(MapsActivity.this, "latitude" + latLng.latitude + "," + "longitude" + latLng.longitude, Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

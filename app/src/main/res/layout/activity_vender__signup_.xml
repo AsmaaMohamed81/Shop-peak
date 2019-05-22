@@ -164,8 +164,7 @@
                 android:background="@drawable/btn_field"
                 android:layout_marginTop="25dp"
                 android:text="@string/sign_up"
-                android:textColor="@android:color/white"
-                />
+                android:textColor="@android:color/white" />
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>
