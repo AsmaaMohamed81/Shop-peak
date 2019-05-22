@@ -2,6 +2,8 @@ package com.alatheer.shop_peak.Activities;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.alatheer.shop_peak.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +25,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
 
@@ -43,5 +46,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(26.8206, 30.8025);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Egypt"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Toast.makeText(MapsActivity.this, "latitude" + latLng.latitude + "," + "longitude" + latLng.longitude, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
