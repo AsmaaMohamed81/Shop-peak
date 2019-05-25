@@ -141,13 +141,31 @@
                 android:textColorHint="@color/colorPrimary"
                 android:maxLines="3" />
 
-            <ImageView
-                android:id="@+id/added_image"
-                android:scaleType="centerInside"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/icon" />
+                android:layout_height="150dp">
+
+                <ImageView
+                    android:id="@+id/added_image"
+                    android:scaleType="centerInside"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/icon"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btn_add_main_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_field"
+                    android:text="add main Picture"
+                    android:textColor="@color/white"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+            </FrameLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -181,19 +199,39 @@
                 android:textColorHint="@color/colorPrimary"
                 android:maxLines="3" />
 
-            <ImageView
-                android:id="@+id/added_multiple_image"
-                android:scaleType="centerInside"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/icon" />
+                android:layout_height="150dp">
+
+                <ImageView
+                    android:id="@+id/added_multiple_image"
+                    android:scaleType="centerInside"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/icon" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_field"
+                    android:text="Add all images of product"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp" />
+
+            </FrameLayout>
+
 
             <EditText
                 android:id="@+id/element_color"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:text="@string/element_color"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColorHint="@color/colorPrimary"
                 android:background="@drawable/txt_field" />
 
             <Button
@@ -201,6 +239,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Add_product"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/btn_field" />
 
 

@@ -105,6 +105,7 @@ public class ProfileFragment extends android.app.Fragment {
                     .setPositiveButton(getString(R.string.wifi), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+
                             WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                             wifiManager.setWifiEnabled(true);
                         }
