@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -53,10 +54,11 @@ public class Client_ProfileFragment extends android.app.Fragment{
         if (!isConnected()) {
             new AlertDialog.Builder(getActivity()).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
                     .setMessage(getString(R.string.check_connection))
-                    .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getString(R.string.wifi), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            getActivity().finish();
+                            WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                            wifiManager.setWifiEnabled(true);
                         }
                     }).show();
         } else {

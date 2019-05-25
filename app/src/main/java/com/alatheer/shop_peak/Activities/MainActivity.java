@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -84,13 +85,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initview();
 
     }
-
-    private boolean isConnected() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
-    }
-
     private void initview() {
 
         final FragmentManager fm = getSupportFragmentManager();
@@ -134,18 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             tv_username.setVisibility(View.VISIBLE);
             img.setVisibility(View.VISIBLE);
             login_register.setVisibility(View.GONE);
-            if (!isConnected()) {
-                new AlertDialog.Builder(this).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
-                        .setMessage(getString(R.string.check_connection))
-                        .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                finish();
-                            }
-                        }).show();
-            } else {
-                Toast.makeText(this, "welcom" + userModel.getName(), Toast.LENGTH_SHORT).show();
-            }
+
         }catch (Exception e){
             //String personname=i.getStringExtra("personName");
             //img.setImageResource(R.mipmap.icon_round);
