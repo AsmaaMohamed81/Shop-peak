@@ -62,6 +62,7 @@ public class Details_two_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_details_two_);
         initview();
 
+
     }
     private void initview() {
         details_title = findViewById(R.id.details_title);
