@@ -1,12 +1,18 @@
 package com.alatheer.shop_peak.Fragments;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.Notification_Adapter;
 import com.alatheer.shop_peak.Model.NotificationModel;
@@ -35,6 +41,18 @@ public class NotificationFragment extends android.app.Fragment {
 
     private void initview(View view) {
         notification_recycler=view.findViewById(R.id.notification_recycler);
+        if (!isConnected()) {
+            new AlertDialog.Builder(getActivity()).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
+                    .setMessage(getString(R.string.check_connection))
+                    .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            getActivity().finish();
+                        }
+                    }).show();
+        } else {
+            Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
+        }
         notification_recycler.setHasFixedSize(true);
         notification_adapter=new Notification_Adapter(notificationModelList(),getActivity());
         notification_recycler.setAdapter(notification_adapter);
@@ -51,5 +69,18 @@ public class NotificationFragment extends android.app.Fragment {
         return list;
     }
 
+    private boolean isConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            android.net.NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if ((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting()))
+                return true;
+            else
+                return false;
+        }
+        return false;
+    }
 
 }

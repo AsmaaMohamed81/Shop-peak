@@ -2,12 +2,18 @@ package com.alatheer.shop_peak.Fragments;
 
 import android.app.Activity;
 import android.arch.persistence.room.Room;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.FavoriteAdapter;
 import com.alatheer.shop_peak.Local.Favorite_Database;
@@ -40,10 +46,23 @@ public class Favorite_Fragment extends android.app.Fragment {
     }
 
     private void initview(View view) {
+        if (!isConnected()) {
+            new AlertDialog.Builder(getActivity()).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
+                    .setMessage(getString(R.string.check_connection))
+                    .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            getActivity().finish();
+                        }
+                    }).show();
+        } else {
+            Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
+        }
         recyclerView_favorite = view.findViewById(R.id.basket_recycler);
         myAppDatabase = Room.databaseBuilder(getApplicationContext(), MyAppDatabase.class, "productdb").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(), Favorite_Database.class, "favoritedb").allowMainThreadQueries().build();
         initRecyclerview();
+
     }
 
     private void initRecyclerview() {
@@ -58,6 +77,20 @@ public class Favorite_Fragment extends android.app.Fragment {
     public void senddate(int position) {
         favorite_database.dao_favorite().Delete_Item(basketModelList.get(position).getId());
         initRecyclerview();
+    }
+
+    private boolean isConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            android.net.NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if ((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting()))
+                return true;
+            else
+                return false;
+        }
+        return false;
     }
 }
 

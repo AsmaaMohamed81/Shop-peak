@@ -4,13 +4,17 @@ import android.app.SearchManager;
 import android.arch.persistence.room.Room;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceFragment;
 import android.renderscript.Short4;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +32,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Activities.Search_Activity;
@@ -72,6 +77,18 @@ public class HomeFragment extends android.app.Fragment {
         //final String title=search.getText().toString();
         setHasOptionsMenu(true);
         addproduct();
+        if (!isConnected()) {
+            new AlertDialog.Builder(getActivity()).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
+                    .setMessage(getString(R.string.check_connection))
+                    .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            getActivity().finish();
+                        }
+                    }).show();
+        } else {
+            Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
+        }
         // ((AppCompatActivity)getActivity()).setSupportActionBar(search);
         //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         /////offer
@@ -151,6 +168,7 @@ public class HomeFragment extends android.app.Fragment {
         return offerlist;
     }
 
+
     /*public List<HomeModel> homeModelList (){
 
         homelist = new ArrayList<>();
@@ -204,5 +222,17 @@ public class HomeFragment extends android.app.Fragment {
         });
         super.onCreateOptionsMenu(menu, inflater);
     }*/
-
+   private boolean isConnected() {
+       ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+       NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+       if (networkInfo != null && networkInfo.isConnected()) {
+           android.net.NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+           android.net.NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+           if ((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting()))
+               return true;
+           else
+               return false;
+       }
+       return false;
+   }
 }
