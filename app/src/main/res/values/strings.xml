@@ -72,4 +72,9 @@
     <string name="element_description_req">Element Description  is required</string>
     <string name="element_color_req">Element Color is required</string>
     <string name="title_activity_maps">Map</string>
+    <string name="notification">notification</string>
+    <string name="app_open_gps">سيقوم التطبيق بفتح ال gps لتحديد موقعك.</string>
+    <string name="ok">ok</string>
+
+
 </resources>

@@ -16,4 +16,10 @@
     <style name="ToolbarColorbackArrow" parent="AppTheme">
         <item name="android:textColorSecondary">@color/colorPrimary</item>
     </style>
+
+    <style name="custom_dialog">
+        <item name="android:windowExitAnimation">@anim/slide_in_left</item>
+        <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
+
+    </style>
 </resources>
