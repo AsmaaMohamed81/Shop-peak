@@ -53,10 +53,8 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         shop_name = findViewById(R.id.shop_name);
         shop_email = findViewById(R.id.shop_email);
-        governate = findViewById(R.id.governate);
-        city = findViewById(R.id.city);
+
         address = findViewById(R.id.address);
-        category = findViewById(R.id.category);
         latlon = findViewById(R.id.addlat_lon);
         add_logo = findViewById(R.id.add_logo);
         signup = findViewById(R.id.btn_sign);
@@ -103,18 +101,18 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         governate_names.add(governate_name3);
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(Vender_Signup_Activity.this, android.R.layout.simple_spinner_item, governate_names);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        governate.setAdapter(adapter);
-        governate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(Vender_Signup_Activity.this, "hello", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        governate.setAdapter(adapter);
+//        governate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                Toast.makeText(Vender_Signup_Activity.this, "hello", Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
     }
 

@@ -7,12 +7,12 @@
     <string name="sign_up">انشاء حساب</string>
     <string name="Terms">الاحكام والشروط</string>
     <string name="phone">رقم الهاتف</string>
-    <string name="email">رقم الحساب</string>
+    <string name="email">البريد الالكتروني</string>
     <string name="shopname">اسم المحل</string>
     <string name="governate">المحافظة</string>
     <string name="city">المدينة</string>
     <string name="category">التصنيف</string>
-    <string name="address">العنوان</string>
+    <string name="address">العنوان بالتفصيل</string>
     <string name="join_us">انضم الينا</string>
     <string name="url">www.shop-peak.com</string>
     <string name="waitt">Please Waiting...</string>
@@ -77,6 +77,8 @@
     <string name="wifi">فتح الانترنت الهوائي </string>
     <string name="app_open_gps">سيقوم التطبيق بفتح ال gps لتحديد موقعك.</string>
     <string name="ok">ok</string>
+    <string name="add_city">أدخل المدينه</string>
+    <string name="add_govern">أدخل المحافظه</string>
 
 
 </resources>

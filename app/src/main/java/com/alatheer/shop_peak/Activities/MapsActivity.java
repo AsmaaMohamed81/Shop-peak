@@ -163,6 +163,9 @@ if (isGpsOpen()) {
 
     private void initMap() {
 
+
+
+
         Log.d(TAG,"initMap : Init Map ");
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -288,6 +291,14 @@ if (isGpsOpen()) {
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivityForResult(intent,gps_req);
 
+
+        sendBroadcast(intent);
+//
+//        String[] permission = new String[]{FINE_LOCATION, COURSE_LOCATION};
+//
+//        ActivityCompat.requestPermissions(this, permission, PER_REQ);
+
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -303,10 +314,20 @@ if (isGpsOpen()) {
             if (isGpsOpen())
             {
 //                StartLocationUpdate();
+                getDeviceLocation();
+                refreshLayout();
+
             }else
             {
                 CreateGpsDialog();
             }
+        }
+    }
+    private void refreshLayout() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            finish();
+            startActivity(intent);
         }
     }
 
@@ -328,6 +349,7 @@ if (isGpsOpen()) {
                     if (isGpsOpen())
                     {
 //                        StartLocationUpdate();
+                        getDeviceLocation();
                     }else
                     {
                         CreateGpsDialog();
