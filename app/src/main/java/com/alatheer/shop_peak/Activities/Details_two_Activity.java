@@ -61,8 +61,8 @@ public class Details_two_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_two_);
         initview();
-    }
 
+    }
     private void initview() {
         details_title = findViewById(R.id.details_title);
         shopping_cart = findViewById(R.id.shopping_cart);
