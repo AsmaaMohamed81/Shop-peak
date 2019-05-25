@@ -1,26 +1,18 @@
 package com.alatheer.shop_peak.Fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alatheer.shop_peak.Activities.FullScreenImageActivity;
-import com.alatheer.shop_peak.Activities.MainActivity;
-import com.alatheer.shop_peak.Adapter.OnBackPressedListener;
 import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
 

@@ -1,22 +1,14 @@
 package com.alatheer.shop_peak.Fragments;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Adapter.Notification_Adapter;
-import com.alatheer.shop_peak.Adapter.OnBackPressedListener;
 import com.alatheer.shop_peak.Model.NotificationModel;
 import com.alatheer.shop_peak.R;
 

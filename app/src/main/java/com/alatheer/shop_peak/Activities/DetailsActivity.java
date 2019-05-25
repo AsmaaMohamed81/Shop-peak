@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
+import com.alatheer.shop_peak.Adapter.PassData;
 import com.alatheer.shop_peak.Fragments.Fragment_Details;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
@@ -40,7 +41,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity implements PassData {
     ImageView details_img,back_image,plus_circle,minus_circle,shopping_cart;
     TextView details_title,details_des,counter,cart_num,tv_not_budget;
     CheckBox c_red,c_blue,c_black;
@@ -85,18 +86,18 @@ public class DetailsActivity extends AppCompatActivity {
         //counter = findViewById(R.id.counter);
         shopping_cart = findViewById(R.id.shopping_cart);
         //cart_num = findViewById(R.id.cart_num);
-        //addcart = findViewById(R.id.add_cart);
+        addcart = findViewById(R.id.add_cart);
         //c_red=findViewById(R.id.checkbox_red);
         //c_blue=findViewById(R.id.checkbox_blue);
         //c_black=findViewById(R.id.checkbox_black);
         //order_num=findViewById(R.id.order_num);
         //details_des=findViewById(R.id.details_des);
         //details_price = findViewById(R.id.details_price);
-        //fab_favorite = findViewById(R.id.fab_favorite);
+        fab_favorite = findViewById(R.id.fab_favorite);
         myAppDatabase = Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"productdb").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(),Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         getDataFromIntent();
-
+        details_title.setText(title);
         tv_not_budget = findViewById(R.id.tv_not_budget);
         back_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,8 +188,8 @@ public class DetailsActivity extends AppCompatActivity {
 
                 }
             }
-        });
-        addcart.setOnClickListener(new View.OnClickListener() {
+        });*/
+        /*addcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -241,8 +242,8 @@ public class DetailsActivity extends AppCompatActivity {
                     flag = true;
                 }
             }
-        });
-        ratingBar.setOnTouchListener(new View.OnTouchListener() {
+        });*/
+        /*ratingBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -261,14 +262,14 @@ public class DetailsActivity extends AppCompatActivity {
                     v.setPressed(false);
                 }
                 return true;
-            }});
+            }});*/
 
         if (myAppDatabase.dao().getdata().size() > 0) {
             tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
         } else {
             tv_not_budget.setText("0");
 
-        }*/
+        }
     }
 
     public void getDataFromIntent(){
@@ -329,4 +330,16 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void getBasketModel(BasketModel basketModel) {
+        makeFlyAnimation(viewPager);
+        myAppDatabase.dao().addproduct(basketModel);
+        if (myAppDatabase.dao().getdata().size() > 0) {
+            tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
+        } else {
+            tv_not_budget.setText("0");
+
+        }
+
+    }
 }

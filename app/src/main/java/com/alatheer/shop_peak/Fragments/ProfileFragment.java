@@ -4,13 +4,9 @@ import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,22 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.alatheer.shop_peak.Activities.MainActivity;
-import com.alatheer.shop_peak.Adapter.OnBackPressed;
-import com.alatheer.shop_peak.Adapter.OnBackPressedListener;
 import com.alatheer.shop_peak.Adapter.Profile_GridAdapter;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
-import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
-import com.alatheer.shop_peak.Model.HomeModel;
-import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;

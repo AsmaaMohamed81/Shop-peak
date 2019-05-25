@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.alatheer.shop_peak.Activities.Basket_Activity;
 import com.alatheer.shop_peak.Activities.DetailsActivity;
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
+import com.alatheer.shop_peak.Adapter.PassData;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
@@ -53,7 +54,7 @@ public class Fragment_Details extends Fragment {
     boolean blue = false;
     boolean black = false;
     int count;
-    long id;
+    int id;
     EditText order_num;
     BasketModel basketModel;
     String[] image;
@@ -64,6 +65,7 @@ public class Fragment_Details extends Fragment {
     String gender;
     FrameLayout destView;
     String first_item_String;
+    PassData passData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,7 +75,6 @@ public class Fragment_Details extends Fragment {
         initview(view);
         return view;
     }
-
     private void initview(View view) {
         back_image = view.findViewById(R.id.back_image);
         details_img = view.findViewById(R.id.details_image);
@@ -170,19 +171,19 @@ public class Fragment_Details extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    makeFlyAnimation(viewPager);
+                    //makeFlyAnimation(viewPager);
                     id = Integer.parseInt(order_num.getText().toString());
-                    basketModel = new BasketModel((int) id, title, counter.getText().toString(), gender, price, des, red, blue, black, first_item);
+                    basketModel = new BasketModel(id, title, counter.getText().toString(), gender, price, des, red, blue, black, first_item);
                     myAppDatabase.dao().addproduct(basketModel);
-
-                    if (myAppDatabase.dao().getdata().size() > 0) {
+                    //passData.getBasketModel(basketModel);
+                    /*if (myAppDatabase.dao().getdata().size() > 0) {
                         tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
                     } else {
                         tv_not_budget.setText("0");
 
-                    }
+                    }*/
                 } catch (Exception e) {
-                    Toast.makeText(getActivity(), "order number took before", Toast.LENGTH_SHORT).show();
+                    Log.v("aaaaa", e.getMessage());
                 }
 
 
@@ -204,7 +205,7 @@ public class Fragment_Details extends Fragment {
                 int id2 = Integer.parseInt(order_num.getText().toString());
                 basketModel = new BasketModel(id2, title, counter.getText().toString(), gender, price, des, red, blue, black, first_item);
                 if (flag) {
-                    id = favorite_database.dao_favorite().add_favorite(basketModel);
+                    id = (int) favorite_database.dao_favorite().add_favorite(basketModel);
                     Toast.makeText(getActivity(), "id" + id, Toast.LENGTH_SHORT).show();
                     Log.e("add_to_favorite", "true");
                     fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_sold));
@@ -247,6 +248,14 @@ public class Fragment_Details extends Fragment {
             tv_not_budget.setText("0");
 
         }*/
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof PassData) {
+            passData = (PassData) context;
+        }
     }
 
     public void getDataFromIntent() {
