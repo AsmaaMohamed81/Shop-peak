@@ -79,6 +79,11 @@
     <string name="ok">ok</string>
     <string name="add_city">أدخل المدينه</string>
     <string name="add_govern">أدخل المحافظه</string>
-
-
+    <string name="element">العنصر</string>
+    <string name="description">الوصف</string>
+    <string name="add">اضافة</string>
+    <string name="skip">تخطي</string>
+    <string name="continuee">استمرار</string>
+    <string name="image">الصورة</string>
+    <string name="color">اللون</string>
 </resources>

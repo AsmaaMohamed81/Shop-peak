@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Vender_Signup_Activity extends AppCompatActivity {
-    EditText shop_name, shop_email, address, category;
+    EditText shop_name, shop_email, address;
     Spinner governate, city;
     Button add_logo, signup, latlon;
     ImageView seller_image;
@@ -146,11 +146,9 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         Name = shop_name.getText().toString();
         Email = shop_email.getText().toString();
         Address = address.getText().toString();
-        Category = category.getText().toString();
         if (!TextUtils.isEmpty(Name) &&
                 !TextUtils.isEmpty(Email) &&
-                !TextUtils.isEmpty(Address) &&
-                !TextUtils.isEmpty(Category)) {
+                !TextUtils.isEmpty(Address)) {
 
 
             Common.CloseKeyBoard(this, shop_email);
@@ -159,7 +157,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
             address.setError(null);
             //city.setError(null);
             //governate.setError(null);
-            Signup(Name, Email, Address, Category, filePath);
+            Signup(Name, Email, Address, filePath);
 
         } else {
             if (TextUtils.isEmpty(Name)) {
@@ -189,17 +187,12 @@ public class Vender_Signup_Activity extends AppCompatActivity {
             } else {
                 address.setError(null);
             }
-            if (TextUtils.isEmpty(Category)) {
-                category.setError(getString(R.string.category_req));
-            } else {
-                category.setError(null);
-            }
 
         }
 
     }
 
-    private void Signup(String name, String email, String address, String category, Uri filePath) {
+    private void Signup(String name, String email, String address, Uri filePath) {
         Intent intent = new Intent(Vender_Signup_Activity.this, MainActivity.class);
         intent.putExtra("flag", 1);
         startActivity(intent);
