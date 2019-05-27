@@ -84,6 +84,7 @@
     <string name="add">اضافة</string>
     <string name="skip">تخطي</string>
     <string name="continuee">استمرار</string>
+    <string name="add_main_image">اضافة الصورة الرئيسية</string>
     <string name="image">الصورة</string>
     <string name="color">اللون</string>
 </resources>

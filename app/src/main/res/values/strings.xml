@@ -78,10 +78,12 @@
     <string name="ok">ok</string>
     <string name="add_govern">Add Govern</string>
     <string name="add_city">Add City</string>
+    <string name="element">element</string>
     <string name="description">Description</string>
     <string name="add">Add</string>
     <string name="skip">Skip</string>
-    <string name="continuee">Continuee</string>
+    <string name="continuee">Continue</string>
+    <string name="add_main_image">Add Main Image</string>
     <string name="image">image</string>
     <string name="color">color</string>
 

@@ -68,7 +68,7 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
                 btn_element_color.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        OpenColorPicker(false);
+                        OpenColorPicker(true);
                     }
                 });
                 tr.addView(btn_element_image);
