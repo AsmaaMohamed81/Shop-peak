@@ -2,12 +2,17 @@ package com.alatheer.shop_peak.Activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,8 +27,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +61,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -76,6 +86,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap;
     private ImageView gps;
     private Intent intentService=null;
+    private EditText address,lat,log;
+    private Button btn_continue;
+
+
 
 
 
@@ -97,6 +111,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void initView() {
 
         gps=findViewById(R.id.img_gps);
+        address=findViewById(R.id.address);
+        lat=findViewById(R.id.lat);
+        log=findViewById(R.id.log);
+        btn_continue=findViewById(R.id.btn_continue);
+
+        final Animation animation= AnimationUtils.loadAnimation(this,R.anim.press_anim);
+
+        btn_continue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_continue.clearAnimation();
+                btn_continue.startAnimation(animation);
+
+                Intent intent=new Intent(MapsActivity.this,Vender_Signup_Activity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -201,6 +232,34 @@ if (isGpsOpen()) {
                                 moveCamera(new LatLng
                                         (currentlocation1.getLatitude(),currentlocation1.getLongitude()),Defult_Zoom,"myLocation");
 
+//                                String cityName = null;
+
+                                StringBuilder sb = new StringBuilder();
+
+                                Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
+                                List<Address> addresses;
+                                try {
+                                    addresses = gcd.getFromLocation(currentlocation1.getLatitude(),
+                                            currentlocation1.getLongitude(), 1);
+                                    if (addresses.size() > 0) {
+
+                                        sb.append(addresses.get(0).getAddressLine(0)).append("\n");
+//                                    sb.append(addresses.get(0).getLocality()).append("\n");
+//                                    sb.append(addresses.get(0).getPostalCode()).append("\n");
+//                                    sb.append(addresses.get(0).getCountryName());
+
+                                    }
+                                }
+                                catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+//                                String s = currentlocation1.getLongitude() + "\n" + currentlocation1.getLatitude() + "\n\nMy Current City is: "
+//                                        + cityName;
+                                address.setText(sb);
+                                lat.setText(currentlocation1.getLatitude()+" ");
+                                log.setText(currentlocation1.getLongitude()+" ");
+
+
                             }
 
                         }else {
@@ -224,6 +283,7 @@ if (isGpsOpen()) {
 
 
     }
+
 
     private void moveCamera(LatLng latLng,float zoom,String title   ){
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));

@@ -87,4 +87,7 @@
     <string name="add_main_image">اضافة الصورة الرئيسية</string>
     <string name="image">الصورة</string>
     <string name="color">اللون</string>
+    <string name="lat">Lat</string>
+    <string name="log">LONG</string>
+    <string name="share_loc">Share Your Location</string>
 </resources>

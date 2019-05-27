@@ -86,6 +86,9 @@
     <string name="add_main_image">Add Main Image</string>
     <string name="image">image</string>
     <string name="color">color</string>
+    <string name="lat">Lat</string>
+    <string name="log">LONG</string>
+    <string name="share_loc">Share Your Location</string>
 
 
 </resources>
