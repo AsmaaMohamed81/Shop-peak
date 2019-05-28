@@ -15,7 +15,7 @@ public class Api {
 
     private static Retrofit retrofit = null;
 
-    private static Retrofit getRetrofit()
+    public static Retrofit getRetrofit()
     {
         if (retrofit==null)
         {

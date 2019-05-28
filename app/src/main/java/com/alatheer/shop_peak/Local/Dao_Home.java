@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by M.Hamada on 28/04/2019.
  */
-
+/*
 @android.arch.persistence.room.Dao
 public interface Dao_Home {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -25,3 +25,4 @@ public interface Dao_Home {
     @Query("delete from myproducts")
     void delete_all();
 }
+*/

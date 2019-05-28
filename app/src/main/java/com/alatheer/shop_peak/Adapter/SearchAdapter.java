@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -53,18 +54,20 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
        // File file =new File(uri.getPath());
         //File[]path=new File[]{file,file,file};
-       String image1=listofhome.get(position).getImage1();
-       String image2=listofhome.get(position).getImage2();
-       String[]images={image1,image2};
+        String image1 = listofhome.get(position).img._0;
+        String image2 = listofhome.get(position).img._1;
+        String image3 = listofhome.get(position).img._2;
+        String image4 = listofhome.get(position).img._3;
+        String[] images = {image1, image2, image3, image4};
         customSwipeAdapter = new CustomSwipeAdapter(images, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
-        final String title = listofhome.get(position).getProduct_title();
-        final String des = listofhome.get(position).getProduct_describtion();
-        final String price = listofhome.get(position).getProduct_price();
-        final String vender_name=listofhome.get(position).getVender_name();
-        final int vender_image=listofhome.get(position).getVender_image();
+        final String title = listofhome.get(position).offeredTitle;
+        final String des = listofhome.get(position).details;
+        //final String price = listofhome.get(position).getProduct_price();
+        final String vender_name = listofhome.get(position).storeName;
+        final String vender_image = listofhome.get(position).storeImg;
         holder.viewPager.setAdapter(customSwipeAdapter);
-        holder.img.setImageResource(vender_image);
+        Picasso.with(context).load(vender_image).into(holder.img);
         holder.textView.setText(vender_name);
     }
 

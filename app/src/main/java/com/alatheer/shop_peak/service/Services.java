@@ -1,5 +1,6 @@
 package com.alatheer.shop_peak.service;
 
+import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.Govern;
 
@@ -27,6 +28,7 @@ public interface Services {
     @GET("Api/countries")
     Call<List<Govern>> getGovern();
 
-    ////
+    @GET("Api/all_products")
+    Call<List<HomeModel>> get_all_products();
 
 }

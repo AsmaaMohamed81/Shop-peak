@@ -42,6 +42,7 @@ import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;

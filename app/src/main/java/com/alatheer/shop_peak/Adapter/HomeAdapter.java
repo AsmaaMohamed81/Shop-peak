@@ -31,6 +31,7 @@ import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * Created by M.Hamada on 22/03/2019.
  */
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> implements Filterable {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> {
     List<HomeModel> listofhome;
     Context context;
     MainActivity mainActivity;
@@ -74,36 +75,29 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         //final File path = new File(uri.getPath());
         profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(context,Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
-        final String image1 = listofhome.get(position).getImage1();
-        final String image2 = listofhome.get(position).getImage2();
-        final String[] image_resources = {image1,image2};
-        final String title = listofhome.get(position).getProduct_title();
-        final String des = listofhome.get(position).getProduct_describtion();
-        final String price = listofhome.get(position).getProduct_price();
-        final String gender = listofhome.get(position).getGender();
-        final String vender_name=listofhome.get(position).getVender_name();
-        final int vender_image=listofhome.get(position).getVender_image();
-        holder.img_profile.setImageResource(vender_image);
+        final String image0 = listofhome.get(position).img._0;
+        final String image1 = listofhome.get(position).img._1;
+        final String image2 = listofhome.get(position).img._2;
+        final String image3 = listofhome.get(position).img._3;
+        final String[] image_resources = {image0, image1, image2, image3};
+        final String title = listofhome.get(position).offeredTitle;
+        final String des = listofhome.get(position).storeName;
+        final String price = listofhome.get(position).priceAfterDis;
+        final String vender_name = listofhome.get(position).storeName;
+        final String vender_image = listofhome.get(position).storeImg;
+        Picasso.with(context).load(vender_image).into(holder.img_profile);
         holder.text_profile.setText(vender_name);
         customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
-        ProfileModel profileModel=new ProfileModel(vender_name,vender_name,image1,image2);
-        profileDatabase.dao().addproductItem(profileModel);
-        holder.home_linear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.setSelectProfile(vender_name,vender_image,image1,image2);
 
-            }
-        });
         mainActivity.passdata(title, listofhome);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            mainActivity.sendHomeItem(image_resources,title,des,price,gender);
+                mainActivity.sendHomeItem(image_resources, title, des, price, des);
             }
         });
-        holder.fav.setOnClickListener(new View.OnClickListener() {
+        /*holder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (holder.fav.isChecked()) {
@@ -120,7 +114,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                     Log.e("delete_from_favorite","true");
                 }
             }
-        });
+        });*/
         holder.ratbar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -150,38 +144,38 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         return listofhome.size();
     }
 
-    @Override
-    public Filter getFilter() {
-        return homefilter;
-    }
+    /* @Override
+     public Filter getFilter() {
+         return homefilter;
+     }
 
-    private Filter homefilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<HomeModel> filterlist = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filterlist.addAll(full_list_ofhome);
-            } else {
-                String filterpattern = constraint.toString().toLowerCase().trim();
-                for (HomeModel homeModel : full_list_ofhome) {
-                    if (homeModel.getProduct_title().toLowerCase().contains(filterpattern)||
-                            homeModel.getSize().toLowerCase().contains(filterpattern)
-                            || homeModel.getGender().toLowerCase().contains(filterpattern)) {
-                        filterlist.add(homeModel);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filterlist;
-            return results;
-        }
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            listofhome.clear();
-            listofhome.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
+     private Filter homefilter = new Filter() {
+         @Override
+         protected FilterResults performFiltering(CharSequence constraint) {
+             List<HomeModel> filterlist = new ArrayList<>();
+             if (constraint == null || constraint.length() == 0) {
+                 filterlist.addAll(full_list_ofhome);
+             } else {
+                 String filterpattern = constraint.toString().toLowerCase().trim();
+                 for (HomeModel homeModel : full_list_ofhome) {
+                     if (homeModel.getProduct_title().toLowerCase().contains(filterpattern)||
+                             homeModel.getSize().toLowerCase().contains(filterpattern)
+                             || homeModel.getGender().toLowerCase().contains(filterpattern)) {
+                         filterlist.add(homeModel);
+                     }
+                 }
+             }
+             FilterResults results = new FilterResults();
+             results.values = filterlist;
+             return results;
+         }
+         @Override
+         protected void publishResults(CharSequence constraint, FilterResults results) {
+             listofhome.clear();
+             listofhome.addAll((List) results.values);
+             notifyDataSetChanged();
+         }
+     };*/
     class Image2holder extends RecyclerView.ViewHolder{
         ImageView share;
         CheckBox fav;

@@ -28,7 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by M.Hamada on 13/05/2019.
  */
 
-public class Search_Navigation_Adapter extends RecyclerView.Adapter<Search_Navigation_Adapter.Search_Navigation_Holder> implements Filterable {
+public class Search_Navigation_Adapter extends RecyclerView.Adapter<Search_Navigation_Adapter.Search_Navigation_Holder> {
     Context context;
     List<HomeModel> homeModelList;
     List<HomeModel> full_list_ofhome;
@@ -57,7 +57,7 @@ public class Search_Navigation_Adapter extends RecyclerView.Adapter<Search_Navig
         return homeModelList.size();
     }
 
-    @Override
+    /*@Override
     public Filter getFilter() {
         return homefilter;
     }
@@ -89,7 +89,7 @@ public class Search_Navigation_Adapter extends RecyclerView.Adapter<Search_Navig
             homeModelList.addAll((List) results.values);
             notifyDataSetChanged();
         }
-    };
+    };*/
 
     class Search_Navigation_Holder extends RecyclerView.ViewHolder {
         ImageView share;

@@ -27,8 +27,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.alatheer.shop_peak.Local.HomeDatabase;
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
@@ -62,7 +60,7 @@ public class AddProductActivity extends AppCompatActivity {
     TableRow tr1, tr2;
      String imageEncoded;
      ProfileDatabase profileDatabase;
-     HomeDatabase homeDatabase;
+    //HomeDatabase homeDatabase;
      MySharedPreference mprefs;
     Button add_row_Element, add_row_Element2;
 
@@ -104,7 +102,7 @@ public class AddProductActivity extends AppCompatActivity {
         product_num1 = findViewById(R.id.order_num);
         Continue = findViewById(R.id.btn_continue);
         mprefs=new MySharedPreference(this);
-        homeDatabase = Room.databaseBuilder(getApplicationContext(), HomeDatabase.class, "home_db").allowMainThreadQueries().build();
+        // homeDatabase = Room.databaseBuilder(getApplicationContext(), HomeDatabase.class, "home_db").allowMainThreadQueries().build();
         profileDatabase = Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
         //homeDatabase= Room.databaseBuilder(getApplicationContext(),HomeDatabase.class,"home_db").allowMainThreadQueries().build();
         close.setOnClickListener(new View.OnClickListener() {
@@ -267,7 +265,7 @@ public class AddProductActivity extends AppCompatActivity {
 
         Toast.makeText(this, "data added successfully", Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(this,MainActivity.class);
-        Log.v("list", String.valueOf(homeDatabase.dao_home().get_profile_data2()));
+        //Log.v("list", String.valueOf(homeDatabase.dao_home().get_profile_data2()));
         startActivity(intent);
 
     }

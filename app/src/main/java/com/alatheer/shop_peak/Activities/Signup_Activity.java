@@ -85,14 +85,14 @@ public class Signup_Activity extends AppCompatActivity {
         checkBox = findViewById(R.id.check_box);
 
 /////#FFFFFF/////////////////
-        recyc_govern=findViewById(R.id.recView_govern);
+       /* recyc_govern=findViewById(R.id.recView_govern);
         recyc_city=findViewById(R.id.recView_city);
 
         container_city=findViewById(R.id.container_city);
         container_govern=findViewById(R.id.container_govern);
 
         expand_layout_city=findViewById(R.id.expand_layout_city);
-        expand_layout_govern=findViewById(R.id.expand_layout_govern);
+        expand_layout_govern=findViewById(R.id.expand_layout_govern);*/
 
 
 

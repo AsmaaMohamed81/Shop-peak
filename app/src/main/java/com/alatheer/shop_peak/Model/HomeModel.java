@@ -10,117 +10,202 @@ import java.util.List;
 /**
  * Created by M.Hamada on 23/03/2019.
  */
-@Entity(tableName = "myproducts")
-public class HomeModel implements Serializable {
-    @PrimaryKey(autoGenerate = true)
-    int id;
-    @ColumnInfo(name = "image1")
-    String image1;
-    @ColumnInfo(name = "image2")
-    String image2;
-    @ColumnInfo(name = "product_title")
-    String product_title;
-    @ColumnInfo(name = "product_describtion")
-    String product_describtion;
-    @ColumnInfo(name = "size")
-    String size;
-    @ColumnInfo(name = "product_price")
-    String product_price;
-    @ColumnInfo(name = "gender")
-    String gender;
-    @ColumnInfo(name = "vender_name")
-    String vender_name;
-    @ColumnInfo(name = "vender_image")
-    int    vender_image;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public int getId() {
-        return id;
-    }
+public class HomeModel {
 
-    public void setId(int id) {
+    @SerializedName("id")
+    @Expose
+    public String id;
+    @SerializedName("store_id_fk")
+    @Expose
+    public String storeIdFk;
+    @SerializedName("sanf_code")
+    @Expose
+    public String sanfCode;
+    @SerializedName("sanf_name")
+    @Expose
+    public String sanfName;
+    @SerializedName("main_tasnef")
+    @Expose
+    public String mainTasnef;
+    @SerializedName("sub_tasnef")
+    @Expose
+    public String subTasnef;
+    @SerializedName("price_before_dis")
+    @Expose
+    public String priceBeforeDis;
+    @SerializedName("price_after_dis")
+    @Expose
+    public String priceAfterDis;
+    @SerializedName("main_img")
+    @Expose
+    public String mainImg;
+    @SerializedName("details")
+    @Expose
+    public String details;
+    @SerializedName("offered")
+    @Expose
+    public String offered;
+    @SerializedName("offered_title")
+    @Expose
+    public String offeredTitle;
+    @SerializedName("price_offered")
+    @Expose
+    public String priceOffered;
+    @SerializedName("date_offered_from")
+    @Expose
+    public String dateOfferedFrom;
+    @SerializedName("date_offered_to")
+    @Expose
+    public String dateOfferedTo;
+    @SerializedName("publisher")
+    @Expose
+    public String publisher;
+    @SerializedName("date")
+    @Expose
+    public String date;
+    @SerializedName("date_s")
+    @Expose
+    public String dateS;
+    @SerializedName("approved")
+    @Expose
+    public String approved;
+    @SerializedName("offer_id_fk")
+    @Expose
+    public String offerIdFk;
+    @SerializedName("store_name")
+    @Expose
+    public String storeName;
+    @SerializedName("store_img")
+    @Expose
+    public String storeImg;
+    @SerializedName("rate")
+    @Expose
+    public Long rate;
+    @SerializedName("img")
+    @Expose
+    public Img img;
+
+    public HomeModel withId(String id) {
         this.id = id;
+        return this;
     }
 
-    public HomeModel(String image1, String image2, String product_title, String product_describtion, String size, String product_price, String gender, String vender_name, int vender_image) {
-        this.image1 = image1;
-        this.image2=image2;
-        this.product_title = product_title;
-        this.product_describtion = product_describtion;
-        this.size = size;
-        this.product_price = product_price;
-        this.gender = gender;
-        this.vender_name=vender_name;
-        this.vender_image=vender_image;
+    public HomeModel withStoreIdFk(String storeIdFk) {
+        this.storeIdFk = storeIdFk;
+        return this;
     }
 
-    public String getImage1() {
-        return image1;
+    public HomeModel withSanfCode(String sanfCode) {
+        this.sanfCode = sanfCode;
+        return this;
     }
 
-    public void setImage1(String image1) {
-        this.image1 = image1;
+    public HomeModel withSanfName(String sanfName) {
+        this.sanfName = sanfName;
+        return this;
     }
 
-    public String getImage2() {
-        return image2;
+    public HomeModel withMainTasnef(String mainTasnef) {
+        this.mainTasnef = mainTasnef;
+        return this;
     }
 
-    public void setImage2(String image2) {
-        this.image2 = image2;
+    public HomeModel withSubTasnef(String subTasnef) {
+        this.subTasnef = subTasnef;
+        return this;
     }
 
-    public String getProduct_title() {
-        return product_title;
+    public HomeModel withPriceBeforeDis(String priceBeforeDis) {
+        this.priceBeforeDis = priceBeforeDis;
+        return this;
     }
 
-    public void setProduct_title(String product_title) {
-        this.product_title = product_title;
+    public HomeModel withPriceAfterDis(String priceAfterDis) {
+        this.priceAfterDis = priceAfterDis;
+        return this;
     }
 
-    public String getProduct_describtion() {
-        return product_describtion;
+    public HomeModel withMainImg(String mainImg) {
+        this.mainImg = mainImg;
+        return this;
     }
 
-    public void setProduct_describtion(String product_describtion) {
-        this.product_describtion = product_describtion;
+    public HomeModel withDetails(String details) {
+        this.details = details;
+        return this;
     }
 
-    public String getSize() {
-        return size;
+    public HomeModel withOffered(String offered) {
+        this.offered = offered;
+        return this;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public HomeModel withOfferedTitle(String offeredTitle) {
+        this.offeredTitle = offeredTitle;
+        return this;
     }
 
-    public String getGender() {
-        return gender;
+    public HomeModel withPriceOffered(String priceOffered) {
+        this.priceOffered = priceOffered;
+        return this;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public HomeModel withDateOfferedFrom(String dateOfferedFrom) {
+        this.dateOfferedFrom = dateOfferedFrom;
+        return this;
     }
 
-    public String getProduct_price() {
-        return product_price;
+    public HomeModel withDateOfferedTo(String dateOfferedTo) {
+        this.dateOfferedTo = dateOfferedTo;
+        return this;
     }
 
-    public void setProduct_price(String product_price) {
-        this.product_price = product_price;
-    }
-    public String getVender_name() {
-        return vender_name;
+    public HomeModel withPublisher(String publisher) {
+        this.publisher = publisher;
+        return this;
     }
 
-    public void setVender_name(String vender_name) {
-        this.vender_name = vender_name;
+    public HomeModel withDate(String date) {
+        this.date = date;
+        return this;
     }
 
-    public int getVender_image() {
-        return vender_image;
+    public HomeModel withDateS(String dateS) {
+        this.dateS = dateS;
+        return this;
     }
 
-    public void setVender_image(int vender_image) {
-        this.vender_image = vender_image;
+    public HomeModel withApproved(String approved) {
+        this.approved = approved;
+        return this;
     }
+
+    public HomeModel withOfferIdFk(String offerIdFk) {
+        this.offerIdFk = offerIdFk;
+        return this;
+    }
+
+    public HomeModel withStoreName(String storeName) {
+        this.storeName = storeName;
+        return this;
+    }
+
+    public HomeModel withStoreImg(String storeImg) {
+        this.storeImg = storeImg;
+        return this;
+    }
+
+    public HomeModel withRate(Long rate) {
+        this.rate = rate;
+        return this;
+    }
+
+    public HomeModel withImg(Img img) {
+        this.img = img;
+        return this;
+    }
+
 }
