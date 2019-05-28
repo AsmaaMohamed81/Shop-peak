@@ -1,5 +1,6 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -39,7 +41,7 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
 
     ColorPickerDialog pickcolor;
     int color;
-
+    private Context context = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,26 +59,51 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
         add_row_Element.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tr = new TableRow(Add_Product_Activity_Details.this);
-                TableRow.LayoutParams params1 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 10f);
-                tr.setLayoutParams(params1);
+                final TableLayout tableLayout = (TableLayout) findViewById(R.id.table);
+
+                context = getApplicationContext();
+
+
+                // Create a new table row.
+                final TableRow tableRow = new TableRow(context);
+
+                // Set new table row layout parameters.
+                TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                tableRow.setLayoutParams(layoutParams);
+                ImageButton delete2 = new ImageButton(context);
                 btn_element_image = new Button(Add_Product_Activity_Details.this);
                 btn_element_color = new Button(Add_Product_Activity_Details.this);
-                ImageButton imageButton = new ImageButton(Add_Product_Activity_Details.this);
-                TableRow.LayoutParams params2 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4.5f);
-                btn_element_image.setLayoutParams(params2);
-                btn_element_image.setBackground(getDrawable(R.drawable.element_txt));
-                TableRow.LayoutParams params3 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4.5f);
-                btn_element_color.setLayoutParams(params3);
+
                 btn_element_color.setBackground(getDrawable(R.drawable.element_txt));
-                btn_element_image.setText("Choose image");
-                btn_element_color.setText("choose color");
+                btn_element_image.setBackground(getDrawable(R.drawable.element_txt));
+
+                delete2.setBackground(getDrawable(R.drawable.ic_close_black_24dp));
+
+
+                TableRow.LayoutParams params2 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4.5f);
+                btn_element_color.setLayoutParams(params2);
+                btn_element_color.setTextSize(20);
+                TableRow.LayoutParams params3 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4.5f);
+                btn_element_image.setLayoutParams(params3);
+                btn_element_image.setTextSize(20);
                 TableRow.LayoutParams params4 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
-                imageButton.setLayoutParams(params4);
-                imageButton.setBackground(getDrawable(R.drawable.ic_close_black_24dp));
                 params4.gravity = Gravity.CENTER;
-                //cp.setForegroundGravity(Gravity.CENTER);
-                //tr2.addView(cp);
+                delete2.setLayoutParams(params4);
+
+
+                tableRow.addView(btn_element_color);
+                tableRow.addView(btn_element_image);
+                tableRow.addView(delete2);
+
+                tableLayout.addView(tableRow);
+
+                delete2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        tableLayout.removeView(tableRow);
+
+                    }
+                });
                 btn_element_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -89,9 +116,8 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
 //                        OpenColorPicker(true);
 
 
-
-                        color= Color.parseColor("#ffffff");
-                        pickcolor=new ColorPickerDialog(Add_Product_Activity_Details.this,color);
+                        color = Color.parseColor("#ffffff");
+                        pickcolor = new ColorPickerDialog(Add_Product_Activity_Details.this, color);
                         pickcolor.setAlphaSliderVisible(true);
                         pickcolor.setTitle("PICK");
 
@@ -101,7 +127,7 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
 
 
                                 btn_element_color.setBackgroundColor(color);
-                                btn_element_color.setText("#" +Integer.toHexString(color));
+                                btn_element_color.setText("#" + Integer.toHexString(color));
                             }
                         });
 
@@ -109,19 +135,9 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
                         pickcolor.show();
                     }
                 });
-                imageButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        t.removeView(tr);
-                    }
-                });
-                tr.addView(btn_element_image);
-                tr.addView(btn_element_color);
-                tr.addView(imageButton);
-                t.addView(tr);
-                Log.v("aaaaa", "hello");
             }
         });
+
     }
 
     private void OpenColorPicker(boolean b) {

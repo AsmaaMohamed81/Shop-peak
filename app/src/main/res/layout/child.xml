@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/parent_linear"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="10"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:id="@+id/btn_add_color"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="4.5"
+        android:hint="choose color"
+        android:background="@drawable/txt_field"
+        android:padding="10dp"
+        android:textColorHint="@color/colorPrimary" />
+
+    <Button
+        android:id="@+id/btn_add_image"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="4.5"
+        android:hint="choose image"
+        android:background="@drawable/txt_field"
+        android:padding="10dp"
+        android:textColorHint="@color/colorPrimary" />
+
+    <ImageView
+        android:id="@+id/element_img"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_delete" />
+</LinearLayout>
