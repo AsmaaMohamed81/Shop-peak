@@ -89,36 +89,12 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
                         mPrefs = new MySharedPreference(Splash_Activity.this);
                         userModel = mPrefs.Get_UserData(Splash_Activity.this);
                         if(userModel==null){
-                            if (!isConnected()) {
-                                new AlertDialog.Builder(Splash_Activity.this).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
-                                        .setMessage(getString(R.string.check_connection))
-                                        .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                finish();
-                                            }
-                                        }).show();
-                            } else {
-                                Toast.makeText(Splash_Activity.this, "welcom" + "login ", Toast.LENGTH_SHORT).show();
-                            }
                             Intent intent=new Intent(Splash_Activity.this,Login_Activity.class);
                             startActivity(intent);
                             LoginManager.getInstance().logOut();
                             Animatoo.animateDiagonal(Splash_Activity.this);
                             finish();
                         }else {
-                            if (!isConnected()) {
-                                new AlertDialog.Builder(Splash_Activity.this).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
-                                        .setMessage(getString(R.string.check_connection))
-                                        .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                finish();
-                                            }
-                                        }).show();
-                            } else {
-                                Toast.makeText(Splash_Activity.this, "welcom" + userModel.getName(), Toast.LENGTH_SHORT).show();
-                            }
                             //Toast.makeText(Splash_Activity.this, "name"+userModel.getName(), Toast.LENGTH_SHORT).show();
 
                             Intent intent=new Intent(Splash_Activity.this,MainActivity.class);

@@ -11,8 +11,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -43,20 +45,31 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
     private void initview() {
         add_row_Element = findViewById(R.id.btn_add_element);
         t = findViewById(R.id.table);
-        tr = findViewById(R.id.table_row1);
         t.setColumnStretchable(0, true);
         t.setColumnStretchable(1, true);
+        t.setColumnStretchable(2, true);
         DefaultColor = ContextCompat.getColor(this, R.color.colorPrimary);
         add_row_Element.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tr = new TableRow(Add_Product_Activity_Details.this);
+                TableRow.LayoutParams params1 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 10f);
+                tr.setLayoutParams(params1);
                 btn_element_image = new Button(Add_Product_Activity_Details.this);
                 btn_element_color = new Button(Add_Product_Activity_Details.this);
+                ImageButton imageButton = new ImageButton(Add_Product_Activity_Details.this);
+                TableRow.LayoutParams params2 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4.5f);
+                btn_element_image.setLayoutParams(params2);
                 btn_element_image.setBackground(getDrawable(R.drawable.element_txt));
+                TableRow.LayoutParams params3 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4.5f);
+                btn_element_color.setLayoutParams(params3);
                 btn_element_color.setBackground(getDrawable(R.drawable.element_txt));
                 btn_element_image.setText("Choose image");
                 btn_element_color.setText("choose color");
+                TableRow.LayoutParams params4 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+                imageButton.setLayoutParams(params4);
+                imageButton.setBackground(getDrawable(R.drawable.ic_close_black_24dp));
+                params4.gravity = Gravity.CENTER;
                 //cp.setForegroundGravity(Gravity.CENTER);
                 //tr2.addView(cp);
                 btn_element_image.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +84,15 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
                         OpenColorPicker(true);
                     }
                 });
+                imageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        t.removeView(tr);
+                    }
+                });
                 tr.addView(btn_element_image);
                 tr.addView(btn_element_color);
+                tr.addView(imageButton);
                 t.addView(tr);
                 Log.v("aaaaa", "hello");
             }
@@ -90,7 +110,7 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 DefaultColor = color;
                 btn_element_color.setBackgroundColor(color);
-                btn_element_color.setText(color + "");
+                btn_element_color.setText(Integer.toHexString(color));
             }
         });
         ambilWarnaDialog.show();
@@ -116,6 +136,7 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
                 // add_main_image.setVisibility(View.GONE);
                 //main_image.setImageBitmap(bitmap);
                 //main_image.setVisibility(View.VISIBLE);
+                btn_element_image.setText("you selected image");
                 Toast.makeText(this, "image added", Toast.LENGTH_SHORT).show();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

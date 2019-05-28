@@ -14,11 +14,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -42,12 +45,15 @@ public class AddProductActivity extends AppCompatActivity {
     Button add_main_image, Skip, Continue;
      TextView added_post;
     EditText sc1, sc2;
+    Button delete_item;
     Button btn_element_image;
     EditText product_num1, product_num, product_name, price_after_discount, price_before_discount, element_name, element_description, element_color;
     Button addproduct;
     String name, number, priceafter_discount, pricebefore_discount, elementname, elementdescription, elementcolor;
      int PICK_IMAGE_MULTIPLE = 2 ;
     int PICK_IMAGE_REQUEST = 1;
+    ImageButton add, delete;
+    int count = 0;
     Uri Image_Uri1, Image_Uri2, Image_Uri3, Image_Uri4, filePath;
      ArrayList<Uri> mArrayUri;
      List<String> imagesEncodedList;
@@ -69,15 +75,18 @@ public class AddProductActivity extends AppCompatActivity {
         close=findViewById(R.id.close);
         main_image = findViewById(R.id.main_image);
         add_row_Element = findViewById(R.id.btn_add_element);
+        // add = findViewById(R.id.add_item);
+        //delete = findViewById(R.id.delete_item);
         //add_row_Element2 = findViewById(R.id.btn_add_element2);
         added_post=findViewById(R.id.added_post);
         add_main_image = findViewById(R.id.add_main_image);
         product_name = findViewById(R.id.product_name);
         t1 = findViewById(R.id.table);
-        tr1 = findViewById(R.id.table_row1);
+        //tr1 = findViewById(R.id.table_row1);
+        //tr2 = findViewById(R.id.table_row2);
         t1.setColumnStretchable(0, true);
         t1.setColumnStretchable(1, true);
-
+        t1.setColumnStretchable(2, true);
         product_num = findViewById(R.id.product_num);
         price_after_discount = findViewById(R.id.price_after_discount);
         price_before_discount = findViewById(R.id.price_before_discount);
@@ -99,21 +108,8 @@ public class AddProductActivity extends AppCompatActivity {
         add_row_Element.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tr1 = new TableRow(AddProductActivity.this);
-                sc1 = new EditText(AddProductActivity.this);
-                sc2 = new EditText(AddProductActivity.this);
-                sc1.setBackground(getDrawable(R.drawable.element_txt));
-                sc2.setBackground(getDrawable(R.drawable.element_txt));
-                //sc1.setText("0");
-                //sc2.setText("0");
-                //sc3.setText("0");
-                sc1.setTextSize(20);
-                sc2.setTextSize(20);
-                sc1.setGravity(Gravity.CENTER);
-                sc2.setGravity(Gravity.CENTER);
-                tr1.addView(sc1);
-                tr1.addView(sc2);
-                t1.addView(tr1);
+                Add_row();
+
             }
         });
         add_main_image.setOnClickListener(new View.OnClickListener() {
@@ -303,8 +299,8 @@ public class AddProductActivity extends AppCompatActivity {
         //String size=added_size.getText().toString();
         //String price=added_price.getText().toString();
         //String gender=added_gender.getText().toString();
-     Image_Uri1 = mArrayUri.get(0);
-     Image_Uri2 = mArrayUri.get(1);
+        Image_Uri1 = mArrayUri.get(0);
+        Image_Uri2 = mArrayUri.get(1);
         Image_Uri3 = mArrayUri.get(2);
         Image_Uri4 = mArrayUri.get(3);
         mutiple_image1.setImageURI(Image_Uri1);
@@ -316,19 +312,59 @@ public class AddProductActivity extends AppCompatActivity {
         mutiple_image2.setVisibility(View.VISIBLE);
         mutiple_image3.setVisibility(View.VISIBLE);
         mutiple_image4.setVisibility(View.VISIBLE);
-     String image1 = Image_Uri1.toString();
-     String image2 = Image_Uri2.toString();
-     int id= Integer.parseInt(product_num.getText().toString());
-     UserModel userModel = mprefs.Get_UserData(AddProductActivity.this);
-     String name =userModel.getName();
+        String image1 = Image_Uri1.toString();
+        String image2 = Image_Uri2.toString();
+        int id= Integer.parseInt(product_num.getText().toString());
+        UserModel userModel = mprefs.Get_UserData(AddProductActivity.this);
+        String name =userModel.getName();
         // HomeModel homeModel=new HomeModel(image1,image2,title,des,size,price,gender,name,R.drawable.vender_image2);
-    // HomeModel homeModel=new HomeModel(id,image,title,"dfkldlfks","50$","XXL","male");
+        // HomeModel homeModel=new HomeModel(id,image,title,"dfkldlfks","50$","XXL","male");
         // homeDatabase.dao_home().addproductItem(homeModel);
-     //homeDatabase.dao_home().addproductItem(homeModel);
-     Toast.makeText(this, "data added successfully", Toast.LENGTH_SHORT).show();
-     Intent intent=new Intent(this,MainActivity.class);
+        //homeDatabase.dao_home().addproductItem(homeModel);
+        Toast.makeText(this, "data added successfully", Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(this,MainActivity.class);
         Log.v("list", String.valueOf(homeDatabase.dao_home().get_profile_data2()));
-     startActivity(intent);
+        startActivity(intent);
 
+    }
+
+    public void Add_row() {
+        tr2 = new TableRow(AddProductActivity.this);
+        TableRow.LayoutParams params1 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 10f);
+        tr2.setLayoutParams(params1);
+        sc1 = new EditText(AddProductActivity.this);
+        sc2 = new EditText(AddProductActivity.this);
+        ImageButton delete2 = new ImageButton(AddProductActivity.this);
+        sc1.setBackground(getDrawable(R.drawable.element_txt));
+        sc2.setBackground(getDrawable(R.drawable.element_txt));
+        delete2.setBackground(getDrawable(R.drawable.ic_close_black_24dp));
+        tr2.setId(count);
+        //sc1.setText("0");
+        //sc2.setText("0");
+        //sc3.setText("0");
+        TableRow.LayoutParams params2 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4f);
+        sc1.setLayoutParams(params2);
+        sc1.setTextSize(20);
+        TableRow.LayoutParams params3 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 5f);
+        sc2.setLayoutParams(params3);
+        sc2.setTextSize(20);
+        TableRow.LayoutParams params4 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+        params4.gravity = Gravity.CENTER;
+        delete2.setLayoutParams(params4);
+
+        tr2.addView(sc1);
+        tr2.addView(sc2);
+        tr2.addView(delete2);
+        t1.addView(tr2);
+        delete2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delete_row();
+            }
+        });
+    }
+
+    public void delete_row() {
+        t1.removeView(tr2);
     }
 }

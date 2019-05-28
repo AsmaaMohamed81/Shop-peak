@@ -430,7 +430,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:weightSum="2"
+                android:weightSum="3"
                 android:orientation="horizontal"
                 android:background="@color/colorPrimary">
 
@@ -451,6 +451,15 @@
                     android:text="@string/description"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="operation"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <TableLayout
@@ -458,14 +467,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp">
-
-                <TableRow
-                    android:id="@+id/table_row1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="2">
-
-                </TableRow>
             </TableLayout>
                 <Button
                     android:id="@+id/btn_add_element"
