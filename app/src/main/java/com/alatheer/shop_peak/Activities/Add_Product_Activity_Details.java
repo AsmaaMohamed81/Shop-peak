@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.R;
 
+import net.margaritov.preference.colorpicker.ColorPickerDialog;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -34,6 +36,9 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
     int PICK_IMAGE_REQUEST = 1;
     int DefaultColor;
     Uri filePath;
+
+    ColorPickerDialog pickcolor;
+    int color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +86,27 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
                 btn_element_color.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        OpenColorPicker(true);
+//                        OpenColorPicker(true);
+
+
+
+                        color= Color.parseColor("#ffffff");
+                        pickcolor=new ColorPickerDialog(Add_Product_Activity_Details.this,color);
+                        pickcolor.setAlphaSliderVisible(true);
+                        pickcolor.setTitle("PICK");
+
+                        pickcolor.setOnColorChangedListener(new ColorPickerDialog.OnColorChangedListener() {
+                            @Override
+                            public void onColorChanged(int color) {
+
+
+                                btn_element_color.setBackgroundColor(color);
+                                btn_element_color.setText("#" +Integer.toHexString(color));
+                            }
+                        });
+
+
+                        pickcolor.show();
                     }
                 });
                 imageButton.setOnClickListener(new View.OnClickListener() {
