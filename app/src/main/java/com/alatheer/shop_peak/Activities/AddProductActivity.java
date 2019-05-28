@@ -2,6 +2,7 @@ package com.alatheer.shop_peak.Activities;
 
 import android.arch.persistence.room.Room;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -44,7 +45,7 @@ public class AddProductActivity extends AppCompatActivity {
     ImageView close, main_image, mutiple_image1, mutiple_image2, mutiple_image3, mutiple_image4;
     Button add_main_image, Skip, Continue;
      TextView added_post;
-    EditText sc1, sc2;
+
     Button delete_item;
     Button btn_element_image;
     EditText product_num1, product_num, product_name, price_after_discount, price_before_discount, element_name, element_description, element_color;
@@ -64,11 +65,18 @@ public class AddProductActivity extends AppCompatActivity {
      HomeDatabase homeDatabase;
      MySharedPreference mprefs;
     Button add_row_Element, add_row_Element2;
+
+    private Context context = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
         initview();
+///////////////////////////////////////
+
+
+        //////////////////////////////////////////////
     }
 
     private void initview() {
@@ -216,64 +224,7 @@ public class AddProductActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       /* if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == RESULT_OK) {
-            // CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            imagesEncodedList = new ArrayList<String>();
-            if (data.getData() != null) {
 
-                Uri mImageUri = data.getData();
-
-                // Get the cursor
-                Cursor cursor = getContentResolver().query(mImageUri,
-                        filePathColumn, null, null, null);
-                // Move to first row
-                cursor.moveToFirst();
-
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                imageEncoded = cursor.getString(columnIndex);
-                cursor.close();
-
-            } else {
-                if (data.getClipData() != null) {
-                    ClipData mClipData = data.getClipData();
-                    mArrayUri = new ArrayList<Uri>();
-                    for (int i = 0; i < mClipData.getItemCount(); i++) {
-
-                        ClipData.Item item = mClipData.getItemAt(i);
-                        Uri uri = item.getUri();
-                        final String path = Environment.getExternalStorageState() + "/" + Environment.DIRECTORY_DCIM + "/";
-                        mArrayUri.add(uri);
-                        // Get the cursor
-                        Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
-                        // Move to first row
-                        cursor.moveToFirst();
-
-                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                        imageEncoded = cursor.getString(columnIndex);
-                        imagesEncodedList.add(imageEncoded);
-                        cursor.close();
-                        Log.v("image_url", path);
-                        Image_Uri1 = mArrayUri.get(0);
-                        Image_Uri2 = mArrayUri.get(1);
-                        Image_Uri3 = mArrayUri.get(2);
-                        Image_Uri4 = mArrayUri.get(3);
-                        mutiple_image1.setImageURI(Image_Uri1);
-                        mutiple_image2.setImageURI(Image_Uri2);
-                        mutiple_image3.setImageURI(Image_Uri3);
-                        mutiple_image4.setImageURI(Image_Uri4);
-                        //add_multiple_image.setVisibility(View.GONE);
-                        mutiple_image1.setVisibility(View.VISIBLE);
-                        mutiple_image2.setVisibility(View.VISIBLE);
-                        mutiple_image3.setVisibility(View.VISIBLE);
-                        mutiple_image4.setVisibility(View.VISIBLE);
-                        //Intent intent=new Intent(this,MainActivity.class);
-                        //startActivity(intent);
-                    }
-                    Toast.makeText(this, "selected Images" + mArrayUri.size(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } */
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             filePath = data.getData();
@@ -294,11 +245,7 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void uploadimage() {
-        //String title = added_TiTle.getText().toString();
-        //String des=added_description.getText().toString();
-        //String size=added_size.getText().toString();
-        //String price=added_price.getText().toString();
-        //String gender=added_gender.getText().toString();
+
         Image_Uri1 = mArrayUri.get(0);
         Image_Uri2 = mArrayUri.get(1);
         Image_Uri3 = mArrayUri.get(2);
@@ -317,10 +264,7 @@ public class AddProductActivity extends AppCompatActivity {
         int id= Integer.parseInt(product_num.getText().toString());
         UserModel userModel = mprefs.Get_UserData(AddProductActivity.this);
         String name =userModel.getName();
-        // HomeModel homeModel=new HomeModel(image1,image2,title,des,size,price,gender,name,R.drawable.vender_image2);
-        // HomeModel homeModel=new HomeModel(id,image,title,"dfkldlfks","50$","XXL","male");
-        // homeDatabase.dao_home().addproductItem(homeModel);
-        //homeDatabase.dao_home().addproductItem(homeModel);
+
         Toast.makeText(this, "data added successfully", Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(this,MainActivity.class);
         Log.v("list", String.valueOf(homeDatabase.dao_home().get_profile_data2()));
@@ -329,19 +273,42 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     public void Add_row() {
-        tr2 = new TableRow(AddProductActivity.this);
-        TableRow.LayoutParams params1 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 10f);
-        tr2.setLayoutParams(params1);
+
+        final TableLayout tableLayout = (TableLayout)findViewById(R.id.table);
+
+        context = getApplicationContext();
+
+
+        // Create a new table row.
+        final TableRow tableRow = new TableRow(context);
+
+        // Set new table row layout parameters.
+        TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+        tableRow.setLayoutParams(layoutParams);
+
+
+
+
+
+
+        EditText sc1=new EditText(context);
+        EditText sc2=new EditText(context);
+
+        ImageButton delete2 = new ImageButton(context);
+
+
+
         sc1 = new EditText(AddProductActivity.this);
         sc2 = new EditText(AddProductActivity.this);
-        ImageButton delete2 = new ImageButton(AddProductActivity.this);
+
         sc1.setBackground(getDrawable(R.drawable.element_txt));
         sc2.setBackground(getDrawable(R.drawable.element_txt));
+
         delete2.setBackground(getDrawable(R.drawable.ic_close_black_24dp));
-        tr2.setId(count);
-        //sc1.setText("0");
-        //sc2.setText("0");
-        //sc3.setText("0");
+
+
+
+
         TableRow.LayoutParams params2 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4f);
         sc1.setLayoutParams(params2);
         sc1.setTextSize(20);
@@ -352,14 +319,20 @@ public class AddProductActivity extends AppCompatActivity {
         params4.gravity = Gravity.CENTER;
         delete2.setLayoutParams(params4);
 
-        tr2.addView(sc1);
-        tr2.addView(sc2);
-        tr2.addView(delete2);
-        t1.addView(tr2);
+
+
+
+        tableRow.addView(sc1);
+        tableRow.addView(sc2);
+        tableRow.addView(delete2);
+
+        tableLayout.addView(tableRow);
+
         delete2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                delete_row();
+                tableLayout.removeView(tableRow);
+
             }
         });
     }
