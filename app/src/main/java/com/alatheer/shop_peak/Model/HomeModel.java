@@ -83,129 +83,200 @@ public class HomeModel {
     public String storeImg;
     @SerializedName("rate")
     @Expose
-    public Long rate;
+    public String rate;
     @SerializedName("img")
     @Expose
-    public Img img;
+    public String[] img;
 
-    public HomeModel withId(String id) {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
 
-    public HomeModel withStoreIdFk(String storeIdFk) {
+    public String getStoreIdFk() {
+        return storeIdFk;
+    }
+
+    public void setStoreIdFk(String storeIdFk) {
         this.storeIdFk = storeIdFk;
-        return this;
     }
 
-    public HomeModel withSanfCode(String sanfCode) {
+    public String getSanfCode() {
+        return sanfCode;
+    }
+
+    public void setSanfCode(String sanfCode) {
         this.sanfCode = sanfCode;
-        return this;
     }
 
-    public HomeModel withSanfName(String sanfName) {
+    public String getSanfName() {
+        return sanfName;
+    }
+
+    public void setSanfName(String sanfName) {
         this.sanfName = sanfName;
-        return this;
     }
 
-    public HomeModel withMainTasnef(String mainTasnef) {
+    public String getMainTasnef() {
+        return mainTasnef;
+    }
+
+    public void setMainTasnef(String mainTasnef) {
         this.mainTasnef = mainTasnef;
-        return this;
     }
 
-    public HomeModel withSubTasnef(String subTasnef) {
+    public String getSubTasnef() {
+        return subTasnef;
+    }
+
+    public void setSubTasnef(String subTasnef) {
         this.subTasnef = subTasnef;
-        return this;
     }
 
-    public HomeModel withPriceBeforeDis(String priceBeforeDis) {
+    public String getPriceBeforeDis() {
+        return priceBeforeDis;
+    }
+
+    public void setPriceBeforeDis(String priceBeforeDis) {
         this.priceBeforeDis = priceBeforeDis;
-        return this;
     }
 
-    public HomeModel withPriceAfterDis(String priceAfterDis) {
+    public String getPriceAfterDis() {
+        return priceAfterDis;
+    }
+
+    public void setPriceAfterDis(String priceAfterDis) {
         this.priceAfterDis = priceAfterDis;
-        return this;
     }
 
-    public HomeModel withMainImg(String mainImg) {
+    public String getMainImg() {
+        return mainImg;
+    }
+
+    public void setMainImg(String mainImg) {
         this.mainImg = mainImg;
-        return this;
     }
 
-    public HomeModel withDetails(String details) {
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
         this.details = details;
-        return this;
     }
 
-    public HomeModel withOffered(String offered) {
+    public String getOffered() {
+        return offered;
+    }
+
+    public void setOffered(String offered) {
         this.offered = offered;
-        return this;
     }
 
-    public HomeModel withOfferedTitle(String offeredTitle) {
+    public String getOfferedTitle() {
+        return offeredTitle;
+    }
+
+    public void setOfferedTitle(String offeredTitle) {
         this.offeredTitle = offeredTitle;
-        return this;
     }
 
-    public HomeModel withPriceOffered(String priceOffered) {
+    public String getPriceOffered() {
+        return priceOffered;
+    }
+
+    public void setPriceOffered(String priceOffered) {
         this.priceOffered = priceOffered;
-        return this;
     }
 
-    public HomeModel withDateOfferedFrom(String dateOfferedFrom) {
+    public String getDateOfferedFrom() {
+        return dateOfferedFrom;
+    }
+
+    public void setDateOfferedFrom(String dateOfferedFrom) {
         this.dateOfferedFrom = dateOfferedFrom;
-        return this;
     }
 
-    public HomeModel withDateOfferedTo(String dateOfferedTo) {
+    public String getDateOfferedTo() {
+        return dateOfferedTo;
+    }
+
+    public void setDateOfferedTo(String dateOfferedTo) {
         this.dateOfferedTo = dateOfferedTo;
-        return this;
     }
 
-    public HomeModel withPublisher(String publisher) {
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
         this.publisher = publisher;
-        return this;
     }
 
-    public HomeModel withDate(String date) {
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
         this.date = date;
-        return this;
     }
 
-    public HomeModel withDateS(String dateS) {
+    public String getDateS() {
+        return dateS;
+    }
+
+    public void setDateS(String dateS) {
         this.dateS = dateS;
-        return this;
     }
 
-    public HomeModel withApproved(String approved) {
+    public String getApproved() {
+        return approved;
+    }
+
+    public void setApproved(String approved) {
         this.approved = approved;
-        return this;
     }
 
-    public HomeModel withOfferIdFk(String offerIdFk) {
+    public String getOfferIdFk() {
+        return offerIdFk;
+    }
+
+    public void setOfferIdFk(String offerIdFk) {
         this.offerIdFk = offerIdFk;
-        return this;
     }
 
-    public HomeModel withStoreName(String storeName) {
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
         this.storeName = storeName;
-        return this;
     }
 
-    public HomeModel withStoreImg(String storeImg) {
+    public String getStoreImg() {
+        return storeImg;
+    }
+
+    public void setStoreImg(String storeImg) {
         this.storeImg = storeImg;
-        return this;
     }
 
-    public HomeModel withRate(Long rate) {
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
         this.rate = rate;
-        return this;
     }
 
-    public HomeModel withImg(Img img) {
+    public String[] getImg() {
+        return img;
+    }
+
+    public void setImg(String[] img) {
         this.img = img;
-        return this;
     }
-
 }

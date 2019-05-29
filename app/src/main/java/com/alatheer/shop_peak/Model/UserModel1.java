@@ -13,16 +13,7 @@ public class UserModel1 {
     private String password;
 
     private Integer agree;
-
-    public UserModel1(String full_name, String email, String phone, String madina, String address, String password, Integer agree) {
-        this.full_name = full_name;
-        this.email = email;
-        this.phone = phone;
-        this.madina = madina;
-        this.address = address;
-        this.password = password;
-        this.agree = agree;
-    }
+    private Integer success;
 
     public String getFull_name() {
         return full_name;
@@ -78,5 +69,13 @@ public class UserModel1 {
 
     public void setAgree(Integer agree) {
         this.agree = agree;
+    }
+
+    public Integer getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Integer success) {
+        this.success = success;
     }
 }

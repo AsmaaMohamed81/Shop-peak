@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.cityAdapter;
@@ -29,6 +30,7 @@ import com.alatheer.shop_peak.Adapter.governAdapter;
 import com.alatheer.shop_peak.Model.City;
 import com.alatheer.shop_peak.Model.Govern;
 import com.alatheer.shop_peak.Model.UserModel;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
@@ -45,18 +47,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Signup_Activity extends AppCompatActivity {
-    EditText edt_name2, edt_email, edt_phone, edt_password;
+    EditText edt_name2, edt_email, edt_phone, edt_password, edt_address;
     private CheckBox checkBox;
     private ProgressDialog dialog;
     Button sign_up;
     private Boolean accepted = false;
-    private String userName, passWord, Phone, Email;
+    private String userName, passWord, Phone, Email, address, city_id, govern_id;
     private View root;
     private Snackbar snackbar;
 
-    private RecyclerView recyc_govern,recyc_city;
-    private LinearLayout container_city,container_govern;
-    private ExpandableLayout expand_layout_city,expand_layout_govern;
+    private RecyclerView recyc_govern, recyc_city;
+    private LinearLayout container_city, container_govern;
+    private ExpandableLayout expand_layout_city, expand_layout_govern;
 
     private ArrayList<Govern> governArrayList;
     private ArrayList<City> cityArrayList;
@@ -65,6 +67,8 @@ public class Signup_Activity extends AppCompatActivity {
     private governAdapter governAdapter;
 
     private Govern govern;
+
+    private TextView tv_title_govern, tv_title_city;
 
 
     @Override
@@ -80,22 +84,22 @@ public class Signup_Activity extends AppCompatActivity {
         edt_password = findViewById(R.id.user_password);
         edt_email = findViewById(R.id.user_email);
         edt_phone = findViewById(R.id.user_phone);
+        edt_address = findViewById(R.id.user_address);
         sign_up = findViewById(R.id.btn_sign);
         root = findViewById(R.id.root);
         checkBox = findViewById(R.id.check_box);
+        tv_title_govern = findViewById(R.id.tv_title_govern);
+        tv_title_city = findViewById(R.id.tv_title_city);
 
 /////#FFFFFF/////////////////
-       /* recyc_govern=findViewById(R.id.recView_govern);
-        recyc_city=findViewById(R.id.recView_city);
+        recyc_govern = findViewById(R.id.recView_govern);
+        recyc_city = findViewById(R.id.recView_city);
 
-        container_city=findViewById(R.id.container_city);
-        container_govern=findViewById(R.id.container_govern);
+        container_city = findViewById(R.id.container_city);
+        container_govern = findViewById(R.id.container_govern);
 
-        expand_layout_city=findViewById(R.id.expand_layout_city);
-        expand_layout_govern=findViewById(R.id.expand_layout_govern);*/
-
-
-
+        expand_layout_city = findViewById(R.id.expand_layout_city);
+        expand_layout_govern = findViewById(R.id.expand_layout_govern);
 
 
         container_govern.setOnClickListener(new View.OnClickListener() {
@@ -115,29 +119,26 @@ public class Signup_Activity extends AppCompatActivity {
         });
 
 
- /////////////////////////////////////
+        /////////////////////////////////////
 
         get_govern();
 
-        governArrayList=new ArrayList<>();
-        cityArrayList=new ArrayList<>();
+        governArrayList = new ArrayList<>();
+        cityArrayList = new ArrayList<>();
 
 
         recyc_govern.setLayoutManager(new LinearLayoutManager(this));
 
-        governAdapter=new governAdapter(this,governArrayList);
+        governAdapter = new governAdapter(this, governArrayList);
 
         recyc_govern.setAdapter(governAdapter);
 
         governAdapter.notifyDataSetChanged();
 
 
-
-
 ////////////////////////////////////////
         final Animation animation2 = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.press_anim);
-
 
 
         Common.CloseKeyBoard(this, edt_name2);
@@ -179,20 +180,29 @@ public class Signup_Activity extends AppCompatActivity {
         passWord = edt_password.getText().toString();
         Email = edt_email.getText().toString();
         Phone = edt_phone.getText().toString();
+        address = edt_address.getText().toString();
+
         if (!TextUtils.isEmpty(userName) &&
                 !TextUtils.isEmpty(passWord) &&
                 !TextUtils.isEmpty(Email) &&
                 !TextUtils.isEmpty(Phone) &&
+                !TextUtils.isEmpty(address) &&
                 passWord.length() >= 8 &&
                 android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches() &&
-                accepted) {
+                accepted &&
+                city_id != null &&
+                govern_id != null) {
 
             Common.CloseKeyBoard(this, edt_name2);
             edt_name2.setError(null);
             edt_password.setError(null);
             edt_email.setError(null);
             edt_phone.setError(null);
-            Signup(userName, passWord, Email, Phone);
+            edt_address.setError(null);
+
+//            Signup(userName, passWord, Email, Phone);
+
+            SignUp(userName, passWord, Email, Phone, address, accepted, city_id, govern_id);
 
         } else {
             if (TextUtils.isEmpty(userName)) {
@@ -212,9 +222,9 @@ public class Signup_Activity extends AppCompatActivity {
                 edt_password.setError(null);
             }
             if (TextUtils.isEmpty(Email)) {
-                edt_password.setError(getString(R.string.pass_req));
+                edt_email.setError(getString(R.string.pass_req));
             } else {
-                edt_password.setError(null);
+                edt_email.setError(null);
             }
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
                 edt_email.setError(getString(R.string.email_patt));
@@ -222,22 +232,77 @@ public class Signup_Activity extends AppCompatActivity {
                 edt_email.setError(null);
             }
             if (TextUtils.isEmpty(Phone)) {
-                edt_password.setError(getString(R.string.pass_req));
+                edt_phone.setError(getString(R.string.phone_req));
             } else {
-                edt_password.setError(null);
+                edt_phone.setError(null);
             }
 
+            if (TextUtils.isEmpty(address)) {
+                edt_address.setError(getString(R.string.address_req));
+            } else {
+                edt_address.setError(null);
+            }
 
             if (!accepted) {
 
 
-
-
                 CreateSnackBar(getString(R.string.accept_terms));
 
+            } else {
+
+                dismissSnackBar();
+            }
+            if (govern_id == null) {
+                Toast.makeText(this, "choose Govern first", Toast.LENGTH_SHORT).show();
+            }
+            if (city_id == null) {
+                Toast.makeText(this, "choose city first", Toast.LENGTH_SHORT).show();
             }
 
+
         }
+
+    }
+
+    private void SignUp(String userName, String passWord, String email, String phone, String address, Boolean accepted, String city_id, String govern_id) {
+
+        int agree = 0;
+
+        if (accepted) {
+
+            agree = 1;
+        }
+
+        Api.getService()
+                .register(userName, email, phone, govern_id, city_id, address, passWord)
+                .enqueue(new Callback<UserModel1>() {
+                    @Override
+                    public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
+
+
+                        if (response.isSuccessful()){
+
+
+                            if (response.body().getSuccess()==1){
+
+
+                                UserModel1 userModel = response.body();
+
+                                Toast.makeText(Signup_Activity.this, "name"+userModel.getFull_name(), Toast.LENGTH_SHORT).show();
+
+                            }
+
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserModel1> call, Throwable t) {
+
+                    }
+                });
+
 
     }
 
@@ -264,7 +329,7 @@ public class Signup_Activity extends AppCompatActivity {
     }
 
 
-    private void get_govern(){
+    private void get_govern() {
 
         Api.getService()
                 .getGovern()
@@ -272,9 +337,11 @@ public class Signup_Activity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<List<Govern>> call, Response<List<Govern>> response) {
 
-                        governArrayList.addAll(response.body());
-                        governAdapter.notifyDataSetChanged();
+                        if (response.isSuccessful()) {
 
+                            governArrayList.addAll(response.body());
+                            governAdapter.notifyDataSetChanged();
+                        }
                     }
 
                     @Override
@@ -285,20 +352,35 @@ public class Signup_Activity extends AppCompatActivity {
 
 
     }
+
     public void pos_city(int pos) {
+
+
+        tv_title_city.setText(cityArrayList.get(pos).getName());
+        city_id = cityArrayList.get(pos).getId();
+        expand_layout_city.toggle(true);
+
     }
 
     public void pos_govern(int pos) {
 
-        govern=governArrayList.get(pos);
 
-        cityArrayList=govern.getCity();
-
-        recyc_city.setLayoutManager(new LinearLayoutManager(this));
-        cityAdapter =new cityAdapter(this,cityArrayList);
-
-        recyc_city.setAdapter(cityAdapter);
+        govern = governArrayList.get(pos);
+        govern_id = govern.getId();
 
 
+        if (govern.getCity().size() > 0) {
+            cityArrayList = govern.getCity();
+
+            recyc_city.setLayoutManager(new LinearLayoutManager(this));
+            cityAdapter = new cityAdapter(this, cityArrayList);
+
+            recyc_city.setAdapter(cityAdapter);
+
+            tv_title_govern.setText(governArrayList.get(pos).getName());
+
+            expand_layout_govern.toggle(true);
+
+        }
     }
 }

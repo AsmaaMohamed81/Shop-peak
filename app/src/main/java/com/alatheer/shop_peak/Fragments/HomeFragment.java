@@ -192,8 +192,7 @@ public class HomeFragment extends android.app.Fragment {
         return homelist;
     }*/
     public void addproduct() {
-        Call<List<HomeModel>> call = Api.getService().get_all_products();
-        call.enqueue(new Callback<List<HomeModel>>() {
+        Api.getService().get_all_products().enqueue(new Callback<List<HomeModel>>() {
             @Override
             public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
                 homelist = response.body();

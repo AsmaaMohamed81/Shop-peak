@@ -142,7 +142,7 @@
 
 
                                     <TextView
-                                        android:id="@+id/tv_title"
+                                        android:id="@+id/tv_title_govern"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="12dp"
@@ -270,7 +270,7 @@
 
 
                                     <TextView
-                                        android:id="@+id/tv_title2"
+                                        android:id="@+id/tv_title_city"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="12dp"

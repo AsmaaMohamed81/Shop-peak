@@ -22,8 +22,7 @@ public interface Services {
                               @Field("mohafza") String mohafza,
                               @Field("madina") String madina,
                               @Field("address")String address,
-                              @Field("password")String password,
-                              @Field("agree")Integer agree);
+                              @Field("password")String password);
 
     @GET("Api/countries")
     Call<List<Govern>> getGovern();
