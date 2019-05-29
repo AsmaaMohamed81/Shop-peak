@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 
 import com.alatheer.shop_peak.Activities.Signup_Activity;
+import com.alatheer.shop_peak.Activities.Vender_Signup_Activity;
 import com.alatheer.shop_peak.Model.City;
 import com.alatheer.shop_peak.R;
 
@@ -22,11 +23,14 @@ public class cityAdapter extends RecyclerView.Adapter<cityAdapter.Holder>{
     List<City> cityList;
 
     Signup_Activity signup_activity;
+    Vender_Signup_Activity vender_signup_activity;
+
 
     public cityAdapter(Context context, List<City> cityList) {
         this.context = context;
         this.cityList = cityList;
-        signup_activity= (Signup_Activity) context;
+
+
     }
 
     @NonNull
@@ -39,14 +43,29 @@ public class cityAdapter extends RecyclerView.Adapter<cityAdapter.Holder>{
     @Override
     public void onBindViewHolder(@NonNull final Holder holder, int position) {
 
-        City city=cityList.get(position);
+        final City city=cityList.get(position);
         holder.Bind(city);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int pos=holder.getAdapterPosition();
-                signup_activity.pos_city(pos);
+
+
+                if (context instanceof Signup_Activity){
+                    signup_activity= (Signup_Activity) context;
+                    signup_activity.pos_city(pos);
+
+
+                }else if (context instanceof Vender_Signup_Activity){
+
+                    vender_signup_activity= (Vender_Signup_Activity) context;
+                    vender_signup_activity.pos_city(pos);
+
+
+                }
+
+
             }
         });
     }

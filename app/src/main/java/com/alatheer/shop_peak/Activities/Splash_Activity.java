@@ -16,6 +16,7 @@ import android.view.SurfaceView;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.alatheer.shop_peak.Model.UserModel;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 
@@ -29,7 +30,7 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mp;
-    UserModel userModel;
+    UserModel1 userModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,8 +99,7 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
                             //Toast.makeText(Splash_Activity.this, "name"+userModel.getName(), Toast.LENGTH_SHORT).show();
 
                             Intent intent=new Intent(Splash_Activity.this,MainActivity.class);
-                            intent.putExtra("personName",userModel.getName());
-                            intent.putExtra("image_url",userModel.getImage_url());
+                            intent.putExtra("personName",userModel.getFull_name());
                             startActivity(intent);
                             Animatoo.animateDiagonal(Splash_Activity.this);
                             finish();

@@ -7,6 +7,8 @@ import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,19 +19,36 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.alatheer.shop_peak.Adapter.TasnefAdapter;
+import com.alatheer.shop_peak.Adapter.cityAdapter;
+import com.alatheer.shop_peak.Adapter.governAdapter;
 import com.alatheer.shop_peak.Model.Address;
+import com.alatheer.shop_peak.Model.City;
+import com.alatheer.shop_peak.Model.Govern;
+import com.alatheer.shop_peak.Model.Tasnefat;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
+import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.squareup.picasso.Picasso;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Vender_Signup_Activity extends AppCompatActivity {
     EditText shop_name, shop_email, address;
@@ -38,10 +57,30 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     ImageView seller_image;
     List<Address> addressList;
     List<String> cities;
-    private String Name, Email, Governate, City, Address, Category;
+    private String Name, Email, Governate, City, Address, Category, city_id, govern_id;
     int PICK_IMAGE_REQUEST = 1 ;
     android.support.v7.widget.Toolbar toolbar;
     Uri filePath;
+//////////////////////////FFFF
+    private RecyclerView recyc_govern, recyc_city,recyc_tasnefat;
+    private LinearLayout container_city, container_govern,container_tasnefat;
+    private ExpandableLayout expand_layout_city, expand_layout_govern,expand_layout_tasnefat;
+
+    private ArrayList<Govern> governArrayList;
+    private ArrayList<City> cityArrayList;
+    private ArrayList<Tasnefat> tasnefatArrayList;
+
+    private cityAdapter cityAdapter;
+    private governAdapter governAdapter;
+    private TasnefAdapter tasnefAdapter;
+
+    private Govern govern;
+
+    private TextView tv_title_govern, tv_title_city,tv_title_tasnefat;
+
+    private MySharedPreference mySharedPreference;
+    private UserModel1 userModel1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +99,100 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         signup = findViewById(R.id.btn_sign);
         setSupportActionBar(toolbar);
         seller_image = findViewById(R.id.seller_image);
+
+
+        /////#FFFFFF/////////////////
+
+        tv_title_govern = findViewById(R.id.tv_title_govern);
+        tv_title_city = findViewById(R.id.tv_title_city);
+
+        recyc_govern = findViewById(R.id.recView_govern);
+        recyc_city = findViewById(R.id.recView_city);
+
+        container_city = findViewById(R.id.container_city);
+        container_govern = findViewById(R.id.container_govern);
+
+        expand_layout_city = findViewById(R.id.expand_layout_city);
+        expand_layout_govern = findViewById(R.id.expand_layout_govern);
+
+
+        container_govern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expand_layout_govern.toggle(true);
+
+            }
+        });
+
+        container_city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expand_layout_city.toggle(true);
+
+            }
+        });
+
+
+        ////////////get Govern/////////////////////////
+
+        get_govern();
+
+        governArrayList = new ArrayList<>();
+        cityArrayList = new ArrayList<>();
+
+
+        recyc_govern.setLayoutManager(new LinearLayoutManager(this));
+
+        governAdapter = new governAdapter(Vender_Signup_Activity.this, governArrayList);
+
+        recyc_govern.setAdapter(governAdapter);
+
+        governAdapter.notifyDataSetChanged();
+
+
+/////FFFFFFF////////////get Tasnefat////////////////////////////
+        recyc_tasnefat=findViewById(R.id.recView_tasnefat);
+        container_tasnefat=findViewById(R.id.container_tasnefat);
+        expand_layout_tasnefat=findViewById(R.id.expand_layout_tasnefat);
+        tv_title_tasnefat=findViewById(R.id.tv_title_tasnefat);
+
+        tasnefatArrayList=new ArrayList<>();
+
+
+        container_tasnefat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expand_layout_tasnefat.toggle(true);
+            }
+        });
+
+        get_Tasnefat();
+
+
+        recyc_tasnefat.setLayoutManager(new LinearLayoutManager(this));
+        tasnefAdapter=new TasnefAdapter(this,tasnefatArrayList);
+        recyc_tasnefat.setAdapter(tasnefAdapter);
+
+
+
+        ///////////////////////////////////////////////////FFFFFFFF
+
+        mySharedPreference=MySharedPreference.getInstance();
+
+
+        userModel1=mySharedPreference.Get_UserData(this);
+
+        shop_name.setText(userModel1.getFull_name());
+        shop_email.setText(userModel1.getEmail());
+        tv_title_govern.setText(userModel1.getMohafza());
+        tv_title_city.setText(userModel1.getMadina());
+        address.setText(userModel1.getAddress());
+
+
+        //////////////////////////////////////////////
+
+
+
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.press_anim);
@@ -116,6 +249,27 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
     }
 
+    private void get_Tasnefat() {
+
+        Api.getService()
+                .getTasnef_Vonder()
+                .enqueue(new Callback<List<Tasnefat>>() {
+                    @Override
+                    public void onResponse(Call<List<Tasnefat>> call, Response<List<Tasnefat>> response) {
+                        if (response.isSuccessful()){
+
+                            tasnefatArrayList.addAll(response.body());
+                            tasnefAdapter.notifyDataSetChanged();
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Tasnefat>> call, Throwable t) {
+
+                    }
+                });
+    }
 
 
     private void chooseImage() {
@@ -222,5 +376,69 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         addressList.add(new Address("Elgharbiah", new String[]{"Tanta"}));
         addressList.add(new Address("Elshaqia", new String[]{"Elzagazig"}));
         return addressList;
+    }
+
+
+    private void get_govern() {
+
+        Api.getService()
+                .getGovern()
+                .enqueue(new Callback<List<Govern>>() {
+                    @Override
+                    public void onResponse(Call<List<Govern>> call, Response<List<Govern>> response) {
+
+                        if (response.isSuccessful()) {
+
+                            governArrayList.addAll(response.body());
+                            governAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Govern>> call, Throwable t) {
+
+                    }
+                });
+
+
+    }
+
+    public void pos_city(int pos) {
+
+
+        tv_title_city.setText(cityArrayList.get(pos).getName());
+        city_id = cityArrayList.get(pos).getId();
+        expand_layout_city.toggle(true);
+
+    }
+
+    public void pos_govern(int pos) {
+
+
+        govern = governArrayList.get(pos);
+        govern_id = govern.getId();
+
+
+        if (govern.getCity().size() > 0) {
+            cityArrayList = govern.getCity();
+
+            recyc_city.setLayoutManager(new LinearLayoutManager(this));
+            cityAdapter = new cityAdapter(Vender_Signup_Activity.this, cityArrayList);
+
+            recyc_city.setAdapter(cityAdapter);
+
+            tv_title_govern.setText(governArrayList.get(pos).getName());
+
+            expand_layout_govern.toggle(true);
+
+        }
+    }
+
+    public void pos_tasnefat(int pos) {
+
+        tv_title_tasnefat.setText(tasnefatArrayList.get(pos).getName());
+        expand_layout_tasnefat.toggle(true);
+
+
     }
 }

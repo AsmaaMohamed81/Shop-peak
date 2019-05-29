@@ -19,14 +19,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Model.UserModel;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
+import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -35,6 +38,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -48,12 +52,16 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Login_Activity extends AppCompatActivity {
-    EditText edt_name, edt_password;
+    EditText edt_email, edt_password;
     Button Sign_up, log_in;
     SignInButton gmail_login;
     LoginButton facebook_login;
-    private String userName, passWord;
+    private String email, passWord;
     private ProgressDialog dialog;
     private CheckBox checkBox;
     private Boolean accepted = false;
@@ -83,7 +91,7 @@ public class Login_Activity extends AppCompatActivity {
 
         checkBox = findViewById(R.id.check_box);
         Sign_up = findViewById(R.id.btn_sign);
-        edt_name = findViewById(R.id.user_name);
+        edt_email = findViewById(R.id.email);
         edt_password = findViewById(R.id.user_password);
         log_in = findViewById(R.id.btn_login);
         root=findViewById(R.id.root);
@@ -117,7 +125,7 @@ public class Login_Activity extends AppCompatActivity {
 
                             userModel = new UserModel(first_name, image_url, "asasa@sdaskd");
 
-                            mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
+//                            mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
                             Intent i=new Intent(Login_Activity.this,MainActivity.class);
                             //i.putExtra("personName",first_name);
                             //i.putExtra("image_url",image_url);
@@ -243,7 +251,7 @@ public class Login_Activity extends AppCompatActivity {
                 } catch (Exception e) {
                     userModel = new UserModel(personName, "https://www.wpclipart.com/buildings/shop.png", personEmail);
                 }
-                mySharedPreference.Create_Update_UserData(Login_Activity.this, userModel);
+//                mySharedPreference.Create_Update_UserData(Login_Activity.this, userModel);
 
                 //Toast.makeText(this,personPhoto.toString(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivity.class);
@@ -295,26 +303,31 @@ public class Login_Activity extends AppCompatActivity {
     }
 
     private void validation() {
-        userName = edt_name.getText().toString();
+        email = edt_email.getText().toString();
         passWord = edt_password.getText().toString();
 
-        if (!TextUtils.isEmpty(userName) &&
+        if (!TextUtils.isEmpty(email) &&
                 !TextUtils.isEmpty(passWord) &&
                 accepted) {
 
-            Common.CloseKeyBoard(this, edt_name);
-            edt_name.setError(null);
+            Common.CloseKeyBoard(this, edt_email);
+            edt_email.setError(null);
             edt_password.setError(null);
             edt_password.setError(null);
-            Login(userName, passWord);
+//            Login(userName, passWord);
+
+//            Login(email, passWord);
+            LoginWeb(email, passWord);
+
+
 
 
         } else {
 
-            if (TextUtils.isEmpty(userName)){
-                edt_name.setError(getString(R.string.name_req));
+            if (TextUtils.isEmpty(email)){
+                edt_email.setError(getString(R.string.name_req));
             }else {
-                edt_name.setError(null);
+                edt_email.setError(null);
             }
 
             if (TextUtils.isEmpty(passWord)){
@@ -334,11 +347,49 @@ public class Login_Activity extends AppCompatActivity {
         }
     }
 
+    private void LoginWeb(String email, String passWord) {
+
+
+        Api.getService()
+                .login(email,passWord)
+                .enqueue(new Callback<UserModel1>() {
+                    @Override
+                    public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body().getSuccess()==1) {
+//                                Toast.makeText(Login_Activity.this, "name:" +response.body().getFull_name(), Toast.LENGTH_SHORT).show();
+
+                                UserModel1 userModel=response.body();
+
+                                mySharedPreference=MySharedPreference.getInstance();
+
+                                mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
+
+                                Intent intent = new Intent(Login_Activity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                            else {
+
+                                Toast.makeText(Login_Activity.this, R.string.chk_user_pas, Toast.LENGTH_LONG).show();
+
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserModel1> call, Throwable t) {
+                        Toast.makeText(Login_Activity.this, "Internet", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+    }
+
     private void Login(String userName, String passWord) {
 
         userModel = new UserModel(userName, "https://www.wpclipart.com/buildings/shop.png", "mmmmm@gmail.com");
 
-        mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
+//        mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
 
         Intent intent = new Intent(Login_Activity.this, MainActivity.class);
         //intent.putExtra("personName",userName);

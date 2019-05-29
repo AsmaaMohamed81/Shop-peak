@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.alatheer.shop_peak.Model.UserModel;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Tags.Tags;
 import com.google.gson.Gson;
 
@@ -16,12 +17,27 @@ import static android.content.Context.MODE_PRIVATE;
 public class MySharedPreference {
     Context context;
     SharedPreferences mPrefs;
+    private static MySharedPreference instance=null;
+
 
     public MySharedPreference(Context context) {
         this.context = context;
     }
 
-    public void Create_Update_UserData(Context context, UserModel userModel)
+    public MySharedPreference() {
+
+    }
+
+    public static  MySharedPreference getInstance()
+    {
+        if (instance==null)
+        {
+            instance = new MySharedPreference();
+        }
+        return instance;
+    }
+
+    public void Create_Update_UserData(Context context, UserModel1 userModel)
     {
         mPrefs = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         Gson gson = new Gson();
@@ -41,12 +57,12 @@ public class MySharedPreference {
         editor.apply();
     }
 
-    public UserModel Get_UserData(Context context){
+    public UserModel1 Get_UserData(Context context){
 
         mPrefs = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         Gson gson=new Gson();
         String userData = mPrefs.getString("user_data", "");
-        UserModel userModel=gson.fromJson(userData,UserModel.class);
+        UserModel1 userModel=gson.fromJson(userData,UserModel1.class);
         return userModel;
 
 

@@ -4,11 +4,13 @@ import android.content.Intent;
 
 public class UserModel1 {
 
+    private String id;
     private String full_name;
     private String email;
     private String phone;
 
     private String madina;
+    private String mohafza;
     private String address;
     private String password;
 
@@ -77,5 +79,21 @@ public class UserModel1 {
 
     public void setSuccess(Integer success) {
         this.success = success;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMohafza() {
+        return mohafza;
+    }
+
+    public void setMohafza(String mohafza) {
+        this.mohafza = mohafza;
     }
 }

@@ -28,6 +28,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.alatheer.shop_peak.Model.UserModel;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
@@ -260,8 +261,8 @@ public class AddProductActivity extends AppCompatActivity {
         String image1 = Image_Uri1.toString();
         String image2 = Image_Uri2.toString();
         int id= Integer.parseInt(product_num.getText().toString());
-        UserModel userModel = mprefs.Get_UserData(AddProductActivity.this);
-        String name =userModel.getName();
+        UserModel1 userModel = mprefs.Get_UserData(AddProductActivity.this);
+        String name =userModel.getFull_name();
 
         Toast.makeText(this, "data added successfully", Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(this,MainActivity.class);

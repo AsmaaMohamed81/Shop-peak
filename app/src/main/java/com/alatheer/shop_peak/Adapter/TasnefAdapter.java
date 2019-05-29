@@ -8,70 +8,61 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import com.alatheer.shop_peak.Activities.Signup_Activity;
 import com.alatheer.shop_peak.Activities.Vender_Signup_Activity;
-import com.alatheer.shop_peak.Model.Govern;
+import com.alatheer.shop_peak.Model.City;
+import com.alatheer.shop_peak.Model.Tasnefat;
 import com.alatheer.shop_peak.R;
 
 import java.util.List;
 
-public class governAdapter extends RecyclerView.Adapter<governAdapter.Holder>{
+public class TasnefAdapter extends RecyclerView.Adapter<TasnefAdapter.Holder>{
 
     Context context;
 
-    List<Govern> governsList;
+    List<Tasnefat> tasnefatList;
 
-    Signup_Activity signup_activity;
+
     Vender_Signup_Activity vender_signup_activity;
 
 
-    public governAdapter(Context context, List<Govern> governsList) {
+    public TasnefAdapter(Context context, List<Tasnefat> tasnefatList) {
         this.context = context;
-        this.governsList = governsList;
+        this.tasnefatList = tasnefatList;
+        vender_signup_activity=(Vender_Signup_Activity) context;
+
 
     }
-
-
 
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.item_txt,parent,false);
-        return new governAdapter.Holder(view);
+        return new TasnefAdapter.Holder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final Holder holder, int position) {
 
-        Govern govern=governsList.get(position);
-        holder.Bind(govern);
+        final Tasnefat tasnefat=tasnefatList.get(position);
+        holder.Bind(tasnefat);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int pos=holder.getAdapterPosition();
+                vender_signup_activity.pos_tasnefat(pos);
 
-                if (context instanceof Signup_Activity){
 
 
-                    signup_activity=(Signup_Activity) context;
-                    signup_activity.pos_govern(pos);
 
-                }else if (context instanceof Vender_Signup_Activity){
-
-                    vender_signup_activity=(Vender_Signup_Activity) context;
-
-                    vender_signup_activity.pos_govern(pos);
-
-                }
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return governsList.size();
+        return tasnefatList.size();
     }
 
     public class Holder extends RecyclerView.ViewHolder {
@@ -83,8 +74,8 @@ public class governAdapter extends RecyclerView.Adapter<governAdapter.Holder>{
             textView=itemView.findViewById(R.id.text);
         }
 
-        public void Bind(Govern govern) {
-            textView.setText(govern.getName());
+        public void Bind(Tasnefat tasnefat) {
+            textView.setText(tasnefat.getName());
         }
     }
     }

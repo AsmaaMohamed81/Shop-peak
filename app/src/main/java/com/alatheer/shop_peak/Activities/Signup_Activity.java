@@ -88,10 +88,12 @@ public class Signup_Activity extends AppCompatActivity {
         sign_up = findViewById(R.id.btn_sign);
         root = findViewById(R.id.root);
         checkBox = findViewById(R.id.check_box);
+
+
+/////#FFFFFF/////////////////
         tv_title_govern = findViewById(R.id.tv_title_govern);
         tv_title_city = findViewById(R.id.tv_title_city);
 
-/////#FFFFFF/////////////////
         recyc_govern = findViewById(R.id.recView_govern);
         recyc_city = findViewById(R.id.recView_city);
 
@@ -309,7 +311,7 @@ public class Signup_Activity extends AppCompatActivity {
     private void Signup(String userName, String passWord, String email, String phone) {
         UserModel userModel = new UserModel(userName, "https://www.wpclipart.com/buildings/shop.png", email);
         MySharedPreference mprefs = new MySharedPreference(this);
-        mprefs.Create_Update_UserData(Signup_Activity.this, userModel);
+//        mprefs.Create_Update_UserData(Signup_Activity.this, userModel);
 
         Intent intent = new Intent(Signup_Activity.this, MainActivity.class);
         startActivity(intent);

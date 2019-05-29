@@ -1,6 +1,7 @@
 package com.alatheer.shop_peak.service;
 
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.Tasnefat;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.Govern;
 
@@ -24,10 +25,19 @@ public interface Services {
                               @Field("address")String address,
                               @Field("password")String password);
 
+    @FormUrlEncoded
+    @POST("Api/login")
+    Call<UserModel1> login(@Field("email") String email,
+                           @Field("password") String password
+                            );
+
     @GET("Api/countries")
     Call<List<Govern>> getGovern();
 
     @GET("Api/all_products")
     Call<List<HomeModel>> get_all_products();
+
+    @GET("Api/category_list")
+    Call<List<Tasnefat>> getTasnef_Vonder();
 
 }

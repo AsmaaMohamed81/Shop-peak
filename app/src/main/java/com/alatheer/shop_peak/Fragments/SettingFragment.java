@@ -18,16 +18,16 @@ public class SettingFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.preferences);
         mySharedPreference=new MySharedPreference(getActivity());
 
-        UserModel userModel = mySharedPreference.Get_UserData(getActivity());
+//        UserModel userModel = mySharedPreference.Get_UserData(getActivity());
+//
+//        String name=userModel.getName();
+//        String url=userModel.getImage_url();
+//        String email=userModel.getEmail();
 
-        String name=userModel.getName();
-        String url=userModel.getImage_url();
-        String email=userModel.getEmail();
 
-
-        EditTextPreference editTextPreference= (EditTextPreference) findPreference("key_name");
-        editTextPreference.setSummary(name);
-        EditTextPreference editTextPreference1= (EditTextPreference) findPreference("key_email");
-        editTextPreference1.setSummary(email);
+//        EditTextPreference editTextPreference= (EditTextPreference) findPreference("key_name");
+//        editTextPreference.setSummary(name);
+//        EditTextPreference editTextPreference1= (EditTextPreference) findPreference("key_email");
+//        editTextPreference1.setSummary(email);
     }
 }

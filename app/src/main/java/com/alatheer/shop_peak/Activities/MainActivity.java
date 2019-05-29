@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //String personname=i.getStringExtra("personName");
             //Toast.makeText(this, personname, Toast.LENGTH_SHORT).show();
             mPrefs = new MySharedPreference(this);
-            userModel = mPrefs.Get_UserData(MainActivity.this);
+//            userModel = mPrefs.Get_UserData(MainActivity.this);
             String name=userModel.getName();
             String url=userModel.getImage_url();
             tv_username.setText(name);

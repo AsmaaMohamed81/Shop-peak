@@ -58,6 +58,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/txt_field"
                 android:hint="@string/email"
+                android:enabled="false"
                 android:paddingRight="15dp"
                 android:paddingLeft="15dp"
                 android:textColor="@color/colorPrimary"
@@ -81,7 +82,7 @@
                     >
 
                     <LinearLayout
-                        android:id="@+id/container"
+                        android:id="@+id/container_govern"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -138,7 +139,7 @@
 
 
                                     <TextView
-                                        android:id="@+id/tv_title"
+                                        android:id="@+id/tv_title_govern"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="12dp"
@@ -172,7 +173,7 @@
                             android:orientation="vertical"
                             >
                             <net.cachapa.expandablelayout.ExpandableLayout
-                                android:id="@+id/expand_layout"
+                                android:id="@+id/expand_layout_govern"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 app:el_duration="1000"
@@ -183,7 +184,7 @@
 
                                 >
                                 <android.support.v7.widget.RecyclerView
-                                    android:id="@+id/recView"
+                                    android:id="@+id/recView_govern"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="2dp"
@@ -209,7 +210,7 @@
 
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/container2"
+                        android:id="@+id/container_city"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -266,7 +267,7 @@
 
 
                                     <TextView
-                                        android:id="@+id/tv_title2"
+                                        android:id="@+id/tv_title_city"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="12dp"
@@ -300,7 +301,7 @@
                             android:orientation="vertical"
                             >
                             <net.cachapa.expandablelayout.ExpandableLayout
-                                android:id="@+id/expand_layout2"
+                                android:id="@+id/expand_layout_city"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 app:el_duration="1000"
@@ -311,7 +312,7 @@
 
                                 >
                                 <android.support.v7.widget.RecyclerView
-                                    android:id="@+id/recView2"
+                                    android:id="@+id/recView_city"
                                     android:layout_width="match_parent"
                                     android:layout_height="100dp"
                                     android:layout_marginTop="2dp"
@@ -383,6 +384,7 @@
 
 
             <LinearLayout
+                android:id="@+id/container_tasnefat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -445,6 +447,7 @@
 
 
                             <TextView
+                                android:id="@+id/tv_title_tasnefat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="12dp"
@@ -477,6 +480,7 @@
                     android:orientation="vertical"
                     >
                     <net.cachapa.expandablelayout.ExpandableLayout
+                        android:id="@+id/expand_layout_tasnefat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:el_duration="1000"
@@ -487,6 +491,7 @@
 
                         >
                         <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recView_tasnefat"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="2dp"
