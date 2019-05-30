@@ -82,6 +82,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         final String vender_name = listofhome.get(position).storeName;
         final String vender_image = listofhome.get(position).storeImg;
         final String product_id = listofhome.get(position).id;
+        final String rating = listofhome.get(position).rate;
         Picasso.with(context).load(vender_image).into(holder.img_profile);
         holder.text_profile.setText(vender_name);
         if (listofhome.get(position).img != null) {
@@ -126,28 +127,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                 }
             }
         });*/
-        holder.ratbar.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    float touchPositionX = event.getX();
-                    float width = holder.ratbar.getWidth();
-                    float starsf = (touchPositionX / width) * 5.0f;
-                    int stars = (int) starsf + 1;
-                    holder.ratbar.setRating(stars);
-                    Toast.makeText(context,stars+"", Toast.LENGTH_SHORT).show();
-                    v.setPressed(false);
-                }
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setPressed(true);
-                }
-
-                if (event.getAction() == MotionEvent.ACTION_CANCEL) {
-                    v.setPressed(false);
-                }
-                return true;
-            }
-        });
+        holder.ratbar.setRating(Float.parseFloat(rating));
     }
 
     @Override
