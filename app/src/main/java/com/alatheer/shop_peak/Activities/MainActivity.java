@@ -40,6 +40,7 @@ import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.UserModel;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.NavigationModel;
@@ -80,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Bitmap bitmap;
     int flag;
     UserModel userModel;
+    UserModel1 userModel1;
+
     Favorite_Database favoriteDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,12 +125,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //Log.e("dddd",image_url);
             //String personname=i.getStringExtra("personName");
             //Toast.makeText(this, personname, Toast.LENGTH_SHORT).show();
-            mPrefs = new MySharedPreference(this);
-//            userModel = mPrefs.Get_UserData(MainActivity.this);
-            String name=userModel.getName();
-            String url=userModel.getImage_url();
+            mPrefs =MySharedPreference.getInstance();
+            userModel1 = mPrefs.Get_UserData(MainActivity.this);
+            String name=userModel1.getFull_name();
+
+//            String url=userModel1.getImage_url();
             tv_username.setText(name);
-            Picasso.with(this).load(url).into(img);
+//            Picasso.with(this).load(url).into(img);
             tv_username.setVisibility(View.VISIBLE);
             img.setVisibility(View.VISIBLE);
             login_register.setVisibility(View.GONE);

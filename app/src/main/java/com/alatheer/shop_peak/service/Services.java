@@ -43,5 +43,15 @@ public interface Services {
     @GET("Api/category_list")
     Call<List<Tasnefat>> getTasnef_Vonder();
 
+    @FormUrlEncoded
+    @POST("Api/addUser")
+    Call<UserModel1> subscribre_vendor(@Field("full_name") String full_name,
+                                       @Field("email") String email,
+                                       @Field("phone") String phone,
+                                       @Field("mohafza") String mohafza,
+                                       @Field("madina") String madina,
+                                       @Field("address")String address,
+                                       @Field("password")String password);
+
 
 }

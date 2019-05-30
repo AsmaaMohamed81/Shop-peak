@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -51,6 +52,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Vender_Signup_Activity extends AppCompatActivity {
+    private static final String TAG ="Vender_Signup_Activity" ;
     EditText shop_name, shop_email, address;
     Spinner governate, city;
     Button add_logo, signup, latlon;
@@ -180,8 +182,10 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         mySharedPreference=MySharedPreference.getInstance();
 
 
+
         userModel1=mySharedPreference.Get_UserData(this);
 
+        Log.d(TAG, "initview: "+userModel1.getFull_name());
         shop_name.setText(userModel1.getFull_name());
         shop_email.setText(userModel1.getEmail());
         tv_title_govern.setText(userModel1.getMohafza());

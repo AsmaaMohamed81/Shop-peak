@@ -365,6 +365,8 @@ public class Login_Activity extends AppCompatActivity {
 
                                 mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
 
+                                Log.d("model",mySharedPreference.Get_UserData(Login_Activity.this).getFull_name());
+
                                 Intent intent = new Intent(Login_Activity.this, MainActivity.class);
                                 startActivity(intent);
                             }
