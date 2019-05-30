@@ -36,8 +36,8 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.RatingHold
 
     @Override
     public void onBindViewHolder(@NonNull RatingHolder ratingHolder, int i) {
-        ratingHolder.name.setText(ratingModelList.get(i).getUsername());
-        ratingHolder.rate.setNumStars(ratingModelList.get(i).getNum_of_stars());
+        ratingHolder.name.setText(ratingModelList.get(i).userName);
+        ratingHolder.rate.setRating(Float.parseFloat(ratingModelList.get(i).rateValue));
     }
 
     @Override

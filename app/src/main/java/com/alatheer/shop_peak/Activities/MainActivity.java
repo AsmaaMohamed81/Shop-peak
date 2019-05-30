@@ -362,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return navigationlist;
     }
 
-    public void sendHomeItem(String[] image, List<Item> item, String title, String details, String price) {
+    public void sendHomeItem(String[] image, List<Item> item, String title, String details, String price, String product_id) {
         Bundle bundle=new Bundle();
         bundle.putStringArray("homeimage", image);
         bundle.putSerializable("itemlist", (Serializable) item);
@@ -373,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra("itemlist", (Serializable) item);
         intent.putExtra("details", details);
         intent.putExtra("price", price);
-        //intent.putExtra("gender",gender);
+        intent.putExtra("id", product_id);
         startActivity(intent);
         Animatoo.animateInAndOut(MainActivity.this);
 

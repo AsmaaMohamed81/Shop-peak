@@ -81,6 +81,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         final String price = listofhome.get(position).priceAfterDis;
         final String vender_name = listofhome.get(position).storeName;
         final String vender_image = listofhome.get(position).storeImg;
+        final String product_id = listofhome.get(position).id;
         Picasso.with(context).load(vender_image).into(holder.img_profile);
         holder.text_profile.setText(vender_name);
         if (listofhome.get(position).img != null) {
@@ -91,7 +92,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mainActivity.sendHomeItem(image_resources, itemList, title, details, price);
+                    mainActivity.sendHomeItem(image_resources, itemList, title, details, price, product_id);
                 }
             });
         } else {
@@ -102,7 +103,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mainActivity.sendHomeItem(image_resources, itemList, title, details, price);
+                    mainActivity.sendHomeItem(image_resources, itemList, title, details, price, product_id);
                 }
             });
         }

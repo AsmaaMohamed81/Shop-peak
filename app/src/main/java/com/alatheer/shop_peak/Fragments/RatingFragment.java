@@ -13,16 +13,23 @@ import android.view.ViewGroup;
 import com.alatheer.shop_peak.Adapter.RatingAdapter;
 import com.alatheer.shop_peak.Model.RatingModel;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.service.Api;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class RatingFragment extends Fragment {
-    RecyclerView ratinglist;
+    RecyclerView ratingrecycler;
     RecyclerView.LayoutManager layoutManager;
     RatingAdapter ratingAdapter;
     List<RatingModel> ratingModelList;
+    String product_id;
+    long id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,20 +41,33 @@ public class RatingFragment extends Fragment {
     }
 
     private void initview(View view) {
-        ratinglist = view.findViewById(R.id.recycler_rating);
-        layoutManager = new LinearLayoutManager(getContext());
-        ratinglist.setLayoutManager(layoutManager);
-        ratingAdapter = new RatingAdapter(getActivity(), get_rating_list());
-        ratinglist.setAdapter(ratingAdapter);
+        ratingrecycler = view.findViewById(R.id.recycler_rating);
+        getdatafromintent();
+        initrecycler();
 
     }
 
-    private List<RatingModel> get_rating_list() {
-        ratingModelList = new ArrayList<>();
-        ratingModelList.add(new RatingModel("mohamed hamada", 3));
-        ratingModelList.add(new RatingModel("ahmed hamada", 4));
-        ratingModelList.add(new RatingModel("mohamed mostafa", 2));
-        ratingModelList.add(new RatingModel("ali ", 5));
-        return ratingModelList;
+    private void initrecycler() {
+        ratingrecycler.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        ratingrecycler.setLayoutManager(layoutManager);
+        Api.getService().get_all_rating(id).enqueue(new Callback<List<RatingModel>>() {
+            @Override
+            public void onResponse(Call<List<RatingModel>> call, Response<List<RatingModel>> response) {
+                ratingModelList = response.body();
+                ratingAdapter = new RatingAdapter(getContext(), ratingModelList);
+                ratingrecycler.setAdapter(ratingAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<RatingModel>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getdatafromintent() {
+        product_id = getActivity().getIntent().getStringExtra("id");
+        id = Long.parseLong(product_id);
     }
 }

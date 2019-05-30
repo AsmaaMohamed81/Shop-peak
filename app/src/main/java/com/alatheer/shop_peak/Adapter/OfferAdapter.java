@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Model.OfferModel;
@@ -44,6 +45,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ImageHolder>
     @Override
     public void onBindViewHolder(@NonNull ImageHolder holder, int position) {
         Picasso.with(context).load(list_of_offer.get(position).imgOffer).into(holder.circleImageView);
+        holder.title.setText(list_of_offer.get(position).offerTitle);
         //final String image1 = list_of_offer.get(position).getImage1();
         //final String image2 = imageModels.get(position).getImage2();
         //final String[] image_resources = {image1, image2};
@@ -70,9 +72,11 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ImageHolder>
 
     class ImageHolder extends RecyclerView.ViewHolder{
         CircleImageView circleImageView;
+        TextView title;
         public ImageHolder(View itemView) {
             super(itemView);
             circleImageView=itemView.findViewById(R.id.img_c);
+            title = itemView.findViewById(R.id.offer_title);
         }
     }
 }

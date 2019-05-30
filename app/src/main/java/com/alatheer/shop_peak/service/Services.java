@@ -2,6 +2,7 @@ package com.alatheer.shop_peak.service;
 
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.OfferModel1;
+import com.alatheer.shop_peak.Model.RatingModel;
 import com.alatheer.shop_peak.Model.Tasnefat;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.Govern;
@@ -13,6 +14,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface Services {
 
@@ -53,5 +55,8 @@ public interface Services {
                                        @Field("address")String address,
                                        @Field("password")String password);
 
+    @GET("Api/get_rating/{id}")
+    Call<List<RatingModel>> get_all_rating(@Path("id") long id);
 
 }
+

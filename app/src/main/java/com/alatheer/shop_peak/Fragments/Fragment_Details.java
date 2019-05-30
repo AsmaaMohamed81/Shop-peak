@@ -105,7 +105,7 @@ public class Fragment_Details extends Fragment {
 
         tv_not_budget = view.findViewById(R.id.tv_not_budget);
 
-
+        details_price.setText(price);
 
        /* back_image.setOnClickListener(new View.OnClickListener() {
             @Override
