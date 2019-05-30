@@ -32,6 +32,7 @@ import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.util.CircleAnimationUtil;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
@@ -62,9 +63,10 @@ public class DetailsActivity extends AppCompatActivity implements PassData {
     EditText order_num;
     BasketModel basketModel;
     String[] image;
+    List<Item> items;
     String first_item;
     String price;
-    String des;
+    String details;
     String title;
     String gender;
     String first_item_String;
@@ -276,10 +278,10 @@ public class DetailsActivity extends AppCompatActivity implements PassData {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         image = extras.getStringArray("homeimage");
-        first_item=image[0];
+        items = (List<Item>) extras.getSerializable("itemlist");
          //first_item_String = first_item.toString();
         title = intent.getStringExtra("title");
-        des = intent.getStringExtra("des");
+        details = intent.getStringExtra("details");
         price = intent.getStringExtra("price");
         gender = intent.getStringExtra("gender");
         Bundle bundle = new Bundle();
@@ -288,6 +290,7 @@ public class DetailsActivity extends AppCompatActivity implements PassData {
         bundle.putString("price", title);
         bundle.putString("gender", title);
         bundle.putStringArray("homeimage", image);
+        bundle.putSerializable("itemlist", (Serializable) items);
         Fragment_Details fragment_details = new Fragment_Details();
         fragment_details.setArguments(bundle);
 

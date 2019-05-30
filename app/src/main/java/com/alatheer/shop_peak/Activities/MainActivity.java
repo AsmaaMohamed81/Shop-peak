@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -37,6 +38,7 @@ import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Local.Favorite_Database;
+import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.Model.HomeModel;
@@ -356,15 +358,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return navigationlist;
     }
 
-    public void sendHomeItem(String[] image, String title, String des, String price, String gender) {
+    public void sendHomeItem(String[] image, List<Item> item, String title, String details, String price) {
         Bundle bundle=new Bundle();
         bundle.putStringArray("homeimage", image);
+        bundle.putSerializable("itemlist", (Serializable) item);
+        bundle.putString("details", details);
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtras(bundle);
         intent.putExtra("title", title);
-        intent.putExtra("des", des);
+        intent.putExtra("itemlist", (Serializable) item);
+        intent.putExtra("details", details);
         intent.putExtra("price", price);
-        intent.putExtra("gender",gender);
+        //intent.putExtra("gender",gender);
         startActivity(intent);
         Animatoo.animateInAndOut(MainActivity.this);
 

@@ -5,11 +5,13 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.List;
 
 /**
  * Created by M.Hamada on 23/03/2019.
  */
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -86,197 +88,134 @@ public class HomeModel {
     public String rate;
     @SerializedName("img")
     @Expose
-    public String[] img;
+    public String[] img = null;
+    @SerializedName("items")
+    @Expose
+    public List<Item> items = null;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
+    public HomeModel withId(String id) {
         this.id = id;
+        return this;
     }
 
-    public String getStoreIdFk() {
-        return storeIdFk;
-    }
-
-    public void setStoreIdFk(String storeIdFk) {
+    public HomeModel withStoreIdFk(String storeIdFk) {
         this.storeIdFk = storeIdFk;
+        return this;
     }
 
-    public String getSanfCode() {
-        return sanfCode;
-    }
-
-    public void setSanfCode(String sanfCode) {
+    public HomeModel withSanfCode(String sanfCode) {
         this.sanfCode = sanfCode;
+        return this;
     }
 
-    public String getSanfName() {
-        return sanfName;
-    }
-
-    public void setSanfName(String sanfName) {
+    public HomeModel withSanfName(String sanfName) {
         this.sanfName = sanfName;
+        return this;
     }
 
-    public String getMainTasnef() {
-        return mainTasnef;
-    }
-
-    public void setMainTasnef(String mainTasnef) {
+    public HomeModel withMainTasnef(String mainTasnef) {
         this.mainTasnef = mainTasnef;
+        return this;
     }
 
-    public String getSubTasnef() {
-        return subTasnef;
-    }
-
-    public void setSubTasnef(String subTasnef) {
+    public HomeModel withSubTasnef(String subTasnef) {
         this.subTasnef = subTasnef;
+        return this;
     }
 
-    public String getPriceBeforeDis() {
-        return priceBeforeDis;
-    }
-
-    public void setPriceBeforeDis(String priceBeforeDis) {
+    public HomeModel withPriceBeforeDis(String priceBeforeDis) {
         this.priceBeforeDis = priceBeforeDis;
+        return this;
     }
 
-    public String getPriceAfterDis() {
-        return priceAfterDis;
-    }
-
-    public void setPriceAfterDis(String priceAfterDis) {
+    public HomeModel withPriceAfterDis(String priceAfterDis) {
         this.priceAfterDis = priceAfterDis;
+        return this;
     }
 
-    public String getMainImg() {
-        return mainImg;
-    }
-
-    public void setMainImg(String mainImg) {
+    public HomeModel withMainImg(String mainImg) {
         this.mainImg = mainImg;
+        return this;
     }
 
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
+    public HomeModel withDetails(String details) {
         this.details = details;
+        return this;
     }
 
-    public String getOffered() {
-        return offered;
-    }
-
-    public void setOffered(String offered) {
+    public HomeModel withOffered(String offered) {
         this.offered = offered;
+        return this;
     }
 
-    public String getOfferedTitle() {
-        return offeredTitle;
-    }
-
-    public void setOfferedTitle(String offeredTitle) {
+    public HomeModel withOfferedTitle(String offeredTitle) {
         this.offeredTitle = offeredTitle;
+        return this;
     }
 
-    public String getPriceOffered() {
-        return priceOffered;
-    }
-
-    public void setPriceOffered(String priceOffered) {
+    public HomeModel withPriceOffered(String priceOffered) {
         this.priceOffered = priceOffered;
+        return this;
     }
 
-    public String getDateOfferedFrom() {
-        return dateOfferedFrom;
-    }
-
-    public void setDateOfferedFrom(String dateOfferedFrom) {
+    public HomeModel withDateOfferedFrom(String dateOfferedFrom) {
         this.dateOfferedFrom = dateOfferedFrom;
+        return this;
     }
 
-    public String getDateOfferedTo() {
-        return dateOfferedTo;
-    }
-
-    public void setDateOfferedTo(String dateOfferedTo) {
+    public HomeModel withDateOfferedTo(String dateOfferedTo) {
         this.dateOfferedTo = dateOfferedTo;
+        return this;
     }
 
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
+    public HomeModel withPublisher(String publisher) {
         this.publisher = publisher;
+        return this;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
+    public HomeModel withDate(String date) {
         this.date = date;
+        return this;
     }
 
-    public String getDateS() {
-        return dateS;
-    }
-
-    public void setDateS(String dateS) {
+    public HomeModel withDateS(String dateS) {
         this.dateS = dateS;
+        return this;
     }
 
-    public String getApproved() {
-        return approved;
-    }
-
-    public void setApproved(String approved) {
+    public HomeModel withApproved(String approved) {
         this.approved = approved;
+        return this;
     }
 
-    public String getOfferIdFk() {
-        return offerIdFk;
-    }
-
-    public void setOfferIdFk(String offerIdFk) {
+    public HomeModel withOfferIdFk(String offerIdFk) {
         this.offerIdFk = offerIdFk;
+        return this;
     }
 
-    public String getStoreName() {
-        return storeName;
-    }
-
-    public void setStoreName(String storeName) {
+    public HomeModel withStoreName(String storeName) {
         this.storeName = storeName;
+        return this;
     }
 
-    public String getStoreImg() {
-        return storeImg;
-    }
-
-    public void setStoreImg(String storeImg) {
+    public HomeModel withStoreImg(String storeImg) {
         this.storeImg = storeImg;
+        return this;
     }
 
-    public String getRate() {
-        return rate;
-    }
-
-    public void setRate(String rate) {
+    public HomeModel withRate(String rate) {
         this.rate = rate;
+        return this;
     }
 
-    public String[] getImg() {
-        return img;
-    }
-
-    public void setImg(String[] img) {
+    public HomeModel withImg(String[] img) {
         this.img = img;
+        return this;
     }
+
+    public HomeModel withItems(List<Item> items) {
+        this.items = items;
+        return this;
+    }
+
 }

@@ -1,13 +1,35 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.alatheer.shop_peak.Fragments.DescriptionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <com.borjabravo.readmoretextview.ReadMoreTextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        app:colorClickableText="@color/colorPrimary"
+        app:trimCollapsedText="Show Less"
+        app:trimExpandedText="Show More"
+        app:trimLength="4"
+        android:textColor="@color/black"
+        app:trimMode="trimModeLine"
+        android:padding="10dp"
+        android:text="Licensed under the Apache License, Version 2.0
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License atLicensed under the Apache License, Version 2.0
+you may not use this file except in compliance with the License." />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"></android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

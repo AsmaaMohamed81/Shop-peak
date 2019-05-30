@@ -29,6 +29,7 @@ import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
@@ -58,7 +59,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     public HomeAdapter(List<HomeModel> listofhome, Context context) {
         this.listofhome = listofhome;
         this.context = context;
-        full_list_ofhome = new ArrayList<>(listofhome);
         this.mainActivity = (MainActivity) context;
     }
 
@@ -75,25 +75,38 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         //final File path = new File(uri.getPath());
         profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(context,Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
-
-        final String[] image_resources = listofhome.get(position).img;
-        final String title = listofhome.get(position).offeredTitle;
-        final String des = listofhome.get(position).storeName;
+        final String title = listofhome.get(position).sanfName;
+        final String details = listofhome.get(position).details;
+        final List<Item> itemList = listofhome.get(position).items;
         final String price = listofhome.get(position).priceAfterDis;
         final String vender_name = listofhome.get(position).storeName;
         final String vender_image = listofhome.get(position).storeImg;
         Picasso.with(context).load(vender_image).into(holder.img_profile);
         holder.text_profile.setText(vender_name);
-        customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
-        holder.viewPager.setAdapter(customSwipeAdapter);
+        if (listofhome.get(position).img != null) {
+            final String[] image_resources = listofhome.get(position).img;
+            customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
+            holder.viewPager.setAdapter(customSwipeAdapter);
+            mainActivity.passdata(title, listofhome);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mainActivity.sendHomeItem(image_resources, itemList, title, details, price);
+                }
+            });
+        } else {
+            final String[] image_resources = {listofhome.get(position).mainImg};
+            customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
+            holder.viewPager.setAdapter(customSwipeAdapter);
+            mainActivity.passdata(title, listofhome);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mainActivity.sendHomeItem(image_resources, itemList, title, details, price);
+                }
+            });
+        }
 
-        mainActivity.passdata(title, listofhome);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.sendHomeItem(image_resources, title, des, price, des);
-            }
-        });
         /*holder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

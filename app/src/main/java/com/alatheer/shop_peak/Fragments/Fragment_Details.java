@@ -31,9 +31,12 @@ import com.alatheer.shop_peak.Adapter.PassData;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
+import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.util.CircleAnimationUtil;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+
+import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -46,6 +49,7 @@ public class Fragment_Details extends Fragment {
     MyAppDatabase myAppDatabase;
     Favorite_Database favorite_database;
     ViewPager viewPager;
+    List<Item> items;
     CustomSwipeAdapter customSwipeAdapter;
     FloatingActionButton fab_favorite;
     RatingBar ratingBar;
@@ -262,7 +266,7 @@ public class Fragment_Details extends Fragment {
         Intent intent = getActivity().getIntent();
         Bundle extras = intent.getExtras();
         image = extras.getStringArray("homeimage");
-        first_item = image[0];
+        items = (List<Item>) extras.getSerializable("itemlist");
         //first_item_String = first_item.toString();
         title = intent.getStringExtra("title");
         des = intent.getStringExtra("des");
