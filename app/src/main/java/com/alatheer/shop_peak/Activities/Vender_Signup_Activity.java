@@ -1,10 +1,16 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +53,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,7 +70,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     private String Name, Email, Governate, City, Address, Category, city_id, govern_id;
     int PICK_IMAGE_REQUEST = 1 ;
     android.support.v7.widget.Toolbar toolbar;
-    Uri filePath;
+    Uri filePath=null;
 //////////////////////////FFFF
     private RecyclerView recyc_govern, recyc_city,recyc_tasnefat;
     private LinearLayout container_city, container_govern,container_tasnefat;
@@ -83,11 +91,28 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     private MySharedPreference mySharedPreference;
     private UserModel1 userModel1;
 
+    private String store_tasnef,lat,lang;
+    private int IMG=1;
+    private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vender__signup_);
         initview();
+        getDataFromIntent();
+    }
+
+    private void getDataFromIntent() {
+        Intent intent=getIntent();
+
+        if (intent!=null){
+            lat=intent.getStringExtra("lat");
+            lang=intent.getStringExtra("lang");
+
+
+        }
     }
 
     private void initview() {
@@ -213,13 +238,14 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         add_logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseImage();
+//                
+                Check_ReadPermission(IMG);
             }
         });
         seller_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseImage();
+                Check_ReadPermission(IMG);
             }
         });
         latlon.setOnClickListener(new View.OnClickListener() {
@@ -253,6 +279,35 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
     }
 
+    private void Check_ReadPermission(int img) {
+
+        if (ContextCompat.checkSelfPermission(this,read_permission)!= PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this,new String[]{read_permission},img);
+        }else
+        {
+            select_photo(img);
+        }
+
+    }
+
+    private void select_photo(int img) {
+
+        Intent intent ;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        }else
+        {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+
+        }
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setType("image/*");
+        startActivityForResult(intent,img);
+    }
+
     private void get_Tasnefat() {
 
         Api.getService()
@@ -284,38 +339,41 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+        if (requestCode == IMG && resultCode == Activity.RESULT_OK
                 && data != null && data.getData() != null) {
             filePath = data.getData();
 
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+
                 add_logo.setVisibility(View.GONE);
-                seller_image.setImageBitmap(bitmap);
+                Picasso.with(this).load(filePath).fit().into(seller_image);
                 seller_image.setVisibility(View.VISIBLE);
                 Toast.makeText(Vender_Signup_Activity.this, "image added successfully", Toast.LENGTH_SHORT).show();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
         }
     }
     private void validation() {
-        Name = shop_name.getText().toString();
-        Email = shop_email.getText().toString();
-        Address = address.getText().toString();
-        if (!TextUtils.isEmpty(Name) &&
-                !TextUtils.isEmpty(Email) &&
+        String id=userModel1.getId();
+
+        String Full_name = shop_name.getText().toString().trim();
+        String mohafza=userModel1.getGovern();
+        String madina=userModel1.getCity();
+        String Address = address.getText().toString().trim();
+
+
+
+        String email = shop_email.getText().toString().trim();
+
+
+        if (!TextUtils.isEmpty(Full_name)  &&
                 !TextUtils.isEmpty(Address)) {
 
-
-            Common.CloseKeyBoard(this, shop_email);
             shop_name.setError(null);
             shop_email.setError(null);
             address.setError(null);
             //city.setError(null);
             //governate.setError(null);
-            Signup(Name, Email, Address, filePath);
+            subscribre_vendor(id,Full_name ,mohafza ,madina, Address,store_tasnef,lat,lang, filePath);
 
         } else {
             if (TextUtils.isEmpty(Name)) {
@@ -347,6 +405,49 @@ public class Vender_Signup_Activity extends AppCompatActivity {
             }
 
         }
+
+    }
+
+    private void subscribre_vendor(String id, String full_name, String mohafza, String madina, String address, String store_tasnef, String lat, String lang, Uri filePath) {
+
+
+        RequestBody Vid = Common.getRequestBodyText(id);
+        RequestBody Vfull_name = Common.getRequestBodyText(full_name);
+        RequestBody Vmohafza = Common.getRequestBodyText(mohafza);
+        RequestBody Vmadina = Common.getRequestBodyText(madina);
+        RequestBody Vaddress = Common.getRequestBodyText(address);
+        RequestBody Vstore_tasnef = Common.getRequestBodyText(store_tasnef);
+        RequestBody Vlat = Common.getRequestBodyText(lat);
+        RequestBody Vlang = Common.getRequestBodyText(lang);
+
+
+
+
+            MultipartBody.Part logo_img = Common.getMultiPart(this,filePath,"logo_img");
+
+
+            Api.getService()
+                    .subscribre_vendor(Vid,Vfull_name,Vmohafza,Vmadina,Vaddress,Vstore_tasnef,Vlat,Vlang,logo_img)
+                    .enqueue(new Callback<UserModel1>() {
+                        @Override
+                        public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
+                            if (response.isSuccessful()){
+
+                                if (response.body().getSuccess()==1){
+
+                                    Toast.makeText(Vender_Signup_Activity.this, "تم ارسال طلبك", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserModel1> call, Throwable t) {
+
+                            Toast.makeText(Vender_Signup_Activity.this, ""+t, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
 
     }
 
@@ -440,6 +541,9 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
     public void pos_tasnefat(int pos) {
 
+        store_tasnef=tasnefatArrayList.get(pos).getId();
+
+        Toast.makeText(this, ""+store_tasnef, Toast.LENGTH_SHORT).show();
         tv_title_tasnefat.setText(tasnefatArrayList.get(pos).getName());
         expand_layout_tasnefat.toggle(true);
 

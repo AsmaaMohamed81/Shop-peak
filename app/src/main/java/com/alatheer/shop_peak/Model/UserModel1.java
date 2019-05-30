@@ -11,6 +11,10 @@ public class UserModel1 {
 
     private String madina;
     private String mohafza;
+    private String govern;
+    private String city;
+
+
     private String address;
     private String password;
 
@@ -95,5 +99,21 @@ public class UserModel1 {
 
     public void setMohafza(String mohafza) {
         this.mohafza = mohafza;
+    }
+
+    public String getGovern() {
+        return govern;
+    }
+
+    public void setGovern(String govern) {
+        this.govern = govern;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

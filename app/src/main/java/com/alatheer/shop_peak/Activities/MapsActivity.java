@@ -89,6 +89,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private EditText address,lat,log;
     private Button btn_continue;
 
+    String Vlat,Vlang;
 
 
 
@@ -124,7 +125,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 btn_continue.clearAnimation();
                 btn_continue.startAnimation(animation);
 
+                Vlat=lat.getText().toString();
+                Vlang=log.getText().toString();
+
                 Intent intent=new Intent(MapsActivity.this,Vender_Signup_Activity.class);
+                intent.putExtra("lat",Vlat);
+                intent.putExtra("lang",Vlang);
                 startActivity(intent);
             }
         });

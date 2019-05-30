@@ -91,4 +91,5 @@
     <string name="log">LONG</string>
     <string name="share_loc">Share Your Location</string>
     <string name="chk_user_pas">Check Your Emeil Or PassWord</string>
+    <string name="inc_img_path">مسار الصور غير صحيح</string>
 </resources>
