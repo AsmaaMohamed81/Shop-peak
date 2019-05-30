@@ -93,7 +93,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mainActivity.sendHomeItem(image_resources, itemList, title, details, price, product_id);
+                    mainActivity.sendHomeItem(image_resources, itemList, title, details, price, product_id, rating);
                 }
             });
         } else {
@@ -104,7 +104,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mainActivity.sendHomeItem(image_resources, itemList, title, details, price, product_id);
+                    mainActivity.sendHomeItem(image_resources, itemList, title, details, price, product_id, rating);
                 }
             });
         }

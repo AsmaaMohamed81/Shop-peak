@@ -67,6 +67,7 @@ public class Fragment_Details extends Fragment {
     String des;
     String title;
     String gender;
+    String rating;
     FrameLayout destView;
     String first_item_String;
     PassData passData;
@@ -105,7 +106,7 @@ public class Fragment_Details extends Fragment {
 
         tv_not_budget = view.findViewById(R.id.tv_not_budget);
 
-        details_price.setText(price);
+        details_price.setText(price + "" + "LE");
 
        /* back_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,27 +225,7 @@ public class Fragment_Details extends Fragment {
                 }
             }
         });
-        ratingBar.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    float touchPositionX = event.getX();
-                    float width = ratingBar.getWidth();
-                    float starsf = (touchPositionX / width) * 5.0f;
-                    int stars = (int) starsf + 1;
-                    ratingBar.setRating(stars);
-                    v.setPressed(false);
-                }
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setPressed(true);
-                }
-
-                if (event.getAction() == MotionEvent.ACTION_CANCEL) {
-                    v.setPressed(false);
-                }
-                return true;
-            }
-        });
+        ratingBar.setRating(Float.parseFloat(rating));
 
         /*if (myAppDatabase.dao().getdata().size() > 0) {
             tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
@@ -272,6 +253,7 @@ public class Fragment_Details extends Fragment {
         des = intent.getStringExtra("des");
         price = intent.getStringExtra("price");
         gender = intent.getStringExtra("gender");
+        rating = intent.getStringExtra("rate");
         // Bundle bundle = new Bundle();
         //bundle.putString("title",title);
         //bundle.putString("des",title);

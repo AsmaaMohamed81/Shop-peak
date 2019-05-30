@@ -2,11 +2,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.alatheer.shop_peak.Fragments.RatingFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_rating"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:text="your Rate"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp" />
+
+    <RatingBar
+        android:id="@+id/ratbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/ratingBarStyleIndicator"
+        android:layout_gravity="center_horizontal"
+        android:scaleY="0.6"
+        android:scaleX="0.6"
+        android:numStars="5"
+        android:rating="0"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:isIndicator="true" />
+
+    <Button
+        android:id="@+id/add_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="add your rate"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_field"
+        android:textColor="@color/white"
+        android:layout_marginTop="15dp" />
 
 </LinearLayout>

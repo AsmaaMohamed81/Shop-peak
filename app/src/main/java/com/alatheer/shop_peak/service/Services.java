@@ -15,6 +15,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Services {
 
@@ -58,5 +59,8 @@ public interface Services {
     @GET("Api/get_rating/{id}")
     Call<List<RatingModel>> get_all_rating(@Path("id") long id);
 
+    @POST("Api/make_rate")
+    Call<RatingModel> make_rate(@Query("product_id") int product_id, @Query("rate_value") int rate_value,
+                                @Query("user_id") int user_id);
 }
 
