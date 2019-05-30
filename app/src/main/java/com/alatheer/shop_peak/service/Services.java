@@ -7,13 +7,18 @@ import com.alatheer.shop_peak.Model.Tasnefat;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.Govern;
 
+import java.lang.ref.SoftReference;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -46,15 +51,17 @@ public interface Services {
     @GET("Api/category_list")
     Call<List<Tasnefat>> getTasnef_Vonder();
 
-    @FormUrlEncoded
-    @POST("Api/addUser")
-    Call<UserModel1> subscribre_vendor(@Field("full_name") String full_name,
-                                       @Field("email") String email,
-                                       @Field("phone") String phone,
-                                       @Field("mohafza") String mohafza,
-                                       @Field("madina") String madina,
-                                       @Field("address")String address,
-                                       @Field("password")String password);
+    @Multipart
+    @POST("Api/subscribre_vendor")
+    Call<UserModel1> subscribre_vendor(@Part("id") RequestBody id,
+                                       @Part("full_name") RequestBody full_name,
+                                       @Part("mohafza") RequestBody mohafza,
+                                       @Part("madina") RequestBody madina,
+                                       @Part("address") RequestBody address,
+                                       @Part("store_tasnef")RequestBody store_tasnef,
+                                       @Part("lat") RequestBody lat,
+                                       @Part("lang") RequestBody lang,
+                                       @Part MultipartBody.Part logo_img);
 
     @GET("Api/get_rating/{id}")
     Call<List<RatingModel>> get_all_rating(@Path("id") long id);
