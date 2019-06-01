@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.RatingAdapter;
 import com.alatheer.shop_peak.Model.RatingModel;
+import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.service.Api;
 
@@ -60,6 +61,7 @@ public class RatingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Add_Rate();
+                initrecycler();
             }
         });
         ratingBar.setOnTouchListener(new View.OnTouchListener() {
@@ -89,18 +91,19 @@ public class RatingFragment extends Fragment {
 
     private void Add_Rate() {
         Log.v("usser_id", user_id + "");
-        Api.getService().make_rate(id2, stars, user_id).enqueue(new Callback<RatingModel>() {
+        initrecycler();
+        Api.getService().make_rate(id2, stars, user_id).enqueue(new Callback<RatingModel2>() {
             @Override
-            public void onResponse(Call<RatingModel> call, Response<RatingModel> response) {
-                Toast.makeText(getContext(), "data added", Toast.LENGTH_LONG).show();
-                RatingModel ratingModel = response.body();
-                Log.v("aaaaa", response.message());
+            public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                RatingModel2 ratingModel2 = response.body();
                 initrecycler();
+                Log.v("5555", ratingModel2.success.toString());
+
             }
 
             @Override
-            public void onFailure(Call<RatingModel> call, Throwable t) {
-                Log.v("aaaaa", t.getMessage());
+            public void onFailure(Call<RatingModel2> call, Throwable t) {
+
             }
         });
     }

@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.service;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.OfferModel1;
 import com.alatheer.shop_peak.Model.RatingModel;
+import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.Tasnefat;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.Govern;
@@ -66,8 +67,9 @@ public interface Services {
     @GET("Api/get_rating/{id}")
     Call<List<RatingModel>> get_all_rating(@Path("id") long id);
 
+    @FormUrlEncoded
     @POST("Api/make_rate")
-    Call<RatingModel> make_rate(@Query("product_id") int product_id, @Query("rate_value") int rate_value,
-                                @Query("user_id") int user_id);
+    Call<RatingModel2> make_rate(@Field("product_id") int product_id, @Field("rate_value") int rate_value,
+                                 @Field("user_id") int user_id);
 }
 
