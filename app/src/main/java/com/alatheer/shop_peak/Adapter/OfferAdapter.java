@@ -57,7 +57,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ImageHolder>
         //final int vender_image = imageModels.get(position).getVender_image();
 
        /* customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        MyHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mainActivity.sendOfferItem(image_resources, title, des, price, gender);

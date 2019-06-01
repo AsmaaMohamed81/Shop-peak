@@ -59,13 +59,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     public void onBindViewHolder(@NonNull FavoriteHolder holder, final int position) {
         favoriteDatabase = Room.databaseBuilder(getApplicationContext(), Favorite_Database.class, "favoritedb").allowMainThreadQueries().build();
         holder.basket_title.setText(basketModelList.get(position).getTitle());
-        //holder.title_img.setImageResource(basketModelList.get(position).getImg());
+        //MyHolder.title_img.setImageResource(basketModelList.get(position).getImg());
         Picasso.with(context).load(basketModelList.get(position).getImg()).into(holder.title_img);
         holder.counter.setText(basketModelList.get(position).getNum_of_cart());
         setFadeAnimation(holder.itemView);
         //Uri uri= Uri.parse(basketModelList.get(position).getImg());
         // File file =new File(uri.getPath());
-        //Picasso.with(context).load(file).into(holder.title_img);
+        //Picasso.with(context).load(file).into(MyHolder.title_img);
         holder.delete_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

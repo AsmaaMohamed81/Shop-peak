@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -41,6 +42,7 @@ import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
+import com.alatheer.shop_peak.Model.list_cats;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.NavigationModel;
@@ -55,6 +57,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
@@ -84,6 +89,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     UserModel1 userModel1;
 
     Favorite_Database favoriteDatabase;
+
+    ArrayList<list_cats> list_cats;
+
+    ArrayList<list_cats.Subs> list_cats_sub;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
     private void initview() {
+
+        list_cats =new ArrayList<>();
 
         final FragmentManager fm = getSupportFragmentManager();
         img_menu = findViewById(R.id.menu_img);
@@ -147,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 chooseimage();
             }
         });
+        get_list_cats();
         initRecyclerview();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView2 = findViewById(R.id.bottom_navigation2);
@@ -157,6 +169,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         HomeFragment homeFragment=new HomeFragment();
         android.app.FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
+
+    }
+
+    private void get_list_cats() {
+
+
+        Api.getService()
+                .get_list_cats()
+                .enqueue(new Callback<List<list_cats>>() {
+                    @Override
+                    public void onResponse(Call<List<list_cats>> call, Response<List<list_cats>> response) {
+
+                        if (response.isSuccessful()){
+
+                            list_cats.addAll(response.body());
+
+                            navigationAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<list_cats>> call, Throwable t) {
+
+                    }
+                });
+
 
     }
 
@@ -183,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigation_manager=new LinearLayoutManager(this);
         navigationrecycler.setLayoutManager(navigation_manager);
         navigationrecycler.setNestedScrollingEnabled(false);
-        navigationAdapter=new NavigationAdapter(navigationModelList(),this);
+        navigationAdapter=new NavigationAdapter(list_cats,this);
         navigationrecycler.setAdapter(navigationAdapter);
     }
 
@@ -411,4 +449,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    public void list_cats_pos(int pos) {
+
+        list_cats list_cats1=list_cats.get(pos);
+        list_cats_sub=list_cats1.getSubs();
+        int id=Integer.parseInt(list_cats1.getId());
+
+        Intent intent=new Intent(MainActivity.this,Category_Activity.class);
+        intent.putExtra("id_main_cats",id);
+
+        Log.d("asmaa", "list_cats_pos: "+id);
+
+        intent.putExtra("cats",list_cats_sub);
+        startActivity(intent);
+
+
+    }
 }

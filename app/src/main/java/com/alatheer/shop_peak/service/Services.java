@@ -7,6 +7,7 @@ import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.Tasnefat;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.Govern;
+import com.alatheer.shop_peak.Model.list_cats;
 
 import java.lang.ref.SoftReference;
 import java.util.List;
@@ -69,7 +70,20 @@ public interface Services {
 
     @FormUrlEncoded
     @POST("Api/make_rate")
-    Call<RatingModel2> make_rate(@Field("product_id") int product_id, @Field("rate_value") int rate_value,
+    Call<RatingModel2> make_rate(@Field("product_id") int product_id,
+                                 @Field("rate_value") int rate_value,
                                  @Field("user_id") int user_id);
+
+    @GET("Api/get_list_cats")
+    Call<List<list_cats>> get_list_cats();
+
+    @GET("Api/product_cat_main/{cat_id}")
+    Call<List<HomeModel>> get_all_main_product(@Path("cat_id") int id);
+
+
+    @GET("Api/product_cat_sub/{cat_id}")
+    Call<List<HomeModel>> get_all_sub_product(@Path("cat_id") int id);
+
+
 }
 

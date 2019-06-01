@@ -45,7 +45,7 @@ public class Profile_verticalAdapter extends RecyclerView.Adapter<Profile_vertic
         customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
         //Uri uri = Uri.parse(profileModels.get(position).getImage());
-        //Picasso.with(context).load(new File(uri.getPath())).into(holder.imageView);
+        //Picasso.with(context).load(new File(uri.getPath())).into(MyHolder.imageView);
     }
 
     @Override

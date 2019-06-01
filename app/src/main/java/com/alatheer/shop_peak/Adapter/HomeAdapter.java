@@ -109,12 +109,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             });
         }
 
-        /*holder.fav.setOnClickListener(new View.OnClickListener() {
+        /*MyHolder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.fav.isChecked()) {
+                if (MyHolder.fav.isChecked()) {
                     accepted = true;
-                    int id2=Integer.parseInt(holder.order_num.getText().toString());
+                    int id2=Integer.parseInt(MyHolder.order_num.getText().toString());
                     BasketModel basketModel=new BasketModel(id2,title,0+"",gender,price,des,false,false,false,image1);
                      id =favorite_database.dao_favorite().add_favorite(basketModel);
                     Log.e("add_to_favorite","true");
