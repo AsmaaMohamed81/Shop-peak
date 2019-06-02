@@ -40,6 +40,7 @@ import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Model.Item;
+import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.list_cats;
@@ -464,5 +465,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
 
 
+    }
+
+    public void addfavPos(int pos) {
+
+        String sanf_id=homeModels.get(pos).id;
+
+        String user_id=userModel1.getId();
+
+
+        Log.d("Mainasmaaa", "favPos: "+sanf_id);
+        Log.d("Mainasmaaa", "favPos: "+user_id);
+
+
+
+        Api.getService()
+                .add_to_favourite(user_id,sanf_id)
+                .enqueue(new Callback<RatingModel2>() {
+                    @Override
+                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    public void deletfavPos(int pos) {
+
+        String sanf_id=homeModels.get(pos).id;
+
+        String user_id=userModel1.getId();
+
+
+        Api.getService()
+                .delet_to_favourite(user_id,sanf_id)
+                .enqueue(new Callback<RatingModel2>() {
+                    @Override
+                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+                    }
+                });
     }
 }

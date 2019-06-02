@@ -69,27 +69,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         holder.delete_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                favorite_fragment.senddate(position);
             }
         });
-        boolean red=basketModelList.get(position).isRed_flag();
-        boolean blue=basketModelList.get(position).isBlue_flag();
-        boolean black=basketModelList.get(position).isBlack_flag();
-        if(red == true){
-            holder.c_red.setButtonDrawable(R.drawable.ic_check);
-        }else {
-            holder.c_red.setButtonDrawable(R.drawable.ic_check_gray);
-        }
-        if (blue == true){
-            holder.c_blue.setButtonDrawable(R.drawable.ic_check);
-        }else {
-            holder.c_blue.setButtonDrawable(R.drawable.ic_check_gray);
-        }
-        if (black == true){
-            holder.c_black.setButtonDrawable(R.drawable.ic_check);
-        }else {
-            holder.c_black.setButtonDrawable(R.drawable.ic_check_gray);
-        }
+
     }
 
     private void setFadeAnimation(View itemView) {

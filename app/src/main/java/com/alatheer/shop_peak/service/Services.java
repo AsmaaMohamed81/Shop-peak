@@ -85,5 +85,20 @@ public interface Services {
     Call<List<HomeModel>> get_all_sub_product(@Path("cat_id") int id);
 
 
+
+    @FormUrlEncoded
+    @POST("Api/add_to_favourite")
+    Call<RatingModel2> add_to_favourite(@Field("client_id_fk") String client_id_fk,
+                                 @Field("sanf_id_fk") String sanf_id_fk);
+
+
+
+    @FormUrlEncoded
+    @POST("Api/delete_favourite")
+    Call<RatingModel2> delet_to_favourite(@Field("client_id_fk") String client_id_fk,
+                                        @Field("sanf_id_fk") String sanf_id_fk);
+
+    @GET("Api/my_favourite/{user_id}")
+    Call<List<HomeModel>> get_all_favourite(@Path("user_id") String user_id);
 }
 

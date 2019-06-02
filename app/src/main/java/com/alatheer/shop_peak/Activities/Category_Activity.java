@@ -83,7 +83,7 @@ public class Category_Activity extends AppCompatActivity {
 
         Recyc_main.setLayoutManager(new GridLayoutManager(this,1));
         Recyc_main.setHasFixedSize(true);
-        main_sub_adapter=new main_sub_Adapter(homeModelArrayList,this,Recyc_main);
+        main_sub_adapter=new main_sub_Adapter(homeModelArrayList,this);
         Recyc_main.setAdapter(main_sub_adapter);
 
         getmaincatsWeb();

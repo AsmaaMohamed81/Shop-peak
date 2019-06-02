@@ -49,7 +49,9 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"/>
     </android.support.v7.widget.CardView>
 
     <RelativeLayout

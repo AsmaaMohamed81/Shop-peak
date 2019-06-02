@@ -109,24 +109,27 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             });
         }
 
-        /*MyHolder.fav.setOnClickListener(new View.OnClickListener() {
+        holder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (MyHolder.fav.isChecked()) {
+                int pos=holder.getAdapterPosition();
+
+
+
+                if (holder.fav.isChecked()) {
                     accepted = true;
-                    int id2=Integer.parseInt(MyHolder.order_num.getText().toString());
-                    BasketModel basketModel=new BasketModel(id2,title,0+"",gender,price,des,false,false,false,image1);
-                     id =favorite_database.dao_favorite().add_favorite(basketModel);
+
+                    mainActivity.addfavPos(pos);
                     Log.e("add_to_favorite","true");
                 } else {
                     accepted = false;
-                    BasketModel basketModel2=new BasketModel();
-                    basketModel2.setId((int) id);
-                    favorite_database.dao_favorite().delete_favorite(basketModel2);
+
+                    mainActivity.deletfavPos(pos);
+
                     Log.e("delete_from_favorite","true");
                 }
             }
-        });*/
+        });
         holder.ratbar.setRating(Float.parseFloat(rating));
     }
 
