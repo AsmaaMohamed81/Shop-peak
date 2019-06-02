@@ -107,9 +107,11 @@ public class Favorite_Fragment extends android.app.Fragment {
                     public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
                         if(response.isSuccessful()){
 
-                            favouritModelList.addAll(response.body());
-                            favoriteAdapter.notifyDataSetChanged();
+                            if (response.body().size()>0) {
 
+                                favouritModelList.addAll(response.body());
+                                favoriteAdapter.notifyDataSetChanged();
+                            }
                         }
                     }
 

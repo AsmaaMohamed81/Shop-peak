@@ -26,9 +26,12 @@ import android.widget.Toast;
 import com.alatheer.shop_peak.Adapter.Profile_GridAdapter;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
+import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -45,9 +48,12 @@ public class ProfileFragment extends android.app.Fragment {
     Uri uri;
     Bitmap bitmap;
     String vender_name;
-    int image;
+    String image;
     int flag;
     int PICK_IMAGE_REQUEST;
+
+
+    private ArrayList<HomeModel> homeModelArrayList;
     public static ProfileFragment getInstance() {
         ProfileFragment fragment = new ProfileFragment();
         return fragment;
@@ -55,10 +61,8 @@ public class ProfileFragment extends android.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
-        // activity = getActivity();
-        // ((MainActivity)activity).setOnBackPressedListener(new  OnBackPressedListener((FragmentActivity) activity) );
+
         initview(view);
         return view;
     }
@@ -93,10 +97,11 @@ public class ProfileFragment extends android.app.Fragment {
          });
          Bundle bundle=getArguments();
          vender_name=bundle.getString("name");
-         image =bundle.getInt("image");
-         String image1=bundle.getString("image1");
-         String image2=bundle.getString("image2");
-         profile_image.setImageResource(image);
+         image =bundle.getString("image");
+
+
+
+        Picasso.with(getActivity()).load(image).into(profile_image);
          profile_name.setText(vender_name);
          Viewgrid();
         if (!isConnected()) {

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
@@ -288,9 +289,16 @@ public class Signup_Activity extends AppCompatActivity {
                             if (response.body().getSuccess()==1){
 
 
-                                UserModel1 userModel = response.body();
+                                UserModel1 userModel=response.body();
 
-                                Toast.makeText(Signup_Activity.this, "name"+userModel.getFull_name(), Toast.LENGTH_SHORT).show();
+                                MySharedPreference mySharedPreference = MySharedPreference.getInstance();
+
+                                mySharedPreference.Create_Update_UserData(Signup_Activity.this,userModel);
+
+                                Log.d("model",mySharedPreference.Get_UserData(Signup_Activity.this).getFull_name());
+
+
+
 
                             }
 

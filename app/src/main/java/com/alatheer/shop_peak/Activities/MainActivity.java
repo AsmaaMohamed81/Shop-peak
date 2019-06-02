@@ -515,4 +515,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
     }
+
+    public void profilePos(HomeModel model) {
+
+
+        if (profileFragment==null)
+        {
+            profileFragment = profileFragment.getInstance();
+        }
+
+        Log.d("asmaa", "profilePos: "+model);
+        Bundle bundle =new Bundle();
+        bundle.putString("name",model.storeName);
+        bundle.putString("image",model.storeImg);
+        bundle.putString("id",model.storeIdFk);
+
+        profileFragment.setArguments(bundle);
+
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
+
+    }
 }

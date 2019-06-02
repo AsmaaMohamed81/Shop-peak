@@ -55,6 +55,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     ProfileDatabase profileDatabase;
     boolean accepted = false;
     CustomSwipeAdapter customSwipeAdapter;
+
+    HomeModel model;
     long id;
     public HomeAdapter(List<HomeModel> listofhome, Context context) {
         this.listofhome = listofhome;
@@ -131,6 +133,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             }
         });
         holder.ratbar.setRating(Float.parseFloat(rating));
+        holder.home_linear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                 model=listofhome.get(position);
+
+                mainActivity.profilePos(model);
+
+
+            }
+        });
     }
 
     @Override

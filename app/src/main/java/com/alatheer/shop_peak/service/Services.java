@@ -44,8 +44,8 @@ public interface Services {
     @GET("Api/countries")
     Call<List<Govern>> getGovern();
 
-    @GET("Api/all_products")
-    Call<List<HomeModel>> get_all_products();
+    @GET("Api/all_products/{user_id}")
+    Call<List<HomeModel>> get_all_products(@Path("user_id") String user_id);
 
     @GET("Api/all_offers")
     Call<List<OfferModel1>> get_all_offers();
@@ -100,5 +100,10 @@ public interface Services {
 
     @GET("Api/my_favourite/{user_id}")
     Call<List<HomeModel>> get_all_favourite(@Path("user_id") String user_id);
+
+
+    @GET("Api/store_products/{store_id_fk}")
+    Call<List<HomeModel>> get_store_product(@Path("store_id_fk") String store_id_fk);
+
 }
 

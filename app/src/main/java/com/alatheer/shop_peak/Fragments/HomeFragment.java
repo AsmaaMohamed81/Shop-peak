@@ -47,7 +47,9 @@ import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.OfferModel;
 import com.alatheer.shop_peak.Model.OfferModel1;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
@@ -71,6 +73,10 @@ public class HomeFragment extends android.app.Fragment {
     EditText search;
     List<HomeModel> homelist;
     List<OfferModel1> offerlist;
+
+    MySharedPreference mySharedPreference;
+
+    UserModel1 userModel1;
     //HomeDatabase homeDatabase;
 
 
@@ -84,6 +90,11 @@ public class HomeFragment extends android.app.Fragment {
         return v;
     }
     private void initView(View v) {
+
+        mySharedPreference=MySharedPreference.getInstance();
+
+        userModel1=mySharedPreference.Get_UserData(getActivity());
+
         search = v.findViewById(R.id.txt_search);
         recyclerView2 = v.findViewById(R.id.recycler_home);
         //service = Api.getRetrofit().create(Service.class);
@@ -179,7 +190,10 @@ public class HomeFragment extends android.app.Fragment {
         return homelist;
     }*/
     public void get_all_product_list() {
-        Api.getService().get_all_products().enqueue(new Callback<List<HomeModel>>() {
+
+        String user_id=userModel1.getId();
+
+        Api.getService().get_all_products(user_id).enqueue(new Callback<List<HomeModel>>() {
             @Override
             public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
                 homelist = response.body();

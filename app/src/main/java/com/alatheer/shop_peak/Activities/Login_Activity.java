@@ -121,6 +121,7 @@ public class Login_Activity extends AppCompatActivity {
                             String first_name = object.getString("first_name");
                             String last_name=object.getString("last_name");
                             String id=object.getString("id");
+                            String EMAIL = object.getString("Email");
                             String image_url="https://graph.facebook.com/"+id+"/picture?type=normal";
 
                             userModel = new UserModel(first_name, image_url, "asasa@sdaskd");
