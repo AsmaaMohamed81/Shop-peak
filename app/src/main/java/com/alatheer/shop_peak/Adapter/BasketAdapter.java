@@ -22,6 +22,7 @@ import com.alatheer.shop_peak.Activities.Details_two_Activity;
 import com.alatheer.shop_peak.Activities.Favorite_Activity;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
+import com.alatheer.shop_peak.Model.OrderItemList;
 import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
 
@@ -37,13 +38,13 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHolder> {
     Context context;
-    List<BasketModel>basketModelList;
+    List<OrderItemList>basketModelList;
     Basket_Activity basket_activity;
     MyAppDatabase myAppDatabase;
     CustomSwipeAdapter customSwipeAdapter;
     int count;
     int id;
-    public BasketAdapter(Context context, List<BasketModel> basketModelList) {
+    public BasketAdapter(Context context, List<OrderItemList> basketModelList) {
         this.context = context;
         this.basketModelList = basketModelList;
         this.basket_activity= (Basket_Activity) context;
@@ -60,9 +61,9 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
     @Override
     public void onBindViewHolder(@NonNull final BasketHolder holder, final int position) {
         myAppDatabase = Room.databaseBuilder(getApplicationContext(), MyAppDatabase.class, "productdb").allowMainThreadQueries().build();
-        holder.basket_title.setText(basketModelList.get(position).getTitle());
-        Picasso.with(context).load(basketModelList.get(position).getImg()).into(holder.title_img);
-        holder.counter.setText(basketModelList.get(position).getNum_of_cart());
+        holder.basket_title.setText(basketModelList.get(position).sanfIdFk);
+        //Picasso.with(context).load(basketModelList.get(position).getImg()).into(holder.title_img);
+        holder.counter.setText(basketModelList.get(position).sanfAmount);
         holder.delete_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +81,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
         //Uri uri= Uri.parse(basketModelList.get(position).getImg());
        // File file =new File(uri.getPath());
         //Picasso.with(context).load(file).into(MyHolder.title_img);
-        boolean red=basketModelList.get(position).isRed_flag();
+        /*boolean red=basketModelList.get(position).isRed_flag();
         boolean blue=basketModelList.get(position).isBlue_flag();
         boolean black=basketModelList.get(position).isBlack_flag();
         if(red == true){
@@ -97,7 +98,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
             holder.c_black.setButtonDrawable(R.drawable.ic_check);
         }else {
             holder.c_black.setButtonDrawable(R.drawable.ic_check_gray);
-        }
+        }*/
 
 
     }

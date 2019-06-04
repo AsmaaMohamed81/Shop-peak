@@ -15,7 +15,10 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.alatheer.shop_peak.Activities.MainActivity;
+import com.alatheer.shop_peak.Activities.Search_Activity;
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
 
@@ -33,7 +36,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     List<HomeModel> listofhome;
     Context context;
     CustomSwipeAdapter customSwipeAdapter;
-
+    Search_Activity search_activity;
     public SearchAdapter(List<HomeModel> listofhome, Context context) {
         this.listofhome = listofhome;
         this.context = context;
@@ -55,17 +58,30 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
        // File file =new File(uri.getPath());
         //File[]path=new File[]{file,file,file};
 
-        String[] images = listofhome.get(position).img;
+        String image = listofhome.get(position).mainImg;
+        final String[] images = {listofhome.get(position).mainImg};
         customSwipeAdapter = new CustomSwipeAdapter(images, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
-        final String title = listofhome.get(position).offeredTitle;
-        final String des = listofhome.get(position).details;
-        //final String price = listofhome.get(position).getProduct_price();
+        final List<Item> itemList = listofhome.get(position).items;
+        final String price = (String) listofhome.get(position).priceAfterDis;
+        final String price_before_discount = listofhome.get(position).priceBeforeDis;
+        final String sanf_name = listofhome.get(position).sanfName;
         final String vender_name = listofhome.get(position).storeName;
         final String vender_image = listofhome.get(position).storeImg;
+        final String sanf_id = listofhome.get(position).id;
+        final String rating = listofhome.get(position).rate;
+        final String store_id = listofhome.get(position).storeIdFk;
+        final String[]colors= listofhome.get(position).colors;
+        final String link = listofhome.get(position).link;
         holder.viewPager.setAdapter(customSwipeAdapter);
         Picasso.with(context).load(vender_image).into(holder.img);
         holder.textView.setText(vender_name);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search_activity.sendHomeItem(images, itemList, sanf_name, price, sanf_id, rating, store_id,colors,price_before_discount);
+            }
+        });
     }
 
     @Override

@@ -147,8 +147,8 @@ public class Fragment_two_Details extends Fragment {
             @Override
             public void onClick(View v) {
 
-                basketModel = new BasketModel(id_intent, title_intent, counter.getText().toString(), gender_intent, price_intent, des_intent, red, blue, black, image_intent);
-                myAppDatabase.dao().editproduct(basketModel);
+                //basketModel = new BasketModel(id_intent, title_intent, counter.getText().toString(), gender_intent, price_intent, des_intent, red, blue, black, image_intent);
+                //myAppDatabase.dao().editproduct(basketModel);
             }
         });
         /*shopping_cart.setOnClickListener(new View.OnClickListener() {

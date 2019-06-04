@@ -96,6 +96,27 @@ public class HomeFragment extends android.app.Fragment {
         userModel1=mySharedPreference.Get_UserData(getActivity());
 
         search = v.findViewById(R.id.txt_search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String sanf_name = search.getText().toString();
+                Api.getService().search_Home(sanf_name).enqueue(new Callback<List<HomeModel>>() {
+                    @Override
+                    public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
+                        Intent intent = new Intent(getActivity(),Search_Activity.class);
+                        Log.v("ggg",response.message());
+                        intent.putExtra("list",(Serializable)response.body());
+                        intent.putExtra("sanf_name",sanf_name);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<HomeModel>> call, Throwable t) {
+                        Log.v("jjj",t.getMessage());
+                    }
+                });
+            }
+        });
         recyclerView2 = v.findViewById(R.id.recycler_home);
         //service = Api.getRetrofit().create(Service.class);
 

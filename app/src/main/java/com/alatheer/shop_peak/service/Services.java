@@ -1,5 +1,7 @@
 package com.alatheer.shop_peak.service;
 
+import com.alatheer.shop_peak.Model.BasketModel2;
+import com.alatheer.shop_peak.Model.BasketModel3;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.OfferModel1;
 import com.alatheer.shop_peak.Model.RatingModel;
@@ -15,6 +17,7 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -105,5 +108,10 @@ public interface Services {
     @GET("Api/store_products/{store_id_fk}")
     Call<List<HomeModel>> get_store_product(@Path("store_id_fk") String store_id_fk);
 
+    @POST("Api/save_basket")
+    Call<RatingModel2>add_to_basket(@Body BasketModel3 basketModel3);
+    @FormUrlEncoded
+    @POST("Api/filter")
+    Call<List<HomeModel>>search_Home(@Field("sanf_name")String sanf_name);
 }
 

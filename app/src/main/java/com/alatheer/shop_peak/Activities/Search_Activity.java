@@ -22,9 +22,12 @@ import com.alatheer.shop_peak.Adapter.SearchAdapter;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
 //import com.alatheer.shop_peak.Local.HomeDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.Item;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
@@ -40,8 +43,10 @@ public class Search_Activity extends AppCompatActivity  {
     ImageView filter_image;
     LinearLayout linear_filter;
     Intent i;
+    UserModel1 userModel1;
     //HomeDatabase homeDatabase;
     String title;
+    List<HomeModel>homeModelList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +59,8 @@ public class Search_Activity extends AppCompatActivity  {
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         homeFragment=new HomeFragment();
-        title = i.getStringExtra("title");
+        title = i.getStringExtra("sanf_name");
+        homeModelList = (List<HomeModel>) i.getExtras().getSerializable("list");
         filter_image=findViewById(R.id.filter_img);
         linear_filter=findViewById(R.id.linear_filter);
         recyclerView_search=findViewById(R.id.recycler_home);
@@ -78,7 +84,7 @@ public class Search_Activity extends AppCompatActivity  {
         recyclerView_search.setHasFixedSize(true);
         layoutManager_search=new LinearLayoutManager(this);
         recyclerView_search.setLayoutManager(layoutManager_search);
-        // searchAdapter = new SearchAdapter(list, this);
+         searchAdapter = new SearchAdapter(homeModelList, this);
         recyclerView_search.setAdapter(searchAdapter);
     }
 
@@ -113,5 +119,24 @@ public class Search_Activity extends AppCompatActivity  {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void sendHomeItem(String[] images, List<Item> itemList, String sanf_name, String price, String sanf_id, String rating, String store_id, String[] colors, String price_before_discount) {
+        Bundle bundle=new Bundle();
+        bundle.putStringArray("homeimage", images);
+        bundle.putSerializable("itemlist", (Serializable) itemList);
+        //bundle.putString("details", details);
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtras(bundle);
+        intent.putExtra("title", sanf_name);
+        intent.putExtra("price", price);
+        intent.putExtra("price_before_dis",price_before_discount);
+        intent.putExtra("id", sanf_id);
+        intent.putExtra("rate", rating);
+        intent.putExtra("user_id", Integer.parseInt(userModel1.getId()));
+        intent.putExtra("color",colors);
+        startActivity(intent);
+        Animatoo.animateInAndOut(Search_Activity.this);
+
     }
 }

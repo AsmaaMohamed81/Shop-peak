@@ -1,21 +1,14 @@
 package com.alatheer.shop_peak.Activities;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +20,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.HomeAdapter;
 import com.alatheer.shop_peak.Adapter.NavigationAdapter;
@@ -51,7 +43,6 @@ import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.facebook.login.LoginManager;
-import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -82,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String title1;
     TextView login_register, tv_username;
     List<HomeModel> homeModels;
+    String sanf_name;
     private int PICK_IMAGE_FROM_GALEARY_REQUEST=0;
     Uri uri;
     Bitmap bitmap;
@@ -351,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     shareIntent.setType("text/plain");
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, "SHOP_PEAK");
                     String shareMessage= "\nLet me recommend you this application\n\n";
-                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
+                    shareMessage = shareMessage + "n,,jhhhkhhkkkk";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     startActivity(Intent.createChooser(shareIntent, "choose one"));
                 } catch(Exception e) {
@@ -401,20 +393,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return navigationlist;
     }
 
-    public void sendHomeItem(String[] image, List<Item> item, String title, String details, String price, String product_id, String rating) {
+    public void sendHomeItem(String[] image, List<Item> item, String sanf_name, String details, String price, String product_id, String rating, String store_id, String[] colors,String price_before_dis) {
         Bundle bundle=new Bundle();
         bundle.putStringArray("homeimage", image);
         bundle.putSerializable("itemlist", (Serializable) item);
         bundle.putString("details", details);
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtras(bundle);
-        intent.putExtra("title", title);
+        intent.putExtra("title", sanf_name);
         intent.putExtra("itemlist", (Serializable) item);
         intent.putExtra("details", details);
         intent.putExtra("price", price);
+        intent.putExtra("price_before_dis",price_before_dis);
         intent.putExtra("id", product_id);
         intent.putExtra("rate", rating);
         intent.putExtra("user_id", Integer.parseInt(userModel1.getId()));
+        intent.putExtra("color",colors);
         startActivity(intent);
         Animatoo.animateInAndOut(MainActivity.this);
 
@@ -534,5 +528,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
 
+    }
+
+    public void sendLink(String link) {
     }
 }

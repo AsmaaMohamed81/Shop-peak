@@ -3,39 +3,29 @@ package com.alatheer.shop_peak.Adapter;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alatheer.shop_peak.Activities.DetailsActivity;
 import com.alatheer.shop_peak.Activities.MainActivity;
+import com.alatheer.shop_peak.BuildConfig;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
-import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
-import com.alatheer.shop_peak.Model.ProfileModel;
 import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -77,39 +67,45 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         //final File path = new File(uri.getPath());
         profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(context,Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
-        final String title = listofhome.get(position).sanfName;
         final String details = listofhome.get(position).details;
         final List<Item> itemList = listofhome.get(position).items;
-        final String price = listofhome.get(position).priceAfterDis;
+        final String price = (String) listofhome.get(position).priceAfterDis;
+        final String price_before_discount = listofhome.get(position).priceBeforeDis;
+        final String sanf_name = listofhome.get(position).sanfName;
         final String vender_name = listofhome.get(position).storeName;
         final String vender_image = listofhome.get(position).storeImg;
-        final String product_id = listofhome.get(position).id;
+        final String sanf_id = listofhome.get(position).id;
         final String rating = listofhome.get(position).rate;
+        final String store_id = listofhome.get(position).storeIdFk;
+        final String[]colors= listofhome.get(position).colors;
+        final String link = listofhome.get(position).link;
         Picasso.with(context).load(vender_image).into(holder.img_profile);
         holder.text_profile.setText(vender_name);
-        if (listofhome.get(position).img != null) {
-            final String[] image_resources = listofhome.get(position).img;
-            customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
-            holder.viewPager.setAdapter(customSwipeAdapter);
-            mainActivity.passdata(title, listofhome);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mainActivity.sendHomeItem(image_resources, itemList, title, details, price, product_id, rating);
-                }
-            });
-        } else {
-            final String[] image_resources = {listofhome.get(position).mainImg};
-            customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
-            holder.viewPager.setAdapter(customSwipeAdapter);
-            mainActivity.passdata(title, listofhome);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mainActivity.sendHomeItem(image_resources, itemList, title, details, price, product_id, rating);
-                }
-            });
-        }
+
+           final String[] image_resources = {listofhome.get(position).mainImg};
+           final String[] image_resources2 =listofhome.get(position).img;
+           if(image_resources2 == null){
+               customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
+               holder.viewPager.setAdapter(customSwipeAdapter);
+               holder.itemView.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount);
+                   }
+               });
+
+           }else {
+               customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
+               holder.viewPager.setAdapter(customSwipeAdapter);
+               holder.itemView.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       mainActivity.sendHomeItem(image_resources2, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount);
+                   }
+               });
+           }
+            mainActivity.sendLink(link);
+            mainActivity.passdata(sanf_name, listofhome);
 
         holder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +126,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
 
                     Log.e("delete_from_favorite","true");
                 }
+            }
+        });
+        holder.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "SHOP_PEAK");
+                String shareMessage= "\nLet me recommend you this application\n\n";
+                shareMessage = shareMessage + link;
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                context.startActivity(Intent.createChooser(shareIntent, "choose one"));
             }
         });
         holder.ratbar.setRating(Float.parseFloat(rating));

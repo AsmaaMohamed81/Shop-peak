@@ -15,7 +15,11 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class HomeModel {
+import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+public class HomeModel implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -40,7 +44,7 @@ public class HomeModel {
     public String priceBeforeDis;
     @SerializedName("price_after_dis")
     @Expose
-    public String priceAfterDis;
+    public Object priceAfterDis;
     @SerializedName("main_img")
     @Expose
     public String mainImg;
@@ -89,9 +93,15 @@ public class HomeModel {
     @SerializedName("img")
     @Expose
     public String[] img = null;
+    @SerializedName("colors")
+    @Expose
+    public String[] colors = null;
     @SerializedName("items")
     @Expose
     public List<Item> items = null;
+    @SerializedName("link")
+    @Expose
+    public String link;
 
     public HomeModel withId(String id) {
         this.id = id;
@@ -128,7 +138,7 @@ public class HomeModel {
         return this;
     }
 
-    public HomeModel withPriceAfterDis(String priceAfterDis) {
+    public HomeModel withPriceAfterDis(Object priceAfterDis) {
         this.priceAfterDis = priceAfterDis;
         return this;
     }
@@ -213,8 +223,18 @@ public class HomeModel {
         return this;
     }
 
+    public HomeModel withColors(String[]colors) {
+        this.colors = colors;
+        return this;
+    }
+
     public HomeModel withItems(List<Item> items) {
         this.items = items;
+        return this;
+    }
+
+    public HomeModel withLink(String link) {
+        this.link = link;
         return this;
     }
 

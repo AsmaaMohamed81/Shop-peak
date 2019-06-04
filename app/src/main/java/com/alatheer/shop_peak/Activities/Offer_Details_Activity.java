@@ -156,8 +156,8 @@ public class Offer_Details_Activity extends AppCompatActivity {
                 try {
                     makeFlyAnimation(viewPager);
                     id = Integer.parseInt(order_num.getText().toString());
-                    basketModel = new BasketModel((int) id, title, counter.getText().toString(), gender, price, des, red, blue, black, first_item);
-                    myAppDatabase.dao().addproduct(basketModel);
+                    //basketModel = new BasketModel((int) id, title, counter.getText().toString(), gender, price, des, red, blue, black, first_item);
+                    //myAppDatabase.dao().addproduct(basketModel);
 
                     if (myAppDatabase.dao().getdata().size() > 0) {
                         tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));

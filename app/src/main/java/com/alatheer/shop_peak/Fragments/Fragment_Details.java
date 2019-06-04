@@ -4,12 +4,15 @@ import android.animation.Animator;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,16 +29,21 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Basket_Activity;
 import com.alatheer.shop_peak.Activities.DetailsActivity;
+import com.alatheer.shop_peak.Activities.MainActivity;
+import com.alatheer.shop_peak.Adapter.ColorAdapter;
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
 import com.alatheer.shop_peak.Adapter.PassData;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.Item;
+import com.alatheer.shop_peak.Model.OrderItemList;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.util.CircleAnimationUtil;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -43,15 +51,16 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Fragment_Details extends Fragment {
     ImageView details_img, back_image, plus_circle, minus_circle, shopping_cart;
-    TextView details_title, details_des, counter, cart_num, tv_not_budget;
+    TextView details_title, details_des, counter, cart_num, tv_not_budget,txt_before_discount;
     CheckBox c_red, c_blue, c_black;
     Button details_price, addcart, editcart;
     MyAppDatabase myAppDatabase;
     Favorite_Database favorite_database;
     ViewPager viewPager;
     List<Item> items;
+    String[]colors;
     CustomSwipeAdapter customSwipeAdapter;
-    FloatingActionButton fab_favorite;
+    FloatingActionButton fab_favorite,fab_shopping;
     RatingBar ratingBar;
     boolean flag = true;
     boolean red = false;
@@ -68,10 +77,16 @@ public class Fragment_Details extends Fragment {
     String title;
     String gender;
     String rating;
+    String sanf_name;
+    String price_before_dis;
     FrameLayout destView;
     String first_item_String;
     PassData passData;
-
+    String sanf_id,store_id;
+    List<OrderItemList> orders_List;
+    RecyclerView color_recycler;
+    RecyclerView.LayoutManager layoutManager;
+    ColorAdapter colorAdapter ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,25 +100,31 @@ public class Fragment_Details extends Fragment {
         details_img = view.findViewById(R.id.details_image);
         ratingBar = view.findViewById(R.id.ratbar2);
         viewPager = view.findViewById(R.id.viewpager);
+        color_recycler = view.findViewById(R.id.recycler_color);
         details_title = view.findViewById(R.id.details_title);
         plus_circle = view.findViewById(R.id.add_circle);
         minus_circle = view.findViewById(R.id.remove_circle);
         counter = view.findViewById(R.id.counter);
         shopping_cart = view.findViewById(R.id.shopping_cart);
+        fab_shopping = view.findViewById(R.id.fab_shopping_cart);
         cart_num = view.findViewById(R.id.cart_num);
         addcart = view.findViewById(R.id.add_cart);
-        c_red = view.findViewById(R.id.checkbox_red);
-        c_blue = view.findViewById(R.id.checkbox_blue);
-        c_black = view.findViewById(R.id.checkbox_black);
+        txt_before_discount = view.findViewById(R.id.txt_price_before_discount);
+        //c_red = view.findViewById(R.id.checkbox_red);
+        //_blue = view.findViewById(R.id.checkbox_blue);
+        //c_black = view.findViewById(R.id.checkbox_black);
         destView = (FrameLayout) view.findViewById(R.id.frame_cart);
         order_num = view.findViewById(R.id.order_num);
         //details_des=findViewById(R.id.details_des);
         details_price = view.findViewById(R.id.details_price);
         fab_favorite = view.findViewById(R.id.fab_favorite);
-        myAppDatabase = Room.databaseBuilder(getApplicationContext(), MyAppDatabase.class, "productdb").allowMainThreadQueries().build();
+        myAppDatabase = Room.databaseBuilder(getApplicationContext(), MyAppDatabase.class, "order_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(), Favorite_Database.class, "favoritedb").allowMainThreadQueries().build();
         getDataFromIntent();
-
+        txt_before_discount.setPaintFlags(txt_before_discount.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+        txt_before_discount.setText(price_before_dis);
+        Log.v("color",colors.length+"");
+        init_color_recycler();
         tv_not_budget = view.findViewById(R.id.tv_not_budget);
 
         details_price.setText(price + "" + "LE");
@@ -114,45 +135,7 @@ public class Fragment_Details extends Fragment {
                 getActivity().finish();
             }
         });*/
-        c_red.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (c_red.isChecked()) {
-                    c_red.setButtonDrawable(R.drawable.ic_check);
-                    red = true;
-                } else {
-                    c_red.setButtonDrawable(R.drawable.ic_check_gray);
-                    red = false;
-                }
 
-            }
-        });
-        c_blue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (c_blue.isChecked()) {
-                    c_blue.setButtonDrawable(R.drawable.ic_check);
-                    blue = true;
-                } else {
-                    c_blue.setButtonDrawable(R.drawable.ic_check_gray);
-                    blue = false;
-                }
-
-            }
-        });
-        c_black.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (c_black.isChecked()) {
-                    c_black.setButtonDrawable(R.drawable.ic_check);
-                    black = true;
-                } else {
-                    c_black.setButtonDrawable(R.drawable.ic_check_gray);
-                    black = false;
-                }
-
-            }
-        });
         plus_circle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,10 +159,18 @@ public class Fragment_Details extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    //makeFlyAnimation(viewPager);
-                    id = Integer.parseInt(order_num.getText().toString());
-                    basketModel = new BasketModel(id, title, counter.getText().toString(), gender, price, des, red, blue, black, first_item);
-                    myAppDatabase.dao().addproduct(basketModel);
+                    makeFlyAnimation(viewPager);
+                    OrderItemList orderItemList = new OrderItemList();
+                    orderItemList.setId(Integer.parseInt(order_num.getText().toString()));
+                    orderItemList.withSanfAmount(counter.getText().toString());
+                    orderItemList.withSanfIdFk(sanf_id);
+                    orderItemList.withSanfPrice(price);
+                    orderItemList.withStoreIdFk(store_id);
+                    myAppDatabase.dao().addproduct(orderItemList);
+                    Toast.makeText(getActivity(), "data added successfully", Toast.LENGTH_SHORT).show();
+                    //DetailsActivity detailsActivity = (DetailsActivity) getActivity();
+                    //detailsActivity.send(orders_List);
+
                     //passData.getBasketModel(basketModel);
                     /*if (myAppDatabase.dao().getdata().size() > 0) {
                         tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
@@ -242,18 +233,30 @@ public class Fragment_Details extends Fragment {
             passData = (PassData) context;
         }
     }
+    public  void  init_color_recycler(){
+        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true);
+        color_recycler.setHasFixedSize(true);
+        color_recycler.setLayoutManager(layoutManager);
+        ColorAdapter colorAdapter =new ColorAdapter(getActivity(),colors);
+        color_recycler.setAdapter(colorAdapter);
+    }
 
     public void getDataFromIntent() {
         Intent intent = getActivity().getIntent();
         Bundle extras = intent.getExtras();
         image = extras.getStringArray("homeimage");
         items = (List<Item>) extras.getSerializable("itemlist");
+        colors = intent.getStringArrayExtra("color");
         //first_item_String = first_item.toString();
         title = intent.getStringExtra("title");
         des = intent.getStringExtra("des");
         price = intent.getStringExtra("price");
         gender = intent.getStringExtra("gender");
         rating = intent.getStringExtra("rate");
+        price =intent.getStringExtra("price");
+        price_before_dis = intent.getStringExtra("price_before_dis");
+        sanf_id = intent.getStringExtra("id");
+        store_id =intent.getStringExtra("store_id");
         // Bundle bundle = new Bundle();
         //bundle.putString("title",title);
         //bundle.putString("des",title);

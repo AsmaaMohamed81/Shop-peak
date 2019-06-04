@@ -93,7 +93,6 @@
         <activity android:name=".Activities.Details_two_Activity" />
         <activity android:name=".Activities.Favorite_Activity" />
         <activity android:name=".Activities.Category_Activity" />
-
         <activity
             android:name=".Activities.Vender_Signup_Activity"
             android:parentActivityName=".Activities.MainActivity" />
@@ -116,7 +115,8 @@
         <activity
             android:name=".Activities.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".Activities.Add_Product_Activity_Details"></activity>
+        <activity android:name=".Activities.Add_Product_Activity_Details" />
+        <activity android:name=".Activities.Offer_Activity"></activity>
     </application>
 
 </manifest>

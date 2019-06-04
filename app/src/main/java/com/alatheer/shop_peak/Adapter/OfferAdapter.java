@@ -1,6 +1,7 @@
 package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.MainActivity;
+import com.alatheer.shop_peak.Activities.Offer_Activity;
 import com.alatheer.shop_peak.Model.OfferModel;
 import com.alatheer.shop_peak.Model.OfferModel1;
 import com.alatheer.shop_peak.Model.ProfileModel;
@@ -46,6 +48,17 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ImageHolder>
     public void onBindViewHolder(@NonNull ImageHolder holder, int position) {
         Picasso.with(context).load(list_of_offer.get(position).imgOffer).into(holder.circleImageView);
         holder.title.setText(list_of_offer.get(position).offerTitle);
+        final String image = list_of_offer.get(position).imgOffer;
+        final String title = list_of_offer.get(position).offerTitle;
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, Offer_Activity.class);
+                intent.putExtra("image",image);
+                intent.putExtra("title",title);
+                context.startActivity(intent);
+            }
+        });
         //final String image1 = list_of_offer.get(position).getImage1();
         //final String image2 = imageModels.get(position).getImage2();
         //final String[] image_resources = {image1, image2};

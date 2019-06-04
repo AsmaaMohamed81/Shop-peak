@@ -6,6 +6,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.alatheer.shop_peak.Model.BasketModel;
+import com.alatheer.shop_peak.Model.OrderItemList;
 import com.alatheer.shop_peak.Model.ProfileModel;
 
 import java.util.List;
@@ -17,14 +18,14 @@ import java.util.List;
 @android.arch.persistence.room.Dao
 public interface Dao {
     @Insert
-     void addproduct(BasketModel basketModel);
-    @Query("select * from products")
-     List<BasketModel> getdata();
-    @Query("delete from products")
+     void addproduct(OrderItemList orderItemList);
+    @Query("select * from orders")
+         List<OrderItemList> getdata();
+    @Query("delete from orders")
      void deleteproduct();
 
-    @Query("delete from products where id=:id")
+    @Query("delete from orders where id=:id")
     void Delete_Item(int id);
     @Update
-     void editproduct(BasketModel basketModel);
+     void editproduct(OrderItemList basketModel);
 }

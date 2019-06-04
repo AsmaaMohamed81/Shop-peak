@@ -11,6 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -25,6 +26,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Adapter.ColorAdapter;
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
 import com.alatheer.shop_peak.Adapter.PassData;
 import com.alatheer.shop_peak.Fragments.Fragment_Details;
@@ -33,6 +35,7 @@ import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
+import com.alatheer.shop_peak.Model.OrderItemList;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.util.CircleAnimationUtil;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
@@ -42,7 +45,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailsActivity extends AppCompatActivity implements PassData {
+public class DetailsActivity extends AppCompatActivity {
     ImageView details_img,back_image,plus_circle,minus_circle,shopping_cart;
     TextView details_title,details_des,counter,cart_num,tv_not_budget;
     CheckBox c_red,c_blue,c_black;
@@ -58,6 +61,7 @@ public class DetailsActivity extends AppCompatActivity implements PassData {
     boolean red=false;
     boolean blue=false;
     boolean black=false;
+    String []colors;
     int count;
     long id;
     EditText order_num;
@@ -70,6 +74,7 @@ public class DetailsActivity extends AppCompatActivity implements PassData {
     String title;
     String gender;
     String first_item_String;
+    List<OrderItemList>listorder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +88,8 @@ public class DetailsActivity extends AppCompatActivity implements PassData {
         //details_img = findViewById(R.id.details_image);
         //ratingBar = findViewById(R.id.ratbar2);
         details_title = findViewById(R.id.details_title);
+        listorder =new ArrayList<>();
+
         //plus_circle = findViewById(R.id.add_circle);
         //minus_circle = findViewById(R.id.remove_circle);
         //counter = findViewById(R.id.counter);
@@ -96,7 +103,7 @@ public class DetailsActivity extends AppCompatActivity implements PassData {
         //details_des=findViewById(R.id.details_des);
         //details_price = findViewById(R.id.details_price);
         fab_favorite = findViewById(R.id.fab_favorite);
-        myAppDatabase = Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"productdb").allowMainThreadQueries().build();
+        myAppDatabase = Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"order_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(),Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         getDataFromIntent();
         details_title.setText(title);
@@ -272,6 +279,10 @@ public class DetailsActivity extends AppCompatActivity implements PassData {
             tv_not_budget.setText("0");
 
         }
+
+    }
+    public void init_color_recycler(){
+
     }
 
     public void getDataFromIntent(){
@@ -284,6 +295,7 @@ public class DetailsActivity extends AppCompatActivity implements PassData {
         details = intent.getStringExtra("details");
         price = intent.getStringExtra("price");
         gender = intent.getStringExtra("gender");
+        colors = intent.getStringArrayExtra("color");
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putString("des", title);
@@ -333,8 +345,8 @@ public class DetailsActivity extends AppCompatActivity implements PassData {
     }
 
 
-    @Override
-    public void getBasketModel(BasketModel basketModel) {
+    /*@Override
+    public void getBasketModel(OrderItemList basketModel) {
         makeFlyAnimation(viewPager);
         myAppDatabase.dao().addproduct(basketModel);
         if (myAppDatabase.dao().getdata().size() > 0) {
@@ -343,6 +355,10 @@ public class DetailsActivity extends AppCompatActivity implements PassData {
             tv_not_budget.setText("0");
 
         }
+
+    }*/
+
+    public void send(List<OrderItemList> orders_list) {
 
     }
 }
