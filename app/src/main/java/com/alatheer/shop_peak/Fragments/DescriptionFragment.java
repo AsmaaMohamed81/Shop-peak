@@ -1,24 +1,18 @@
 package com.alatheer.shop_peak.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
 import com.alatheer.shop_peak.Adapter.ItemAdapter;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.R;
-import com.borjabravo.readmoretextview.ReadMoreTextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -51,7 +45,7 @@ public class DescriptionFragment extends Fragment {
 
     private void initrecycler() {
         description_recycler.setHasFixedSize(true);
-        description__layoutManager = new LinearLayoutManager(getContext());
+        description__layoutManager = new GridLayoutManager(getContext(),2);
         description_recycler.setLayoutManager(description__layoutManager);
         itemAdapter = new ItemAdapter(items, getContext());
         description_recycler.setAdapter(itemAdapter);

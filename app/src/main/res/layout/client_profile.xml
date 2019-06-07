@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/gradient_background">
+    >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                     android:layout_marginTop="20dp"
                     android:enabled="false"
                     android:gravity="center"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="27dp"
                     android:text="client name"
                     android:textStyle="bold"
@@ -82,16 +82,16 @@
 
                     />
                 <EditText
-                    android:id="@+id/phone"
+                    android:id="@+id/adress"
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"
-                    android:drawableLeft="@drawable/phone"
+                    android:drawableLeft="@drawable/map"
                     android:drawablePadding="5dp"
                     android:textSize="14sp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:enabled="false"
                     android:text="012892382382"
                     android:background="@drawable/et_update_profile"
@@ -109,7 +109,7 @@
                     android:drawableLeft="@drawable/ic_email"
                     android:drawablePadding="5dp"
                     android:textSize="14sp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:enabled="false"
                     android:layout_marginTop="5dp"
                     android:text="hsajha@gmail.com"

@@ -4,26 +4,27 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 
 public class Client_Profile_Fragment extends android.app.Fragment{
 
+
+    MySharedPreference preferences;
+
+    UserModel1 userModel1;
+
+    EditText user_name,adress,email;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,6 +50,30 @@ public class Client_Profile_Fragment extends android.app.Fragment{
         } else {
             Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
         }
+
+
+
+        Toast.makeText(getActivity(), "client", Toast.LENGTH_SHORT).show();
+        user_name=view.findViewById(R.id.user_name);
+        adress=view.findViewById(R.id.adress);
+        email=view.findViewById(R.id.email);
+
+
+        preferences=MySharedPreference.getInstance();
+        userModel1=preferences.Get_UserData(getActivity());
+
+        if (userModel1!=null){
+
+
+            user_name.setText(userModel1.getFull_name());
+            adress.setText(userModel1.getAddress());
+            email.setText(userModel1.getEmail());
+        }else {
+
+            Toast.makeText(getActivity(), "you SHoud Sign First", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     private boolean isConnected() {

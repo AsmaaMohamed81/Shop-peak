@@ -7,38 +7,36 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
-import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.common.Common;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -76,7 +74,7 @@ public class Login_Activity extends AppCompatActivity {
     int GmailSignInRequest=0;
     UserModel userModel;
     Uri image_path;
-    TextView Skip;
+    TextView Skip,link;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +100,20 @@ public class Login_Activity extends AppCompatActivity {
         callbackManager=CallbackManager.Factory.create();
         mySharedPreference = new MySharedPreference(this);
         Skip=findViewById(R.id.skip);
+
+        link=findViewById(R.id.link);
+
+        link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                WebView mWebview = new WebView(Login_Activity.this);
+                mWebview.loadUrl("www.shop-peak.com");
+                setContentView(mWebview);
+            }
+        });
+
+
         Skip.setPaintFlags(Skip.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
         // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.

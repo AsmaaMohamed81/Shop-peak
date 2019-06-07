@@ -59,6 +59,7 @@ public class HomeFragment extends android.app.Fragment {
     private TextView txt_no;
     //HomeDatabase homeDatabase;
 
+    String user_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -209,8 +210,11 @@ public class HomeFragment extends android.app.Fragment {
     }*/
     public void get_all_product_list() {
 
-        String user_id=userModel1.getId();
-
+        if (userModel1!=null) {
+             user_id = userModel1.getId();
+        }else {
+            user_id="0";
+        }
         Api.getService().get_all_products(user_id).enqueue(new Callback<List<HomeModel>>() {
             @Override
             public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {

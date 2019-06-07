@@ -138,13 +138,15 @@
 
 
         <TextView
+            android:id="@+id/link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="@string/url"
             android:textColor="@color/colorPrimary"
             android:textSize="17sp"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"/>
 
     </RelativeLayout>
 

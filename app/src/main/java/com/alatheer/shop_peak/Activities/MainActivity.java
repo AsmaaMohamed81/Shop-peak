@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.Activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -10,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,26 +20,26 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.HomeAdapter;
 import com.alatheer.shop_peak.Adapter.NavigationAdapter;
 import com.alatheer.shop_peak.Adapter.Search_Navigation_Adapter;
-import com.alatheer.shop_peak.BuildConfig;
 import com.alatheer.shop_peak.Fragments.Client_Profile_Fragment;
 import com.alatheer.shop_peak.Fragments.Favorite_Fragment;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Local.Favorite_Database;
+import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
+import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.list_cats;
-import com.alatheer.shop_peak.preferance.MySharedPreference;
-import com.alatheer.shop_peak.Model.HomeModel;
-import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.facebook.login.LoginManager;
@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<list_cats> list_cats;
 
     ArrayList<list_cats.Subs> list_cats_sub;
+
+    String user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -407,7 +409,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra("price_before_dis",price_before_dis);
         intent.putExtra("id", product_id);
         intent.putExtra("rate", rating);
-        intent.putExtra("user_id", Integer.parseInt(userModel1.getId()));
+
+        if (user_id!=null) {
+            intent.putExtra("user_id", Integer.parseInt(user_id));
+
+        }
         intent.putExtra("color",colors);
         startActivity(intent);
         Animatoo.animateInAndOut(MainActivity.this);
@@ -463,10 +469,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void addfavPos(int pos) {
 
-        String sanf_id=homeModels.get(pos).id;
+        String sanf_id = homeModels.get(pos).id;
 
-        String user_id=userModel1.getId();
-
+        if (userModel1 != null){
+            user_id = userModel1.getId();
+    }
 
         Log.d("Mainasmaaa", "favPos: "+sanf_id);
         Log.d("Mainasmaaa", "favPos: "+user_id);
@@ -492,8 +499,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         String sanf_id=homeModels.get(pos).id;
 
-        String user_id=userModel1.getId();
+        if (userModel1!=null) {
+            user_id = userModel1.getId();
+        }else {
 
+            Toast.makeText(this, "You Should SignUp First !!", Toast.LENGTH_SHORT).show();
+        }
 
         Api.getService()
                 .delet_to_favourite(user_id,sanf_id)
