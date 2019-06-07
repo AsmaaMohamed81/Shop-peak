@@ -168,6 +168,29 @@
 
            </android.support.v7.widget.RecyclerView>
 
+
+           <ProgressBar
+               android:id="@+id/progBar"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="55dp"
+               android:layout_marginTop="6dp"
+               android:layout_centerHorizontal="true"
+
+               />
+           <TextView
+               android:id="@+id/tv_no"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:layout_marginBottom="90dp"
+               android:textColor="@color/black"
+               android:textSize="17sp"
+               android:textAllCaps="true"
+               android:visibility="gone"
+
+               />
+
        </RelativeLayout>
 
 

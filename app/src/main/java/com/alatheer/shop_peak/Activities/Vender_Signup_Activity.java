@@ -4,15 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -21,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +27,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.alatheer.shop_peak.Adapter.TasnefAdapter;
 import com.alatheer.shop_peak.Adapter.cityAdapter;
@@ -49,7 +45,6 @@ import com.squareup.picasso.Picasso;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -366,7 +361,14 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
 
         if (!TextUtils.isEmpty(Full_name)  &&
-                !TextUtils.isEmpty(Address)) {
+                !TextUtils.isEmpty(Address)&&
+                madina!=null&&
+                mohafza!=null&&
+                store_tasnef!=null&&
+                lat!=null&&
+                lang!=null&&
+                filePath!=null&&
+                id!=null) {
 
             shop_name.setError(null);
             shop_email.setError(null);
@@ -376,33 +378,51 @@ public class Vender_Signup_Activity extends AppCompatActivity {
             subscribre_vendor(id,Full_name ,mohafza ,madina, Address,store_tasnef,lat,lang, filePath);
 
         } else {
-            if (TextUtils.isEmpty(Name)) {
+            if (TextUtils.isEmpty(Full_name)) {
                 shop_name.setError(getString(R.string.shopname_req));
             } else {
                 shop_name.setError(null);
             }
 
-            if (TextUtils.isEmpty(Email)) {
-                shop_email.setError(getString(R.string.email_req));
+            if (TextUtils.isEmpty(Address)) {
+                shop_email.setError(getString(R.string.address_req));
             } else {
                 shop_email.setError(null);
             }
 
-            /*if (TextUtils.isEmpty(Governate)) {
-                //governate.setError(getString(R.string.governate_req));
+            if (mohafza==null) {
+                tv_title_govern.setError(getString(R.string.governate_req));
             } else {
-                //governate.setError(null);
+                tv_title_govern.setError(null);
             }
-            if (TextUtils.isEmpty(City)) {
-                //city.setError(getString(R.string.city_req));
+            if (madina==null) {
+                tv_title_city.setError(getString(R.string.city_req));
             } else {
-                //city.setError(null);
-            }*/
-            if (TextUtils.isEmpty(Address)) {
-                address.setError(getString(R.string.address_req));
-            } else {
-                address.setError(null);
+                tv_title_city.setError(null);
             }
+            if (store_tasnef==null) {
+                tv_title_tasnefat.setError(getString(R.string.tasnef_req));
+            } else {
+                tv_title_tasnefat.setError(null);
+            }
+
+            if (lat==null) {
+                latlon.setError(getString(R.string.lat_lang_req));
+            } else {
+                latlon.setError(null);
+            }
+            if (lang==null) {
+                latlon.setError(getString(R.string.lat_lang_req));
+            } else {
+                latlon.setError(null);
+            }
+
+            if (filePath==null) {
+                add_logo.setError(getString(R.string.logo_req));
+            } else {
+                add_logo.setError(null);
+            }
+
 
         }
 

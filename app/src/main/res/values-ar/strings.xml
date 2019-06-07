@@ -92,4 +92,7 @@
     <string name="share_loc">Share Your Location</string>
     <string name="chk_user_pas">Check Your Emeil Or PassWord</string>
     <string name="inc_img_path">مسار الصور غير صحيح</string>
+    <string name="tasnef_req">يجب اختيار تصنيف للمحل اولا</string>
+    <string name="lat_lang_req">يجب عليك تحديد موقعك علي الخريطه اولا</string>
+    <string name="logo_req">اختار لوجولمحل اولا</string>
 </resources>

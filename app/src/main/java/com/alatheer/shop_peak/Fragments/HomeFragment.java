@@ -1,68 +1,45 @@
 package com.alatheer.shop_peak.Fragments;
 
-import android.app.SearchManager;
-import android.app.Service;
-import android.arch.persistence.room.Room;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.preference.PreferenceFragment;
-import android.renderscript.Short4;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Activities.Search_Activity;
 import com.alatheer.shop_peak.Adapter.HomeAdapter;
-
 import com.alatheer.shop_peak.Adapter.OfferAdapter;
-//import com.alatheer.shop_peak.Local.HomeDatabase;
-import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
-import com.alatheer.shop_peak.Model.OfferModel;
 import com.alatheer.shop_peak.Model.OfferModel1;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
-import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
+//import com.alatheer.shop_peak.Local.HomeDatabase;
 
 
 public class HomeFragment extends android.app.Fragment {
@@ -77,6 +54,9 @@ public class HomeFragment extends android.app.Fragment {
     MySharedPreference mySharedPreference;
 
     UserModel1 userModel1;
+
+    private ProgressBar progressBar;
+    private TextView txt_no;
     //HomeDatabase homeDatabase;
 
 
@@ -91,10 +71,13 @@ public class HomeFragment extends android.app.Fragment {
     }
     private void initView(View v) {
 
+
         mySharedPreference=MySharedPreference.getInstance();
 
         userModel1=mySharedPreference.Get_UserData(getActivity());
 
+        homelist=new ArrayList<>();
+        offerlist=new ArrayList<>();
         search = v.findViewById(R.id.txt_search);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,12 +100,26 @@ public class HomeFragment extends android.app.Fragment {
                 });
             }
         });
+
+        get_all_product_list();
+
         recyclerView2 = v.findViewById(R.id.recycler_home);
+        progressBar = v.findViewById(R.id.progBar);
+        txt_no = v.findViewById(R.id.tv_no);
+
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+
+
+        recyclerView2.setHasFixedSize(true);
+        layoutManager2 = new LinearLayoutManager(getActivity());
+        recyclerView2.setLayoutManager(layoutManager2);
+        homeAdapter = new HomeAdapter(homelist, getActivity());
+        recyclerView2.setAdapter(homeAdapter);
+
         //service = Api.getRetrofit().create(Service.class);
 
         //final String title=search.getText().toString();
         setHasOptionsMenu(true);
-        get_all_product_list();
         get_offers_list();
         if (!isConnected()) {
             new AlertDialog.Builder(getActivity()).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
@@ -217,18 +214,33 @@ public class HomeFragment extends android.app.Fragment {
         Api.getService().get_all_products(user_id).enqueue(new Callback<List<HomeModel>>() {
             @Override
             public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
-                homelist = response.body();
-                recyclerView2.setHasFixedSize(true);
-                layoutManager2 = new LinearLayoutManager(getActivity());
-                recyclerView2.setLayoutManager(layoutManager2);
-                homeAdapter = new HomeAdapter(homelist, getActivity());
-                recyclerView2.setAdapter(homeAdapter);
+
+
+                if (response.isSuccessful()) {
+
+                    progressBar.setVisibility(View.GONE);
+
+                    if (response.body().size() > 0) {
+
+                        homelist.addAll(response.body());
+                        homeAdapter.notifyDataSetChanged();
+
+                        txt_no.setVisibility(View.GONE);
+
+
+                    }
+
+                    txt_no.setVisibility(View.VISIBLE);
+                }
+
 
             }
 
             @Override
             public void onFailure(Call<List<HomeModel>> call, Throwable t) {
                 Log.v("lllll", t.getMessage());
+                progressBar.setVisibility(View.GONE);
+
             }
         });
     }

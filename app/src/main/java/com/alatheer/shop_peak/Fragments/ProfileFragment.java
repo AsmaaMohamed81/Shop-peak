@@ -6,20 +6,24 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,10 +32,16 @@ import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.service.Api;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -47,13 +57,18 @@ public class ProfileFragment extends android.app.Fragment {
     Activity activity;
     Uri uri;
     Bitmap bitmap;
-    String vender_name;
-    String image;
+    String vender_name,image,id_store;
     int flag;
     int PICK_IMAGE_REQUEST;
 
+    private ProgressBar progressBar;
+    private TextView txt_no;
 
     private ArrayList<HomeModel> homeModelArrayList;
+
+    Profile_verticalAdapter profile_verticalAdapter;
+    Profile_GridAdapter profile_gridAdapter;
+
     public static ProfileFragment getInstance() {
         ProfileFragment fragment = new ProfileFragment();
         return fragment;
@@ -68,6 +83,8 @@ public class ProfileFragment extends android.app.Fragment {
     }
 
     private void initview(final View view) {
+
+        homeModelArrayList=new ArrayList<>();
          profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
          profile_name=view.findViewById(R.id.profile_name);
          profile_image=view.findViewById(R.id.profile_img);
@@ -75,7 +92,15 @@ public class ProfileFragment extends android.app.Fragment {
          img_ver=view.findViewById(R.id.menu_vertical);
          add_product=view.findViewById(R.id.add_product);
          menu_recycler=view.findViewById(R.id.recycler_menu);
-         img_grid.setOnClickListener(new View.OnClickListener() {
+        progressBar = view.findViewById(R.id.progBar);
+        txt_no = view.findViewById(R.id.tv_no);
+
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+
+
+
+
+        img_grid.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  Viewgrid();
@@ -98,10 +123,15 @@ public class ProfileFragment extends android.app.Fragment {
          Bundle bundle=getArguments();
          vender_name=bundle.getString("name");
          image =bundle.getString("image");
+         id_store=bundle.getString("id");
+
+        Log.d("asmaa", "initview: "+id_store);
 
 
 
         Picasso.with(getActivity()).load(image).into(profile_image);
+
+        getStoreProduct(id_store);
          profile_name.setText(vender_name);
          Viewgrid();
         if (!isConnected()) {
@@ -118,6 +148,42 @@ public class ProfileFragment extends android.app.Fragment {
         } else {
             Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void getStoreProduct(String id_store) {
+
+        Api.getService()
+                .get_store_product(id_store)
+                .enqueue(new Callback<List<HomeModel>>() {
+                    @Override
+                    public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
+
+                        if (response.isSuccessful()){
+
+                            progressBar.setVisibility(View.GONE);
+
+                            if (response.body().size()>0){
+                                homeModelArrayList.addAll(response.body());
+                                profile_gridAdapter.notifyDataSetChanged();
+                                profile_verticalAdapter.notifyDataSetChanged();
+
+                                txt_no.setVisibility(View.GONE);
+
+                            }
+
+                            txt_no.setVisibility(View.VISIBLE);
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<HomeModel>> call, Throwable t) {
+
+                        progressBar.setVisibility(View.GONE);
+
+                    }
+                });
     }
 
     private void chooseimage() {
@@ -146,7 +212,7 @@ public class ProfileFragment extends android.app.Fragment {
         menu_recycler.setHasFixedSize(true);
         verticalmanager=new LinearLayoutManager(getActivity());
         menu_recycler.setLayoutManager(verticalmanager);
-        Profile_verticalAdapter profile_verticalAdapter=new Profile_verticalAdapter(profileDatabase.dao().getdata1(vender_name),getActivity());
+         profile_verticalAdapter=new Profile_verticalAdapter(homeModelArrayList,getActivity());
         menu_recycler.setAdapter(profile_verticalAdapter);
 
     }
@@ -157,7 +223,7 @@ public class ProfileFragment extends android.app.Fragment {
         menu_recycler.setHasFixedSize(true);
         gridmanager=new GridLayoutManager(getActivity(),3);
         menu_recycler.setLayoutManager(gridmanager);
-        Profile_GridAdapter profile_gridAdapter=new Profile_GridAdapter(profileDatabase.dao().getdata1(vender_name),getActivity());
+         profile_gridAdapter=new Profile_GridAdapter(homeModelArrayList,getActivity());
         menu_recycler.setAdapter(profile_gridAdapter);
     }
 
