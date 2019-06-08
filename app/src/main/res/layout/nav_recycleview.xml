@@ -25,7 +25,7 @@
         android:layout_marginTop="155dp"
         android:orientation="vertical">
     <EditText
-        android:id="@+id/txt_search"
+        android:id="@+id/txt_search2"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginRight="10dp"
@@ -37,6 +37,8 @@
         android:drawableLeft="@drawable/ic_search"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
         android:textColorHint="@color/colorPrimary" />
 
     <android.support.v4.widget.NestedScrollView

@@ -109,7 +109,7 @@ public interface Services {
     Call<List<HomeModel>> get_store_product(@Path("store_id_fk") String store_id_fk);
 
     @POST("Api/save_basket")
-    Call<RatingModel2>add_to_basket(@Body BasketModel3 basketModel3);
+    Call<RatingModel2>add_to_basket(@Body BasketModel2 basketModel2);
     @FormUrlEncoded
     @POST("Api/filter")
     Call<List<HomeModel>>search_Home(@Field("sanf_name")String sanf_name);

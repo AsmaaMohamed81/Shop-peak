@@ -13,9 +13,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -83,22 +85,32 @@ public class HomeFragment extends android.app.Fragment {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String sanf_name = search.getText().toString();
-                Api.getService().search_Home(sanf_name).enqueue(new Callback<List<HomeModel>>() {
-                    @Override
-                    public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
-                        Intent intent = new Intent(getActivity(),Search_Activity.class);
-                        Log.v("ggg",response.message());
-                        intent.putExtra("list",(Serializable)response.body());
-                        intent.putExtra("sanf_name",sanf_name);
-                        startActivity(intent);
-                    }
 
-                    @Override
-                    public void onFailure(Call<List<HomeModel>> call, Throwable t) {
-                        Log.v("jjj",t.getMessage());
-                    }
-                });
+            }
+        });
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_SEARCH){
+                    final String sanf_name = search.getText().toString();
+                    Api.getService().search_Home(sanf_name).enqueue(new Callback<List<HomeModel>>() {
+                        @Override
+                        public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
+                            Intent intent = new Intent(getActivity(),Search_Activity.class);
+                            Log.v("ggg",response.message());
+                            intent.putExtra("list",(Serializable)response.body());
+                            intent.putExtra("sanf_name",sanf_name);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<HomeModel>> call, Throwable t) {
+                            Log.v("jjj",t.getMessage());
+                        }
+                    });
+                    return true;
+                }
+                return false;
             }
         });
 

@@ -79,7 +79,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                search_activity.sendHomeItem(images, itemList, sanf_name, price, sanf_id, rating, store_id,colors,price_before_discount);
+               // search_activity.sendHomeItem(images, itemList, sanf_name, price, sanf_id, rating, store_id,colors,price_before_discount);
             }
         });
     }

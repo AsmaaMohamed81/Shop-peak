@@ -96,6 +96,16 @@ public class ProfileFragment extends android.app.Fragment {
         txt_no = view.findViewById(R.id.tv_no);
 
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+        Bundle bundle=getArguments();
+        vender_name=bundle.getString("name");
+        image =bundle.getString("image");
+        id_store=bundle.getString("id");
+
+        Log.d("asmaa", "initview: "+id_store);
+
+        Viewgrid();
+
+        getStoreProduct(id_store);
 
 
 
@@ -120,18 +130,12 @@ public class ProfileFragment extends android.app.Fragment {
                  chooseimage();
              }
          });
-         Bundle bundle=getArguments();
-         vender_name=bundle.getString("name");
-         image =bundle.getString("image");
-         id_store=bundle.getString("id");
 
-        Log.d("asmaa", "initview: "+id_store);
 
 
 
         Picasso.with(getActivity()).load(image).into(profile_image);
 
-        getStoreProduct(id_store);
          profile_name.setText(vender_name);
          Viewgrid();
         if (!isConnected()) {
@@ -164,8 +168,8 @@ public class ProfileFragment extends android.app.Fragment {
 
                             if (response.body().size()>0){
                                 homeModelArrayList.addAll(response.body());
-                                profile_gridAdapter.notifyDataSetChanged();
-                                profile_verticalAdapter.notifyDataSetChanged();
+//                                profile_gridAdapter.notifyDataSetChanged();
+//                                profile_verticalAdapter.notifyDataSetChanged();
 
                                 txt_no.setVisibility(View.GONE);
 

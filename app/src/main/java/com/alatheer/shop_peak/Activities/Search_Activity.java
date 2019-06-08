@@ -61,22 +61,13 @@ public class Search_Activity extends AppCompatActivity  {
         homeFragment=new HomeFragment();
         title = i.getStringExtra("sanf_name");
         homeModelList = (List<HomeModel>) i.getExtras().getSerializable("list");
-        filter_image=findViewById(R.id.filter_img);
-        linear_filter=findViewById(R.id.linear_filter);
         recyclerView_search=findViewById(R.id.recycler_home);
         //homeDatabase = Room.databaseBuilder(getApplicationContext(), HomeDatabase.class, "home_db").allowMainThreadQueries().build();
         initRecyclerview();
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        linear_filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(Search_Activity.this,Filter_Activity.class);
-                startActivity(i);
-                Animatoo.animateSlideRight(Search_Activity.this);
-            }
-        });
+
 
     }
     public void initRecyclerview(){

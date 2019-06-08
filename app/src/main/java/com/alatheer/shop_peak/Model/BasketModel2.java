@@ -10,62 +10,104 @@ import com.google.gson.annotations.SerializedName;
 
 public class BasketModel2 {
 
+    @SerializedName("Type")
+    @Expose
+    private String type;
+    @SerializedName("orderItemList")
+    @Expose
+    private List<OrderItemList> orderItemList = null;
     @SerializedName("user_id")
     @Expose
-    public String userId;
+    private String userId;
     @SerializedName("client_name")
     @Expose
-    public String clientName;
+    private String clientName;
     @SerializedName("address")
     @Expose
-    public String address;
+    private String address;
     @SerializedName("user_lat")
     @Expose
-    public String userLat;
+    private String userLat;
     @SerializedName("user_lang")
     @Expose
-    public String userLang;
+    private String userLang;
     @SerializedName("phone")
     @Expose
-    public String phone;
-    @SerializedName("OrderItemList")
-    @Expose
-    public List<OrderItemList> orderItemList = null;
+    private String phone;
 
-    public BasketModel2 withUserId(String userId) {
-        this.userId = userId;
-        return this;
+    public String getType() {
+        return type;
     }
 
-    public BasketModel2 withClientName(String clientName) {
-        this.clientName = clientName;
-        return this;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public BasketModel2 withAddress(String address) {
-        this.address = address;
-        return this;
+    public List<OrderItemList> getOrderItemList() {
+        return orderItemList;
     }
 
-    public BasketModel2 withUserLat(String userLat) {
-        this.userLat = userLat;
-        return this;
-    }
-
-    public BasketModel2 withUserLang(String userLang) {
-        this.userLang = userLang;
-        return this;
-    }
-
-    public BasketModel2 withPhone(String phone) {
-        this.phone = phone;
-        return this;
-    }
-
-    public BasketModel2 withOrderItemList(List<OrderItemList> orderItemList) {
+    public void setOrderItemList(List<OrderItemList> orderItemList) {
         this.orderItemList = orderItemList;
-        return this;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getUserLat() {
+        return userLat;
+    }
+
+    public void setUserLat(String userLat) {
+        this.userLat = userLat;
+    }
+
+    public String getUserLang() {
+        return userLang;
+    }
+
+    public void setUserLang(String userLang) {
+        this.userLang = userLang;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public BasketModel2(String type, List<OrderItemList> orderItemList, String userId, String clientName, String address, String userLat, String userLang, String phone) {
+        this.type = type;
+        this.orderItemList = orderItemList;
+        this.userId = userId;
+        this.clientName = clientName;
+        this.address = address;
+        this.userLat = userLat;
+        this.userLang = userLang;
+        this.phone = phone;
+    }
 }
 

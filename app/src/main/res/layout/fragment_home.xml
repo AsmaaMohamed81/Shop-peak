@@ -46,8 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/recycler_home"
-            android:layoutAnimation="@anim/layout_animation_fall_down"
-           >
+            android:layoutAnimation="@anim/layout_animation_fall_down">
         </android.support.v7.widget.RecyclerView>
 
         <ProgressBar

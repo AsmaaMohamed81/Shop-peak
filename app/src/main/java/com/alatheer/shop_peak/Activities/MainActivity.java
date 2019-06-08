@@ -15,8 +15,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -105,19 +107,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.nav_view);
         navigationView2 = findViewById(R.id.nav_view2);
-        search = findViewById(R.id.txt_search);
+        search = findViewById(R.id.txt_search2);
         login_register = findViewById(R.id.tv_login_register);
         View headview=navigationView.getHeaderView(0);
         img = headview.findViewById(R.id.profile_img);
         tv_username = headview.findViewById(R.id.txtname);
         login_register = headview.findViewById(R.id.tv_login_register);
-        search.setOnClickListener(new View.OnClickListener() {
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, Search_Activity.class);
-                i.putExtra("title", search.getText().toString());
-                i.putExtra("list", (Serializable) homeModels);
-                startActivity(i);
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_SEARCH){
+                    final String sanf_name = search.getText().toString();
+                    Api.getService().search_Home(sanf_name).enqueue(new Callback<List<HomeModel>>() {
+                        @Override
+                        public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
+                            Intent intent = new Intent(MainActivity.this,Search_Activity.class);
+                            Log.v("ggg",response.message());
+                            intent.putExtra("list",(Serializable)response.body());
+                            intent.putExtra("sanf_name",sanf_name);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<HomeModel>> call, Throwable t) {
+                            Log.v("jjj",t.getMessage());
+                        }
+                    });
+                    return true;
+                }
+                return false;
             }
         });
         login_register.setOnClickListener(new View.OnClickListener() {

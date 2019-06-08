@@ -23,7 +23,9 @@ import com.alatheer.shop_peak.Model.BasketModel2;
 import com.alatheer.shop_peak.Model.BasketModel3;
 import com.alatheer.shop_peak.Model.OrderItemList;
 import com.alatheer.shop_peak.Model.RatingModel2;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
@@ -44,6 +46,8 @@ public class Basket_Activity extends AppCompatActivity {
     Favorite_Database favorite_database;
     List<OrderItemList>basketModelList;
     Button add;
+    MySharedPreference mPrefs;
+    UserModel1 userModel1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,12 @@ public class Basket_Activity extends AppCompatActivity {
         myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"order_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(),Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         initRecyclerview();
+        mPrefs =MySharedPreference.getInstance();
+        userModel1 = mPrefs.Get_UserData(Basket_Activity.this);
+        final String name = userModel1.getFull_name();
+        final String USER_ID = userModel1.getId();
+        final String address = userModel1.getAddress();
+        final String phone = userModel1.getPhone();
         image_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,8 +79,8 @@ public class Basket_Activity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BasketModel3 basketModel3 =new BasketModel3("31","kkkk","31.000","30.012",
-                        "01065242773","mohamed hamada");
+                BasketModel2 basketModel2 =new BasketModel2("1",basketModelList,USER_ID,name,address
+                ,"30.5421","31.02643",phone);
                 //basketModel3.setUserId("31");
                 //basketModel3.withAddress("شارع الاستاد");
                // basketModel3.withClientName("mohamed hamada");
@@ -78,7 +88,7 @@ public class Basket_Activity extends AppCompatActivity {
                 //basketModel3.withUserLang("31");
                 //basketModel3.withUserLat("31");
                 //basketModel2.withOrderItemList(myAppDatabase.dao().getdata());
-                Api.getService().add_to_basket(basketModel3).enqueue(new Callback<RatingModel2>() {
+                Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
                     @Override
                     public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
                        Log.v("llll",response.message());
