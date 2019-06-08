@@ -100,7 +100,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                holder.itemView.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
-                       mainActivity.sendHomeItem(image_resources2, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount);
+                       mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount);
                    }
                });
            }

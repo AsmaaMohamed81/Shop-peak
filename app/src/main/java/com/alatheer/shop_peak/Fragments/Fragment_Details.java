@@ -128,7 +128,8 @@ public class Fragment_Details extends Fragment {
         tv_not_budget = view.findViewById(R.id.tv_not_budget);
 
         details_price.setText(price + "" + "LE");
-
+        customSwipeAdapter = new CustomSwipeAdapter(image, getActivity());
+        viewPager.setAdapter(customSwipeAdapter);
        /* back_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -265,8 +266,7 @@ public class Fragment_Details extends Fragment {
 
         //details_price.setText(price);
         //details_title.setText(title);
-        customSwipeAdapter = new CustomSwipeAdapter(image, getActivity());
-        viewPager.setAdapter(customSwipeAdapter);
+
     }
 
     private void makeFlyAnimation(ViewPager targetView) {

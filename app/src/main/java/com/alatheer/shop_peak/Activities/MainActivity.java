@@ -45,6 +45,7 @@ import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.facebook.login.LoginManager;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -152,10 +153,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mPrefs =MySharedPreference.getInstance();
             userModel1 = mPrefs.Get_UserData(MainActivity.this);
             String name=userModel1.getFull_name();
-
+          //  String url = userModel1.getPassword();
 //            String url=userModel1.getImage_url();
             tv_username.setText(name);
-//            Picasso.with(this).load(url).into(img);
+           // Picasso.with(this).load(url).into(img);
             tv_username.setVisibility(View.VISIBLE);
             img.setVisibility(View.VISIBLE);
             login_register.setVisibility(View.GONE);
@@ -427,6 +428,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra("price_before_dis",price_before_dis);
         intent.putExtra("id", product_id);
         intent.putExtra("rate", rating);
+        intent.putExtra("store_id",store_id);
+        Log.v("gggg",store_id);
 
         if (user_id!=null) {
             intent.putExtra("user_id", Integer.parseInt(user_id));

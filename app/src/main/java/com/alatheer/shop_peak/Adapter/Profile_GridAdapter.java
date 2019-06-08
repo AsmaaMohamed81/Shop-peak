@@ -38,7 +38,7 @@ public class Profile_GridAdapter extends RecyclerView.Adapter<Profile_GridAdapte
     public void onBindViewHolder(@NonNull Profile_GridHolder holder, int position) {
 
 
-        final String[] image_resources2 =mHomeModelList.get(position).img;
+        final String[] image_resources2 ={mHomeModelList.get(position).mainImg};
         customSwipeAdapter = new CustomSwipeAdapter(image_resources2, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
      //Uri uri = Uri.parse(profileModels.get(position).getImage());

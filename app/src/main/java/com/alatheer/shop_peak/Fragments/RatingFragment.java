@@ -18,7 +18,9 @@ import android.widget.Toast;
 import com.alatheer.shop_peak.Adapter.RatingAdapter;
 import com.alatheer.shop_peak.Model.RatingModel;
 import com.alatheer.shop_peak.Model.RatingModel2;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class RatingFragment extends Fragment {
     int stars;
     long id;
     int id2;
+    MySharedPreference mprefs;
+    UserModel1 userModel1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,8 +58,12 @@ public class RatingFragment extends Fragment {
         ratingrecycler = view.findViewById(R.id.recycler_rating);
         btn_add_rate = view.findViewById(R.id.add_rate);
         ratingBar = view.findViewById(R.id.ratbar);
+        mprefs = MySharedPreference.getInstance();
+        userModel1 = mprefs.Get_UserData(getActivity());
+        user_id = Integer.parseInt(userModel1.getId());
         getdatafromintent();
         Log.v("usser_id", user_id + "");
+        Log.v("JJJJ",userModel1.getFull_name());
         initrecycler();
         btn_add_rate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +120,7 @@ public class RatingFragment extends Fragment {
         ratingrecycler.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         ratingrecycler.setLayoutManager(layoutManager);
-        Api.getService().get_all_rating(id).enqueue(new Callback<List<RatingModel>>() {
+        Api.getService().get_all_rating(id2).enqueue(new Callback<List<RatingModel>>() {
             @Override
             public void onResponse(Call<List<RatingModel>> call, Response<List<RatingModel>> response) {
                 ratingModelList = response.body();
@@ -132,6 +140,6 @@ public class RatingFragment extends Fragment {
         product_id = getActivity().getIntent().getStringExtra("id");
         id = Long.parseLong(product_id);
         id2 = Integer.parseInt(product_id);
-        user_id = getActivity().getIntent().getIntExtra("user_id", 0);
+       // user_id = getActivity().getIntent().getIntExtra("user_id", 0);
     }
 }

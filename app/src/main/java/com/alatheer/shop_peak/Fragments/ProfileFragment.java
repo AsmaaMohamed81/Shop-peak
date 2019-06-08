@@ -103,9 +103,8 @@ public class ProfileFragment extends android.app.Fragment {
 
         Log.d("asmaa", "initview: "+id_store);
 
-        Viewgrid();
-
         getStoreProduct(id_store);
+        Viewgrid();
 
 
 

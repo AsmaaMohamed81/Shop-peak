@@ -261,6 +261,7 @@ public class Login_Activity extends AppCompatActivity {
                 try {
                     userModel = new UserModel(personName, personPhoto.toString(), personEmail);
 
+
                 } catch (Exception e) {
                     userModel = new UserModel(personName, "https://www.wpclipart.com/buildings/shop.png", personEmail);
                 }
