@@ -9,12 +9,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.alatheer.shop_peak.Adapter.HomeAdapter;
@@ -23,14 +25,20 @@ import com.alatheer.shop_peak.Fragments.HomeFragment;
 //import com.alatheer.shop_peak.Local.HomeDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
+import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -47,6 +55,7 @@ public class Search_Activity extends AppCompatActivity  {
     //HomeDatabase homeDatabase;
     String title;
     List<HomeModel>homeModelList;
+    String user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,22 +121,78 @@ public class Search_Activity extends AppCompatActivity  {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendHomeItem(String[] images, List<Item> itemList, String sanf_name, String price, String sanf_id, String rating, String store_id, String[] colors, String price_before_discount) {
+    public void sendHomeItem(String[] images, List<Item> itemList, String sanf_name,String details ,String price, String sanf_id, String rating, String store_id, String[] colors, String price_before_discount) {
         Bundle bundle=new Bundle();
         bundle.putStringArray("homeimage", images);
         bundle.putSerializable("itemlist", (Serializable) itemList);
-        //bundle.putString("details", details);
+        bundle.putString("details", details);
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtras(bundle);
         intent.putExtra("title", sanf_name);
+        intent.putExtra("itemlist", (Serializable) itemList);
+        intent.putExtra("details", details);
         intent.putExtra("price", price);
         intent.putExtra("price_before_dis",price_before_discount);
         intent.putExtra("id", sanf_id);
         intent.putExtra("rate", rating);
-        intent.putExtra("user_id", Integer.parseInt(userModel1.getId()));
+        intent.putExtra("store_id",store_id);
         intent.putExtra("color",colors);
         startActivity(intent);
         Animatoo.animateInAndOut(Search_Activity.this);
 
+    }
+
+    public void addfavPos(int pos) {
+
+        String sanf_id = homeModelList.get(pos).id;
+
+        if (userModel1 != null){
+            user_id = userModel1.getId();
+        }
+
+        Log.d("Mainasmaaa", "favPos: "+sanf_id);
+        Log.d("Mainasmaaa", "favPos: "+user_id);
+
+
+
+        Api.getService()
+                .add_to_favourite(user_id,sanf_id)
+                .enqueue(new Callback<RatingModel2>() {
+                    @Override
+                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    public void deletfavPos(int pos) {
+
+        String sanf_id=homeModelList.get(pos).id;
+
+        if (userModel1!=null) {
+            user_id = userModel1.getId();
+        }else {
+
+            Toast.makeText(this, "You Should SignUp First !!", Toast.LENGTH_SHORT).show();
+        }
+
+        Api.getService()
+                .delet_to_favourite(user_id,sanf_id)
+                .enqueue(new Callback<RatingModel2>() {
+                    @Override
+                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+                    }
+                });
     }
 }

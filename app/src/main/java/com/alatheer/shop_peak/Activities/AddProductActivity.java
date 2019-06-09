@@ -1,16 +1,23 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.Manifest;
 import android.arch.persistence.room.Room;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -27,29 +34,67 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.alatheer.shop_peak.Adapter.Main_cats_Adapter;
+import com.alatheer.shop_peak.Adapter.Sub_cat_Adapter;
+import com.alatheer.shop_peak.Adapter.TasnefAdapter;
+import com.alatheer.shop_peak.Adapter.cityAdapter;
+import com.alatheer.shop_peak.Adapter.governAdapter;
+import com.alatheer.shop_peak.Model.City;
+import com.alatheer.shop_peak.Model.Govern;
+import com.alatheer.shop_peak.Model.RatingModel2;
+import com.alatheer.shop_peak.Model.Tasnefat;
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
+import com.alatheer.shop_peak.Model.list_cats;
 import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.service.Api;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class AddProductActivity extends AppCompatActivity {
     ImageView close, main_image, mutiple_image1, mutiple_image2, mutiple_image3, mutiple_image4;
     Button add_main_image, Skip, Continue;
      TextView added_post;
-
+    private int IMG=1;
     Button delete_item;
     Button btn_element_image;
     EditText product_num1, product_num, product_name, price_after_discount, price_before_discount, element_name, element_description, element_color;
     Button addproduct;
+    String main_id, sub_id;
     String name, number, priceafter_discount, pricebefore_discount, elementname, elementdescription, elementcolor;
+    //////////////
+    private RecyclerView recyc_main, recyc_sub;
+    TextView title_main,title_sub;
+    private LinearLayout container_main, container_sub;
+    private ExpandableLayout expand_layout_main, expand_layout_sub;
+    /////////////
+    private ArrayList<list_cats> main_cats_List;
+    private ArrayList<list_cats.Subs> sub_cats_List;
+    /////////////
+    Main_cats_Adapter main_cats_adapter;
+    Sub_cat_Adapter sub_cat_adapter;
+    private TasnefAdapter tasnefAdapter;
+    RecyclerView.LayoutManager recyc_sub_manager;
+    private list_cats main_cat;
+
+    private TextView tv_title_main, tv_title_sub;
+
      int PICK_IMAGE_MULTIPLE = 2 ;
     int PICK_IMAGE_REQUEST = 1;
     ImageButton add, delete;
@@ -64,8 +109,10 @@ public class AddProductActivity extends AppCompatActivity {
     //HomeDatabase homeDatabase;
      MySharedPreference mprefs;
     Button add_row_Element, add_row_Element2;
-
+    private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
     private Context context = null;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +126,14 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void initview() {
+        recyc_main = findViewById(R.id.recView_main);
+        recyc_sub = findViewById(R.id.recView_sub);
+        container_main = findViewById(R.id.main_category_container);
+        container_sub = findViewById(R.id.sub_category_container);
+        expand_layout_main = findViewById(R.id.expand_main_layout);
+        expand_layout_sub = findViewById(R.id.expand_sub_layout);
+        title_main = findViewById(R.id.tv_title_main);
+        title_sub = findViewById(R.id.tv_title_sub);
         close=findViewById(R.id.close);
         main_image = findViewById(R.id.main_image);
         add_row_Element = findViewById(R.id.btn_add_element);
@@ -122,10 +177,37 @@ public class AddProductActivity extends AppCompatActivity {
         add_main_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                choose_main_image();
+                Check_ReadPermission(IMG);
                 // uploadimage();
             }
         });
+        container_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expand_layout_main.toggle(true);
+
+            }
+        });
+
+        container_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expand_layout_sub.toggle(true);
+
+            }
+        });
+        getCategory();
+        main_cats_List = new ArrayList<>();
+        sub_cats_List = new ArrayList<>();
+
+
+        recyc_main.setLayoutManager(new LinearLayoutManager(this));
+
+        main_cats_adapter = new Main_cats_Adapter(AddProductActivity.this, main_cats_List);
+
+        recyc_main.setAdapter(main_cats_adapter);
+
+        main_cats_adapter.notifyDataSetChanged();
         /*add_multiple_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,6 +233,56 @@ public class AddProductActivity extends AppCompatActivity {
         });
     }
 
+
+
+    private void Check_ReadPermission(int img) {
+        if (ContextCompat.checkSelfPermission(this,read_permission)!= PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this,new String[]{read_permission},img);
+        }else
+        {
+            select_photo(img);
+        }
+    }
+
+    private void select_photo(int img) {
+        Intent intent ;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        }else
+        {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+
+        }
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setType("image/*");
+        startActivityForResult(intent,img);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            filePath = data.getData();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                add_main_image.setVisibility(View.GONE);
+                main_image.setImageBitmap(bitmap);
+                main_image.setVisibility(View.VISIBLE);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(this, "some thing error", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void validation() {
         number = product_num.getText().toString();
         name = product_name.getText().toString();
@@ -172,7 +304,7 @@ public class AddProductActivity extends AppCompatActivity {
             price_before_discount.setError(null);
             // element_name.setError(null);
             //element_description.setError(null);
-            Add(number, name, priceafter_discount, pricebefore_discount);
+            AddProduct(number, name, priceafter_discount, pricebefore_discount,filePath);
 
         } else {
             if (TextUtils.isEmpty(number)) {
@@ -200,48 +332,26 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
 
-    private void Add(String number, String name, String priceafter_discount, String pricebefore_discount) {
-        startActivity(new Intent(AddProductActivity.this, Add_Product_Activity_Details.class));
+    private void AddProduct(String number, String name, String price_after_discount, String price_before_discount,Uri filePath) {
+        RequestBody Vnumber = Common.getRequestBodyText(number);
+        RequestBody Vname = Common.getRequestBodyText(name);
+        RequestBody Vprice_after_discount = Common.getRequestBodyText(price_after_discount);
+        RequestBody Vprice_before_discount = Common.getRequestBodyText(price_before_discount);
+        MultipartBody.Part main_image = Common.getMultiPart(this,filePath,"main_image");
+        /*Api.getService().Add_Product(Vnumber,Vname,Vprice_after_discount,Vprice_before_discount,main_image).enqueue(new Callback<RatingModel2>() {
+            @Override
+            public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
 
-    }
-
-    private void choose_main_image() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-
-    }
-
-    private void choose_multiple_images() {
-        Intent intent =new Intent();
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Picture"),PICK_IMAGE_MULTIPLE);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
-            filePath = data.getData();
-
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                add_main_image.setVisibility(View.GONE);
-                main_image.setImageBitmap(bitmap);
-                main_image.setVisibility(View.VISIBLE);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        } else {
-            Toast.makeText(this, "some thing error", Toast.LENGTH_SHORT).show();
-        }
+
+            @Override
+            public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+            }
+        });*/
     }
+
+
 
     private void uploadimage() {
 
@@ -338,5 +448,52 @@ public class AddProductActivity extends AppCompatActivity {
 
     public void delete_row() {
         t1.removeView(tr2);
+    }
+
+    public void pos_main_cat(int pos) {
+        main_cat = main_cats_List.get(pos);
+        main_id = main_cat.getId();
+
+
+        if (main_cat.getSubs().size() > 0) {
+            sub_cats_List = main_cat.getSubs();
+
+            recyc_sub.setLayoutManager(new LinearLayoutManager(this));
+            sub_cat_adapter = new Sub_cat_Adapter(this, sub_cats_List);
+
+            recyc_sub.setAdapter(sub_cat_adapter);
+
+            tv_title_main.setText(main_cats_List.get(pos).getName());
+
+            expand_layout_main.toggle(true);
+
+        }
+    }
+    public void pos_sub(int pos) {
+        title_sub.setText(sub_cats_List.get(pos).getName());
+        sub_id = sub_cats_List.get(pos).getId();
+        expand_layout_sub.toggle(true);
+
+    }
+    private void getCategory() {
+        Api.getService()
+                .get_list_cats()
+                .enqueue(new Callback<List<list_cats>>() {
+                    @Override
+                    public void onResponse(Call<List<list_cats>> call, Response<List<list_cats>> response) {
+
+                        if (response.isSuccessful()){
+
+
+                            main_cats_List.addAll(response.body());
+                            main_cats_adapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<list_cats>> call, Throwable t) {
+
+                    }
+                });
     }
 }

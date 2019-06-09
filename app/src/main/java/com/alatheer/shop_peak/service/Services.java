@@ -67,6 +67,17 @@ public interface Services {
                                        @Part("lat") RequestBody lat,
                                        @Part("lang") RequestBody lang,
                                        @Part MultipartBody.Part logo_img);
+    @Multipart
+    @POST("Api/add_product")
+    Call<RatingModel2>Add_Product(@Part("sanf_code")RequestBody sanf_code,
+                                  @Part("sanf_name")RequestBody sanf_name,
+                                  @Part("main_category")RequestBody main_category,
+                                  @Part("sub_category")RequestBody sub_category,
+                                  @Part("price_after_discount")RequestBody price_after_discount,
+                                  @Part("price_before_discount")RequestBody price_before_discount,
+                                  @Part MultipartBody.Part main_image,
+                                  @Part("Product_specification")RequestBody Product_specification);
+
 
     @GET("Api/get_rating/{id}")
     Call<List<RatingModel>> get_all_rating(@Path("id") long id);

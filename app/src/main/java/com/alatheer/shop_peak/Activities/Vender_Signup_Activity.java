@@ -61,6 +61,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     Button add_logo, signup, latlon;
     ImageView seller_image;
     List<Address> addressList;
+    Button add_product;
     List<String> cities;
     private String Name, Email, Governate, City, Address, Category, city_id, govern_id;
     int PICK_IMAGE_REQUEST = 1 ;
@@ -114,7 +115,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         shop_name = findViewById(R.id.shop_name);
         shop_email = findViewById(R.id.shop_email);
-
+        add_product = findViewById(R.id.btn_add_product);
         address = findViewById(R.id.address);
         latlon = findViewById(R.id.addlat_lon);
         add_logo = findViewById(R.id.add_logo);
@@ -235,6 +236,12 @@ public class Vender_Signup_Activity extends AppCompatActivity {
             public void onClick(View v) {
 //                
                 Check_ReadPermission(IMG);
+            }
+        });
+        add_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Vender_Signup_Activity.this,AddProductActivity.class));
             }
         });
         seller_image.setOnClickListener(new View.OnClickListener() {
@@ -456,6 +463,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
                                 if (response.body().getSuccess()==1){
 
                                     Toast.makeText(Vender_Signup_Activity.this, "تم ارسال طلبك", Toast.LENGTH_SHORT).show();
+                                    Log.v("response",response.message());
                                 }
 
                             }
@@ -465,6 +473,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
                         public void onFailure(Call<UserModel1> call, Throwable t) {
 
                             Toast.makeText(Vender_Signup_Activity.this, ""+t, Toast.LENGTH_SHORT).show();
+                                Log.v("error",t.getMessage());
                         }
                     });
 

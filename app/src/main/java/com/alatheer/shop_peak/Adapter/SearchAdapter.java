@@ -1,10 +1,12 @@
 package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +39,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     Context context;
     CustomSwipeAdapter customSwipeAdapter;
     Search_Activity search_activity;
+    boolean accepted = false;
     public SearchAdapter(List<HomeModel> listofhome, Context context) {
         this.listofhome = listofhome;
         this.context = context;
+        this.search_activity = (Search_Activity) context;
 
     }
 
@@ -52,7 +56,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SearchHolder holder, int position) {
         //Uri uri = Uri.parse(listofhome.get(position).getProduct_image());
 
        // File file =new File(uri.getPath());
@@ -64,6 +68,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         holder.viewPager.setAdapter(customSwipeAdapter);
         final List<Item> itemList = listofhome.get(position).items;
         final String price = (String) listofhome.get(position).priceAfterDis;
+        final String details = listofhome.get(position).details;
         final String price_before_discount = listofhome.get(position).priceBeforeDis;
         final String sanf_name = listofhome.get(position).sanfName;
         final String vender_name = listofhome.get(position).storeName;
@@ -79,9 +84,43 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // search_activity.sendHomeItem(images, itemList, sanf_name, price, sanf_id, rating, store_id,colors,price_before_discount);
+                search_activity.sendHomeItem(images, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount);
             }
         });
+        holder.fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos=holder.getAdapterPosition();
+
+
+
+                if (holder.fav.isChecked()) {
+                    accepted = true;
+
+                    search_activity.addfavPos(pos);
+                    Log.e("add_to_favorite","true");
+                } else {
+                    accepted = false;
+
+                    search_activity.deletfavPos(pos);
+
+                    Log.e("delete_from_favorite","true");
+                }
+            }
+        });
+        holder.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "SHOP_PEAK");
+                String shareMessage= "\nLet me recommend you this application\n\n";
+                shareMessage = shareMessage + link;
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                context.startActivity(Intent.createChooser(shareIntent, "choose one"));
+            }
+        });
+        holder.ratbar.setRating(Float.parseFloat(rating));
     }
 
     @Override
