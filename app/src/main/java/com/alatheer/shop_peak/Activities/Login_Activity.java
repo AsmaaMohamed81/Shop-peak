@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.Tags.Tags;
 import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
@@ -81,6 +82,26 @@ public class Login_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initView();
+        mySharedPreference = new MySharedPreference(this);
+
+
+        String session = mySharedPreference.getSession(this);
+        if (!TextUtils.isEmpty(session)|| session!=null)
+        {
+            if (session.equals(Tags.session_login))
+            {
+                UserModel1 userModel1 = mySharedPreference.Get_UserData(this);
+
+                if (userModel1!=null)
+                {
+                    Intent intent = new Intent(Login_Activity.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+        }
+
 
 
     }
@@ -98,7 +119,6 @@ public class Login_Activity extends AppCompatActivity {
         gmail_login=findViewById(R.id.btn_gmail_login);
         gmail_login.setSize(SignInButton.SIZE_STANDARD);
         callbackManager=CallbackManager.Factory.create();
-        mySharedPreference = new MySharedPreference(this);
         Skip=findViewById(R.id.skip);
 
         link=findViewById(R.id.link);

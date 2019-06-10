@@ -90,13 +90,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ArrayList<list_cats.Subs> list_cats_sub;
 
-    String user_id, type;
+    String user_id, type,name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initview();
-        getDataIntent();
 
 
     }
@@ -154,7 +153,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //Toast.makeText(this, personname, Toast.LENGTH_SHORT).show();
             mPrefs =MySharedPreference.getInstance();
             userModel1 = mPrefs.Get_UserData(MainActivity.this);
-            String name=userModel1.getFull_name();
+            if(userModel1!=null){
+
+                 name=userModel1.getFull_name();
+                type=userModel1.getType();
+
+
+
+            }
+
           //  String url = userModel1.getPassword();
 //            String url=userModel1.getImage_url();
             tv_username.setText(name);
@@ -181,6 +188,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(nav_listner);
         bottomNavigationView2.setOnNavigationItemSelectedListener(nav_listner2);
+
+        getDataIntent();
+
         HomeFragment homeFragment=new HomeFragment();
         android.app.FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
@@ -351,8 +361,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Animatoo.animateInAndOut(MainActivity.this);
                 break;
             case R.id.nav_join_us:
-                startActivity(new Intent(MainActivity.this, Vender_Signup_Activity.class));
-                Animatoo.animateInAndOut(MainActivity.this);
+
+                if (type.equals("2")){
+
+                    startActivity(new Intent(MainActivity.this, Vender_Signup_Activity.class));
+                    Animatoo.animateInAndOut(MainActivity.this);
+                }else {
+
+                    Toast.makeText(this, "انت منضم الينا بالفعل مرحبا بك", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case R.id.nav_contact_us:
                 startActivity(new Intent(MainActivity.this, Contact_Us_Activity.class));
@@ -383,36 +401,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void openDrawer() {
         drawerLayout.openDrawer(GravityCompat.START);
-    }
-    private List<NavigationModel> navigationModelList (){
-
-        List<NavigationModel>  navigationlist = new ArrayList<>();
-        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("سوبر ماركت",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("كمبوتر واكسسورات",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("المطبخ والسفره",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("المنزل والديكور",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("سوبر ماركت",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("كمبوتر واكسسورات",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("المطبخ والسفره",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("المنزل والديكور",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("سوبر ماركت",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("كمبوتر واكسسورات",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("المطبخ والسفره",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("المنزل والديكور",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("سوبر ماركت",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("كمبوتر واكسسورات",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("المطبخ والسفره",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("موبيلات واجهزه",R.drawable.ic_favorite_sold));
-        navigationlist.add(new NavigationModel("المنزل والديكور",R.drawable.ic_favorite_sold));
-
-        return navigationlist;
     }
 
     public void sendHomeItem(String[] image, List<Item> item, String sanf_name, String details, String price, String product_id, String rating, String store_id, String[] colors,String price_before_dis) {
@@ -465,8 +453,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        Intent intent = getIntent();
 //        flag = intent.getIntExtra("flag", 0);
 
-        if (userModel1!=null){
-             type=userModel1.getType();
 
             if (type.equals("1")) {
                 bottomNavigationView2.setVisibility(View.VISIBLE);
@@ -476,14 +462,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 bottomNavigationView2.setVisibility(View.GONE);
                 bottomNavigationView.setVisibility(View.VISIBLE);
             }
-        }else {
-
-            Toast.makeText(this, "Yo should sign up First", Toast.LENGTH_SHORT).show();
-
         }
 
 
-    }
+
 
 
     public void list_cats_pos(int pos) {

@@ -87,23 +87,12 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
                     public void onCompletion(MediaPlayer mp) {
                         mp.stop();
                         mp.release();
-                        mPrefs = new MySharedPreference(Splash_Activity.this);
-                        userModel = mPrefs.Get_UserData(Splash_Activity.this);
-                        if(userModel==null){
-                            Intent intent=new Intent(Splash_Activity.this,Login_Activity.class);
-                            startActivity(intent);
-                            LoginManager.getInstance().logOut();
-                            Animatoo.animateDiagonal(Splash_Activity.this);
-                            finish();
-                        }else {
-                            //Toast.makeText(Splash_Activity.this, "name"+userModel.getName(), Toast.LENGTH_SHORT).show();
 
-                            Intent intent=new Intent(Splash_Activity.this,MainActivity.class);
-                            intent.putExtra("personName",userModel.getFull_name());
-                            startActivity(intent);
-                            Animatoo.animateDiagonal(Splash_Activity.this);
-                            finish();
-                        }
+                        Intent intent = new Intent(Splash_Activity.this,Login_Activity.class);
+                        startActivity(intent);
+                        finish();
+
+
                     }
                 });
             }catch (IllegalStateException e){}

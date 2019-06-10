@@ -57,6 +57,15 @@ public class MySharedPreference {
         editor.apply();
     }
 
+
+    public String getSession(Context context)
+    {
+        SharedPreferences preferences = context.getSharedPreferences("session",Context.MODE_PRIVATE);
+        String session = preferences.getString("state", Tags.session_logout);
+        return session;
+    }
+
+
     public UserModel1 Get_UserData(Context context){
 
         mPrefs = context.getSharedPreferences("user", Context.MODE_PRIVATE);
