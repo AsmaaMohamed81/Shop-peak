@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ public class DescriptionFragment extends Fragment {
 
     private void initrecycler() {
         description_recycler.setHasFixedSize(true);
-        description__layoutManager = new GridLayoutManager(getContext(),2);
+        description__layoutManager = new LinearLayoutManager(getContext());
         description_recycler.setLayoutManager(description__layoutManager);
         itemAdapter = new ItemAdapter(items, getContext());
         description_recycler.setAdapter(itemAdapter);

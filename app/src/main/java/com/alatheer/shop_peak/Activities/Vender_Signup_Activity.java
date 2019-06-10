@@ -2,11 +2,13 @@ package com.alatheer.shop_peak.Activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
@@ -453,17 +455,29 @@ public class Vender_Signup_Activity extends AppCompatActivity {
             MultipartBody.Part logo_img = Common.getMultiPart(this,filePath,"logo_img");
 
 
+        final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.waitt));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+
             Api.getService()
                     .subscribre_vendor(Vid,Vfull_name,Vmohafza,Vmadina,Vaddress,Vstore_tasnef,Vlat,Vlang,logo_img)
                     .enqueue(new Callback<UserModel1>() {
                         @Override
                         public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
                             if (response.isSuccessful()){
+                                dialog.dismiss();
 
                                 if (response.body().getSuccess()==1){
 
-                                    Toast.makeText(Vender_Signup_Activity.this, "تم ارسال طلبك", Toast.LENGTH_SHORT).show();
+
+                                            Toast.makeText(Vender_Signup_Activity.this, "تم ارسال طلبك", Toast.LENGTH_SHORT).show();
+
+
+
                                     Log.v("response",response.message());
+
                                 }
 
                             }
@@ -471,6 +485,9 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<UserModel1> call, Throwable t) {
+
+                            dialog.dismiss();
+
 
                             Toast.makeText(Vender_Signup_Activity.this, ""+t, Toast.LENGTH_SHORT).show();
                                 Log.v("error",t.getMessage());

@@ -15,7 +15,7 @@
     <string name="address">العنوان بالتفصيل</string>
     <string name="join_us">انضم الينا</string>
     <string name="url">www.shop-peak.com</string>
-    <string name="waitt">Please Waiting...</string>
+    <string name="waitt">إنتظر قليلا...</string>
     <string name="name_req">مطلوب اسم المستخدم اولا</string>
     <string name="pass_req">مطلوب كلمه المرور اولا</string>
     <string name="email_req">مطلوب رقم الحساب </string>
@@ -95,4 +95,5 @@
     <string name="tasnef_req">يجب اختيار تصنيف للمحل اولا</string>
     <string name="lat_lang_req">يجب عليك تحديد موقعك علي الخريطه اولا</string>
     <string name="logo_req">اختار لوجولمحل اولا</string>
+    <string name="follow">متـــــــــــابعه</string>
 </resources>

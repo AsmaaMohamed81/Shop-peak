@@ -276,6 +276,11 @@ public class Signup_Activity extends AppCompatActivity {
             agree = 1;
         }
 
+        final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.waitt));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
         Api.getService()
                 .register(userName, email, phone, govern_id, city_id, address, passWord)
                 .enqueue(new Callback<UserModel1>() {
@@ -285,6 +290,8 @@ public class Signup_Activity extends AppCompatActivity {
 
                         if (response.isSuccessful()){
 
+
+                            dialog.dismiss();
 
                             if (response.body().getSuccess()==1){
 
@@ -298,6 +305,8 @@ public class Signup_Activity extends AppCompatActivity {
                                 Log.d("model",mySharedPreference.Get_UserData(Signup_Activity.this).getFull_name());
 
 
+                                Intent intent = new Intent(Signup_Activity.this, MainActivity.class);
+                                startActivity(intent);
 
 
                             }
@@ -309,6 +318,8 @@ public class Signup_Activity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<UserModel1> call, Throwable t) {
+
+                        dialog.dismiss();
 
                     }
                 });

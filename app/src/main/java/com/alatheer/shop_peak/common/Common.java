@@ -246,4 +246,18 @@ public class Common {
         return requestBody;
     }
 
+    public static ProgressDialog createProgressDialog(Context context , String msg)
+    {
+        ProgressDialog  dialog = new ProgressDialog(context);
+        dialog.setMessage(msg);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        ProgressBar bar = new ProgressBar(context);
+        Drawable drawable = bar.getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        dialog.setIndeterminateDrawable(drawable);
+        return dialog;
+
+    }
+
 }

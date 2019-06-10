@@ -364,12 +364,21 @@ public class Login_Activity extends AppCompatActivity {
     private void LoginWeb(String email, String passWord) {
 
 
+
+        final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.waitt));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+
         Api.getService()
                 .login(email,passWord)
                 .enqueue(new Callback<UserModel1>() {
                     @Override
                     public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
                         if (response.isSuccessful()) {
+
+                            dialog.dismiss();
                             if (response.body().getSuccess()==1) {
 //                                Toast.makeText(Login_Activity.this, "name:" +response.body().getFull_name(), Toast.LENGTH_SHORT).show();
 
@@ -395,6 +404,7 @@ public class Login_Activity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<UserModel1> call, Throwable t) {
+                        dialog.dismiss();
                         Toast.makeText(Login_Activity.this, "Internet", Toast.LENGTH_SHORT).show();
 
                     }

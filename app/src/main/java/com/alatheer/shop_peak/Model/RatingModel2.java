@@ -13,9 +13,11 @@ public class RatingModel2 {
     @Expose
     public Long success;
 
-    public RatingModel2 withSuccess(Long success) {
-        this.success = success;
-        return this;
+    public Long getSuccess() {
+        return success;
     }
 
+    public void setSuccess(Long success) {
+        this.success = success;
+    }
 }

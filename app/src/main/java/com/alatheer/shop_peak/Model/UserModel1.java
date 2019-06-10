@@ -21,8 +21,19 @@ public class UserModel1 {
     private Integer agree;
     private Integer success;
 
+    private String type;
+
     public String getFull_name() {
         return full_name;
+    }
+
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setFull_name(String full_name) {

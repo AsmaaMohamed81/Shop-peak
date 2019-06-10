@@ -90,7 +90,7 @@ public class ProfileFragment extends android.app.Fragment {
          profile_image=view.findViewById(R.id.profile_img);
          img_grid=view.findViewById(R.id.menu_grid);
          img_ver=view.findViewById(R.id.menu_vertical);
-         add_product=view.findViewById(R.id.add_product);
+//         add_product=view.findViewById(R.id.add_product);
          menu_recycler=view.findViewById(R.id.recycler_menu);
         num_products=view.findViewById(R.id.num_products);
 
@@ -125,12 +125,12 @@ public class ProfileFragment extends android.app.Fragment {
 
              }
          });
-         add_product.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 chooseimage();
-             }
-         });
+//         add_product.setOnClickListener(new View.OnClickListener() {
+//             @Override
+//             public void onClick(View v) {
+//                 chooseimage();
+//             }
+//         });
 
 
 
@@ -172,9 +172,12 @@ public class ProfileFragment extends android.app.Fragment {
 //                                profile_gridAdapter.notifyDataSetChanged();
 //                                profile_verticalAdapter.notifyDataSetChanged();
 
-                                num_products.setText(response.body().size());
+                                num_products.setText(Integer.toString(response.body().size()));
 
+                                Viewgrid();
                                 txt_no.setVisibility(View.GONE);
+
+
 
                             }
 

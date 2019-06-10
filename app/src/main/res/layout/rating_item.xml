@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="mohamed hamada"
-            android:textSize="24sp"
+            android:textSize="17sp"
             android:textColor="@color/colorPrimary"
             android:layout_alignParentEnd="true" />
         <RatingBar

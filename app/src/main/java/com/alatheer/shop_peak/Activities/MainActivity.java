@@ -90,12 +90,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ArrayList<list_cats.Subs> list_cats_sub;
 
-    String user_id;
+    String user_id, type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initview();
+        getDataIntent();
+
 
     }
     private void initview() {
@@ -179,7 +181,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(nav_listner);
         bottomNavigationView2.setOnNavigationItemSelectedListener(nav_listner2);
-        getDataIntent();
         HomeFragment homeFragment=new HomeFragment();
         android.app.FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
@@ -461,12 +462,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     void getDataIntent() {
-        Intent intent = getIntent();
-        flag = intent.getIntExtra("flag", 0);
-        if (flag == 1) {
-            bottomNavigationView2.setVisibility(View.VISIBLE);
-            bottomNavigationView.setVisibility(View.GONE);
+//        Intent intent = getIntent();
+//        flag = intent.getIntExtra("flag", 0);
+
+        if (userModel1!=null){
+             type=userModel1.getType();
+
+            if (type.equals("1")) {
+                bottomNavigationView2.setVisibility(View.VISIBLE);
+                bottomNavigationView.setVisibility(View.GONE);
+            }else {
+
+                bottomNavigationView2.setVisibility(View.GONE);
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            }
+        }else {
+
+            Toast.makeText(this, "Yo should sign up First", Toast.LENGTH_SHORT).show();
+
         }
+
 
     }
 

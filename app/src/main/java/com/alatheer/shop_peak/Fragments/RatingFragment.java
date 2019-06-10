@@ -1,9 +1,12 @@
 package com.alatheer.shop_peak.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,7 +15,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.RatingAdapter;
@@ -20,6 +25,7 @@ import com.alatheer.shop_peak.Model.RatingModel;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 
@@ -45,6 +51,9 @@ public class RatingFragment extends Fragment {
     int id2;
     MySharedPreference mprefs;
     UserModel1 userModel1;
+
+    private ProgressBar progressBar;
+    private TextView txt_no;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,6 +70,13 @@ public class RatingFragment extends Fragment {
         mprefs = MySharedPreference.getInstance();
         userModel1 = mprefs.Get_UserData(getActivity());
         user_id = Integer.parseInt(userModel1.getId());
+
+        progressBar = view.findViewById(R.id.progBar);
+        txt_no = view.findViewById(R.id.tv_no);
+
+
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+
         getdatafromintent();
         Log.v("usser_id", user_id + "");
         Log.v("JJJJ",userModel1.getFull_name());
@@ -98,19 +114,36 @@ public class RatingFragment extends Fragment {
     }
 
     private void Add_Rate() {
+
+        final ProgressDialog dialog = Common.createProgressDialog(getActivity(),getString(R.string.waitt));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
         Log.v("usser_id", user_id + "");
         initrecycler();
         Api.getService().make_rate(id2, stars, user_id).enqueue(new Callback<RatingModel2>() {
             @Override
             public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
-                RatingModel2 ratingModel2 = response.body();
-                initrecycler();
-                Log.v("5555", ratingModel2.success.toString());
+
+                if (response.isSuccessful()){
+
+                    dialog.dismiss();
+
+                    if (response.body().getSuccess()==1) {
+
+                        RatingModel2 ratingModel2 = response.body();
+                        initrecycler();
+                        Log.v("5555", ratingModel2.success.toString());
+                    }
+                }
+
 
             }
 
             @Override
             public void onFailure(Call<RatingModel2> call, Throwable t) {
+                dialog.dismiss();
 
             }
         });
@@ -120,17 +153,35 @@ public class RatingFragment extends Fragment {
         ratingrecycler.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         ratingrecycler.setLayoutManager(layoutManager);
-        Api.getService().get_all_rating(id2).enqueue(new Callback<List<RatingModel>>() {
+        Api.getService()
+                .get_all_rating(id2)
+                .enqueue(new Callback<List<RatingModel>>() {
             @Override
             public void onResponse(Call<List<RatingModel>> call, Response<List<RatingModel>> response) {
-                ratingModelList = response.body();
-                Log.v("ffff", response.message());
-                ratingAdapter = new RatingAdapter(getContext(), ratingModelList);
-                ratingrecycler.setAdapter(ratingAdapter);
+                if (response.isSuccessful()){
+                    progressBar.setVisibility(View.GONE);
+
+                    if (response.body().size()>0){
+
+                        ratingModelList = response.body();
+                        Log.v("ffff", response.message());
+                        ratingAdapter = new RatingAdapter(getContext(), ratingModelList);
+                        ratingrecycler.setAdapter(ratingAdapter);
+
+                        txt_no.setVisibility(View.GONE);
+
+                    }
+                    txt_no.setVisibility(View.VISIBLE);
+
+
+
+                }
+
             }
 
             @Override
             public void onFailure(Call<List<RatingModel>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
 
             }
         });
