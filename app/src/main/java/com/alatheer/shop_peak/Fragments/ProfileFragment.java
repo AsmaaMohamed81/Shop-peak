@@ -62,7 +62,7 @@ public class ProfileFragment extends android.app.Fragment {
     int PICK_IMAGE_REQUEST;
 
     private ProgressBar progressBar;
-    private TextView txt_no;
+    private TextView txt_no,num_products;
 
     private ArrayList<HomeModel> homeModelArrayList;
 
@@ -92,6 +92,8 @@ public class ProfileFragment extends android.app.Fragment {
          img_ver=view.findViewById(R.id.menu_vertical);
          add_product=view.findViewById(R.id.add_product);
          menu_recycler=view.findViewById(R.id.recycler_menu);
+        num_products=view.findViewById(R.id.num_products);
+
         progressBar = view.findViewById(R.id.progBar);
         txt_no = view.findViewById(R.id.tv_no);
 
@@ -169,6 +171,8 @@ public class ProfileFragment extends android.app.Fragment {
                                 homeModelArrayList.addAll(response.body());
 //                                profile_gridAdapter.notifyDataSetChanged();
 //                                profile_verticalAdapter.notifyDataSetChanged();
+
+                                num_products.setText(response.body().size());
 
                                 txt_no.setVisibility(View.GONE);
 
