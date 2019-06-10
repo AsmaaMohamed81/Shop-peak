@@ -31,7 +31,10 @@ import com.alatheer.shop_peak.Adapter.Profile_GridAdapter;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.UserModel;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.squareup.picasso.Picasso;
 
@@ -69,6 +72,12 @@ public class ProfileFragment extends android.app.Fragment {
     Profile_verticalAdapter profile_verticalAdapter;
     Profile_GridAdapter profile_gridAdapter;
 
+    MySharedPreference mySharedPreference;
+    UserModel1 userModel1;
+    String img,id,name;
+
+    String type="1";
+
     public static ProfileFragment getInstance() {
         ProfileFragment fragment = new ProfileFragment();
         return fragment;
@@ -84,6 +93,17 @@ public class ProfileFragment extends android.app.Fragment {
 
     private void initview(final View view) {
 
+        mySharedPreference=MySharedPreference.getInstance();
+        userModel1=mySharedPreference.Get_UserData(getActivity());
+
+
+        if (userModel1!=null){
+            img=userModel1.getLogo_img();
+            id=userModel1.getId();
+            name=userModel1.getFull_name();
+
+        }
+
         homeModelArrayList=new ArrayList<>();
          profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
          profile_name=view.findViewById(R.id.profile_name);
@@ -98,15 +118,13 @@ public class ProfileFragment extends android.app.Fragment {
         txt_no = view.findViewById(R.id.tv_no);
 
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
-        Bundle bundle=getArguments();
-        vender_name=bundle.getString("name");
-        image =bundle.getString("image");
-        id_store=bundle.getString("id");
+
+
+        getIntent();
 
         Log.d("asmaa", "initview: "+id_store);
 
-        getStoreProduct(id_store);
-        Viewgrid();
+
 
 
 
@@ -134,10 +152,30 @@ public class ProfileFragment extends android.app.Fragment {
 
 
 
+        if (type.equals("1")){
 
-        Picasso.with(getActivity()).load(image).into(profile_image);
 
-         profile_name.setText(vender_name);
+            Picasso.with(getActivity()).load(image).into(profile_image);
+            profile_name.setText(vender_name);
+            getStoreProduct(id_store);
+            Viewgrid();
+
+
+
+
+
+        }else {
+
+
+            Picasso.with(getActivity()).load(img).into(profile_image);
+            profile_name.setText(name);
+            getStoreProduct(id
+            );
+            Viewgrid();
+
+        }
+
+
          Viewgrid();
         if (!isConnected()) {
             new AlertDialog.Builder(getActivity()).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
@@ -153,6 +191,20 @@ public class ProfileFragment extends android.app.Fragment {
         } else {
             Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void getIntent() {
+
+        Bundle bundle=getArguments();
+
+
+        if(bundle !=null) {
+
+            vender_name = bundle.getString("name");
+            image = bundle.getString("image");
+            id_store = bundle.getString("id");
+        }
+
     }
 
     private void getStoreProduct(String id_store) {

@@ -1,5 +1,6 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,7 @@ import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.list_cats;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
@@ -300,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
                     break;
                 case R.id.nav_profile:
-                    selectedfragment = new Client_Profile_Fragment();
+                    selectedfragment = new ProfileFragment();
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
                     break;
                 case R.id.nav_add:
@@ -497,6 +500,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d("Mainasmaaa", "favPos: "+sanf_id);
         Log.d("Mainasmaaa", "favPos: "+user_id);
 
+        final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.waitt));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
 
 
         Api.getService()
@@ -505,10 +512,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
 
+
+                        if (response.isSuccessful()){
+                            dialog.dismiss();
+
+                            if (response.body().getSuccess() == 1) {
+
+                                Toast.makeText(MainActivity.this, R.string.addfav, Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        }
+
                     }
 
                     @Override
                     public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+                        dialog.dismiss();
 
                     }
                 });
@@ -525,17 +546,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Toast.makeText(this, "You Should SignUp First !!", Toast.LENGTH_SHORT).show();
         }
 
+        final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.waitt));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
         Api.getService()
                 .delet_to_favourite(user_id,sanf_id)
                 .enqueue(new Callback<RatingModel2>() {
                     @Override
                     public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
 
+
+                        if (response.isSuccessful()){
+                            dialog.dismiss();
+
+                            if (response.body().getSuccess() == 1) {
+
+                                Toast.makeText(MainActivity.this, R.string.deletfav, Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        }
                     }
 
                     @Override
                     public void onFailure(Call<RatingModel2> call, Throwable t) {
 
+                        dialog.dismiss();
                     }
                 });
     }
@@ -553,6 +591,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bundle.putString("name",model.storeName);
         bundle.putString("image",model.storeImg);
         bundle.putString("id",model.storeIdFk);
+        bundle.putString("type","1");
+
 
         profileFragment.setArguments(bundle);
 

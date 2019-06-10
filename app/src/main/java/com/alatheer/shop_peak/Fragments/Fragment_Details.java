@@ -1,6 +1,7 @@
 package com.alatheer.shop_peak.Fragments;
 
 import android.animation.Animator;
+import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +42,7 @@ import com.alatheer.shop_peak.Model.OrderItemList;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.alatheer.shop_peak.util.CircleAnimationUtil;
@@ -206,11 +208,21 @@ public class Fragment_Details extends Fragment {
 
         fab_favorite.setOnClickListener(new View.OnClickListener() {
 
+
+
             @Override
             public void onClick(View v) {
                 int id2 = Integer.parseInt(order_num.getText().toString());
 
+
                 basketModel = new BasketModel(id2, title, counter.getText().toString(), gender, price, des, red, blue, black, first_item);
+
+                final ProgressDialog dialog = Common.createProgressDialog(getActivity(),getString(R.string.waitt));
+                dialog.setCancelable(true);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+
+
                 if (flag) {
 
                     Api.getService()
@@ -219,11 +231,22 @@ public class Fragment_Details extends Fragment {
                                 @Override
                                 public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
 
+                                    if (response.isSuccessful()){
+                                        dialog.dismiss();
+
+                                        if (response.body().getSuccess() == 1) {
+
+                                            Toast.makeText(getActivity(), R.string.addfav, Toast.LENGTH_SHORT).show();
+                                        }
+
+
+                                    }
                                 }
 
                                 @Override
                                 public void onFailure(Call<RatingModel2> call, Throwable t) {
 
+                                    dialog.dismiss();
                                 }
                             });
 
@@ -238,10 +261,21 @@ public class Fragment_Details extends Fragment {
                                 @Override
                                 public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
 
+                                    if (response.isSuccessful()){
+                                        dialog.dismiss();
+
+                                        if (response.body().getSuccess() == 1) {
+
+                                            Toast.makeText(getActivity(), R.string.deletfav, Toast.LENGTH_SHORT).show();
+                                        }
+
+
+                                    }
                                 }
 
                                 @Override
                                 public void onFailure(Call<RatingModel2> call, Throwable t) {
+                                    dialog.dismiss();
 
                                 }
                             });

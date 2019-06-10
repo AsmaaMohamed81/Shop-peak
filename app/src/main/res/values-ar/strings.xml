@@ -96,4 +96,7 @@
     <string name="lat_lang_req">يجب عليك تحديد موقعك علي الخريطه اولا</string>
     <string name="logo_req">اختار لوجولمحل اولا</string>
     <string name="follow">متـــــــــــابعه</string>
+    <string name="addrate">تم تعديل تقيمك بنجاح</string>
+    <string name="addfav">تم اضافه العنصر الي المفضله بنجاح</string>
+    <string name="deletfav">تم ازاله العنصر الي المفضله بنجاح</string>
 </resources>
