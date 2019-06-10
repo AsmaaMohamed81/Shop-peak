@@ -403,7 +403,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
-    public void sendHomeItem(String[] image, List<Item> item, String sanf_name, String details, String price, String product_id, String rating, String store_id, String[] colors,String price_before_dis) {
+    public void sendHomeItem(String[] image, List<Item> item, String sanf_name, String details, String price, String product_id, String rating, String store_id, String[] colors,String price_before_dis,String like) {
         Bundle bundle=new Bundle();
         bundle.putStringArray("homeimage", image);
         bundle.putSerializable("itemlist", (Serializable) item);
@@ -418,6 +418,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra("id", product_id);
         intent.putExtra("rate", rating);
         intent.putExtra("store_id",store_id);
+        intent.putExtra("like",like);
         Log.v("gggg",store_id);
 
         if (user_id!=null) {
@@ -561,4 +562,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void sendLink(String link) {
     }
+
+
 }

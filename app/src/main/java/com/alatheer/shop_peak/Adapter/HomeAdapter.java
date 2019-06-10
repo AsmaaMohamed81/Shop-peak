@@ -79,6 +79,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         final String store_id = listofhome.get(position).storeIdFk;
         final String[]colors= listofhome.get(position).colors;
         final String link = listofhome.get(position).link;
+
+         final String like = listofhome.get(position).getLike();
+
+         if (like.equals("1")){
+
+             holder.fav.setChecked(true);
+         }else {
+
+             holder.fav.setChecked(false);
+
+         }
+
+
         Picasso.with(context).load(vender_image).into(holder.img_profile);
         holder.text_profile.setText(vender_name);
 
@@ -90,7 +103,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                holder.itemView.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
-                       mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount);
+                       mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
                    }
                });
 
@@ -100,7 +113,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                holder.itemView.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
-                       mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount);
+                       mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
                    }
                });
            }

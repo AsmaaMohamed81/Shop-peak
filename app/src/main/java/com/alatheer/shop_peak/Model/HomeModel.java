@@ -103,6 +103,8 @@ public class HomeModel implements Serializable {
     @Expose
     public String link;
 
+    private  String like;
+
     public HomeModel withId(String id) {
         this.id = id;
         return this;
@@ -238,4 +240,11 @@ public class HomeModel implements Serializable {
         return this;
     }
 
+    public String getLike() {
+        return like;
+    }
+
+    public void setLike(String like) {
+        this.like = like;
+    }
 }
