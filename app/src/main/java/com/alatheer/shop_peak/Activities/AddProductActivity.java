@@ -423,6 +423,7 @@ public class AddProductActivity extends AppCompatActivity {
                 product_num.setError(getString(R.string.productnumber_req));
             } else {
                 product_num.setError(null);
+
             }
 
             if (TextUtils.isEmpty(name)) {
