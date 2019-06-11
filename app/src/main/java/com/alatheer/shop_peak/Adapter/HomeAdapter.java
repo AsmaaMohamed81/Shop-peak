@@ -92,7 +92,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
          }
 
 
-        Picasso.with(context).load(vender_image).into(holder.img_profile);
+         if (!vender_image.isEmpty()) {
+             Picasso.with(context).load(vender_image).into(holder.img_profile);
+         }
         holder.text_profile.setText(vender_name);
 
            final String[] image_resources = {listofhome.get(position).mainImg};

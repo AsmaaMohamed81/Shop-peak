@@ -2,7 +2,9 @@ package com.alatheer.shop_peak.Model;
 
 import android.content.Intent;
 
-public class UserModel1 {
+import java.io.Serializable;
+
+public class UserModel1 implements Serializable {
 
     private String id;
     private String full_name;

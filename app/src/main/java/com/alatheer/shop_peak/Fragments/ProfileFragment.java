@@ -22,16 +22,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Activities.FollowersActivity;
+import com.alatheer.shop_peak.Activities.MyFollowersActivity;
 import com.alatheer.shop_peak.Adapter.Profile_GridAdapter;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
-import com.alatheer.shop_peak.Model.UserModel;
+import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
@@ -65,7 +68,7 @@ public class ProfileFragment extends android.app.Fragment {
     int PICK_IMAGE_REQUEST;
 
     private ProgressBar progressBar;
-    private TextView txt_no,num_products;
+    private TextView txt_no,num_products,followers,myfollow;
 
     private ArrayList<HomeModel> homeModelArrayList;
 
@@ -75,8 +78,14 @@ public class ProfileFragment extends android.app.Fragment {
     MySharedPreference mySharedPreference;
     UserModel1 userModel1;
     String img,id,name;
+    private ArrayList<UserModel1> userModel1ArrayList,Listmyfollow;
+
 
     String type="1";
+
+    Button follow;
+
+    boolean flagButton=false;
 
     public static ProfileFragment getInstance() {
         ProfileFragment fragment = new ProfileFragment();
@@ -96,6 +105,9 @@ public class ProfileFragment extends android.app.Fragment {
         mySharedPreference=MySharedPreference.getInstance();
         userModel1=mySharedPreference.Get_UserData(getActivity());
 
+        userModel1ArrayList=new ArrayList<>();
+        Listmyfollow=new ArrayList<>();
+
 
         if (userModel1!=null){
             img=userModel1.getLogo_img();
@@ -114,6 +126,10 @@ public class ProfileFragment extends android.app.Fragment {
          menu_recycler=view.findViewById(R.id.recycler_menu);
         num_products=view.findViewById(R.id.num_products);
 
+        followers=view.findViewById(R.id.followers);
+        follow=view.findViewById(R.id.follow);
+        myfollow=view.findViewById(R.id.myfollow);
+
         progressBar = view.findViewById(R.id.progBar);
         txt_no = view.findViewById(R.id.tv_no);
 
@@ -121,6 +137,7 @@ public class ProfileFragment extends android.app.Fragment {
 
 
         getIntent();
+        checkfollow(id_store,id);
 
         Log.d("asmaa", "initview: "+id_store);
 
@@ -152,7 +169,7 @@ public class ProfileFragment extends android.app.Fragment {
 
 
 
-        if (type.equals("1")){
+
 
 
             Picasso.with(getActivity()).load(image).into(profile_image);
@@ -160,23 +177,50 @@ public class ProfileFragment extends android.app.Fragment {
             getStoreProduct(id_store);
             Viewgrid();
 
+        get_storefollow(id_store);
 
 
+        followers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(getActivity(), FollowersActivity.class);
+                intent.putExtra("id_store",id_store);
+                startActivity(intent);
+
+            }
+        });
+        myfollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(getActivity(), MyFollowersActivity.class);
+                intent.putExtra("id_store",id_store);
+                startActivity(intent);
+
+            }
+        });
 
 
-        }else {
+        follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (flagButton==true){
+
+                    deleteflow(id_store,id);
 
 
-            Picasso.with(getActivity()).load(img).into(profile_image);
-            profile_name.setText(name);
-            getStoreProduct(id
-            );
-            Viewgrid();
+                }else {
+                    makefollow(id_store,id);
 
-        }
+                }
+            }
+        });
 
 
-         Viewgrid();
+        get_my_flow(id_store);
+
         if (!isConnected()) {
             new AlertDialog.Builder(getActivity()).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
                     .setMessage(getString(R.string.check_connection))
@@ -192,6 +236,156 @@ public class ProfileFragment extends android.app.Fragment {
             Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void updateUI() {
+
+        if (flagButton==true){
+
+
+            follow.setText(R.string.unfollow);
+            follow.setBackgroundResource(R.drawable.btn_field2);
+        }else {
+
+
+            follow.setText(R.string.follow);
+            follow.setBackgroundResource(R.drawable.edite_profile);
+        }
+    }
+
+    private void makefollow(String id_store, String id) {
+
+        Api.getService()
+                .make_follow(id_store,id)
+                .enqueue(new Callback<RatingModel2>() {
+                    @Override
+                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+
+                        if (response.isSuccessful()){
+
+                            if (response.body().getSuccess()==1){
+
+                                flagButton=true;
+                                updateUI();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    private void deleteflow(String id_store, String id) {
+
+        Api.getService()
+                .delete_flow(id_store,id)
+                .enqueue(new Callback<RatingModel2>() {
+                    @Override
+                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+
+                        if (response.isSuccessful()){
+
+                            if (response.body().getSuccess()==1){
+
+                                flagButton=false;
+                                updateUI();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+                    }
+                });
+    }
+
+
+    private void get_my_flow(String id_store) {
+        Api.getService()
+                .get_my_flow(id_store)
+                .enqueue(new Callback<List<UserModel1>>() {
+                    @Override
+                    public void onResponse(Call<List<UserModel1>> call, Response<List<UserModel1>> response) {
+                        if (response.isSuccessful()){
+
+                            if (response.body().size()>0){
+
+                                Listmyfollow.addAll(response.body());
+                                myfollow.setText(Integer.toString(response.body().size()));
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<UserModel1>> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    private void checkfollow(String id_store, String id) {
+
+        Api.getService()
+                .get_user_folow(id_store,id)
+                .enqueue(new Callback<RatingModel2>() {
+                    @Override
+                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                        if (response.isSuccessful()){
+
+                            if (response.body().getSuccess()==1){
+
+                                flagButton=true;
+                                updateUI();
+
+                            }else {
+
+                                flagButton=false;
+                                updateUI();
+
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    private void get_storefollow(String id_store) {
+
+        Api.getService()
+                .get_storefollow(id_store)
+                .enqueue(new Callback<List<UserModel1>>() {
+                    @Override
+                    public void onResponse(Call<List<UserModel1>> call, Response<List<UserModel1>> response) {
+                        if (response.isSuccessful()){
+
+                            if (response.body().size()>0){
+
+                                userModel1ArrayList.addAll(response.body());
+                                followers.setText(Integer.toString(response.body().size()));
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<UserModel1>> call, Throwable t) {
+
+                    }
+                });
+    }
+
+
 
     private void getIntent() {
 

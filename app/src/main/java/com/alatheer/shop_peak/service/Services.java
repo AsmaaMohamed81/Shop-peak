@@ -137,5 +137,31 @@ public interface Services {
     @FormUrlEncoded
     @POST("Api/filter")
     Call<List<HomeModel>>search_Home(@Field("sanf_name")String sanf_name);
+
+    @GET("Api/get_store_folower/{store_id_fk}")
+    Call<List<UserModel1>> get_storefollow(@Path("store_id_fk") String store_id_fk);
+
+
+
+    @FormUrlEncoded
+    @POST("Api/get_user_folow")
+    Call<RatingModel2> get_user_folow(@Field("store_id_fk") String sanf_id_fk,
+                                      @Field("client_id_fk") String client_id_fk
+                                        );
+
+    @GET("Api/get_store_flow/{user_id}")
+    Call<List<UserModel1>> get_my_flow(@Path("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("Api/make_follow")
+    Call<RatingModel2> make_follow(@Field("store_id_fk") String sanf_id_fk,
+                                      @Field("client_id_fk") String client_id_fk
+    );
+
+    @FormUrlEncoded
+    @POST("Api/delete_flow")
+    Call<RatingModel2> delete_flow(@Field("store_id_fk") String sanf_id_fk,
+                                   @Field("client_id_fk") String client_id_fk
+    );
 }
 

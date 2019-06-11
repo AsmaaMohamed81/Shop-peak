@@ -56,15 +56,16 @@
                    android:id="@+id/num_products"
                    android:layout_width="50dp"
                    android:layout_height="wrap_content"
-                   android:text="100"
+                   android:text="0"
                    android:gravity="center_horizontal"
                    android:textSize="18sp"
                    android:textColor="@color/black"
                    android:textStyle="bold"/>
                <TextView
+                   android:id="@+id/myfollow"
                    android:layout_width="50dp"
                    android:layout_height="wrap_content"
-                   android:text="80"
+                   android:text="0"
                    android:textSize="18sp"
                    android:gravity="center_horizontal"
                    android:layout_marginLeft="30dp"
@@ -72,11 +73,12 @@
                    android:textColor="@color/black"
                    android:textStyle="bold"/>
                <TextView
+                   android:id="@+id/followers"
                    android:layout_width="50dp"
                    android:layout_height="wrap_content"
                    android:textSize="18sp"
                    android:gravity="center_horizontal"
-                   android:text="200"
+                   android:text="0"
                    android:textColor="@color/black"
                    android:textStyle="bold"/>
            </LinearLayout>
@@ -90,22 +92,22 @@
                    <TextView
                        android:layout_width="50dp"
                        android:layout_height="wrap_content"
-                       android:text="سلع"
-                       android:textSize="17sp"
+                       android:text="@string/products"
+                       android:textSize="15sp"
                        android:gravity="center_horizontal"/>
                    <TextView
                        android:layout_width="50dp"
                        android:layout_height="wrap_content"
-                       android:text="تققيم"
-                       android:textSize="17sp"
+                       android:text="@string/followe"
+                       android:textSize="15sp"
                        android:layout_marginLeft="30dp"
                        android:layout_marginRight="30dp"
                        android:gravity="center_horizontal"/>
                    <TextView
                        android:layout_width="50dp"
                        android:layout_height="wrap_content"
-                       android:textSize="17sp"
-                       android:text="العملاء"
+                       android:textSize="15sp"
+                       android:text="@string/followers"
                        android:gravity="center_horizontal"/>
 
          </LinearLayout>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alatheer.shop_peak.Adapter.FollowersAdapter;
 import com.alatheer.shop_peak.Adapter.ItemAdapter;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.R;
@@ -21,7 +22,7 @@ import java.util.List;
 public class DescriptionFragment extends Fragment {
     List<Item> items;
     String details;
-    RecyclerView description_recycler;
+    RecyclerView followers_recycler;
     RecyclerView.LayoutManager description__layoutManager;
     ItemAdapter itemAdapter;
     TextView txt_details;
@@ -36,20 +37,19 @@ public class DescriptionFragment extends Fragment {
 
     private void initview(View view) {
         getDataFromIntent();
-        description_recycler = view.findViewById(R.id.recycler_description);
-        txt_details = view.findViewById(R.id.text_view);
-        txt_details.setText(details);
+        followers_recycler = view.findViewById(R.id.notification_recycler);
+
         initrecycler();
 
 
     }
 
     private void initrecycler() {
-        description_recycler.setHasFixedSize(true);
+        followers_recycler.setHasFixedSize(true);
         description__layoutManager = new LinearLayoutManager(getContext());
-        description_recycler.setLayoutManager(description__layoutManager);
+        followers_recycler.setLayoutManager(description__layoutManager);
         itemAdapter = new ItemAdapter(items, getContext());
-        description_recycler.setAdapter(itemAdapter);
+        followers_recycler.setAdapter(itemAdapter);
     }
 
     public void getDataFromIntent() {

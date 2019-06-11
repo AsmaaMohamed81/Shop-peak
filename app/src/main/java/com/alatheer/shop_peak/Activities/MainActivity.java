@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Search_Navigation_Adapter search_navigation_adapter;
     RecyclerView.LayoutManager navigation_manager;
     RecyclerView navigationrecycler;
-    CircleImageView img;
+    CircleImageView profile_img;
     android.app.Fragment selectedfragment;
     HomeFragment homeFragment;
     MySharedPreference mPrefs;
@@ -93,7 +93,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ArrayList<list_cats.Subs> list_cats_sub;
 
-    String user_id, type,name;
+    String user_id,name,Logo_img;
+    String type="0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         search = findViewById(R.id.txt_search2);
         login_register = findViewById(R.id.tv_login_register);
         View headview=navigationView.getHeaderView(0);
-        img = headview.findViewById(R.id.profile_img);
+        profile_img = headview.findViewById(R.id.profile_img);
         tv_username = headview.findViewById(R.id.txtname);
         login_register = headview.findViewById(R.id.tv_login_register);
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -160,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                  name=userModel1.getFull_name();
                 type=userModel1.getType();
+                Logo_img=userModel1.getLogo_img();
 
 
 
@@ -170,15 +172,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             tv_username.setText(name);
            // Picasso.with(this).load(url).into(img);
             tv_username.setVisibility(View.VISIBLE);
-            img.setVisibility(View.VISIBLE);
+            profile_img.setVisibility(View.VISIBLE);
             login_register.setVisibility(View.GONE);
+
+            Picasso.with(this).load(Logo_img).into(profile_img);
 
         }catch (Exception e){
             //String personname=i.getStringExtra("personName");
             //img.setImageResource(R.mipmap.icon_round);
             //textView.setText(personname);
         }
-        img.setOnClickListener(new View.OnClickListener() {
+        profile_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseimage();

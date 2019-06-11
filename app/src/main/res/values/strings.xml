@@ -98,6 +98,10 @@
     <string name="addrate">تم تعديل تقيمك بنجاح</string>
     <string name="addfav">تم اضافه العنصر الي المفضله بنجاح</string>
     <string name="deletfav">تم ازاله العنصر الي المفضله بنجاح</string>
+    <string name="unfollow">UnFollow</string>
+    <string name="followers">المتابعون</string>
+    <string name="products">المنتجات</string>
+    <string name="followe">يتابع</string>
 
 
 </resources>
