@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class Add_Product_Activity_Details extends AppCompatActivity {
     Button add_row_Element, btn_element_image, btn_element_color;
+    LinearLayout color_image_layout;
     TableLayout t;
     TableRow tr;
     int PICK_IMAGE_REQUEST = 1;
@@ -51,6 +53,7 @@ public class Add_Product_Activity_Details extends AppCompatActivity {
 
     private void initview() {
         add_row_Element = findViewById(R.id.btn_add_element);
+
         t = findViewById(R.id.table);
         t.setColumnStretchable(0, true);
         t.setColumnStretchable(1, true);

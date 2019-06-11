@@ -1,5 +1,6 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -33,6 +34,7 @@ import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Local.Favorite_Database;
+import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.NavigationModel;
@@ -76,14 +78,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String title1;
     TextView login_register, tv_username;
     List<HomeModel> homeModels;
-    String sanf_name;
+    String sanf_name,store_id;
+
     private int PICK_IMAGE_FROM_GALEARY_REQUEST=0;
     Uri uri;
     Bitmap bitmap;
     int flag;
     UserModel userModel;
     UserModel1 userModel1;
-
+     MyAppDatabase myAppDatabase;
     Favorite_Database favoriteDatabase;
 
     ArrayList<list_cats> list_cats;
@@ -100,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
     private void initview() {
-
+        myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"order_db").allowMainThreadQueries().build();
         list_cats =new ArrayList<>();
 
         final FragmentManager fm = getSupportFragmentManager();
@@ -304,6 +307,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
                     break;
                 case R.id.nav_add:
+                    Intent intent = new Intent(MainActivity.this, AddProductActivity.class);
                     startActivity(new Intent(MainActivity.this, AddProductActivity.class));
                     break;
             }
@@ -356,6 +360,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_logout:
                 mPrefs.ClearData(MainActivity.this);
                 LoginManager.getInstance().logOut();
+                myAppDatabase.dao().deleteproduct();
                 startActivity(new Intent(MainActivity.this, Login_Activity.class));
 
                 Animatoo.animateInAndOut(MainActivity.this);

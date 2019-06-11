@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -42,6 +43,7 @@ import com.alatheer.shop_peak.Adapter.cityAdapter;
 import com.alatheer.shop_peak.Adapter.governAdapter;
 import com.alatheer.shop_peak.Model.City;
 import com.alatheer.shop_peak.Model.Govern;
+import com.alatheer.shop_peak.Model.Product_Specification;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.Tasnefat;
 import com.alatheer.shop_peak.Model.UserModel;
@@ -55,6 +57,7 @@ import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.service.Api;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
+import net.margaritov.preference.colorpicker.ColorPickerDialog;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -72,16 +75,22 @@ public class AddProductActivity extends AppCompatActivity {
     Button add_main_image, Skip, Continue;
      TextView added_post;
     private int IMG=1;
-    Button delete_item;
-    Button btn_element_image;
-    EditText product_num1, product_num, product_name, price_after_discount, price_before_discount, element_name, element_description, element_color;
+    TableLayout t;
+    TableRow tr;
+    int DefaultColor;
+    Uri filePath2;
+
+    ColorPickerDialog pickcolor;
+    int color;
+    private Context context2 = null;
+    EditText product_num1, product_num, product_name, price_after_discount, price_before_discount, element_description;
     Button addproduct;
     String main_id, sub_id;
     String name, number, priceafter_discount, pricebefore_discount, elementname, elementdescription, elementcolor;
     //////////////
     private RecyclerView recyc_main, recyc_sub;
     TextView title_main,title_sub;
-    private LinearLayout container_main, container_sub;
+    private LinearLayout container_main, container_sub,color_image_layout;
     private ExpandableLayout expand_layout_main, expand_layout_sub;
     /////////////
     private ArrayList<list_cats> main_cats_List;
@@ -92,7 +101,6 @@ public class AddProductActivity extends AppCompatActivity {
     private TasnefAdapter tasnefAdapter;
     RecyclerView.LayoutManager recyc_sub_manager;
     private list_cats main_cat;
-
     private TextView tv_title_main, tv_title_sub;
 
      int PICK_IMAGE_MULTIPLE = 2 ;
@@ -101,6 +109,7 @@ public class AddProductActivity extends AppCompatActivity {
     int count = 0;
     Uri Image_Uri1, Image_Uri2, Image_Uri3, Image_Uri4, filePath;
      ArrayList<Uri> mArrayUri;
+     List<Product_Specification> product_specifications;
      List<String> imagesEncodedList;
     TableLayout t1, t2;
     TableRow tr1, tr2;
@@ -108,7 +117,7 @@ public class AddProductActivity extends AppCompatActivity {
      ProfileDatabase profileDatabase;
     //HomeDatabase homeDatabase;
      MySharedPreference mprefs;
-    Button add_row_Element, add_row_Element2;
+    Button add_row_Element, add_row_Element2,btn_element_image, btn_element_color;
     private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
     private Context context = null;
 
@@ -132,17 +141,20 @@ public class AddProductActivity extends AppCompatActivity {
         container_sub = findViewById(R.id.sub_category_container);
         expand_layout_main = findViewById(R.id.expand_main_layout);
         expand_layout_sub = findViewById(R.id.expand_sub_layout);
-        title_main = findViewById(R.id.tv_title_main);
-        title_sub = findViewById(R.id.tv_title_sub);
         close=findViewById(R.id.close);
+        color_image_layout= findViewById(R.id.color_image_layout);
         main_image = findViewById(R.id.main_image);
         add_row_Element = findViewById(R.id.btn_add_element);
+        add_row_Element2 = findViewById(R.id.btn_add_element2);
+        product_specifications = new ArrayList<>();
         // add = findViewById(R.id.add_item);
         //delete = findViewById(R.id.delete_item);
         //add_row_Element2 = findViewById(R.id.btn_add_element2);
         added_post=findViewById(R.id.added_post);
         add_main_image = findViewById(R.id.add_main_image);
         product_name = findViewById(R.id.product_name);
+        tv_title_main= findViewById(R.id.tv_title_main);
+        tv_title_sub = findViewById(R.id.tv_title_sub);
         t1 = findViewById(R.id.table);
         //tr1 = findViewById(R.id.table_row1);
         //tr2 = findViewById(R.id.table_row2);
@@ -152,11 +164,13 @@ public class AddProductActivity extends AppCompatActivity {
         product_num = findViewById(R.id.product_num);
         price_after_discount = findViewById(R.id.price_after_discount);
         price_before_discount = findViewById(R.id.price_before_discount);
+        element_description = findViewById(R.id.item_description);
         //element_name = findViewById(R.id.element_name);
         // element_color = findViewById(R.id.element_color);
         // element_description = findViewById(R.id.element_description);
         product_num1 = findViewById(R.id.order_num);
         Continue = findViewById(R.id.btn_continue);
+        Skip = findViewById(R.id.btn_skip);
         mprefs=new MySharedPreference(this);
         // homeDatabase = Room.databaseBuilder(getApplicationContext(), HomeDatabase.class, "home_db").allowMainThreadQueries().build();
         profileDatabase = Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
@@ -189,7 +203,7 @@ public class AddProductActivity extends AppCompatActivity {
             }
         });
 
-        container_main.setOnClickListener(new View.OnClickListener() {
+        container_sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 expand_layout_sub.toggle(true);
@@ -205,9 +219,9 @@ public class AddProductActivity extends AppCompatActivity {
 
         main_cats_adapter = new Main_cats_Adapter(AddProductActivity.this, main_cats_List);
 
+        main_cats_adapter.notifyDataSetChanged();
         recyc_main.setAdapter(main_cats_adapter);
 
-        main_cats_adapter.notifyDataSetChanged();
         /*add_multiple_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -223,15 +237,108 @@ public class AddProductActivity extends AppCompatActivity {
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.press_anim);
         Common.CloseKeyBoard(this, product_name);
 
-        Continue.setOnClickListener(new View.OnClickListener() {
+        Skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Continue.clearAnimation();
-                Continue.setAnimation(animation);
+                Skip.clearAnimation();
+                Skip.setAnimation(animation);
                 validation();
             }
         });
+        Continue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                color_image_layout.setVisibility(View.VISIBLE);
+            }
+        });
+        t = findViewById(R.id.table2);
+        t.setColumnStretchable(0, true);
+        t.setColumnStretchable(1, true);
+        t.setColumnStretchable(2, true);
+        DefaultColor = ContextCompat.getColor(this, R.color.colorPrimary);
+        add_row_Element2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final TableLayout tableLayout = (TableLayout) findViewById(R.id.table2);
+
+                context = getApplicationContext();
+
+
+                // Create a new table row.
+                final TableRow tableRow = new TableRow(context);
+
+                // Set new table row layout parameters.
+                TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                tableRow.setLayoutParams(layoutParams);
+                ImageButton delete2 = new ImageButton(context);
+                btn_element_image = new Button(AddProductActivity.this);
+                btn_element_color = new Button(AddProductActivity.this);
+
+                btn_element_color.setBackground(getDrawable(R.drawable.element_txt));
+                btn_element_image.setBackground(getDrawable(R.drawable.element_txt));
+
+                delete2.setBackground(getDrawable(R.drawable.ic_close_black_24dp));
+
+
+                TableRow.LayoutParams params2 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4.5f);
+                btn_element_color.setLayoutParams(params2);
+                btn_element_color.setTextSize(20);
+                TableRow.LayoutParams params3 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4.5f);
+                btn_element_image.setLayoutParams(params3);
+                btn_element_image.setTextSize(20);
+                TableRow.LayoutParams params4 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+                params4.gravity = Gravity.CENTER;
+                delete2.setLayoutParams(params4);
+
+
+                tableRow.addView(btn_element_color);
+                tableRow.addView(btn_element_image);
+                tableRow.addView(delete2);
+
+                tableLayout.addView(tableRow);
+
+                delete2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        tableLayout.removeView(tableRow);
+
+                    }
+                });
+                btn_element_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Check_ReadPermission(IMG);
+                    }
+                });
+                btn_element_color.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+//                        OpenColorPicker(true);
+
+
+                        color = Color.parseColor("#ffffff");
+                        pickcolor = new ColorPickerDialog(AddProductActivity.this, color);
+                        pickcolor.setAlphaSliderVisible(true);
+                        pickcolor.setTitle("PICK");
+
+                        pickcolor.setOnColorChangedListener(new ColorPickerDialog.OnColorChangedListener() {
+                            @Override
+                            public void onColorChanged(int color) {
+
+
+                                btn_element_color.setBackgroundColor(color);
+                                btn_element_color.setText("#" + Integer.toHexString(color));
+                            }
+                        });
+
+
+                        pickcolor.show();
+                    }
+                });
+            }
+        });
     }
+
 
 
 
@@ -273,6 +380,7 @@ public class AddProductActivity extends AppCompatActivity {
                 add_main_image.setVisibility(View.GONE);
                 main_image.setImageBitmap(bitmap);
                 main_image.setVisibility(View.VISIBLE);
+                btn_element_image.setText("you selected image");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -288,13 +396,16 @@ public class AddProductActivity extends AppCompatActivity {
         name = product_name.getText().toString();
         pricebefore_discount = price_before_discount.getText().toString();
         priceafter_discount = price_after_discount.getText().toString();
+        elementdescription =element_description.getText().toString();
         //elementname = element_name.getText().toString();
         //elementdescription = element_description.getText().toString();
         if (!TextUtils.isEmpty(number) &&
                 !TextUtils.isEmpty(name) &&
                 !TextUtils.isEmpty(priceafter_discount) &&
-                !TextUtils.isEmpty(pricebefore_discount)
-                ) {
+                !TextUtils.isEmpty(pricebefore_discount) &&
+                !TextUtils.isEmpty(elementdescription) &&
+                main_id != null &&
+                sub_id != null) {
 
 
             Common.CloseKeyBoard(this, product_num);
@@ -302,9 +413,10 @@ public class AddProductActivity extends AppCompatActivity {
             product_name.setError(null);
             price_after_discount.setError(null);
             price_before_discount.setError(null);
-            // element_name.setError(null);
-            //element_description.setError(null);
-            AddProduct(number, name, priceafter_discount, pricebefore_discount,filePath);
+            tv_title_main.setError(null);
+            tv_title_sub.setError(null);
+            element_description.setError(null);
+            AddProduct(number, name,main_id,sub_id,priceafter_discount, pricebefore_discount,elementdescription,filePath,product_specifications);
 
         } else {
             if (TextUtils.isEmpty(number)) {
@@ -329,18 +441,39 @@ public class AddProductActivity extends AppCompatActivity {
             } else {
                 price_after_discount.setError(null);
             }
+            if (TextUtils.isEmpty(elementdescription)) {
+                price_after_discount.setError(getString(R.string.element_description_req));
+            } else {
+                price_after_discount.setError(null);
+            }
+            if (main_id==null) {
+                tv_title_main.setError(getString(R.string.governate_req));
+            } else {
+                tv_title_main.setError(null);
+            }
+            if (sub_id == null) {
+                tv_title_sub.setError(getString(R.string.city_req));
+            } else {
+                tv_title_sub.setError(null);
+            }
         }
     }
 
-    private void AddProduct(String number, String name, String price_after_discount, String price_before_discount,Uri filePath) {
+    private void AddProduct(String number, String name,String main_id,String sub_id, String price_after_discount, String price_before_discount,String elementdescription,Uri filePath,List<Product_Specification>product_specifications) {
         RequestBody Vnumber = Common.getRequestBodyText(number);
         RequestBody Vname = Common.getRequestBodyText(name);
+        RequestBody Vmain_id = Common.getRequestBodyText(main_id);
+        RequestBody Vsub_id = Common.getRequestBodyText(sub_id);
         RequestBody Vprice_after_discount = Common.getRequestBodyText(price_after_discount);
         RequestBody Vprice_before_discount = Common.getRequestBodyText(price_before_discount);
+        RequestBody Velementdescription = Common.getRequestBodyText(elementdescription);
         MultipartBody.Part main_image = Common.getMultiPart(this,filePath,"main_image");
-        /*Api.getService().Add_Product(Vnumber,Vname,Vprice_after_discount,Vprice_before_discount,main_image).enqueue(new Callback<RatingModel2>() {
+        Api.getService().Add_Product(Vnumber,Vname,Vmain_id,Vsub_id,Vprice_after_discount,Vprice_before_discount,Velementdescription,main_image,product_specifications).enqueue(new Callback<RatingModel2>() {
             @Override
             public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                if(response.isSuccessful()){
+                    Log.v("success",response.message());
+                }
 
             }
 
@@ -348,7 +481,7 @@ public class AddProductActivity extends AppCompatActivity {
             public void onFailure(Call<RatingModel2> call, Throwable t) {
 
             }
-        });*/
+        });
     }
 
 
@@ -427,9 +560,10 @@ public class AddProductActivity extends AppCompatActivity {
         TableRow.LayoutParams params4 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
         params4.gravity = Gravity.CENTER;
         delete2.setLayoutParams(params4);
-
-
-
+        String name =sc1.getText().toString();
+        String value = sc2.getText().toString();
+        Product_Specification product_specification = new Product_Specification(name,value);
+        product_specifications.add(product_specification);
 
         tableRow.addView(sc1);
         tableRow.addView(sc2);
@@ -450,7 +584,7 @@ public class AddProductActivity extends AppCompatActivity {
         t1.removeView(tr2);
     }
 
-    public void pos_main_cat(int pos) {
+     public void pos_main_cat(int pos) {
         main_cat = main_cats_List.get(pos);
         main_id = main_cat.getId();
 
@@ -470,7 +604,7 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
     public void pos_sub(int pos) {
-        title_sub.setText(sub_cats_List.get(pos).getName());
+        tv_title_sub.setText(sub_cats_List.get(pos).getName());
         sub_id = sub_cats_List.get(pos).getId();
         expand_layout_sub.toggle(true);
 
@@ -487,12 +621,13 @@ public class AddProductActivity extends AppCompatActivity {
 
                             main_cats_List.addAll(response.body());
                             main_cats_adapter.notifyDataSetChanged();
+                            Log.v("kkkkk",response.message());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<list_cats>> call, Throwable t) {
-
+                        Log.v("kkkkk",t.getMessage());
                     }
                 });
     }
