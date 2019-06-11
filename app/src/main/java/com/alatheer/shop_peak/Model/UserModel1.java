@@ -23,6 +23,17 @@ public class UserModel1 {
 
     private String type;
 
+    private String logo_img;
+
+
+    public String getLogo_img() {
+        return logo_img;
+    }
+
+    public void setLogo_img(String logo_img) {
+        this.logo_img = logo_img;
+    }
+
     public String getFull_name() {
         return full_name;
     }

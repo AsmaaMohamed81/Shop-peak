@@ -134,6 +134,8 @@ public class RatingFragment extends Fragment {
 
                         RatingModel2 ratingModel2 = response.body();
                         initrecycler();
+
+                        Toast.makeText(getActivity(), R.string.addrate, Toast.LENGTH_SHORT).show();
                         Log.v("5555", ratingModel2.success.toString());
                     }
                 }

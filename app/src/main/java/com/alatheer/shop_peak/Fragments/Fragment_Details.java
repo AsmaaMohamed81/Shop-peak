@@ -1,6 +1,7 @@
 package com.alatheer.shop_peak.Fragments;
 
 import android.animation.Animator;
+import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
@@ -38,13 +39,22 @@ import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.OrderItemList;
+import com.alatheer.shop_peak.Model.RatingModel2;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.common.Common;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
+import com.alatheer.shop_peak.service.Api;
 import com.alatheer.shop_peak.util.CircleAnimationUtil;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -87,6 +97,13 @@ public class Fragment_Details extends Fragment {
     RecyclerView color_recycler;
     RecyclerView.LayoutManager layoutManager;
     ColorAdapter colorAdapter ;
+
+    private MySharedPreference mySharedPreference;
+
+    private UserModel1 userModel1;
+    private String User_id;
+    private String like;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,6 +113,17 @@ public class Fragment_Details extends Fragment {
         return view;
     }
     private void initview(View view) {
+
+        mySharedPreference=MySharedPreference.getInstance();
+        userModel1=mySharedPreference.Get_UserData(getActivity());
+
+        if (userModel1!=null){
+
+            User_id=userModel1.getId();
+        }
+
+
+
         back_image = view.findViewById(R.id.back_image);
         details_img = view.findViewById(R.id.details_image);
         ratingBar = view.findViewById(R.id.ratbar2);
@@ -169,16 +197,7 @@ public class Fragment_Details extends Fragment {
                     orderItemList.withStoreIdFk(store_id);
                     myAppDatabase.dao().addproduct(orderItemList);
                     Toast.makeText(getActivity(), "data added successfully", Toast.LENGTH_SHORT).show();
-                    //DetailsActivity detailsActivity = (DetailsActivity) getActivity();
-                    //detailsActivity.send(orders_List);
 
-                    //passData.getBasketModel(basketModel);
-                    /*if (myAppDatabase.dao().getdata().size() > 0) {
-                        tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
-                    } else {
-                        tv_not_budget.setText("0");
-
-                    }*/
                 } catch (Exception e) {
                     Log.v("aaaaa", e.getMessage());
                 }
@@ -187,44 +206,102 @@ public class Fragment_Details extends Fragment {
             }
         });
 
-        /*shopping_cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Basket_Activity.class);
-                startActivity(intent);
-                Animatoo.animateDiagonal(getActivity());
-            }
-        });*/
         fab_favorite.setOnClickListener(new View.OnClickListener() {
+
+
 
             @Override
             public void onClick(View v) {
                 int id2 = Integer.parseInt(order_num.getText().toString());
+
+
                 basketModel = new BasketModel(id2, title, counter.getText().toString(), gender, price, des, red, blue, black, first_item);
+
+                final ProgressDialog dialog = Common.createProgressDialog(getActivity(),getString(R.string.waitt));
+                dialog.setCancelable(true);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+
+
                 if (flag) {
-                    id = (int) favorite_database.dao_favorite().add_favorite(basketModel);
-                    Toast.makeText(getActivity(), "id" + id, Toast.LENGTH_SHORT).show();
-                    Log.e("add_to_favorite", "true");
+
+                    Api.getService()
+                            .add_to_favourite(User_id,sanf_id)
+                            .enqueue(new Callback<RatingModel2>() {
+                                @Override
+                                public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+
+                                    if (response.isSuccessful()){
+                                        dialog.dismiss();
+
+                                        if (response.body().getSuccess() == 1) {
+
+                                            Toast.makeText(getActivity(), R.string.addfav, Toast.LENGTH_SHORT).show();
+                                        }
+
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+                                    dialog.dismiss();
+                                }
+                            });
+
                     fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_sold));
                     flag = false;
                 } else if (!flag) {
+
+
+                    Api.getService()
+                            .delet_to_favourite(User_id,sanf_id)
+                            .enqueue(new Callback<RatingModel2>() {
+                                @Override
+                                public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+
+                                    if (response.isSuccessful()){
+                                        dialog.dismiss();
+
+                                        if (response.body().getSuccess() == 1) {
+
+                                            Toast.makeText(getActivity(), R.string.deletfav, Toast.LENGTH_SHORT).show();
+                                        }
+
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<RatingModel2> call, Throwable t) {
+                                    dialog.dismiss();
+
+                                }
+                            });
+
+
                     fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite));
-                    BasketModel basketModel2 = new BasketModel();
-                    basketModel2.setId((int) id);
-                    favorite_database.dao_favorite().delete_favorite(basketModel2);
-                    Log.e("delete_from_favorite", "true");
+
+
+
+
                     flag = true;
                 }
             }
         });
         ratingBar.setRating(Float.parseFloat(rating));
 
-        /*if (myAppDatabase.dao().getdata().size() > 0) {
-            tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
-        } else {
-            tv_not_budget.setText("0");
 
-        }*/
+
+        if (like.equals("1")){
+        fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_sold));
+        flag = false;
+        }else {
+
+            fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite));
+            flag = true;
+        }
     }
 
     @Override
@@ -258,6 +335,10 @@ public class Fragment_Details extends Fragment {
         price_before_dis = intent.getStringExtra("price_before_dis");
         sanf_id = intent.getStringExtra("id");
         store_id =intent.getStringExtra("store_id");
+
+        like =intent.getStringExtra("like");
+
+
         // Bundle bundle = new Bundle();
         //bundle.putString("title",title);
         //bundle.putString("des",title);
