@@ -50,12 +50,16 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ImageHolder>
         holder.title.setText(list_of_offer.get(position).offerTitle);
         final String image = list_of_offer.get(position).imgOffer;
         final String title = list_of_offer.get(position).offerTitle;
+
+        final String offerid = list_of_offer.get(position).id;
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, Offer_Activity.class);
                 intent.putExtra("image",image);
                 intent.putExtra("title",title);
+                intent.putExtra("offer_id",offerid);
                 context.startActivity(intent);
             }
         });
