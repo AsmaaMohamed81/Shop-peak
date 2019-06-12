@@ -75,8 +75,8 @@ public interface Services {
                                   @Part("sanf_name")RequestBody sanf_name,
                                   @Part("main_tasnef")RequestBody main_category,
                                   @Part("sub_tasnef")RequestBody sub_category,
-                                  @Part("price_before_discount")RequestBody price_before_discount,
-                                  @Part("price_after_discount")RequestBody price_after_discount,
+                                  @Part("price_before_dis")RequestBody price_before_discount,
+                                  @Part("price_after_dis")RequestBody price_after_discount,
                                   @Part("details")RequestBody details,
                                   @Part MultipartBody.Part main_img);
     @Multipart
