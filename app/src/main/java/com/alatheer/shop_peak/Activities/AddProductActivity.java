@@ -129,6 +129,8 @@ public class AddProductActivity extends AppCompatActivity {
     private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
     private Context context = null;
 
+    EditText sc1,sc2;
+
 
 
     @Override
@@ -261,6 +263,9 @@ public class AddProductActivity extends AppCompatActivity {
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                name1 =sc1.getText().toString();
+                value1 = sc2.getText().toString();
+
                 color_image_layout.setVisibility(View.VISIBLE);
             }
         });
@@ -680,12 +685,8 @@ public class AddProductActivity extends AppCompatActivity {
         tableRow.setLayoutParams(layoutParams);
 
 
-
-
-
-
-        EditText sc1=new EditText(context);
-        EditText sc2=new EditText(context);
+         sc1=new EditText(context);
+         sc2=new EditText(context);
 
         ImageButton delete2 = new ImageButton(context);
 
@@ -711,8 +712,8 @@ public class AddProductActivity extends AppCompatActivity {
         TableRow.LayoutParams params4 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
         params4.gravity = Gravity.CENTER;
         delete2.setLayoutParams(params4);
-         name1 =sc1.getText().toString();
-         value1 = sc2.getText().toString();
+
+
 
 
         tableRow.addView(sc1);
@@ -720,6 +721,8 @@ public class AddProductActivity extends AppCompatActivity {
         tableRow.addView(delete2);
 
         tableLayout.addView(tableRow);
+
+
 
         delete2.setOnClickListener(new View.OnClickListener() {
             @Override
