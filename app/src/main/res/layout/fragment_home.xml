@@ -39,7 +39,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="55dp">
         <android.support.v7.widget.RecyclerView
             android:layout_marginTop="6dp"
@@ -54,16 +54,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
 
             />
         <TextView
             android:id="@+id/tv_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="25sp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
             android:textAllCaps="true"
             android:layout_centerHorizontal="true"
+            android:text="@string/noproduct"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
 
 
             />

@@ -37,7 +37,7 @@ public class DescriptionFragment extends Fragment {
 
     private void initview(View view) {
         getDataFromIntent();
-        followers_recycler = view.findViewById(R.id.notification_recycler);
+        followers_recycler = view.findViewById(R.id.recycler_description);
 
         initrecycler();
 

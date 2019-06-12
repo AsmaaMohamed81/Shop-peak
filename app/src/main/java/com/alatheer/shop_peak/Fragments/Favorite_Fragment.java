@@ -3,15 +3,19 @@ package com.alatheer.shop_peak.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.Favourit_Adapter;
@@ -45,6 +49,9 @@ public class Favorite_Fragment extends android.app.Fragment {
 
     String usr_id;
 
+    private ProgressBar progressBar;
+    private TextView txt_no;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,7 +83,14 @@ public class Favorite_Fragment extends android.app.Fragment {
         userModel1=preferences.Get_UserData(getActivity());
 
         recyclerView_favorite = view.findViewById(R.id.basket_recycler);
-           initRecyclerview();
+        progressBar = view.findViewById(R.id.progBar);
+        txt_no = view.findViewById(R.id.tv_no);
+
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+
+
+
+        initRecyclerview();
 
     }
 
@@ -101,18 +115,26 @@ public class Favorite_Fragment extends android.app.Fragment {
                 .enqueue(new Callback<List<HomeModel>>() {
                     @Override
                     public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
-                        if(response.isSuccessful()){
+                        if (response.isSuccessful()) {
 
-                            if (response.body().size()>0) {
+                            progressBar.setVisibility(View.GONE);
+
+                            if (response.body().size() > 0) {
 
                                 favouritModelList.addAll(response.body());
                                 favoriteAdapter.notifyDataSetChanged();
+                                txt_no.setVisibility(View.GONE);
+
                             }
+
+                            txt_no.setVisibility(View.VISIBLE);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<HomeModel>> call, Throwable t) {
+
+                        progressBar.setVisibility(View.GONE);
 
                     }
                 });

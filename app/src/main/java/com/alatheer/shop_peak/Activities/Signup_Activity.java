@@ -48,12 +48,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Signup_Activity extends AppCompatActivity {
-    EditText edt_name2, edt_email, edt_phone, edt_password, edt_address;
+    EditText edt_name2, edt_email, edt_phone, edt_password, edt_address,user_confirm_password;
     private CheckBox checkBox;
     private ProgressDialog dialog;
     Button sign_up;
     private Boolean accepted = false;
-    private String userName, passWord, Phone, Email, address, city_id, govern_id;
+    private String userName, passWord, Phone, Email, address, city_id, govern_id,confirm_password;
     private View root;
     private Snackbar snackbar;
 
@@ -89,6 +89,7 @@ public class Signup_Activity extends AppCompatActivity {
         sign_up = findViewById(R.id.btn_sign);
         root = findViewById(R.id.root);
         checkBox = findViewById(R.id.check_box);
+        user_confirm_password=findViewById(R.id.user_confirm_password);
 
 
 /////#FFFFFF/////////////////
@@ -181,6 +182,7 @@ public class Signup_Activity extends AppCompatActivity {
     private void validation() {
         userName = edt_name2.getText().toString();
         passWord = edt_password.getText().toString();
+        confirm_password=user_confirm_password.getText().toString();
         Email = edt_email.getText().toString();
         Phone = edt_phone.getText().toString();
         address = edt_address.getText().toString();

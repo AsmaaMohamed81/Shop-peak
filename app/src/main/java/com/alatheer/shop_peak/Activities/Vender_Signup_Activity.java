@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.Activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -12,11 +13,13 @@ import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -43,6 +46,7 @@ import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -360,8 +364,6 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         String id=userModel1.getId();
 
         String Full_name = shop_name.getText().toString().trim();
-        String mohafza=userModel1.getGovern();
-        String madina=userModel1.getCity();
         String Address = address.getText().toString().trim();
 
 
@@ -371,8 +373,8 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(Full_name)  &&
                 !TextUtils.isEmpty(Address)&&
-                madina!=null&&
-                mohafza!=null&&
+                city_id!=null&&
+                govern_id!=null&&
                 store_tasnef!=null&&
                 lat!=null&&
                 lang!=null&&
@@ -382,9 +384,9 @@ public class Vender_Signup_Activity extends AppCompatActivity {
             shop_name.setError(null);
             shop_email.setError(null);
             address.setError(null);
-            //city.setError(null);
-            //governate.setError(null);
-            subscribre_vendor(id,Full_name ,mohafza ,madina, Address,store_tasnef,lat,lang, filePath);
+            tv_title_govern.setError(null);
+            tv_title_city.setError(null);
+            subscribre_vendor(id,Full_name ,govern_id ,city_id, Address,store_tasnef,lat,lang, filePath);
 
         } else {
             if (TextUtils.isEmpty(Full_name)) {
@@ -399,13 +401,22 @@ public class Vender_Signup_Activity extends AppCompatActivity {
                 shop_email.setError(null);
             }
 
-            if (mohafza==null) {
-                tv_title_govern.setError(getString(R.string.governate_req));
+            if (govern_id==null) {
+                govern_id=userModel1.getGovern();
+
+
+                if (govern_id==null) {
+                    tv_title_govern.setError(getString(R.string.governate_req));
+                }
             } else {
                 tv_title_govern.setError(null);
             }
-            if (madina==null) {
-                tv_title_city.setError(getString(R.string.city_req));
+            if (city_id==null) {
+                city_id=userModel1.getGovern();
+
+                if (city_id==null) {
+                    tv_title_city.setError(getString(R.string.city_req));
+                }
             } else {
                 tv_title_city.setError(null);
             }
@@ -471,10 +482,9 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
                                 if (response.body().getSuccess()==1){
 
+                                  Toast.makeText(Vender_Signup_Activity.this, "تم ارسال طلبك", Toast.LENGTH_SHORT).show();
 
-                                            Toast.makeText(Vender_Signup_Activity.this, "تم ارسال طلبك", Toast.LENGTH_SHORT).show();
-
-
+                                    CreateUserNotSignInAlertDialog(Vender_Signup_Activity.this,getString(R.string.ordersend));
 
                                     Log.v("response",response.message());
 
@@ -496,6 +506,32 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
 
     }
+
+    public void CreateUserNotSignInAlertDialog(Context context, String msg) {
+        final AlertDialog dialog = new AlertDialog.Builder(context)
+                .setCancelable(true)
+                .create();
+
+        View view = LayoutInflater.from(context).inflate(R.layout.custom_dialog, null);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(msg);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mySharedPreference.ClearData(Vender_Signup_Activity.this);
+                startActivity(new Intent(Vender_Signup_Activity.this, Login_Activity.class));
+                Animatoo.animateInAndOut(Vender_Signup_Activity.this);
+
+            }
+        });
+
+        dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog;
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setView(view);
+        dialog.show();
+    }
+
 
     private void Signup(String name, String email, String address, Uri filePath) {
         Intent intent = new Intent(Vender_Signup_Activity.this, MainActivity.class);

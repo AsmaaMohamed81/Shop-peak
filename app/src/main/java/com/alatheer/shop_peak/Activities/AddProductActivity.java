@@ -585,12 +585,14 @@ public class AddProductActivity extends AppCompatActivity {
         values.add(Vvalue1);
         MultipartBody.Part img = Common.getMultiPart(this,filePath2,"img");
         images.add(img);
-        Api.getService().Add_Product2(Vid,Vnumber,Vname,Vmain_id,Vsub_id,Vprice_after_discount,Vprice_before_discount,Velementdescription,
+        Api.getService()
+                .Add_Product2(Vid,Vnumber,Vname,Vmain_id,Vsub_id,Vprice_after_discount,Vprice_before_discount,Velementdescription,
                 main_image,names,values,colors,images).enqueue(new Callback<RatingModel2>() {
             @Override
             public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
                 if(response.isSuccessful()){
                     Log.v("success",response.message());
+                    Toast.makeText(AddProductActivity.this, "تم", Toast.LENGTH_SHORT).show();
                 }
             }
 

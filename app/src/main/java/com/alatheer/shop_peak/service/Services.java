@@ -91,7 +91,7 @@ public interface Services {
                                    @Part("details")RequestBody element_desscribion,
                                    @Part MultipartBody.Part main_image,
                                    @Part("items[]")List<RequestBody> items,
-                                   @Part("description[]")List<RequestBody> descriptions,
+                                   @Part("descriptions[]")List<RequestBody> descriptions,
                                    @Part("colors[]")List<RequestBody> colors,
                                    @Part List<MultipartBody.Part> imgs);
 
