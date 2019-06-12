@@ -46,8 +46,10 @@ public class Basket_Activity extends AppCompatActivity {
     Favorite_Database favorite_database;
     List<OrderItemList>basketModelList;
     Button add;
+    Button add_lat_lon;
     MySharedPreference mPrefs;
     UserModel1 userModel1;
+    private String lat,lon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,26 +63,36 @@ public class Basket_Activity extends AppCompatActivity {
         text_title.setText("Basket");
         image_title=findViewById(R.id.back_image);
         add = findViewById(R.id.add);
+        add_lat_lon = findViewById(R.id.addlat_lon);
         myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"order_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(),Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         initRecyclerview();
+        getDataFromIntent();
         mPrefs =MySharedPreference.getInstance();
         userModel1 = mPrefs.Get_UserData(Basket_Activity.this);
         final String name = userModel1.getFull_name();
         final String USER_ID = userModel1.getId();
         final String address = userModel1.getAddress();
         final String phone = userModel1.getPhone();
+        final String type = userModel1.getType();
         image_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        add_lat_lon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Basket_Activity.this,MapsActivity.class));
+            }
+        });
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BasketModel2 basketModel2 =new BasketModel2("1",basketModelList,USER_ID,name,address
-                ,"30.5421","31.02643",phone);
+                getlatlon();
+                BasketModel2 basketModel2 =new BasketModel2(type,basketModelList,USER_ID,name,address
+                ,lat,lon,phone);
                 //basketModel3.setUserId("31");
                 //basketModel3.withAddress("شارع الاستاد");
                // basketModel3.withClientName("mohamed hamada");
@@ -103,7 +115,12 @@ public class Basket_Activity extends AppCompatActivity {
         });
 
     }
-     public void initRecyclerview(){
+
+    private void getlatlon() {
+
+    }
+
+    public void initRecyclerview(){
          basketModelList=myAppDatabase.dao().getdata();
          recyclerView_basket.setHasFixedSize(true);
          basket_manager=new LinearLayoutManager(this);
@@ -132,5 +149,15 @@ public class Basket_Activity extends AppCompatActivity {
     public void senddata2(int position) {
         myAppDatabase.dao().Delete_Item(basketModelList.get(position).getId());
         initRecyclerview();
+    }
+    private void getDataFromIntent() {
+        Intent intent=getIntent();
+
+        if (intent!=null){
+            lat=intent.getStringExtra("lat");
+            lon=intent.getStringExtra("lang");
+
+
+        }
     }
 }

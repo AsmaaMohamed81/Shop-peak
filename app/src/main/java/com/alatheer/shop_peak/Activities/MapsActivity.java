@@ -88,6 +88,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Intent intentService=null;
     private EditText address,lat,log;
     private Button btn_continue;
+    private Button btn_add_basket;
 
     String Vlat,Vlang;
 
@@ -116,7 +117,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         lat=findViewById(R.id.lat);
         log=findViewById(R.id.log);
         btn_continue=findViewById(R.id.btn_continue);
-
+        btn_add_basket = findViewById(R.id.btn_add_basket);
         final Animation animation= AnimationUtils.loadAnimation(this,R.anim.press_anim);
 
         btn_continue.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +130,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Vlang=log.getText().toString();
 
                 Intent intent=new Intent(MapsActivity.this,Vender_Signup_Activity.class);
+                intent.putExtra("lat",Vlat);
+                intent.putExtra("lang",Vlang);
+                startActivity(intent);
+            }
+        });
+        btn_add_basket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_continue.clearAnimation();
+                btn_continue.startAnimation(animation);
+
+                Vlat=lat.getText().toString();
+                Vlang=log.getText().toString();
+
+                Intent intent=new Intent(MapsActivity.this,Basket_Activity.class);
                 intent.putExtra("lat",Vlat);
                 intent.putExtra("lang",Vlang);
                 startActivity(intent);

@@ -140,18 +140,36 @@
 
 
 </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="2">
+    <Button
+        android:id="@+id/btn_continue"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@drawable/btn_field"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/continuee"
+        android:layout_weight="1"
+        android:textColor="@android:color/white"
+        />
+    <Button
+        android:id="@+id/btn_add_basket"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@drawable/btn_field"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="add to basket"
+        android:layout_weight="1"
+        android:textColor="@android:color/white"
+        />
+</LinearLayout>
 
-        <Button
-            android:id="@+id/btn_continue"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/btn_field"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:text="@string/continuee"
-            android:textColor="@android:color/white"
-            />
 
     </LinearLayout>
 

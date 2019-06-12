@@ -68,10 +68,21 @@ public interface Services {
                                        @Part("lat") RequestBody lat,
                                        @Part("lang") RequestBody lang,
                                        @Part MultipartBody.Part logo_img);
-    @FormUrlEncoded
     @Multipart
     @POST("Api/add_product")
-    Call<RatingModel2>Add_Product(@Part("sanf_code")RequestBody sanf_code,
+    Call<RatingModel2>Add_Product(@Part("store_id_fk")RequestBody user_id,
+                                  @Part("sanf_code")RequestBody sanf_code,
+                                  @Part("sanf_name")RequestBody sanf_name,
+                                  @Part("main_tasnef")RequestBody main_category,
+                                  @Part("sub_tasnef")RequestBody sub_category,
+                                  @Part("price_before_discount")RequestBody price_before_discount,
+                                  @Part("price_after_discount")RequestBody price_after_discount,
+                                  @Part("details")RequestBody details,
+                                  @Part MultipartBody.Part main_img);
+    @Multipart
+    @POST("Api/add_product")
+    Call<RatingModel2>Add_Product2(@Part("store_id_fk")RequestBody user_id,
+                                  @Part("sanf_code")RequestBody sanf_code,
                                   @Part("sanf_name")RequestBody sanf_name,
                                   @Part("main_category")RequestBody main_category,
                                   @Part("sub_category")RequestBody sub_category,
@@ -79,17 +90,8 @@ public interface Services {
                                   @Part("price_before_discount")RequestBody price_before_discount,
                                   @Part("element_desscribion")RequestBody element_desscribion,
                                   @Part MultipartBody.Part main_image,
-                                  @Field("Product_specification[]") List<Product_Specification> Product_specification);
-
-    Call<RatingModel2>Add_Product2(@Part("sanf_code")RequestBody sanf_code,
-                                  @Part("sanf_name")RequestBody sanf_name,
-                                  @Part("main_category")RequestBody main_category,
-                                  @Part("sub_category")RequestBody sub_category,
-                                  @Part("price_after_discount")RequestBody price_after_discount,
-                                  @Part("price_before_discount")RequestBody price_before_discount,
-                                  @Part("element_desscribion")RequestBody element_desscribion,
-                                  @Part MultipartBody.Part main_image,
-                                  @Field("Product_specification[]") List<Product_Specification> Product_specification);
+                                   @Part("color[]")List<RequestBody> colors,
+                                   @Part List<MultipartBody.Part> imgs);
 
 
     @GET("Api/get_rating/{id}")

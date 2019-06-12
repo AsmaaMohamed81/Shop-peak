@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initview() {
 
         list_cats =new ArrayList<>();
-
         final FragmentManager fm = getSupportFragmentManager();
         img_menu = findViewById(R.id.menu_img);
         drawerLayout = findViewById(R.id.drawer);
@@ -597,15 +596,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bundle.putString("id",model.storeIdFk);
         bundle.putString("type","1");
 
-
         profileFragment.setArguments(bundle);
 
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
 
     }
-
-    public void sendLink(String link) {
-    }
-
 
 }

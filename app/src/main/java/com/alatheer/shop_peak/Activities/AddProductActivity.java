@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -59,16 +60,19 @@ import com.alatheer.shop_peak.service.Api;
 import net.cachapa.expandablelayout.ExpandableLayout;
 import net.margaritov.preference.colorpicker.ColorPickerDialog;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 
 public class AddProductActivity extends AppCompatActivity {
     ImageView close, main_image, mutiple_image1, mutiple_image2, mutiple_image3, mutiple_image4;
@@ -78,9 +82,10 @@ public class AddProductActivity extends AppCompatActivity {
     TableLayout t;
     TableRow tr;
     int DefaultColor;
-    Uri filePath2;
-
+    String color2;
     ColorPickerDialog pickcolor;
+    List<RequestBody>colors;
+    List<MultipartBody.Part>images;
     int color;
     private Context context2 = null;
     EditText product_num1, product_num, product_name, price_after_discount, price_before_discount, element_description;
@@ -102,12 +107,12 @@ public class AddProductActivity extends AppCompatActivity {
     RecyclerView.LayoutManager recyc_sub_manager;
     private list_cats main_cat;
     private TextView tv_title_main, tv_title_sub;
-
+    Button add_product;
      int PICK_IMAGE_MULTIPLE = 2 ;
-    int PICK_IMAGE_REQUEST = 1;
+    int PICK_IMAGE_REQUEST = 3;
     ImageButton add, delete;
     int count = 0;
-    Uri Image_Uri1, Image_Uri2, Image_Uri3, Image_Uri4, filePath;
+    Uri Image_Uri1, Image_Uri2, Image_Uri3, Image_Uri4, filePath,filePath2;
      ArrayList<Uri> mArrayUri;
      List<Product_Specification> product_specifications;
      List<String> imagesEncodedList;
@@ -144,6 +149,7 @@ public class AddProductActivity extends AppCompatActivity {
         close=findViewById(R.id.close);
         color_image_layout= findViewById(R.id.color_image_layout);
         main_image = findViewById(R.id.main_image);
+        add_product = findViewById(R.id.add_product);
         add_row_Element = findViewById(R.id.btn_add_element);
         add_row_Element2 = findViewById(R.id.btn_add_element2);
         product_specifications = new ArrayList<>();
@@ -156,6 +162,8 @@ public class AddProductActivity extends AppCompatActivity {
         tv_title_main= findViewById(R.id.tv_title_main);
         tv_title_sub = findViewById(R.id.tv_title_sub);
         t1 = findViewById(R.id.table);
+        colors = new ArrayList<>();
+        images = new ArrayList<>();
         //tr1 = findViewById(R.id.table_row1);
         //tr2 = findViewById(R.id.table_row2);
         t1.setColumnStretchable(0, true);
@@ -251,6 +259,14 @@ public class AddProductActivity extends AppCompatActivity {
                 color_image_layout.setVisibility(View.VISIBLE);
             }
         });
+        add_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                add_product.clearAnimation();
+                add_product.setAnimation(animation);
+                validation2();
+            }
+        });
         t = findViewById(R.id.table2);
         t.setColumnStretchable(0, true);
         t.setColumnStretchable(1, true);
@@ -307,7 +323,7 @@ public class AddProductActivity extends AppCompatActivity {
                 btn_element_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Check_ReadPermission(IMG);
+                        Check_ReadPermission(PICK_IMAGE_REQUEST);
                     }
                 });
                 btn_element_color.setOnClickListener(new View.OnClickListener() {
@@ -328,6 +344,7 @@ public class AddProductActivity extends AppCompatActivity {
 
                                 btn_element_color.setBackgroundColor(color);
                                 btn_element_color.setText("#" + Integer.toHexString(color));
+                                color2 = Integer.toHexString(color);
                             }
                         });
 
@@ -371,7 +388,7 @@ public class AddProductActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+        if (requestCode == IMG && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             filePath = data.getData();
 
@@ -380,13 +397,29 @@ public class AddProductActivity extends AppCompatActivity {
                 add_main_image.setVisibility(View.GONE);
                 main_image.setImageBitmap(bitmap);
                 main_image.setVisibility(View.VISIBLE);
-                btn_element_image.setText("you selected image");
+
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
+        } else if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            filePath2 = data.getData();
+            btn_element_image.setText("you selected image");
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
+
+                 btn_element_image.setText("you selected image");
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
             Toast.makeText(this, "some thing error", Toast.LENGTH_SHORT).show();
         }
     }
@@ -403,9 +436,8 @@ public class AddProductActivity extends AppCompatActivity {
                 !TextUtils.isEmpty(name) &&
                 !TextUtils.isEmpty(priceafter_discount) &&
                 !TextUtils.isEmpty(pricebefore_discount) &&
-                !TextUtils.isEmpty(elementdescription) &&
-                main_id != null &&
-                sub_id != null) {
+                !TextUtils.isEmpty(elementdescription)
+                ) {
 
 
             Common.CloseKeyBoard(this, product_num);
@@ -416,7 +448,7 @@ public class AddProductActivity extends AppCompatActivity {
             tv_title_main.setError(null);
             tv_title_sub.setError(null);
             element_description.setError(null);
-            AddProduct(number, name,main_id,sub_id,priceafter_discount, pricebefore_discount,elementdescription,filePath,product_specifications);
+            AddProduct(number, name,main_id,sub_id,priceafter_discount, pricebefore_discount,elementdescription,filePath);
 
         } else {
             if (TextUtils.isEmpty(number)) {
@@ -447,7 +479,7 @@ public class AddProductActivity extends AppCompatActivity {
             } else {
                 price_after_discount.setError(null);
             }
-            if (main_id==null) {
+           /* if (main_id==null) {
                 tv_title_main.setError(getString(R.string.governate_req));
             } else {
                 tv_title_main.setError(null);
@@ -456,11 +488,81 @@ public class AddProductActivity extends AppCompatActivity {
                 tv_title_sub.setError(getString(R.string.city_req));
             } else {
                 tv_title_sub.setError(null);
+            }*/
+        }
+    }
+    private void validation2() {
+        number = product_num.getText().toString();
+        name = product_name.getText().toString();
+        pricebefore_discount = price_before_discount.getText().toString();
+        priceafter_discount = price_after_discount.getText().toString();
+        elementdescription =element_description.getText().toString();
+        //elementname = element_name.getText().toString();
+        //elementdescription = element_description.getText().toString();
+        if (!TextUtils.isEmpty(number) &&
+                !TextUtils.isEmpty(name) &&
+                !TextUtils.isEmpty(priceafter_discount) &&
+                !TextUtils.isEmpty(pricebefore_discount) &&
+                !TextUtils.isEmpty(elementdescription)
+                ) {
+
+
+            Common.CloseKeyBoard(this, product_num);
+            product_num.setError(null);
+            product_name.setError(null);
+            price_after_discount.setError(null);
+            price_before_discount.setError(null);
+            tv_title_main.setError(null);
+            tv_title_sub.setError(null);
+            element_description.setError(null);
+            AddProduct2(number, name,main_id,sub_id,priceafter_discount, pricebefore_discount,elementdescription,filePath,colors,filePath2);
+
+        } else {
+            if (TextUtils.isEmpty(number)) {
+                product_num.setError(getString(R.string.productnumber_req));
+            } else {
+                product_num.setError(null);
+
             }
+
+            if (TextUtils.isEmpty(name)) {
+                product_name.setError(getString(R.string.productname_req));
+            } else {
+                product_name.setError(null);
+            }
+
+            if (TextUtils.isEmpty(pricebefore_discount)) {
+                price_before_discount.setError(getString(R.string.price_before_discount__req));
+            } else {
+                price_after_discount.setError(null);
+            }
+            if (TextUtils.isEmpty(priceafter_discount)) {
+                price_after_discount.setError(getString(R.string.price_after_discount_req));
+            } else {
+                price_after_discount.setError(null);
+            }
+            if (TextUtils.isEmpty(elementdescription)) {
+                price_after_discount.setError(getString(R.string.element_description_req));
+            } else {
+                price_after_discount.setError(null);
+            }
+           /* if (main_id==null) {
+                tv_title_main.setError(getString(R.string.governate_req));
+            } else {
+                tv_title_main.setError(null);
+            }
+            if (sub_id == null) {
+                tv_title_sub.setError(getString(R.string.city_req));
+            } else {
+                tv_title_sub.setError(null);
+            }*/
         }
     }
 
-    private void AddProduct(String number, String name,String main_id,String sub_id, String price_after_discount, String price_before_discount,String elementdescription,Uri filePath,List<Product_Specification>product_specifications) {
+    private void AddProduct2(String number, String name, String main_id, String sub_id, String price_after_discount, String price_before_discount, String elementdescription, Uri filePath, List<RequestBody> colors, Uri filePath2) {
+        UserModel1 userModel = mprefs.Get_UserData(AddProductActivity.this);
+        String user_id = userModel.getId();
+        RequestBody Vid = Common.getRequestBodyText(user_id);
         RequestBody Vnumber = Common.getRequestBodyText(number);
         RequestBody Vname = Common.getRequestBodyText(name);
         RequestBody Vmain_id = Common.getRequestBodyText(main_id);
@@ -468,8 +570,44 @@ public class AddProductActivity extends AppCompatActivity {
         RequestBody Vprice_after_discount = Common.getRequestBodyText(price_after_discount);
         RequestBody Vprice_before_discount = Common.getRequestBodyText(price_before_discount);
         RequestBody Velementdescription = Common.getRequestBodyText(elementdescription);
-        MultipartBody.Part main_image = Common.getMultiPart(this,filePath,"main_image");
-        Api.getService().Add_Product(Vnumber,Vname,Vmain_id,Vsub_id,Vprice_after_discount,Vprice_before_discount,Velementdescription,main_image,product_specifications).enqueue(new Callback<RatingModel2>() {
+        MultipartBody.Part main_image = Common.getMultiPart(this,filePath,"main_img");
+        RequestBody Vcolor = Common.getRequestBodyText(color2);
+        colors.add(Vcolor);
+        MultipartBody.Part img = Common.getMultiPart(this,filePath2,"img");
+        images.add(img);
+        Api.getService().Add_Product2(Vid,Vnumber,Vname,Vmain_id,Vsub_id,Vprice_after_discount,Vprice_before_discount,Velementdescription,
+                main_image,colors,images).enqueue(new Callback<RatingModel2>() {
+            @Override
+            public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                if(response.isSuccessful()){
+                    Log.v("success",response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void AddProduct(String number, String name,String main_id,String sub_id, String price_after_discount, String price_before_discount,String elementdescription,Uri filePath) {
+        UserModel1 userModel = mprefs.Get_UserData(AddProductActivity.this);
+        String user_id = userModel.getId();
+        RequestBody Vid = Common.getRequestBodyText(user_id);
+        RequestBody Vnumber = Common.getRequestBodyText(number);
+        RequestBody Vname = Common.getRequestBodyText(name);
+        RequestBody Vmain_id = Common.getRequestBodyText(main_id);
+        RequestBody Vsub_id = Common.getRequestBodyText(sub_id);
+        RequestBody Vprice_after_discount = Common.getRequestBodyText(price_after_discount);
+        RequestBody Vprice_before_discount = Common.getRequestBodyText(price_before_discount);
+        RequestBody Velementdescription = Common.getRequestBodyText(elementdescription);
+        MultipartBody.Part main_image = Common.getMultiPart(this,filePath,"main_img");
+        //RequestBody Vcolor = Common.getRequestBodyText(color2);
+        //RequestBody[] Vcolors= new RequestBody[]{Vcolor};
+        //MultipartBody.Part[] Vimage= new MultipartBody.Part[]{main_image};
+        Api.getService().Add_Product(Vid,Vnumber,Vname,Vmain_id,Vsub_id,Vprice_before_discount,Vprice_after_discount,Velementdescription,main_image).enqueue(new Callback<RatingModel2>() {
             @Override
             public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
                 if(response.isSuccessful()){
@@ -588,8 +726,6 @@ public class AddProductActivity extends AppCompatActivity {
      public void pos_main_cat(int pos) {
         main_cat = main_cats_List.get(pos);
         main_id = main_cat.getId();
-
-
         if (main_cat.getSubs().size() > 0) {
             sub_cats_List = main_cat.getSubs();
 

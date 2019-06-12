@@ -119,7 +119,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                    }
                });
            }
-            mainActivity.sendLink(link);
             mainActivity.passdata(sanf_name, listofhome);
 
         holder.fav.setOnClickListener(new View.OnClickListener() {
