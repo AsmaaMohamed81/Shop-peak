@@ -77,7 +77,7 @@ import retrofit2.http.Multipart;
 public class AddProductActivity extends AppCompatActivity {
     ImageView close, main_image, mutiple_image1, mutiple_image2, mutiple_image3, mutiple_image4;
     Button add_main_image, Skip, Continue;
-     TextView added_post;
+    TextView added_post;
     private int IMG=1;
     TableLayout t;
     TableRow tr;
@@ -86,6 +86,8 @@ public class AddProductActivity extends AppCompatActivity {
     ColorPickerDialog pickcolor;
     List<RequestBody>colors;
     List<MultipartBody.Part>images;
+    List<RequestBody>names;
+    List<RequestBody>values;
     int color;
     private Context context2 = null;
     EditText product_num1, product_num, product_name, price_after_discount, price_before_discount, element_description;
@@ -111,6 +113,7 @@ public class AddProductActivity extends AppCompatActivity {
      int PICK_IMAGE_MULTIPLE = 2 ;
     int PICK_IMAGE_REQUEST = 3;
     ImageButton add, delete;
+    String name1,value1;
     int count = 0;
     Uri Image_Uri1, Image_Uri2, Image_Uri3, Image_Uri4, filePath,filePath2;
      ArrayList<Uri> mArrayUri;
@@ -164,6 +167,8 @@ public class AddProductActivity extends AppCompatActivity {
         t1 = findViewById(R.id.table);
         colors = new ArrayList<>();
         images = new ArrayList<>();
+        names = new ArrayList<>();
+        values = new ArrayList<>();
         //tr1 = findViewById(R.id.table_row1);
         //tr2 = findViewById(R.id.table_row2);
         t1.setColumnStretchable(0, true);
@@ -515,7 +520,7 @@ public class AddProductActivity extends AppCompatActivity {
             tv_title_main.setError(null);
             tv_title_sub.setError(null);
             element_description.setError(null);
-            AddProduct2(number, name,main_id,sub_id,priceafter_discount, pricebefore_discount,elementdescription,filePath,colors,filePath2);
+            AddProduct2(number, name,main_id,sub_id,priceafter_discount, pricebefore_discount,elementdescription,filePath,filePath2);
 
         } else {
             if (TextUtils.isEmpty(number)) {
@@ -559,7 +564,8 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
 
-    private void AddProduct2(String number, String name, String main_id, String sub_id, String price_after_discount, String price_before_discount, String elementdescription, Uri filePath, List<RequestBody> colors, Uri filePath2) {
+    private void AddProduct2(String number, String name, String main_id, String sub_id, String price_after_discount, String price_before_discount, String elementdescription, Uri filePath,
+            Uri filePath2) {
         UserModel1 userModel = mprefs.Get_UserData(AddProductActivity.this);
         String user_id = userModel.getId();
         RequestBody Vid = Common.getRequestBodyText(user_id);
@@ -572,11 +578,15 @@ public class AddProductActivity extends AppCompatActivity {
         RequestBody Velementdescription = Common.getRequestBodyText(elementdescription);
         MultipartBody.Part main_image = Common.getMultiPart(this,filePath,"main_img");
         RequestBody Vcolor = Common.getRequestBodyText(color2);
+        RequestBody Vname1 = Common.getRequestBodyText(name1);
+        RequestBody Vvalue1 = Common.getRequestBodyText(value1);
         colors.add(Vcolor);
+        names.add(Vname1);
+        values.add(Vvalue1);
         MultipartBody.Part img = Common.getMultiPart(this,filePath2,"img");
         images.add(img);
         Api.getService().Add_Product2(Vid,Vnumber,Vname,Vmain_id,Vsub_id,Vprice_after_discount,Vprice_before_discount,Velementdescription,
-                main_image,colors,images).enqueue(new Callback<RatingModel2>() {
+                main_image,names,values,colors,images).enqueue(new Callback<RatingModel2>() {
             @Override
             public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
                 if(response.isSuccessful()){
@@ -699,10 +709,9 @@ public class AddProductActivity extends AppCompatActivity {
         TableRow.LayoutParams params4 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
         params4.gravity = Gravity.CENTER;
         delete2.setLayoutParams(params4);
-        String name =sc1.getText().toString();
-        String value = sc2.getText().toString();
-        Product_Specification product_specification = new Product_Specification(name,value);
-        product_specifications.add(product_specification);
+         name1 =sc1.getText().toString();
+         value1 = sc2.getText().toString();
+
 
         tableRow.addView(sc1);
         tableRow.addView(sc2);
