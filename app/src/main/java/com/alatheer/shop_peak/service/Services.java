@@ -84,7 +84,7 @@ public interface Services {
     Call<RatingModel2>Add_Product2(@Part("store_id_fk")RequestBody user_id,
                                    @Part("sanf_code")RequestBody sanf_code,
                                    @Part("sanf_name")RequestBody sanf_name,
-                                   @Part("main_tansef")RequestBody main_category,
+                                   @Part("main_tasnef")RequestBody main_category,
                                    @Part("sub_tasnef")RequestBody sub_category,
                                    @Part("price_after_dis")RequestBody price_after_discount,
                                    @Part("price_before_dis")RequestBody price_before_discount,
@@ -92,8 +92,9 @@ public interface Services {
                                    @Part MultipartBody.Part main_image,
                                    @Part("items[]")List<RequestBody> items,
                                    @Part("descriptions[]")List<RequestBody> descriptions,
-                                   @Part("colors[]")List<RequestBody> colors,
-                                   @Part List<MultipartBody.Part> imgs);
+                                   @Part List<MultipartBody.Part> images,
+                                   @Part("colors[]")List<RequestBody> colors
+                                  );
 
 
 

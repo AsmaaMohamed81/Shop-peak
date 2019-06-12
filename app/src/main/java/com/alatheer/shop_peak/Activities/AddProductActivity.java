@@ -73,6 +73,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Multipart;
+import retrofit2.http.Part;
 
 public class AddProductActivity extends AppCompatActivity {
     ImageView close, main_image, mutiple_image1, mutiple_image2, mutiple_image3, mutiple_image4;
@@ -85,6 +86,8 @@ public class AddProductActivity extends AppCompatActivity {
     String color2;
     ColorPickerDialog pickcolor;
     List<RequestBody>colors;
+    List<String>items;
+    List<String>descriptions;
     List<MultipartBody.Part>images;
     List<RequestBody>names;
     List<RequestBody>values;
@@ -171,6 +174,8 @@ public class AddProductActivity extends AppCompatActivity {
         images = new ArrayList<>();
         names = new ArrayList<>();
         values = new ArrayList<>();
+        items = new ArrayList<>();
+        descriptions = new ArrayList<>();
         //tr1 = findViewById(R.id.table_row1);
         //tr2 = findViewById(R.id.table_row2);
         t1.setColumnStretchable(0, true);
@@ -265,7 +270,8 @@ public class AddProductActivity extends AppCompatActivity {
             public void onClick(View view) {
                 name1 =sc1.getText().toString();
                 value1 = sc2.getText().toString();
-
+                items.add(name1);
+                descriptions.add(value1);
                 color_image_layout.setVisibility(View.VISIBLE);
             }
         });
@@ -582,17 +588,21 @@ public class AddProductActivity extends AppCompatActivity {
         RequestBody Vprice_before_discount = Common.getRequestBodyText(price_before_discount);
         RequestBody Velementdescription = Common.getRequestBodyText(elementdescription);
         MultipartBody.Part main_image = Common.getMultiPart(this,filePath,"main_img");
+        for(String item :items){
+            RequestBody Vname1 = Common.getRequestBodyText(item);
+            names.add(Vname1);
+        }
+        for(String description :descriptions){
+            RequestBody Vvalue = Common.getRequestBodyText(description);
+            values.add(Vvalue);
+        }
         RequestBody Vcolor = Common.getRequestBodyText(color2);
-        RequestBody Vname1 = Common.getRequestBodyText(name1);
-        RequestBody Vvalue1 = Common.getRequestBodyText(value1);
         colors.add(Vcolor);
-        names.add(Vname1);
-        values.add(Vvalue1);
-        MultipartBody.Part img = Common.getMultiPart(this,filePath2,"img");
+        MultipartBody.Part img = Common.getMultiPart(this,filePath2,"images");
         images.add(img);
         Api.getService()
                 .Add_Product2(Vid,Vnumber,Vname,Vmain_id,Vsub_id,Vprice_after_discount,Vprice_before_discount,Velementdescription,
-                main_image,names,values,colors,images).enqueue(new Callback<RatingModel2>() {
+                main_image,names,values,images,colors).enqueue(new Callback<RatingModel2>() {
             @Override
             public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
                 if(response.isSuccessful()){
