@@ -165,5 +165,9 @@ public interface Services {
     Call<RatingModel2> delete_flow(@Field("store_id_fk") String sanf_id_fk,
                                    @Field("client_id_fk") String client_id_fk
     );
+
+
+    @GET("Api/get_offer_products/{offer_id}")
+    Call<List<HomeModel>> get_offer_products(@Path("offer_id") String offer_id);
 }
 

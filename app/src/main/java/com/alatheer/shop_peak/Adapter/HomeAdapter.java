@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.alatheer.shop_peak.Activities.AddProductActivity;
 import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.BuildConfig;
 import com.alatheer.shop_peak.Local.Favorite_Database;
@@ -51,7 +52,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     public HomeAdapter(List<HomeModel> listofhome, Context context) {
         this.listofhome = listofhome;
         this.context = context;
-        this.mainActivity = (MainActivity) context;
     }
 
     @NonNull
@@ -105,7 +105,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                holder.itemView.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
-                       mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
+
+                       if (context instanceof AddProductActivity){
+
+
+                           mainActivity=(MainActivity) context;
+                           mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
+
+
+                       }
+
                    }
                });
 
@@ -115,31 +124,59 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                holder.itemView.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
-                       mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
+
+                       if (context instanceof AddProductActivity){
+
+
+                           mainActivity=(MainActivity) context;
+                           mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
+
+
+                       }
                    }
                });
            }
+
+        if (context instanceof AddProductActivity){
+
+
+            mainActivity=(MainActivity) context;
+            mainActivity.sendLink(link);
             mainActivity.passdata(sanf_name, listofhome);
+
+        }
+
+
 
         holder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int pos=holder.getAdapterPosition();
+
+                if (context instanceof AddProductActivity){
+
+
+                    mainActivity=(MainActivity) context;
+                    int pos=holder.getAdapterPosition();
 
 
 
-                if (holder.fav.isChecked()) {
-                    accepted = true;
+                    if (holder.fav.isChecked()) {
+                        accepted = true;
 
-                    mainActivity.addfavPos(pos);
-                    Log.e("add_to_favorite","true");
-                } else {
-                    accepted = false;
+                        mainActivity.addfavPos(pos);
+                        Log.e("add_to_favorite","true");
+                    } else {
+                        accepted = false;
 
-                    mainActivity.deletfavPos(pos);
+                        mainActivity.deletfavPos(pos);
 
-                    Log.e("delete_from_favorite","true");
+                        Log.e("delete_from_favorite","true");
+                    }
+
                 }
+
+
+
             }
         });
         holder.share.setOnClickListener(new View.OnClickListener() {
@@ -159,9 +196,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             @Override
             public void onClick(View view) {
 
-                 model=listofhome.get(position);
 
-                mainActivity.profilePos(model);
+                if (context instanceof AddProductActivity){
+
+
+                    mainActivity=(MainActivity) context;
+                    model=listofhome.get(position);
+
+                    mainActivity.profilePos(model);
+
+                }
+
+
 
 
             }
@@ -173,38 +219,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         return listofhome.size();
     }
 
-    /* @Override
-     public Filter getFilter() {
-         return homefilter;
-     }
 
-     private Filter homefilter = new Filter() {
-         @Override
-         protected FilterResults performFiltering(CharSequence constraint) {
-             List<HomeModel> filterlist = new ArrayList<>();
-             if (constraint == null || constraint.length() == 0) {
-                 filterlist.addAll(full_list_ofhome);
-             } else {
-                 String filterpattern = constraint.toString().toLowerCase().trim();
-                 for (HomeModel homeModel : full_list_ofhome) {
-                     if (homeModel.getProduct_title().toLowerCase().contains(filterpattern)||
-                             homeModel.getSize().toLowerCase().contains(filterpattern)
-                             || homeModel.getGender().toLowerCase().contains(filterpattern)) {
-                         filterlist.add(homeModel);
-                     }
-                 }
-             }
-             FilterResults results = new FilterResults();
-             results.values = filterlist;
-             return results;
-         }
-         @Override
-         protected void publishResults(CharSequence constraint, FilterResults results) {
-             listofhome.clear();
-             listofhome.addAll((List) results.values);
-             notifyDataSetChanged();
-         }
-     };*/
     class Image2holder extends RecyclerView.ViewHolder{
         ImageView share;
         CheckBox fav;
