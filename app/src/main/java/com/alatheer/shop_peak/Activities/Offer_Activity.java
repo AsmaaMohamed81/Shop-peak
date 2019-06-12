@@ -5,14 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.alatheer.shop_peak.Adapter.AllOfferAdapter;
 import com.alatheer.shop_peak.Adapter.HomeAdapter;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.service.Api;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +23,7 @@ public class Offer_Activity extends AppCompatActivity {
 
     RecyclerView recycler_offer;
 
-    HomeAdapter homeAdapter;
+    AllOfferAdapter allOfferAdapter;
 
     List<HomeModel> homeModelList;
 
@@ -68,7 +66,7 @@ public class Offer_Activity extends AppCompatActivity {
                             if (response.body().size()>0){
 
                                 homeModelList.addAll(response.body());
-                                homeAdapter.notifyDataSetChanged();
+                                allOfferAdapter.notifyDataSetChanged();
                             }
 
                         }
@@ -84,7 +82,7 @@ public class Offer_Activity extends AppCompatActivity {
     private void initrecycle() {
         recycler_offer.setLayoutManager(new LinearLayoutManager(this));
         recycler_offer.setHasFixedSize(true);
-        homeAdapter=new HomeAdapter(homeModelList,this);
-        recycler_offer.setAdapter(homeAdapter);
+        allOfferAdapter =new AllOfferAdapter(homeModelList,this);
+        recycler_offer.setAdapter(allOfferAdapter);
     }
 }

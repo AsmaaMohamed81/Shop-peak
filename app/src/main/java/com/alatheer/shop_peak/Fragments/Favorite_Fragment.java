@@ -125,9 +125,12 @@ public class Favorite_Fragment extends android.app.Fragment {
                                 favoriteAdapter.notifyDataSetChanged();
                                 txt_no.setVisibility(View.GONE);
 
+                            }else {
+
+                                txt_no.setVisibility(View.VISIBLE);
+
                             }
 
-                            txt_no.setVisibility(View.VISIBLE);
                         }
                     }
 

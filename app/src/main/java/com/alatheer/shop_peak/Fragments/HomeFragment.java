@@ -114,11 +114,14 @@ public class HomeFragment extends android.app.Fragment {
             }
         });
 
-        get_all_product_list();
 
         recyclerView2 = v.findViewById(R.id.recycler_home);
         progressBar = v.findViewById(R.id.progBar);
         txt_no = v.findViewById(R.id.tv_no);
+
+
+
+
 
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
 
@@ -190,6 +193,8 @@ public class HomeFragment extends android.app.Fragment {
                 return false;
             }
         });*/
+
+        get_all_product_list();
     }
 
     public void get_offers_list() {
@@ -227,7 +232,9 @@ public class HomeFragment extends android.app.Fragment {
         }else {
             user_id="0";
         }
-        Api.getService().get_all_products(user_id).enqueue(new Callback<List<HomeModel>>() {
+                 Api
+                .getService()
+                .get_all_products(user_id).enqueue(new Callback<List<HomeModel>>() {
             @Override
             public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
 
@@ -238,15 +245,19 @@ public class HomeFragment extends android.app.Fragment {
 
                     if (response.body().size() > 0) {
 
+
+                        txt_no.setVisibility(View.GONE);
                         homelist.addAll(response.body());
                         homeAdapter.notifyDataSetChanged();
 
-                        txt_no.setVisibility(View.GONE);
 
+
+                    }else {
+
+                        txt_no.setVisibility(View.VISIBLE);
 
                     }
 
-                    txt_no.setVisibility(View.VISIBLE);
                 }
 
 
