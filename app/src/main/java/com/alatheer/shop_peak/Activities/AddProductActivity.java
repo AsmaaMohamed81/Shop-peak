@@ -595,6 +595,7 @@ public class AddProductActivity extends AppCompatActivity {
         for(String description :descriptions){
             RequestBody Vvalue = Common.getRequestBodyText(description);
             values.add(Vvalue);
+
         }
         RequestBody Vcolor = Common.getRequestBodyText(color2);
         colors.add(Vcolor);
