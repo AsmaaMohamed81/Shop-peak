@@ -519,7 +519,10 @@ public class AddProductActivity extends AppCompatActivity {
                 !TextUtils.isEmpty(name) &&
                 !TextUtils.isEmpty(priceafter_discount) &&
                 !TextUtils.isEmpty(pricebefore_discount) &&
-                !TextUtils.isEmpty(elementdescription)
+                !TextUtils.isEmpty(elementdescription) &&
+                main_id !=null &&
+                sub_id !=null &&
+                add_main_image.isClickable()
                 ) {
 
 
