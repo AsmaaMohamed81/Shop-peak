@@ -134,6 +134,8 @@ public class AddProductActivity extends AppCompatActivity {
 
     EditText sc1,sc2;
 
+     TableLayout tableLayout;
+
 
 
     @Override
@@ -206,6 +208,18 @@ public class AddProductActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Add_row();
 
+
+
+
+                items.add(name1);
+                descriptions.add(value1);
+
+                Log.d("asmaaa", "onClick: "+name1);
+                Log.d("asmaaa", "onClick: "+value1);
+
+
+
+
             }
         });
         add_main_image.setOnClickListener(new View.OnClickListener() {
@@ -268,10 +282,47 @@ public class AddProductActivity extends AppCompatActivity {
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                name1 =sc1.getText().toString();
-                value1 = sc2.getText().toString();
-                items.add(name1);
-                descriptions.add(value1);
+//                name1 =sc1.getText().toString();
+//                value1 = sc2.getText().toString();
+
+//                for (int i = 0; i < tableLayout.getChildCount(); i++) {
+//
+//                    TableRow mRow = (TableRow) tableLayout.getChildAt(i);
+//
+//
+//                    for (int y = 0; y < mRow.getChildCount(); y++) {
+//
+//
+//                        items.add(mRow.getChildAt(y).toString());
+//                    }
+//                }
+
+
+
+
+                for (int i = 0; i < tableLayout.getChildCount(); i++) {
+                    View child = tableLayout.getChildAt(i);
+
+                    if (child instanceof TableRow) {
+                        TableRow row = (TableRow) child;
+
+
+
+
+                        for (int x = 0; x < row.getChildCount(); x++) {
+                            //View view = row.getChildAt(x);
+                            EditText text = (EditText) row.getChildAt(x); // get child index on particular row
+
+
+                            String title = text.getText().toString();
+                            Log.i("Value", title);
+
+                            items.add(title);
+                        }
+                    }}
+
+                Log.d("item", "onClick: "+items.size());
+
                 color_image_layout.setVisibility(View.VISIBLE);
             }
         });
@@ -591,6 +642,7 @@ public class AddProductActivity extends AppCompatActivity {
         RequestBody Vprice_before_discount = Common.getRequestBodyText(price_before_discount);
         RequestBody Velementdescription = Common.getRequestBodyText(elementdescription);
         MultipartBody.Part main_image = Common.getMultiPart(this,filePath,"main_img");
+
         for(String item :items){
             RequestBody Vname1 = Common.getRequestBodyText(item);
             names.add(Vname1);
@@ -686,7 +738,7 @@ public class AddProductActivity extends AppCompatActivity {
 
     public void Add_row() {
 
-        final TableLayout tableLayout = (TableLayout)findViewById(R.id.table);
+         tableLayout = (TableLayout)findViewById(R.id.table);
 
         context = getApplicationContext();
 
@@ -702,7 +754,7 @@ public class AddProductActivity extends AppCompatActivity {
          sc1=new EditText(context);
          sc2=new EditText(context);
 
-        ImageButton delete2 = new ImageButton(context);
+//        ImageButton delete2 = new ImageButton(context);
 
 
 
@@ -712,7 +764,7 @@ public class AddProductActivity extends AppCompatActivity {
         sc1.setBackground(getDrawable(R.drawable.element_txt));
         sc2.setBackground(getDrawable(R.drawable.element_txt));
 
-        delete2.setBackground(getDrawable(R.drawable.ic_close_black_24dp));
+//        delete2.setBackground(getDrawable(R.drawable.ic_close_black_24dp));
 
 
 
@@ -725,26 +777,32 @@ public class AddProductActivity extends AppCompatActivity {
         sc2.setTextSize(20);
         TableRow.LayoutParams params4 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
         params4.gravity = Gravity.CENTER;
-        delete2.setLayoutParams(params4);
+//        delete2.setLayoutParams(params4);
 
 
 
 
         tableRow.addView(sc1);
         tableRow.addView(sc2);
-        tableRow.addView(delete2);
+//        tableRow.addView(delete2);
 
         tableLayout.addView(tableRow);
 
 
 
-        delete2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tableLayout.removeView(tableRow);
+        name1 =sc1.getText().toString();
+        value1 = sc2.getText().toString();
 
-            }
-        });
+
+
+
+//        delete2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                tableLayout.removeView(tableRow);
+//
+//            }
+//        });
     }
 
     public void delete_row() {
