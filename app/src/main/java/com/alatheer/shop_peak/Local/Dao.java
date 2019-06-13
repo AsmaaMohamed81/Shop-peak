@@ -20,15 +20,13 @@ import java.util.List;
 public interface Dao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
      void addproduct(OrderItemList orderItemList);
-    @Query("update orders set sanf_amount = sanf_amount+1 where id=:id ")
-     void update(int id);
-    @Query("select * from orders")
+    @Query("select * from morders")
          List<OrderItemList> getdata();
-    @Query("delete from orders")
+    @Query("delete from morders")
      void deleteproduct();
 
-    @Query("delete from orders where id=:id")
+    @Query("delete from morders where sanf_id_fk=:id")
     void Delete_Item(int id);
     @Update
-     void editproduct(OrderItemList basketModel);
+    void editproduct(OrderItemList basketModel);
 }
