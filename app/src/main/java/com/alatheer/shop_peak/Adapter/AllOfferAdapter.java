@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.MainActivity;
+import com.alatheer.shop_peak.Activities.Offer_Activity;
 import com.alatheer.shop_peak.Fragments.Favorite_Fragment;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
@@ -25,13 +26,13 @@ public class AllOfferAdapter extends RecyclerView.Adapter<AllOfferAdapter.MyHold
     Context context;
     HomeModel homeModel;
     long id;
-   MainActivity mainActivity;
+    Offer_Activity offer_activity;
 
 
     public AllOfferAdapter(List<HomeModel> listofhome, Context context) {
         this.listofhome = listofhome;
         this.context = context;
-        mainActivity = (MainActivity) context;
+        offer_activity = (Offer_Activity) context;
 
 
     }
@@ -49,24 +50,24 @@ public class AllOfferAdapter extends RecyclerView.Adapter<AllOfferAdapter.MyHold
 
 
 
-            homeModel = listofhome.get(i);
-            myHolder.BindData(homeModel);
+        homeModel = listofhome.get(i);
+        myHolder.BindData(homeModel);
 
-            myHolder.Fav.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
+        myHolder.Fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
-                    homeModel = listofhome.get(i);
 
-                    int pos=myHolder.getAdapterPosition();
+
+                homeModel = listofhome.get(i);
+
+                int pos=myHolder.getAdapterPosition();
 
 //                    favorite_fragment.pos(pos,homeModel.id);
 
-                }
-            });
+            }
+        });
         final String details = listofhome.get(i).details;
         final List<Item> itemList = listofhome.get(i).items;
         final String price = (String) listofhome.get(i).priceAfterDis;
@@ -81,7 +82,13 @@ public class AllOfferAdapter extends RecyclerView.Adapter<AllOfferAdapter.MyHold
         final String link = listofhome.get(i).link;
         final String like = listofhome.get(i).getLike();
         final String[] image_resources = {listofhome.get(i).mainImg};
-        mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
+        myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                offer_activity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
+            }
+        });
+
 
 
     }
@@ -119,8 +126,6 @@ public class AllOfferAdapter extends RecyclerView.Adapter<AllOfferAdapter.MyHold
 
         }
     }
-
-
 
 
 

@@ -91,6 +91,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Button btn_add_basket;
 
     String Vlat,Vlang;
+    int flag;
 
 
 
@@ -117,9 +118,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         lat=findViewById(R.id.lat);
         log=findViewById(R.id.log);
         btn_continue=findViewById(R.id.btn_continue);
-        btn_add_basket = findViewById(R.id.btn_add_basket);
         final Animation animation= AnimationUtils.loadAnimation(this,R.anim.press_anim);
-
+        Intent intent =getIntent();
+        flag = intent.getIntExtra("flag",0);
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,11 +129,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 Vlat=lat.getText().toString();
                 Vlang=log.getText().toString();
-
-                Intent intent=new Intent(MapsActivity.this,Vender_Signup_Activity.class);
-                intent.putExtra("lat",Vlat);
-                intent.putExtra("lang",Vlang);
-                startActivity(intent);
+                if(flag == 1){
+                    Intent intent=new Intent(MapsActivity.this,Basket_Activity.class);
+                    intent.putExtra("lat",Vlat);
+                    intent.putExtra("lang",Vlang);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(MapsActivity.this, Vender_Signup_Activity.class);
+                    intent.putExtra("lat", Vlat);
+                    intent.putExtra("lang", Vlang);
+                    startActivity(intent);
+                }
             }
         });
         btn_add_basket.setOnClickListener(new View.OnClickListener() {

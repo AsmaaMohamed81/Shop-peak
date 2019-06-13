@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Activities.Offer_Activity;
+import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.OfferModel;
 import com.alatheer.shop_peak.Model.OfferModel1;
 import com.alatheer.shop_peak.Model.ProfileModel;

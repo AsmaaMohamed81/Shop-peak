@@ -84,7 +84,9 @@ public class Basket_Activity extends AppCompatActivity {
         add_lat_lon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Basket_Activity.this,MapsActivity.class));
+                Intent intent =new Intent(Basket_Activity.this,MapsActivity.class);
+                intent.putExtra("flag",1);
+                startActivity(intent);
             }
         });
         add.setOnClickListener(new View.OnClickListener() {

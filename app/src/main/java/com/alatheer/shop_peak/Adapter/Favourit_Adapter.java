@@ -89,15 +89,13 @@ public class Favourit_Adapter extends RecyclerView.Adapter {
             final String link = listofhome.get(position).link;
             final String like = listofhome.get(position).getLike();
             final String[] image_resources = {listofhome.get(position).mainImg};
-            if (like.equals("1")){
+            myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
+                }
+            });
 
-                myHolder.Fav.setChecked(true);
-            }else {
-
-                myHolder.Fav.setChecked(false);
-
-            }
-            mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
 
 
         }
@@ -110,8 +108,7 @@ public class Favourit_Adapter extends RecyclerView.Adapter {
 
     class MyHolder extends RecyclerView.ViewHolder{
         private FrameLayout fl_discount_container;
-        private ImageView image;
-        private CheckBox Fav;
+        private ImageView image,Fav;
         private TextView tv_discount,tv_name,tv_before_discount,tv_after_discount;
 
         public MyHolder(View itemView) {
