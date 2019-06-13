@@ -146,7 +146,7 @@ public class Fragment_Details extends Fragment {
         //details_des=findViewById(R.id.details_des);
         details_price = view.findViewById(R.id.details_price);
         fab_favorite = view.findViewById(R.id.fab_favorite);
-        myAppDatabase = Room.databaseBuilder(getApplicationContext(), MyAppDatabase.class, "order_db").allowMainThreadQueries().build();
+        myAppDatabase = Room.databaseBuilder(getApplicationContext(), MyAppDatabase.class, "myorders_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(), Favorite_Database.class, "favoritedb").allowMainThreadQueries().build();
         getDataFromIntent();
         txt_before_discount.setPaintFlags(txt_before_discount.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
@@ -190,7 +190,6 @@ public class Fragment_Details extends Fragment {
                 try {
                     makeFlyAnimation(viewPager);
                     OrderItemList orderItemList = new OrderItemList();
-                    orderItemList.setId(Integer.parseInt(order_num.getText().toString()));
                     orderItemList.withSanfAmount(counter.getText().toString());
                     orderItemList.withSanfIdFk(sanf_id);
                     orderItemList.withSanfPrice(price);
@@ -198,7 +197,14 @@ public class Fragment_Details extends Fragment {
                     myAppDatabase.dao().addproduct(orderItemList);
                     Toast.makeText(getActivity(), "data added successfully", Toast.LENGTH_SHORT).show();
 
+
                 } catch (Exception e) {
+                    OrderItemList orderItemList = new OrderItemList();
+                    orderItemList.withSanfAmount(counter.getText().toString());
+                    orderItemList.withSanfIdFk(sanf_id);
+                    orderItemList.withSanfPrice(price);
+                    orderItemList.withStoreIdFk(store_id);
+                    myAppDatabase.dao().editproduct(orderItemList);
                     Log.v("aaaaa", e.getMessage());
                 }
 

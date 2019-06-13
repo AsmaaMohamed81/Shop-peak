@@ -62,7 +62,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
     public void onBindViewHolder(@NonNull final BasketHolder holder, final int position) {
         myAppDatabase = Room.databaseBuilder(getApplicationContext(), MyAppDatabase.class, "productdb").allowMainThreadQueries().build();
         holder.basket_title.setText(basketModelList.get(position).sanfIdFk);
-        //Picasso.with(context).load(basketModelList.get(position).getImg()).into(holder.title_img);
+        Picasso.with(context).load(basketModelList.get(position).sanfPrice).into(holder.title_img);
         holder.counter.setText(basketModelList.get(position).sanfAmount);
         holder.delete_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +73,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "id"+basketModelList.get(position).getId()+"", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "id"+basketModelList.get(position).getId()+"", Toast.LENGTH_SHORT).show();
                 basket_activity.senddata(position);
 
             }

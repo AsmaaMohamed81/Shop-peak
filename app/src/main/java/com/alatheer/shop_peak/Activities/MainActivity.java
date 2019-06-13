@@ -1,6 +1,7 @@
 package com.alatheer.shop_peak.Activities;
 
 import android.app.ProgressDialog;
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -35,6 +36,7 @@ import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Local.Favorite_Database;
+import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.NavigationModel;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView, navigationView2;
     ImageView img_menu;
     Toolbar toolbar;
+    MyAppDatabase myAppDatabase;
     BottomNavigationView bottomNavigationView, bottomNavigationView2;
     NavigationAdapter navigationAdapter;
     Search_Navigation_Adapter search_navigation_adapter;
@@ -119,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         profile_img = headview.findViewById(R.id.profile_img);
         tv_username = headview.findViewById(R.id.txtname);
         login_register = headview.findViewById(R.id.tv_login_register);
+        myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"myorders_db").allowMainThreadQueries().build();
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -371,6 +375,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_logout:
                 mPrefs.ClearData(MainActivity.this);
                 LoginManager.getInstance().logOut();
+                myAppDatabase.dao().deleteproduct();
                 startActivity(new Intent(MainActivity.this, Login_Activity.class));
 
                 Animatoo.animateInAndOut(MainActivity.this);
