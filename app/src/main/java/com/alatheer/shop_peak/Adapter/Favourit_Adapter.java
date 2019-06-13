@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,9 @@ public class Favourit_Adapter extends RecyclerView.Adapter {
             final String[]colors= listofhome.get(position).colors;
             final String link = listofhome.get(position).link;
             final String like = listofhome.get(position).getLike();
+
+
+            Log.d("asmaa", "onBindViewHolder: "+store_id);
             final String[] image_resources = {listofhome.get(position).mainImg};
             myHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -335,7 +335,6 @@ public class Fragment_Details extends Fragment {
         price_before_dis = intent.getStringExtra("price_before_dis");
         sanf_id = intent.getStringExtra("id");
         store_id =intent.getStringExtra("store_id");
-
         like =intent.getStringExtra("like");
 
 
