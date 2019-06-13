@@ -134,7 +134,7 @@ public class Fragment_Details extends Fragment {
         minus_circle = view.findViewById(R.id.remove_circle);
         counter = view.findViewById(R.id.counter);
         shopping_cart = view.findViewById(R.id.shopping_cart);
-        fab_shopping = view.findViewById(R.id.fab_shopping_cart);
+        //fab_shopping = view.findViewById(R.id.fab_shopping_cart);
         cart_num = view.findViewById(R.id.cart_num);
         addcart = view.findViewById(R.id.add_cart);
         txt_before_discount = view.findViewById(R.id.txt_price_before_discount);
@@ -228,12 +228,12 @@ public class Fragment_Details extends Fragment {
             }
         });
 
-        if (myAppDatabase.dao().getdata().size() > 0) {
+        /*if (myAppDatabase.dao().getdata().size() > 0) {
             tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
         } else {
             tv_not_budget.setText("0");
 
-        }
+        }*/
 
 
 

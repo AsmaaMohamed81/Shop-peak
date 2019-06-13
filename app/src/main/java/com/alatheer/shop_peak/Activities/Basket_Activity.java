@@ -97,6 +97,7 @@ public class Basket_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 BasketModel2 basketModel2 =new BasketModel2(type,basketModelList,USER_ID,name,address
                 ,lat,lon,phone);
+
                 //Intent intent = new Intent(Basket_Activity.this,MapsActivity.class);
                 //intent.putExtra("type",type);
                 //intent.putExtra("user_id",USER_ID);
