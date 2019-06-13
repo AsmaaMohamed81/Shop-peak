@@ -482,6 +482,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        flag = intent.getIntExtra("flag", 0);
 
 
+        type=userModel1.getType();
+        Log.d(TAG, "getDataIntent: "+type);
             if (type.equals("1")) {
                 bottomNavigationView2.setVisibility(View.VISIBLE);
                 bottomNavigationView.setVisibility(View.GONE);
