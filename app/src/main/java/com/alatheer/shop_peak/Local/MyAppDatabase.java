@@ -14,4 +14,5 @@ import com.alatheer.shop_peak.Model.ProfileModel;
 @Database(entities = {OrderItemList.class},version = 1)
 public abstract class MyAppDatabase extends RoomDatabase {
     public abstract Dao dao();
+
 }

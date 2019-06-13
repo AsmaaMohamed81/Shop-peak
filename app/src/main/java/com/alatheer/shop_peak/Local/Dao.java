@@ -23,6 +23,7 @@ public interface Dao {
     @Query("select * from morders")
          List<OrderItemList> getdata();
     @Query("delete from morders")
+
      void deleteproduct();
 
     @Query("delete from morders where sanf_id_fk=:id")

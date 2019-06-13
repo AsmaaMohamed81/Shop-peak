@@ -291,6 +291,7 @@ public class HomeFragment extends android.app.Fragment {
         });
         super.onCreateOptionsMenu(menu, inflater);
     }*/
+
    private boolean isConnected() {
        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
