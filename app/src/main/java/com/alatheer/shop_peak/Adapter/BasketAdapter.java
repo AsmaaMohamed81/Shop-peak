@@ -67,6 +67,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
         count = Integer.parseInt(holder.counter.getText().toString());
         holder.plus_circle.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
                 holder.counter.setText(count++);
                 OrderItemList orderItemList = new OrderItemList();

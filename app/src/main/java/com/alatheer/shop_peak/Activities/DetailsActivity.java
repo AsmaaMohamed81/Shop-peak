@@ -149,6 +149,7 @@ public class DetailsActivity extends AppCompatActivity {
                 startActivity(intent);
                 Animatoo.animateDiagonal(DetailsActivity.this);
 
+
             }
         });
 

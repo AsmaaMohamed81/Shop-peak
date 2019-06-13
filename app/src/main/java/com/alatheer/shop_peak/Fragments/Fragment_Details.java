@@ -149,6 +149,7 @@ public class Fragment_Details extends Fragment {
         myAppDatabase = Room.databaseBuilder(getApplicationContext(), MyAppDatabase.class, "myorders_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(), Favorite_Database.class, "favoritedb").allowMainThreadQueries().build();
         getDataFromIntent();
+
         txt_before_discount.setPaintFlags(txt_before_discount.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
         txt_before_discount.setText(price_before_dis);
         Log.v("color",colors.length+"");
