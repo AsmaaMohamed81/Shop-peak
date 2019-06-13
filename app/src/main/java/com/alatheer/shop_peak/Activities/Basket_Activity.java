@@ -87,6 +87,7 @@ public class Basket_Activity extends AppCompatActivity {
                 Intent intent =new Intent(Basket_Activity.this,MapsActivity.class);
                 intent.putExtra("flag",1);
                 startActivity(intent);
+
             }
         });
         add.setOnClickListener(new View.OnClickListener() {

@@ -42,6 +42,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     Favorite_Database favoriteDatabase;
     Favorite_Fragment favorite_fragment;
 
+
     public FavoriteAdapter(Context context, List<BasketModel> basketModelList, Favorite_Fragment favorite_fragment) {
         this.context = context;
         this.basketModelList = basketModelList;
