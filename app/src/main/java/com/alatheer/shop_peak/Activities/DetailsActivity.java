@@ -148,6 +148,7 @@ public class DetailsActivity extends AppCompatActivity {
                 Intent intent=new Intent(DetailsActivity.this,Basket_Activity.class);
                 startActivity(intent);
                 Animatoo.animateDiagonal(DetailsActivity.this);
+
             }
         });
 
