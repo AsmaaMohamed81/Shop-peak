@@ -41,6 +41,33 @@ public class OrderItemList  {
     @Expose
     public String sanfPrice;
 
+    public String getSanfImage() {
+        return sanfImage;
+    }
+
+    public void setSanfImage(String sanfImage) {
+        this.sanfImage = sanfImage;
+    }
+
+    @ColumnInfo(name = "sanf_image")
+    @SerializedName("sanf_Image")
+    @Expose
+    public String sanfImage;
+
+    public String getSanfTitle() {
+        return sanfTitle;
+    }
+
+    public void setSanfTitle(String sanfTitle) {
+        this.sanfTitle = sanfTitle;
+    }
+
+    @ColumnInfo(name = "sanf_title")
+    @SerializedName("sanf_Image")
+
+    @Expose
+    public String sanfTitle;
+
     public OrderItemList() {
     }
 

@@ -61,8 +61,8 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
     @Override
     public void onBindViewHolder(@NonNull final BasketHolder holder, final int position) {
         myAppDatabase = Room.databaseBuilder(getApplicationContext(), MyAppDatabase.class, "productdb").allowMainThreadQueries().build();
-        holder.basket_title.setText(basketModelList.get(position).sanfIdFk);
-        Picasso.with(context).load(basketModelList.get(position).sanfPrice).into(holder.title_img);
+        holder.basket_title.setText(basketModelList.get(position).getSanfTitle());
+        Picasso.with(context).load(basketModelList.get(position).getSanfImage()).into(holder.title_img);
         holder.counter.setText(basketModelList.get(position).sanfAmount);
         count = Integer.parseInt(holder.counter.getText().toString());
         holder.plus_circle.setOnClickListener(new View.OnClickListener() {
@@ -74,8 +74,9 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
                 orderItemList.withSanfIdFk(basketModelList.get(position).sanfIdFk);
                 orderItemList.withSanfPrice(basketModelList.get(position).sanfPrice);
                 orderItemList.withStoreIdFk(basketModelList.get(position).storeIdFk);
+                orderItemList.setSanfImage(basketModelList.get(position).getSanfImage());
+                orderItemList.setSanfTitle(basketModelList.get(position).sanfTitle);
                 myAppDatabase.dao().editproduct(orderItemList);
-
             }
         });
         holder.plus_circle.setOnClickListener(new View.OnClickListener() {

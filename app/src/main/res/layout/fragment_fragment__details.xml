@@ -132,23 +132,18 @@
         android:layout_above="@+id/relative"
         android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content">
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_shopping_cart"
-            android:layout_alignParentEnd="true"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_shopping_cart"
-            app:fabCustomSize="50dp"
-            android:backgroundTint="@color/white"
-            app:borderWidth="3dp"
-            android:layout_marginEnd="20dp" />
+        <ImageView
+            android:id="@+id/shopping_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_shopping_cart" />
         <TextView
             android:id="@+id/tv_not_budget"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_gravity="right"
+            android:layout_gravity="center"
             android:layout_margin="9dp"
             android:background="@drawable/not_budget_bg"
             android:gravity="center"

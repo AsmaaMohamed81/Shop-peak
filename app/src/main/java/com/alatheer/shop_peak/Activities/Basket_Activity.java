@@ -29,6 +29,7 @@ import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -96,12 +97,15 @@ public class Basket_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 BasketModel2 basketModel2 =new BasketModel2(type,basketModelList,USER_ID,name,address
                 ,lat,lon,phone);
-                //basketModel3.setUserId("31");
-                //basketModel3.withAddress("شارع الاستاد");
-               // basketModel3.withClientName("mohamed hamada");
-                //basketModel3.withPhone("01065242773");
-                //basketModel3.withUserLang("31");
-                //basketModel3.withUserLat("31");
+                //Intent intent = new Intent(Basket_Activity.this,MapsActivity.class);
+                //intent.putExtra("type",type);
+                //intent.putExtra("user_id",USER_ID);
+                //intent.putExtra("name",name);
+                //intent.putExtra("address",address);
+                //intent.putExtra("flag",1);
+                //intent.putExtra("list",(Serializable) basketModelList);
+                //intent.putExtra("phone",phone);
+
                 //basketModel2.withOrderItemList(myAppDatabase.dao().getdata());
                 Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
                     @Override

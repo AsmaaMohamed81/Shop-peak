@@ -92,7 +92,7 @@ public class Fragment_Details extends Fragment {
     FrameLayout destView;
     String first_item_String;
     PassData passData;
-    String sanf_id,store_id;
+    String sanf_id,store_id,sanf_image;
     List<OrderItemList> orders_List;
     RecyclerView color_recycler;
     RecyclerView.LayoutManager layoutManager;
@@ -194,6 +194,8 @@ public class Fragment_Details extends Fragment {
                     orderItemList.withSanfIdFk(sanf_id);
                     orderItemList.withSanfPrice(price);
                     orderItemList.withStoreIdFk(store_id);
+                    orderItemList.setSanfImage(image[0]);
+                    orderItemList.setSanfTitle(sanf_name);
                     myAppDatabase.dao().addproduct(orderItemList);
                     Toast.makeText(getActivity(), "data added successfully", Toast.LENGTH_SHORT).show();
 
@@ -204,6 +206,8 @@ public class Fragment_Details extends Fragment {
                     orderItemList.withSanfIdFk(sanf_id);
                     orderItemList.withSanfPrice(price);
                     orderItemList.withStoreIdFk(store_id);
+                    orderItemList.setSanfImage(image[0]);
+                    orderItemList.setSanfTitle(sanf_name);
                     myAppDatabase.dao().editproduct(orderItemList);
                     Log.v("aaaaa", e.getMessage());
 
@@ -212,6 +216,23 @@ public class Fragment_Details extends Fragment {
 
             }
         });
+        shopping_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(),Basket_Activity.class);
+                startActivity(intent);
+                Animatoo.animateDiagonal(getActivity());
+            }
+        });
+
+        if (myAppDatabase.dao().getdata().size() > 0) {
+            tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
+        } else {
+            tv_not_budget.setText("0");
+
+        }
+
+
 
         fab_favorite.setOnClickListener(new View.OnClickListener() {
 
