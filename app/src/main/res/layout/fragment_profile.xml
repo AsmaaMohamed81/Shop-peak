@@ -121,6 +121,7 @@
                    android:layout_height="wrap_content"
                    android:layout_gravity="center_horizontal"
                    android:background="@drawable/edite_profile"
+                   android:visibility="gone"
                    android:text="@string/follow"/>
            </LinearLayout>
        </LinearLayout>

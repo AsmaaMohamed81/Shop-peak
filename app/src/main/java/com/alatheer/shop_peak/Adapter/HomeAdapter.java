@@ -101,33 +101,26 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
 
            final String[] image_resources = {listofhome.get(position).mainImg};
            final String[] image_resources2 =listofhome.get(position).img;
-           if(image_resources2 == null){
+           if(image_resources2.length <1){
                customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
                holder.viewPager.setAdapter(customSwipeAdapter);
                holder.itemView.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
 
-
-                           mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
-
-
-
+                     mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
 
                    }
                });
 
            }else {
-               customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
+               customSwipeAdapter = new CustomSwipeAdapter(image_resources2, context);
                holder.viewPager.setAdapter(customSwipeAdapter);
                holder.itemView.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
 
-
-                           mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
-
-
+                mainActivity.sendHomeItem(image_resources2, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
 
                    }
                });
