@@ -64,6 +64,33 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
         holder.basket_title.setText(basketModelList.get(position).sanfIdFk);
         Picasso.with(context).load(basketModelList.get(position).sanfPrice).into(holder.title_img);
         holder.counter.setText(basketModelList.get(position).sanfAmount);
+        count = Integer.parseInt(holder.counter.getText().toString());
+        holder.plus_circle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.counter.setText(count++);
+                OrderItemList orderItemList = new OrderItemList();
+                orderItemList.withSanfAmount(count+++"");
+                orderItemList.withSanfIdFk(basketModelList.get(position).sanfIdFk);
+                orderItemList.withSanfPrice(basketModelList.get(position).sanfPrice);
+                orderItemList.withStoreIdFk(basketModelList.get(position).storeIdFk);
+                myAppDatabase.dao().editproduct(orderItemList);
+
+            }
+        });
+        holder.plus_circle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.counter.setText(count--+"");
+                OrderItemList orderItemList = new OrderItemList();
+                orderItemList.withSanfAmount(count+"");
+                orderItemList.withSanfIdFk(basketModelList.get(position).sanfIdFk);
+                orderItemList.withSanfPrice(basketModelList.get(position).sanfPrice);
+                orderItemList.withStoreIdFk(basketModelList.get(position).storeIdFk);
+                myAppDatabase.dao().editproduct(orderItemList);
+            }
+        });
+
         holder.delete_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

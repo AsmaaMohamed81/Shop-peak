@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alatheer.shop_peak.Adapter.FollowersAdapter;
-import com.alatheer.shop_peak.Adapter.ItemAdapter;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
