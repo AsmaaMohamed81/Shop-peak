@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Client_Profile_Fragment extends android.app.Fragment{
 
@@ -24,7 +27,9 @@ public class Client_Profile_Fragment extends android.app.Fragment{
 
     UserModel1 userModel1;
 
-    EditText user_name,adress,email;
+    EditText user_name,adress,email,city,govern,phone;
+
+    CircleImageView img_profile;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,7 +53,7 @@ public class Client_Profile_Fragment extends android.app.Fragment{
                         }
                     }).show();
         } else {
-            Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
+
         }
 
 
@@ -57,6 +62,11 @@ public class Client_Profile_Fragment extends android.app.Fragment{
         user_name=view.findViewById(R.id.user_name);
         adress=view.findViewById(R.id.adress);
         email=view.findViewById(R.id.email);
+        city=view.findViewById(R.id.city);
+        govern=view.findViewById(R.id.govern);
+        phone=view.findViewById(R.id.phone);
+        img_profile=view.findViewById(R.id.img_profile);
+
 
 
         preferences=MySharedPreference.getInstance();
@@ -68,9 +78,14 @@ public class Client_Profile_Fragment extends android.app.Fragment{
             user_name.setText(userModel1.getFull_name());
             adress.setText(userModel1.getAddress());
             email.setText(userModel1.getEmail());
+            city.setText(userModel1.getMadina());
+            govern.setText(userModel1.getMohafza());
+            phone.setText(userModel1.getPhone());
+
+            Picasso.with(getActivity()).load(userModel1.getLogo_img()).into(img_profile);
         }else {
 
-            Toast.makeText(getActivity(), "you SHoud Sign First", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "you Shoud Sign First", Toast.LENGTH_SHORT).show();
         }
 
 

@@ -94,7 +94,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<list_cats.Subs> list_cats_sub;
 
     String user_id,name,Logo_img;
-    String type="0";
+    String type,order;
+    String TAG="MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,9 +160,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(userModel1!=null){
 
                  name=userModel1.getFull_name();
-                type=userModel1.getType();
-                Logo_img=userModel1.getLogo_img();
+                 type=userModel1.getType();
+                 Logo_img=userModel1.getLogo_img();
+                 order=userModel1.getSend_order();
 
+
+                Log.d(TAG, "initview: "+type);
+                Log.d(TAG, "initview: "+order);
 
 
             }
@@ -174,7 +179,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             profile_img.setVisibility(View.VISIBLE);
             login_register.setVisibility(View.GONE);
 
-            Picasso.with(this).load(Logo_img).into(profile_img);
+            if (Logo_img!=null) {
+                Picasso.with(this).load(Logo_img).into(profile_img);
+            }else {
+                profile_img.setImageResource(R.mipmap.icon_round);
+            }
 
         }catch (Exception e){
             //String personname=i.getStringExtra("personName");
@@ -368,13 +377,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_join_us:
 
+                Log.d(TAG, "onNavigationItemSelected: "+type);
                 if (type.equals("2")){
 
-                    startActivity(new Intent(MainActivity.this, Vender_Signup_Activity.class));
-                    Animatoo.animateInAndOut(MainActivity.this);
+
+                    if (order.equals("0")){
+
+                        startActivity(new Intent(MainActivity.this, Vender_Signup_Activity.class));
+                        Animatoo.animateInAndOut(MainActivity.this);
+                    }else {
+
+                        Toast.makeText(this, R.string.ordersend, Toast.LENGTH_LONG).show();
+
+                    }
+
                 }else {
 
-                    Toast.makeText(this, "انت منضم الينا بالفعل مرحبا بك", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.youVonder, Toast.LENGTH_LONG).show();
+
+
                 }
 
                 break;

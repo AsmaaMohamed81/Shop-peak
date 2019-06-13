@@ -105,5 +105,6 @@
     <string name="followe">يتابع</string>
     <string name="noproduct">لا يوجد منتجات الان</string>
     <string name="nofav">لا يوجد قائمه لمفضلاتك</string>
-    <string name="ordersend">تم ارسال طلبك للانضمام الينا كا تاجر بنجاح من فضلك انظر</string>
+    <string name="ordersend">تم ارسال طلبك للانضمام الينا كا تاجر بنجاح من فضلك انتظر</string>
+    <string name="youVonder">انت منضم الينا بالفعل مرحبا بك</string>
 </resources>
