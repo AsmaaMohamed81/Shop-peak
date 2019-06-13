@@ -53,6 +53,8 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ImageHolder>
         final String image = list_of_offer.get(position).imgOffer;
         final String title = list_of_offer.get(position).offerTitle;
 
+
+
         final String offerid = list_of_offer.get(position).id;
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

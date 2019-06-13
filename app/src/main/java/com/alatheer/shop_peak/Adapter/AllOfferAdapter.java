@@ -57,9 +57,6 @@ public class AllOfferAdapter extends RecyclerView.Adapter<AllOfferAdapter.MyHold
             @Override
             public void onClick(View v) {
 
-
-
-
                 homeModel = listofhome.get(i);
 
                 int pos=myHolder.getAdapterPosition();
@@ -82,10 +79,14 @@ public class AllOfferAdapter extends RecyclerView.Adapter<AllOfferAdapter.MyHold
         final String link = listofhome.get(i).link;
         final String like = listofhome.get(i).getLike();
         final String[] image_resources = {listofhome.get(i).mainImg};
+
+
+        offer_activity.dataVonder(vender_name,vender_image);
+
         myHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                offer_activity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
+                offer_activity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like,vender_name,vender_image);
             }
         });
 

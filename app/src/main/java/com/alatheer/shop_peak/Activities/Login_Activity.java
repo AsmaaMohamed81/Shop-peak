@@ -108,7 +108,7 @@ public class Login_Activity extends AppCompatActivity {
 
     private void initView() {
 
-        checkBox = findViewById(R.id.check_box);
+//        checkBox = findViewById(R.id.check_box);
         Sign_up = findViewById(R.id.btn_sign);
         edt_email = findViewById(R.id.email);
         edt_password = findViewById(R.id.user_password);
@@ -127,9 +127,9 @@ public class Login_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                WebView mWebview = new WebView(Login_Activity.this);
-                mWebview.loadUrl("www.shop-peak.com");
-                setContentView(mWebview);
+
+              Intent  intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.shop-peak.com/"));
+                startActivity(intent);
             }
         });
 
@@ -198,16 +198,16 @@ public class Login_Activity extends AppCompatActivity {
         final Animation animation2=AnimationUtils.loadAnimation(this,R.anim.fade_in);
 
 
-        checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkBox.isChecked()) {
-                    accepted = true;
-                } else {
-                    accepted = false;
-                }
-            }
-        });
+//        checkBox.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (checkBox.isChecked()) {
+//                    accepted = true;
+//                } else {
+//                    accepted = false;
+//                }
+//            }
+//        });
 
         Sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -341,8 +341,7 @@ public class Login_Activity extends AppCompatActivity {
         passWord = edt_password.getText().toString();
 
         if (!TextUtils.isEmpty(email) &&
-                !TextUtils.isEmpty(passWord) &&
-                accepted) {
+                !TextUtils.isEmpty(passWord) ) {
 
             Common.CloseKeyBoard(this, edt_email);
             edt_email.setError(null);
@@ -371,11 +370,7 @@ public class Login_Activity extends AppCompatActivity {
             }
 
 
-            if (!accepted){
 
-              CreateSnackBar(getString(R.string.accept_terms));
-
-            }
 
 
         }

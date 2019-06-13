@@ -1,6 +1,7 @@
 package com.alatheer.shop_peak.Activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.content.ClipData;
 import android.content.Context;
@@ -660,19 +661,39 @@ public class AddProductActivity extends AppCompatActivity {
         colors.add(Vcolor);
         MultipartBody.Part img = Common.getMultiPart(this,filePath2,"images");
         images.add(img);
+
+        final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.waitt));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
         Api.getService()
-                .Add_Product2(Vid,Vnumber,Vname,Vmain_id,Vsub_id,Vprice_after_discount,Vprice_before_discount,Velementdescription,
-                main_image,names,values,images,colors).enqueue(new Callback<RatingModel2>() {
+                .Add_Product2
+                        (Vid,Vnumber,Vname,Vmain_id,Vsub_id,Vprice_after_discount,Vprice_before_discount,Velementdescription,
+                main_image,names,values,images,colors)
+                .enqueue(new Callback<RatingModel2>() {
             @Override
             public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
-                if(response.isSuccessful()){
-                    Log.v("success",response.message());
+                if (response.isSuccessful()){
+                    dialog.dismiss();
+
+                    if (response.body().getSuccess()==1){
+
+                        Toast.makeText(AddProductActivity.this, "تم ارسال طلبك", Toast.LENGTH_SHORT).show();
+
+                        Log.v("success",response.message());
                     Toast.makeText(AddProductActivity.this, "تم", Toast.LENGTH_SHORT).show();
-                }
+                }}
             }
 
             @Override
             public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+                dialog.dismiss();
+
+
+                Toast.makeText(AddProductActivity.this, "Check Internet", Toast.LENGTH_SHORT).show();
+                Log.v("error",t.getMessage());
 
             }
         });
