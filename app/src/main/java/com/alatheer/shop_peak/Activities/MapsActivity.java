@@ -142,21 +142,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         });
-        btn_add_basket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btn_continue.clearAnimation();
-                btn_continue.startAnimation(animation);
 
-                Vlat=lat.getText().toString();
-                Vlang=log.getText().toString();
-
-                Intent intent=new Intent(MapsActivity.this,Basket_Activity.class);
-                intent.putExtra("lat",Vlat);
-                intent.putExtra("lang",Vlang);
-                startActivity(intent);
-            }
-        });
     }
 
 
