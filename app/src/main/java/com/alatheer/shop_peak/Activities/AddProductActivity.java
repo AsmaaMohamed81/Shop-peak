@@ -692,7 +692,7 @@ public class AddProductActivity extends AppCompatActivity {
                 dialog.dismiss();
 
 
-                Toast.makeText(AddProductActivity.this, "Check Internet", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AddProductActivity.this, "Check Internet", Toast.LENGTH_SHORT).show();
                 Log.v("error",t.getMessage());
 
             }
