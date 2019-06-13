@@ -149,7 +149,6 @@ public class HomeFragment extends android.app.Fragment {
                         }
                     }).show();
         } else {
-            Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
         }
         // ((AppCompatActivity)getActivity()).setSupportActionBar(search);
         //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -267,6 +266,7 @@ public class HomeFragment extends android.app.Fragment {
             public void onFailure(Call<List<HomeModel>> call, Throwable t) {
                 Log.v("lllll", t.getMessage());
                 progressBar.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), "Check You Internet", Toast.LENGTH_SHORT).show();
 
             }
         });

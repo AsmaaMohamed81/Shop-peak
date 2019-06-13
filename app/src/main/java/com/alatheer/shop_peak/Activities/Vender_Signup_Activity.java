@@ -54,6 +54,7 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -65,7 +66,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     EditText shop_name, shop_email, address;
     Spinner governate, city;
     Button add_logo, signup, latlon;
-    ImageView seller_image;
+    CircleImageView seller_image;
     List<Address> addressList;
     Button add_product;
     List<String> cities;
@@ -121,7 +122,6 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         shop_name = findViewById(R.id.shop_name);
         shop_email = findViewById(R.id.shop_email);
-        add_product = findViewById(R.id.btn_add_product);
         address = findViewById(R.id.address);
         latlon = findViewById(R.id.addlat_lon);
         add_logo = findViewById(R.id.add_logo);
@@ -244,12 +244,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
                 Check_ReadPermission(IMG);
             }
         });
-        add_product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Vender_Signup_Activity.this,AddProductActivity.class));
-            }
-        });
+
         seller_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

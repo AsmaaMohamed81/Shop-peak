@@ -26,7 +26,16 @@ public class UserModel1 implements Serializable {
     private String type;
 
     private String logo_img;
+    private String send_order;
 
+
+    public String getSend_order() {
+        return send_order;
+    }
+
+    public void setSend_order(String send_order) {
+        this.send_order = send_order;
+    }
 
     public String getLogo_img() {
         return logo_img;
