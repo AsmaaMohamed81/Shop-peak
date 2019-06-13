@@ -18,6 +18,7 @@ import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
 
@@ -69,22 +70,40 @@ public class main_sub_Adapter extends RecyclerView.Adapter {
             MyHolder myHolder = (MyHolder) MyHolder;
             homeModel = listofhome.get(position);
             myHolder.BindData(homeModel);
+            final String details = listofhome.get(position).details;
+            final List<Item> itemList = listofhome.get(position).items;
+            final String price = (String) listofhome.get(position).priceAfterDis;
+            final String price_before_discount = listofhome.get(position).priceBeforeDis;
+            final String sanf_name = listofhome.get(position).sanfName;
+            final String vender_name = listofhome.get(position).storeName;
+            final String vender_image = listofhome.get(position).storeImg;
+            final String sanf_id = listofhome.get(position).id;
+            final String rating = listofhome.get(position).rate;
+            final String store_id = listofhome.get(position).storeIdFk;
+            final String[]colors= listofhome.get(position).colors;
+            final String link = listofhome.get(position).link;
+            final String like = listofhome.get(position).getLike();
+            final String[] image_resources = {listofhome.get(position).mainImg};
+            /*if (like.equals("1")){
+
+                myHolder.fav.setChecked(true);
+            }else {
+
+                myHolder.fav.setChecked(false);
+
+            }*/
 
             myHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    homeModel = listofhome.get(position);
 
-                    if (homeModel!=null)
-                    {
-//                        fragment_offers.setItemForDetails(products);
-
-                    }
+                    category_activity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
                 }
             });
 
         }
     }
+
 
     @Override
     public int getItemCount() {

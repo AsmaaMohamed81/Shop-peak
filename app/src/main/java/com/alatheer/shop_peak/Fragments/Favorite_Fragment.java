@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.alatheer.shop_peak.Adapter.Favourit_Adapter;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
@@ -183,6 +184,7 @@ public class Favorite_Fragment extends android.app.Fragment {
                 });
 
     }
+
 }
 
 

@@ -11,8 +11,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Fragments.Favorite_Fragment;
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
 
@@ -23,12 +25,14 @@ public class AllOfferAdapter extends RecyclerView.Adapter<AllOfferAdapter.MyHold
     Context context;
     HomeModel homeModel;
     long id;
-
+   MainActivity mainActivity;
 
 
     public AllOfferAdapter(List<HomeModel> listofhome, Context context) {
         this.listofhome = listofhome;
         this.context = context;
+        mainActivity = (MainActivity) context;
+
 
     }
 
@@ -63,6 +67,21 @@ public class AllOfferAdapter extends RecyclerView.Adapter<AllOfferAdapter.MyHold
 
                 }
             });
+        final String details = listofhome.get(i).details;
+        final List<Item> itemList = listofhome.get(i).items;
+        final String price = (String) listofhome.get(i).priceAfterDis;
+        final String price_before_discount = listofhome.get(i).priceBeforeDis;
+        final String sanf_name = listofhome.get(i).sanfName;
+        final String vender_name = listofhome.get(i).storeName;
+        final String vender_image = listofhome.get(i).storeImg;
+        final String sanf_id = listofhome.get(i).id;
+        final String rating = listofhome.get(i).rate;
+        final String store_id = listofhome.get(i).storeIdFk;
+        final String[]colors= listofhome.get(i).colors;
+        final String link = listofhome.get(i).link;
+        final String like = listofhome.get(i).getLike();
+        final String[] image_resources = {listofhome.get(i).mainImg};
+        mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
 
 
     }

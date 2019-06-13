@@ -13,10 +13,13 @@ import android.widget.Toast;
 import com.alatheer.shop_peak.Adapter.Sub_product_Adapter;
 import com.alatheer.shop_peak.Adapter.main_sub_Adapter;
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.list_cats;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.service.Api;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,5 +160,27 @@ public class Category_Activity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    public void sendHomeItem(String[] image_resources, List<Item> itemList, String sanf_name, String details, String price, String sanf_id, String rating, String store_id, String[] colors, String price_before_discount, String like) {
+        Bundle bundle=new Bundle();
+        bundle.putStringArray("homeimage", image_resources);
+        bundle.putSerializable("itemlist", (Serializable) itemList);
+        bundle.putString("details", details);
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtras(bundle);
+        intent.putExtra("title", sanf_name);
+        intent.putExtra("itemlist", (Serializable) itemList);
+        intent.putExtra("details", details);
+        intent.putExtra("price", price);
+        intent.putExtra("price_before_dis",price_before_discount);
+        intent.putExtra("id", sanf_id);
+        intent.putExtra("rate", rating);
+        intent.putExtra("store_id",store_id);
+        intent.putExtra("like",like);
+        Log.v("gggg",store_id);
+        intent.putExtra("color",colors);
+        startActivity(intent);
+        Animatoo.animateInAndOut(Category_Activity.this);
     }
 }

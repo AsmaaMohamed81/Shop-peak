@@ -7,12 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Fragments.Favorite_Fragment;
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
 
@@ -29,7 +32,7 @@ public class Favourit_Adapter extends RecyclerView.Adapter {
     long id;
 
     Favorite_Fragment favorite_fragment;
-
+    MainActivity mainActivity;
 
 
 
@@ -38,6 +41,7 @@ public class Favourit_Adapter extends RecyclerView.Adapter {
         this.listofhome = listofhome;
         this.context = context;
         this.favorite_fragment=fragment;
+        mainActivity=(MainActivity) context;
 
     }
 
@@ -71,6 +75,29 @@ public class Favourit_Adapter extends RecyclerView.Adapter {
 
                 }
             });
+            final String details = listofhome.get(position).details;
+            final List<Item> itemList = listofhome.get(position).items;
+            final String price = (String) listofhome.get(position).priceAfterDis;
+            final String price_before_discount = listofhome.get(position).priceBeforeDis;
+            final String sanf_name = listofhome.get(position).sanfName;
+            final String vender_name = listofhome.get(position).storeName;
+            final String vender_image = listofhome.get(position).storeImg;
+            final String sanf_id = listofhome.get(position).id;
+            final String rating = listofhome.get(position).rate;
+            final String store_id = listofhome.get(position).storeIdFk;
+            final String[]colors= listofhome.get(position).colors;
+            final String link = listofhome.get(position).link;
+            final String like = listofhome.get(position).getLike();
+            final String[] image_resources = {listofhome.get(position).mainImg};
+            if (like.equals("1")){
+
+                myHolder.Fav.setChecked(true);
+            }else {
+
+                myHolder.Fav.setChecked(false);
+
+            }
+            mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
 
         }
     }
@@ -82,7 +109,8 @@ public class Favourit_Adapter extends RecyclerView.Adapter {
 
     class MyHolder extends RecyclerView.ViewHolder{
         private FrameLayout fl_discount_container;
-        private ImageView image,Fav;
+        private ImageView image;
+        private CheckBox Fav;
         private TextView tv_discount,tv_name,tv_before_discount,tv_after_discount;
 
         public MyHolder(View itemView) {

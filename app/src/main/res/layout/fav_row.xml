@@ -79,7 +79,7 @@
                 android:clickable="false"
                 android:longClickable="false"
                 >
-                <ImageView
+                <CheckBox
                     android:id="@+id/Fav"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

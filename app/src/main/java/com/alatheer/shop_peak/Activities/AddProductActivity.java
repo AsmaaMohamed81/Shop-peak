@@ -42,6 +42,8 @@ import com.alatheer.shop_peak.Adapter.Sub_cat_Adapter;
 import com.alatheer.shop_peak.Adapter.TasnefAdapter;
 import com.alatheer.shop_peak.Adapter.cityAdapter;
 import com.alatheer.shop_peak.Adapter.governAdapter;
+import com.alatheer.shop_peak.Local.ItemDatabase;
+import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.City;
 import com.alatheer.shop_peak.Model.Govern;
 import com.alatheer.shop_peak.Model.Product_Specification;
@@ -126,6 +128,7 @@ public class AddProductActivity extends AppCompatActivity {
     TableRow tr1, tr2;
      String imageEncoded;
      ProfileDatabase profileDatabase;
+     ItemDatabase item_database;
     //HomeDatabase homeDatabase;
      MySharedPreference mprefs;
     Button add_row_Element, add_row_Element2,btn_element_image, btn_element_color;
@@ -154,6 +157,7 @@ public class AddProductActivity extends AppCompatActivity {
         container_sub = findViewById(R.id.sub_category_container);
         expand_layout_main = findViewById(R.id.expand_main_layout);
         expand_layout_sub = findViewById(R.id.expand_sub_layout);
+        item_database= Room.databaseBuilder(getApplicationContext(),ItemDatabase.class,"item_db").allowMainThreadQueries().build();
         close=findViewById(R.id.close);
         color_image_layout= findViewById(R.id.color_image_layout);
         main_image = findViewById(R.id.main_image);
