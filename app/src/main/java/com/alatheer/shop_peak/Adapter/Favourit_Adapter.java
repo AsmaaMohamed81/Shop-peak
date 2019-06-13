@@ -99,6 +99,7 @@ public class Favourit_Adapter extends RecyclerView.Adapter {
             }
             mainActivity.sendHomeItem(image_resources, itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like);
 
+
         }
     }
 
