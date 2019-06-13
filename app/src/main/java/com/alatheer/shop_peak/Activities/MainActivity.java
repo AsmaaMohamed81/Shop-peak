@@ -34,6 +34,7 @@ import com.alatheer.shop_peak.Fragments.Favorite_Fragment;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
+import com.alatheer.shop_peak.Fragments.ProfileVendor_Fragment;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
@@ -315,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
                     break;
                 case R.id.nav_profile:
-                    selectedfragment = new ProfileFragment();
+                    selectedfragment = new ProfileVendor_Fragment();
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
                     break;
                 case R.id.nav_add:

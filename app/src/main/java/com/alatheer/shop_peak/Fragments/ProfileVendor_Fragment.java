@@ -53,7 +53,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 
-public class ProfileFragment extends android.app.Fragment {
+public class ProfileVendor_Fragment extends android.app.Fragment {
     ImageView img_grid,img_ver,add_product,profile_image;
     TextView profile_name;
     RecyclerView menu_recycler;
@@ -63,7 +63,7 @@ public class ProfileFragment extends android.app.Fragment {
     Activity activity;
     Uri uri;
     Bitmap bitmap;
-    String vender_name,image,id_store;
+//    String vender_name,image,id_store;
     int flag;
     int PICK_IMAGE_REQUEST;
 
@@ -87,8 +87,8 @@ public class ProfileFragment extends android.app.Fragment {
 
     boolean flagButton=false;
 
-    public static ProfileFragment getInstance() {
-        ProfileFragment fragment = new ProfileFragment();
+    public static ProfileVendor_Fragment getInstance() {
+        ProfileVendor_Fragment fragment = new ProfileVendor_Fragment();
         return fragment;
     }
     @Override
@@ -127,8 +127,6 @@ public class ProfileFragment extends android.app.Fragment {
         num_products=view.findViewById(R.id.num_products);
 
         followers=view.findViewById(R.id.followers);
-        follow=view.findViewById(R.id.follow);
-        follow.setVisibility(view.VISIBLE);
         myfollow=view.findViewById(R.id.myfollow);
 
         progressBar = view.findViewById(R.id.progBar);
@@ -138,9 +136,7 @@ public class ProfileFragment extends android.app.Fragment {
 
 
         getIntent();
-        checkfollow(id_store,id);
-
-        Log.d("asmaa", "initview: "+id_store);
+        Log.d("asmaa", "initview: "+id);
 
 
 
@@ -150,33 +146,34 @@ public class ProfileFragment extends android.app.Fragment {
         img_grid.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Viewgrid();
 
+                 ViewGrid();
              }
          });
          img_ver.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 viewvertical();
 
+                 ViewLinear();
              }
          });
 
 
-            Picasso.with(getActivity()).load(image).into(profile_image);
-            profile_name.setText(vender_name);
-            getStoreProduct(id_store);
-            Viewgrid();
 
-        get_storefollow(id_store);
+            Picasso.with(getActivity()).load(img).into(profile_image);
+            profile_name.setText(name);
+            getStoreProduct(id);
 
+
+        get_storefollow(id);
+        ViewGrid();
 
         followers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent=new Intent(getActivity(), FollowersActivity.class);
-                intent.putExtra("id_store",id_store);
+                intent.putExtra("id_store",id);
                 startActivity(intent);
 
             }
@@ -186,31 +183,16 @@ public class ProfileFragment extends android.app.Fragment {
             public void onClick(View view) {
 
                 Intent intent=new Intent(getActivity(), MyFollowersActivity.class);
-                intent.putExtra("id_store",id_store);
+                intent.putExtra("id_store",id);
                 startActivity(intent);
 
             }
         });
 
 
-        follow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (flagButton==true){
-
-                    deleteflow(id_store,id);
 
 
-                }else {
-                    makefollow(id_store,id);
-
-                }
-            }
-        });
-
-
-        get_my_flow(id_store);
+        get_my_flow(id);
 
         if (!isConnected()) {
             new AlertDialog.Builder(getActivity()).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
@@ -224,75 +206,33 @@ public class ProfileFragment extends android.app.Fragment {
                         }
                     }).show();
         } else {
-            Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void updateUI() {
+    private void ViewGrid() {
 
-        if (flagButton==true){
-
-
-            follow.setText(R.string.unfollow);
-            follow.setBackgroundResource(R.drawable.btn_field2);
-        }else {
+        img_grid.setColorFilter(getResources().getColor(R.color.colorPrimary));
+        img_ver.setColorFilter(getResources().getColor(R.color.gray));
 
 
-            follow.setText(R.string.follow);
-            follow.setBackgroundResource(R.drawable.edite_profile);
-        }
+        verticalmanager=new GridLayoutManager(getActivity(),3);
+        menu_recycler.setHasFixedSize(true);
+        menu_recycler.setLayoutManager(verticalmanager);
+        profile_verticalAdapter=new Profile_verticalAdapter(homeModelArrayList,getActivity());
+        menu_recycler.setAdapter(profile_verticalAdapter);
     }
 
-    private void makefollow(String id_store, String id) {
+    private void ViewLinear() {
+        img_ver.setColorFilter(getResources().getColor(R.color.colorPrimary));
+        img_grid.setColorFilter(getResources().getColor(R.color.gray));
 
-        Api.getService()
-                .make_follow(id_store,id)
-                .enqueue(new Callback<RatingModel2>() {
-                    @Override
-                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
 
-                        if (response.isSuccessful()){
 
-                            if (response.body().getSuccess()==1){
-
-                                flagButton=true;
-                                updateUI();
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<RatingModel2> call, Throwable t) {
-
-                    }
-                });
-    }
-
-    private void deleteflow(String id_store, String id) {
-
-        Api.getService()
-                .delete_flow(id_store,id)
-                .enqueue(new Callback<RatingModel2>() {
-                    @Override
-                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
-
-                        if (response.isSuccessful()){
-
-                            if (response.body().getSuccess()==1){
-
-                                flagButton=false;
-                                updateUI();
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<RatingModel2> call, Throwable t) {
-
-                    }
-                });
+        verticalmanager=new LinearLayoutManager(getActivity());
+        menu_recycler.setHasFixedSize(true);
+        menu_recycler.setLayoutManager(verticalmanager);
+        profile_verticalAdapter=new Profile_verticalAdapter(homeModelArrayList,getActivity());
+        menu_recycler.setAdapter(profile_verticalAdapter);
     }
 
 
@@ -320,36 +260,6 @@ public class ProfileFragment extends android.app.Fragment {
                 });
     }
 
-    private void checkfollow(String id_store, String id) {
-
-        Api.getService()
-                .get_user_folow(id_store,id)
-                .enqueue(new Callback<RatingModel2>() {
-                    @Override
-                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
-                        if (response.isSuccessful()){
-
-                            if (response.body().getSuccess()==1){
-
-                                flagButton=true;
-                                updateUI();
-
-                            }else {
-
-                                flagButton=false;
-                                updateUI();
-
-
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<RatingModel2> call, Throwable t) {
-
-                    }
-                });
-    }
 
     private void get_storefollow(String id_store) {
 
@@ -364,6 +274,8 @@ public class ProfileFragment extends android.app.Fragment {
 
                                 userModel1ArrayList.addAll(response.body());
                                 followers.setText(Integer.toString(response.body().size()));
+
+                                ViewGrid();
 
                             }
                         }
@@ -383,12 +295,12 @@ public class ProfileFragment extends android.app.Fragment {
         Bundle bundle=getArguments();
 
 
-        if(bundle !=null) {
-
-            vender_name = bundle.getString("name");
-            image = bundle.getString("image");
-            id_store = bundle.getString("id");
-        }
+//        if(bundle !=null) {
+//
+//            vender_name = bundle.getString("name");
+//            image = bundle.getString("image");
+//            id_store = bundle.getString("id");
+//        }
 
     }
 
@@ -411,7 +323,6 @@ public class ProfileFragment extends android.app.Fragment {
 
                                 num_products.setText(Integer.toString(response.body().size()));
 
-                                Viewgrid();
                                 txt_no.setVisibility(View.GONE);
 
 
@@ -433,7 +344,12 @@ public class ProfileFragment extends android.app.Fragment {
                 });
     }
 
-
+    private void chooseimage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
@@ -448,38 +364,33 @@ public class ProfileFragment extends android.app.Fragment {
             }
         }
     }
-    private void viewvertical() {
-        img_ver.setColorFilter(getResources().getColor(R.color.colorPrimary));
-        img_grid.setColorFilter(getResources().getColor(R.color.gray));
-
-
-
-        verticalmanager=new LinearLayoutManager(getActivity());
-        menu_recycler.setHasFixedSize(true);
-        menu_recycler.setLayoutManager(verticalmanager);
-        profile_verticalAdapter=new Profile_verticalAdapter(homeModelArrayList,getActivity());
-        menu_recycler.setAdapter(profile_verticalAdapter);
-
-    }
-
-    private void Viewgrid() {
-        img_grid.setColorFilter(getResources().getColor(R.color.colorPrimary));
-        img_ver.setColorFilter(getResources().getColor(R.color.gray));
-
-
-        verticalmanager=new GridLayoutManager(getActivity(),3);
-        menu_recycler.setHasFixedSize(true);
-        menu_recycler.setLayoutManager(verticalmanager);
-        profile_verticalAdapter=new Profile_verticalAdapter(homeModelArrayList,getActivity());
-        menu_recycler.setAdapter(profile_verticalAdapter);
-    }
+//    private void viewvertical() {
+//        img_ver.setColorFilter(getResources().getColor(R.color.colorPrimary));
+//        img_grid.setColorFilter(getResources().getColor(R.color.gray));
+//        menu_recycler.setHasFixedSize(true);
+//        verticalmanager=new LinearLayoutManager(getActivity());
+//        menu_recycler.setLayoutManager(verticalmanager);
+//         profile_verticalAdapter=new Profile_verticalAdapter(homeModelArrayList,getActivity());
+//        menu_recycler.setAdapter(profile_verticalAdapter);
+//
+//    }
+//
+//    private void Viewgrid() {
+//        img_grid.setColorFilter(getResources().getColor(R.color.colorPrimary));
+//        img_ver.setColorFilter(getResources().getColor(R.color.gray));
+//        menu_recycler.setHasFixedSize(true);
+//        gridmanager=new GridLayoutManager(getActivity(),3);
+//        menu_recycler.setLayoutManager(gridmanager);
+//         profile_gridAdapter=new Profile_GridAdapter(homeModelArrayList,getActivity());
+//        menu_recycler.setAdapter(profile_gridAdapter);
+//    }
 
     private boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            android.net.NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            android.net.NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             if ((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting()))
                 return true;
             else

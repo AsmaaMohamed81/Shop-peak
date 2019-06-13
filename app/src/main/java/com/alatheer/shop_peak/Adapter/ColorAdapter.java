@@ -37,7 +37,9 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorHolder>
 
     @Override
     public void onBindViewHolder(@NonNull ColorHolder colorHolder, int i) {
-          colorHolder.linearLayout_color.setBackgroundColor(android.graphics.Color.parseColor("#"+colors[i]));
+        if (!colors[i].isEmpty()) {
+            colorHolder.linearLayout_color.setBackgroundColor(android.graphics.Color.parseColor("#" + colors[i]));
+        }
     }
 
     @Override
