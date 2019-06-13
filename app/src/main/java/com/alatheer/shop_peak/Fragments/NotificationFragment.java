@@ -54,7 +54,6 @@ public class NotificationFragment extends android.app.Fragment {
                         }
                     }).show();
         } else {
-            Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
         }
         notification_recycler.setHasFixedSize(true);
         notification_adapter=new Notification_Adapter(notificationModelList(),getActivity());

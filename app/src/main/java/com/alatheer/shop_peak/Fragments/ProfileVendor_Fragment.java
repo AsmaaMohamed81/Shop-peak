@@ -26,15 +26,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.FollowersActivity;
 import com.alatheer.shop_peak.Activities.MyFollowersActivity;
-import com.alatheer.shop_peak.Adapter.Profile_GridAdapter;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
-import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
@@ -73,7 +70,6 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
     private ArrayList<HomeModel> homeModelArrayList;
 
     Profile_verticalAdapter profile_verticalAdapter;
-    Profile_GridAdapter profile_gridAdapter;
 
     MySharedPreference mySharedPreference;
     UserModel1 userModel1;
@@ -163,10 +159,11 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
             Picasso.with(getActivity()).load(img).into(profile_image);
             profile_name.setText(name);
             getStoreProduct(id);
+           ViewGrid();
+
 
 
         get_storefollow(id);
-        ViewGrid();
 
         followers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -320,6 +317,8 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
                                 homeModelArrayList.addAll(response.body());
 //                                profile_gridAdapter.notifyDataSetChanged();
 //                                profile_verticalAdapter.notifyDataSetChanged();
+
+                                ViewGrid();
 
                                 num_products.setText(Integer.toString(response.body().size()));
 

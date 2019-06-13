@@ -30,7 +30,6 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.FollowersActivity;
 import com.alatheer.shop_peak.Activities.MyFollowersActivity;
-import com.alatheer.shop_peak.Adapter.Profile_GridAdapter;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
@@ -73,7 +72,6 @@ public class ProfileFragment extends android.app.Fragment {
     private ArrayList<HomeModel> homeModelArrayList;
 
     Profile_verticalAdapter profile_verticalAdapter;
-    Profile_GridAdapter profile_gridAdapter;
 
     MySharedPreference mySharedPreference;
     UserModel1 userModel1;
@@ -224,7 +222,6 @@ public class ProfileFragment extends android.app.Fragment {
                         }
                     }).show();
         } else {
-            Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
         }
     }
 
