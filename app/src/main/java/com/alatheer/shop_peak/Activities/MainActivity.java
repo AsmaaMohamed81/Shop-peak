@@ -482,6 +482,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         selectedfragment=new HomeFragment();
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
+
     }
 
     void getDataIntent() {

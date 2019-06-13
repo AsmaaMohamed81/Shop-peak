@@ -155,6 +155,7 @@ public class Fragment_Details extends Fragment {
         txt_before_discount.setText(price_before_dis);
         Log.v("color",colors.length+"");
         init_color_recycler();
+
         tv_not_budget = view.findViewById(R.id.tv_not_budget);
 
         details_price.setText(price + "" + "LE");

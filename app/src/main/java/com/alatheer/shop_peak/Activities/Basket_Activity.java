@@ -107,7 +107,6 @@ public class Basket_Activity extends AppCompatActivity {
                 //intent.putExtra("phone",phone);
 
 
-
                 //basketModel2.withOrderItemList(myAppDatabase.dao().getdata());
                 Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
                     @Override
