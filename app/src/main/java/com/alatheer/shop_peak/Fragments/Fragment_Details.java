@@ -206,6 +206,7 @@ public class Fragment_Details extends Fragment {
                     orderItemList.withStoreIdFk(store_id);
                     myAppDatabase.dao().editproduct(orderItemList);
                     Log.v("aaaaa", e.getMessage());
+
                 }
 
 
