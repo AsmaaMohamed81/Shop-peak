@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+
                 if(i == EditorInfo.IME_ACTION_SEARCH){
                     final String sanf_name = search.getText().toString();
                     Api.getService().search_Home(sanf_name).enqueue(new Callback<List<HomeModel>>() {

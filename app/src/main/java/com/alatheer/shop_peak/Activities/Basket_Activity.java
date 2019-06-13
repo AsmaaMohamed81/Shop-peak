@@ -64,6 +64,7 @@ public class Basket_Activity extends AppCompatActivity {
         image_title=findViewById(R.id.back_image);
         add = findViewById(R.id.add);
         add_lat_lon = findViewById(R.id.add_lat_lon);
+
         myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"myorders_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(),Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         initRecyclerview();

@@ -25,6 +25,7 @@ public class OrderItemList  {
     @NonNull
     public String sanfIdFk;
 
+
     @ColumnInfo(name = "store_id_fk")
     @SerializedName("store_id_fk")
     @Expose
