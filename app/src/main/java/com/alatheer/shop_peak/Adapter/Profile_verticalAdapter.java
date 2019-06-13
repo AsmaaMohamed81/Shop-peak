@@ -39,9 +39,23 @@ public class Profile_verticalAdapter extends RecyclerView.Adapter<Profile_vertic
         //final String image2 = profileModels.get(position).getImage2();
       //  final String[] image_resources = {image1,image2};
 
-        final String[] image_resources2 ={mHomeModelList.get(position).mainImg};
-        customSwipeAdapter = new CustomSwipeAdapter(image_resources2, context);
+
         holder.viewPager.setAdapter(customSwipeAdapter);
+
+
+        final String[] image_resources = {mHomeModelList.get(position).mainImg};
+        final String[] image_resources2 =mHomeModelList.get(position).img;
+        if(image_resources2.length <1){
+            customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
+            holder.viewPager.setAdapter(customSwipeAdapter);
+
+
+        }else {
+            customSwipeAdapter = new CustomSwipeAdapter(image_resources2, context);
+            holder.viewPager.setAdapter(customSwipeAdapter);
+
+        }
+
         //Uri uri = Uri.parse(profileModels.get(position).getImage());
         //Picasso.with(context).load(new File(uri.getPath())).into(MyHolder.imageView);
     }

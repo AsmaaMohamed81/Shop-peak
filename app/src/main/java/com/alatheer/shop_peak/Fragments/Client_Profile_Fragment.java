@@ -58,7 +58,6 @@ public class Client_Profile_Fragment extends android.app.Fragment{
 
 
 
-        Toast.makeText(getActivity(), "client", Toast.LENGTH_SHORT).show();
         user_name=view.findViewById(R.id.user_name);
         adress=view.findViewById(R.id.adress);
         email=view.findViewById(R.id.email);

@@ -75,7 +75,6 @@ public class Favorite_Fragment extends android.app.Fragment {
                         }
                     }).show();
         } else {
-            Toast.makeText(getActivity(), "welcom" + "dffghjlk;l", Toast.LENGTH_SHORT).show();
         }
 
 

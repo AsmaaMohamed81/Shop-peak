@@ -1,13 +1,18 @@
 package com.alatheer.shop_peak.Activities;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.Sub_product_Adapter;
@@ -47,7 +52,8 @@ public class Category_Activity extends AppCompatActivity {
     list_cats.Subs subs;
 
 
-
+    private ProgressBar progressBar;
+    private TextView txt_no;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +84,15 @@ public class Category_Activity extends AppCompatActivity {
 
         homeModelArrayList=new ArrayList<>();
 
+        progressBar = findViewById(R.id.progBar);
+        txt_no = findViewById(R.id.tv_no);
+
+
+
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+
+
+
         getRcycSub();
         getRcycmain();
     }
@@ -102,14 +117,27 @@ public class Category_Activity extends AppCompatActivity {
 
                         if (response.isSuccessful()){
 
-                            homeModelArrayList.addAll(response.body());
-                            main_sub_adapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.GONE);
+
+                            if (response.body().size() > 0) {
+                                homeModelArrayList.addAll(response.body());
+                                main_sub_adapter.notifyDataSetChanged();
+                                txt_no.setVisibility(View.GONE);
+
+                            }
+                            else {
+
+                                txt_no.setVisibility(View.VISIBLE);
+
+                            }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<HomeModel>> call, Throwable t) {
 
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(Category_Activity.this, "Check You Internet", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
