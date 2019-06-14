@@ -38,8 +38,11 @@ public class DescriptionFragment extends Fragment {
     private void initview(View view) {
         getDataFromIntent();
         followers_recycler = view.findViewById(R.id.recycler_description);
+        txt_details=view.findViewById(R.id.text_view);
 
         initrecycler();
+
+        txt_details.setText(details);
 
 
     }

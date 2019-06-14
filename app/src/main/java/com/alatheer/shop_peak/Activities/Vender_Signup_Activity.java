@@ -494,7 +494,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
                             dialog.dismiss();
 
 
-                            Toast.makeText(Vender_Signup_Activity.this, ""+t, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Vender_Signup_Activity.this, "Check Internet", Toast.LENGTH_SHORT).show();
                                 Log.v("error",t.getMessage());
                         }
                     });
