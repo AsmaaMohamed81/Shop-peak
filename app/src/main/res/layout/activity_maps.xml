@@ -140,13 +140,13 @@
 
 
 </LinearLayout>
-<LinearLayout
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
     <Button
         android:id="@+id/btn_continue"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/btn_field"
         android:layout_marginTop="20dp"
@@ -154,22 +154,23 @@
         android:layout_marginRight="15dp"
         android:text="@string/continuee"
         android:textColor="@android:color/white"
-        android:layout_weight="1"
+        android:visibility="visible"
         />
     <Button
         android:id="@+id/btn_add"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/btn_field"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:text="تاكيد شراء"
+        android:visibility="gone"
         android:textColor="@android:color/white"
-        android:layout_weight="1"
+
         />
 
-</LinearLayout>
+</FrameLayout>
 
 
     </LinearLayout>

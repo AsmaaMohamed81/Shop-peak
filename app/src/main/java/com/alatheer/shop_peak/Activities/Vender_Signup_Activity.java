@@ -254,7 +254,9 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         latlon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Vender_Signup_Activity.this, MapsActivity.class));
+                Intent intent = new Intent(Vender_Signup_Activity.this,MapsActivity.class);
+                intent.putExtra("flag",0);
+                startActivity(intent);
             }
         });
         List<Address> addressList = getaddresslist();

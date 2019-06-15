@@ -131,52 +131,59 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         final Animation animation= AnimationUtils.loadAnimation(this,R.anim.press_anim);
         final Intent intent =getIntent();
         flag = intent.getIntExtra("flag",0);
-        btn_continue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btn_continue.clearAnimation();
-                btn_continue.startAnimation(animation);
+        if (flag == 0) {
+            btn_continue.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    btn_continue.clearAnimation();
+                    btn_continue.startAnimation(animation);
 
-                Vlat=lat.getText().toString();
-                Vlang=log.getText().toString();
+                    Vlat=lat.getText().toString();
+                    Vlang=log.getText().toString();
 
                     Intent intent = new Intent(MapsActivity.this, Vender_Signup_Activity.class);
                     intent.putExtra("lat", Vlat);
                     intent.putExtra("lang", Vlang);
                     startActivity(intent);
 
-            }
-        });
-        btn_add_basket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String type= intent.getStringExtra("type");
-                String user_id =intent.getStringExtra("user_id");
-                String name =intent.getStringExtra("name");
-                String address = intent.getStringExtra("address");
-                List<OrderItemList> list = (List<OrderItemList>) intent.getExtras().getSerializable("list");
-                String phone =intent.getStringExtra("phone");
-                Vlat=lat.getText().toString();
-                Vlang=log.getText().toString();
-                BasketModel2 basketModel2 =new BasketModel2(type,list,user_id,name,address
-                        ,Vlat,Vlang,phone);
-                Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
-                    @Override
-                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
-                        if(response.isSuccessful()){
-                            Log.v("llll", response.message());
-                            Toast.makeText(MapsActivity.this,"data added successfully",Toast.LENGTH_LONG).show();
+                }
+            });
+        }else {
+            btn_continue.setVisibility(View.GONE);
+            btn_add_basket.setVisibility(View.VISIBLE);
+            btn_add_basket.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String type= intent.getStringExtra("type");
+                    String user_id =intent.getStringExtra("user_id");
+                    String name =intent.getStringExtra("name");
+                    String address = intent.getStringExtra("address");
+                    List<OrderItemList> list = (List<OrderItemList>) intent.getExtras().getSerializable("list");
+                    String phone =intent.getStringExtra("phone");
+                    Vlat=lat.getText().toString();
+                    Vlang=log.getText().toString();
+                    BasketModel2 basketModel2 =new BasketModel2(type,list,user_id,name,address
+                            ,Vlat,Vlang,phone);
+                    Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
+                        @Override
+                        public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                            if(response.isSuccessful()){
+                                Log.v("llll", response.message());
+                                Toast.makeText(MapsActivity.this,"data added successfully",Toast.LENGTH_LONG).show();
+                            }
+
                         }
 
-                    }
+                        @Override
+                        public void onFailure(Call<RatingModel2> call, Throwable t) {
+                            Log.v("eeee",t.getMessage());
+                        }
+                    });
+                }
+            });
 
-                    @Override
-                    public void onFailure(Call<RatingModel2> call, Throwable t) {
-                        Log.v("eeee",t.getMessage());
-                    }
-                });
-            }
-        });
+        }
+
 
     }
 

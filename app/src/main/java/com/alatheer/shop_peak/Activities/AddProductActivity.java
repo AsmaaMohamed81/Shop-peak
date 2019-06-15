@@ -694,13 +694,19 @@ public class AddProductActivity extends AppCompatActivity {
         String des_1 =des1.getText().toString();
         String des_2 =des2.getText().toString();
         items.add(item_name1);
-        items.add(item_name2);
         descriptions.add(des_1);
-        descriptions.add(des_2);
+        if(item_name2 != null && des_2 != null  ){
+            items.add(item_name2);
+            descriptions.add(des_2);
+        }
         all_colors.add(hexColor1);
-        all_colors.add(hexColor2);
         all_images.add(filePath3);
-        all_images.add(filePath4);
+        if(hexColor2 != null && filePath4 != null){
+            all_colors.add(hexColor2);
+            all_images.add(filePath4);
+        }
+
+
         if (!TextUtils.isEmpty(number) &&
                 !TextUtils.isEmpty(name) &&
                 !TextUtils.isEmpty(priceafter_discount) &&
@@ -708,9 +714,8 @@ public class AddProductActivity extends AppCompatActivity {
                 !TextUtils.isEmpty(elementdescription) &&
                 main_id !=null &&
                 sub_id !=null &&
-                filePath != null &&
-                hexColor1 != null &&
-                hexColor2 != null
+                filePath != null
+
 
                 ) {
 
