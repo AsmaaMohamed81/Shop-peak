@@ -108,6 +108,9 @@
     <string name="youVonder">You are already joined to us Welcome</string>
     <string name="nooffer">There are currently no offers</string>
     <string name="Skip">Skip</string>
+    <string name="SH_Log">Please Sign in or sign up .</string>
+    <string name="Succ_send">Product successfully uploaded</string>
+    <string name="order_basket_send">Your order has been successfully sent</string>
 
 
 </resources>

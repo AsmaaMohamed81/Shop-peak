@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Basket_Activity;
 import com.alatheer.shop_peak.Activities.DetailsActivity;
+import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Adapter.ColorAdapter;
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
@@ -243,6 +244,11 @@ public class Fragment_Details extends Fragment {
 
             @Override
             public void onClick(View v) {
+
+                if (userModel1==null){
+
+                    CreateGpsDialog();
+                }else{
                 int id2 = Integer.parseInt(order_num.getText().toString());
 
 
@@ -319,11 +325,11 @@ public class Fragment_Details extends Fragment {
 
                     flag = true;
                 }
-            }
+            }}
         });
         ratingBar.setRating(Float.parseFloat(rating));
 
-
+if (like!=null){
 
         if (like.equals("1")){
         fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_sold));
@@ -332,7 +338,7 @@ public class Fragment_Details extends Fragment {
 
             fab_favorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite));
             flag = true;
-        }
+        }}
     }
 
     @Override
@@ -409,4 +415,31 @@ public class Fragment_Details extends Fragment {
 
 
     }
+
+    private void CreateGpsDialog() {
+
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(getActivity())
+                .setCancelable(false)
+                .create();
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(R.string.SH_Log);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                Intent intent = new Intent(getActivity(), Login_Activity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
+    }
+
 }

@@ -2,6 +2,7 @@ package com.alatheer.shop_peak.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Adapter.RatingAdapter;
 import com.alatheer.shop_peak.Model.RatingModel;
 import com.alatheer.shop_peak.Model.RatingModel2;
@@ -69,8 +71,10 @@ public class RatingFragment extends Fragment {
         ratingBar = view.findViewById(R.id.ratbar);
         mprefs = MySharedPreference.getInstance();
         userModel1 = mprefs.Get_UserData(getActivity());
-        user_id = Integer.parseInt(userModel1.getId());
 
+        if (userModel1!=null) {
+            user_id = Integer.parseInt(userModel1.getId());
+        }
         progressBar = view.findViewById(R.id.progBar);
         txt_no = view.findViewById(R.id.tv_no);
 
@@ -78,14 +82,19 @@ public class RatingFragment extends Fragment {
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
 
         getdatafromintent();
-        Log.v("usser_id", user_id + "");
-        Log.v("JJJJ",userModel1.getFull_name());
+//        Log.v("usser_id", user_id + "");
+//        Log.v("JJJJ",userModel1.getFull_name());
         initrecycler();
         btn_add_rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (userModel1==null){
+
+                    CreateGpsDialog();
+                }else {
                 Add_Rate();
-                initrecycler();
+                initrecycler();}
             }
         });
         ratingBar.setOnTouchListener(new View.OnTouchListener() {
@@ -194,5 +203,31 @@ public class RatingFragment extends Fragment {
         id = Long.parseLong(product_id);
         id2 = Integer.parseInt(product_id);
        // user_id = getActivity().getIntent().getIntExtra("user_id", 0);
+    }
+
+    private void CreateGpsDialog() {
+
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(getActivity())
+                .setCancelable(false)
+                .create();
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(R.string.SH_Log);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                Intent intent = new Intent(getActivity(), Login_Activity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
     }
 }

@@ -831,10 +831,10 @@ public class AddProductActivity extends AppCompatActivity {
 
                     if (response.body().getSuccess()==1){
 
-                        Toast.makeText(AddProductActivity.this, "تم ارسال طلبك", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddProductActivity.this, R.string.Succ_send, Toast.LENGTH_SHORT).show();
 
                         Log.v("success",response.message());
-                    Toast.makeText(AddProductActivity.this, "تم", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(AddProductActivity.this, "تم", Toast.LENGTH_SHORT).show();
                 }}
             }
 
@@ -844,7 +844,7 @@ public class AddProductActivity extends AppCompatActivity {
                 dialog.dismiss();
 
 
-//                Toast.makeText(AddProductActivity.this, "Check Internet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddProductActivity.this, "Check Internet", Toast.LENGTH_SHORT).show();
                 Log.v("error",t.getMessage());
 
             }

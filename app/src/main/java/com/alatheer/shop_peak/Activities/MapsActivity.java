@@ -2,6 +2,7 @@ package com.alatheer.shop_peak.Activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -41,6 +42,7 @@ import com.alatheer.shop_peak.Model.LocationModel;
 import com.alatheer.shop_peak.Model.OrderItemList;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.service.Api;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -76,33 +78,30 @@ import retrofit2.Response;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final String TAG ="MapssActivity" ;
+    private static final String TAG = "MapssActivity";
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private final int PER_REQ = 12012;
     private boolean isGranted = false;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private static final float Defult_Zoom=15f;
+    private static final float Defult_Zoom = 15f;
 
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
 
 
-
-    private final int gps_req = 102,loc_req=103;
+    private final int gps_req = 102, loc_req = 103;
 
 
     private GoogleMap mMap;
     private ImageView gps;
-    private Intent intentService=null;
-    private EditText address,lat,log;
+    private Intent intentService = null;
+    private EditText address, lat, log;
     private Button btn_continue;
     private Button btn_add_basket;
 
-    String Vlat,Vlang;
+    String Vlat, Vlang;
     int flag;
-
-
 
 
     @Override
@@ -115,22 +114,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         CheckPermission();
 
 
-
-
-
     }
 
     private void initView() {
 
-        gps=findViewById(R.id.img_gps);
-        address=findViewById(R.id.address);
-        lat=findViewById(R.id.lat);
-        log=findViewById(R.id.log);
-        btn_continue=findViewById(R.id.btn_continue);
+        gps = findViewById(R.id.img_gps);
+        address = findViewById(R.id.address);
+        lat = findViewById(R.id.lat);
+        log = findViewById(R.id.log);
+        btn_continue = findViewById(R.id.btn_continue);
         btn_add_basket = findViewById(R.id.btn_add);
-        final Animation animation= AnimationUtils.loadAnimation(this,R.anim.press_anim);
-        final Intent intent =getIntent();
-        flag = intent.getIntExtra("flag",0);
+        final Animation animation = AnimationUtils.loadAnimation(this, R.anim.press_anim);
+        final Intent intent = getIntent();
+        flag = intent.getIntExtra("flag", 0);
         if (flag == 0) {
             btn_continue.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -138,8 +134,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     btn_continue.clearAnimation();
                     btn_continue.startAnimation(animation);
 
-                    Vlat=lat.getText().toString();
-                    Vlang=log.getText().toString();
+                    Vlat = lat.getText().toString();
+                    Vlang = log.getText().toString();
 
                     Intent intent = new Intent(MapsActivity.this, Vender_Signup_Activity.class);
                     intent.putExtra("lat", Vlat);
@@ -148,35 +144,50 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 }
             });
-        }else {
+        } else {
             btn_continue.setVisibility(View.GONE);
             btn_add_basket.setVisibility(View.VISIBLE);
             btn_add_basket.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String type= intent.getStringExtra("type");
-                    String user_id =intent.getStringExtra("user_id");
-                    String name =intent.getStringExtra("name");
+                    String type = intent.getStringExtra("type");
+                    String user_id = intent.getStringExtra("user_id");
+                    String name = intent.getStringExtra("name");
                     String address = intent.getStringExtra("address");
                     List<OrderItemList> list = (List<OrderItemList>) intent.getExtras().getSerializable("list");
-                    String phone =intent.getStringExtra("phone");
-                    Vlat=lat.getText().toString();
-                    Vlang=log.getText().toString();
-                    BasketModel2 basketModel2 =new BasketModel2(type,list,user_id,name,address
-                            ,Vlat,Vlang,phone);
+                    String phone = intent.getStringExtra("phone");
+                    Vlat = lat.getText().toString();
+                    Vlang = log.getText().toString();
+                    BasketModel2 basketModel2 = new BasketModel2(type, list, user_id, name, address
+                            , Vlat, Vlang, phone);
+
+                    final ProgressDialog dialog = Common.createProgressDialog(MapsActivity.this, getString(R.string.waitt));
+                    dialog.setCancelable(true);
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+
                     Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
                         @Override
                         public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
-                            if(response.isSuccessful()){
+                            if (response.isSuccessful()) {
+                                dialog.dismiss();
+
+                                if (response.body().getSuccess()==1){
+
+
                                 Log.v("llll", response.message());
-                                Toast.makeText(MapsActivity.this,"data added successfully",Toast.LENGTH_LONG).show();
-                            }
+                                Toast.makeText(MapsActivity.this, R.string.order_basket_send, Toast.LENGTH_LONG).show();
+                            }}
 
                         }
 
                         @Override
                         public void onFailure(Call<RatingModel2> call, Throwable t) {
-                            Log.v("eeee",t.getMessage());
+                            Log.v("eeee", t.getMessage());
+                            dialog.dismiss();
+
+
+                            Toast.makeText(MapsActivity.this, "Check Internet", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -192,32 +203,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        Toast.makeText(this, "Map Ready", Toast.LENGTH_SHORT).show();
-        Log.d(TAG,"onMapReady : Map Ready");
+//        Toast.makeText(this, "Map Ready", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onMapReady : Map Ready");
 
-if (isGpsOpen()) {
-    try {
-        getDeviceLocation();
+        if (isGpsOpen()) {
+            try {
+                getDeviceLocation();
 
-        // get image of gps
-        mMap.setMyLocationEnabled(true);
-        // delete image of gps
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                // get image of gps
+                mMap.setMyLocationEnabled(true);
+                // delete image of gps
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
-        init();
-    } catch (SecurityException e) {
-        e.printStackTrace();
-    }
+                init();
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }
 
 
-}
-
+        }
 
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                Toast.makeText(MapsActivity.this, "latitude" + latLng.latitude + "," + "longitude" + latLng.longitude, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MapsActivity.this, "latitude" + latLng.latitude + "," + "longitude" + latLng.longitude, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -234,13 +244,9 @@ if (isGpsOpen()) {
     }
 
 
-
-
-    private boolean isGpsOpen()
-    {
+    private boolean isGpsOpen() {
         LocationManager manager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (manager!=null&&manager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-        {
+        if (manager != null && manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             return true;
         }
 
@@ -248,13 +254,10 @@ if (isGpsOpen()) {
     }
 
 
-
     private void initMap() {
 
 
-
-
-        Log.d(TAG,"initMap : Init Map ");
+        Log.d(TAG, "initMap : Init Map ");
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -263,31 +266,30 @@ if (isGpsOpen()) {
 
     }
 
-    private void getDeviceLocation()    {
+    private void getDeviceLocation() {
 
         Log.d(TAG, "getDeviceLocation: get Currnt Location");
 
-        fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try {
-            if (isGpsOpen()){
-                final Task location=fusedLocationProviderClient.getLastLocation();
+            if (isGpsOpen()) {
+                final Task location = fusedLocationProviderClient.getLastLocation();
 
                 location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: found location");
 
-                            Location currentlocation1=(Location) task.getResult();
+                            Location currentlocation1 = (Location) task.getResult();
 
-                            if (currentlocation1!=null)
-                            {
+                            if (currentlocation1 != null) {
 
-                                Log.d(TAG, "onComplete: "+currentlocation1.getLatitude());
-                                Log.d(TAG, "onComplete: "+currentlocation1.getLongitude());
+                                Log.d(TAG, "onComplete: " + currentlocation1.getLatitude());
+                                Log.d(TAG, "onComplete: " + currentlocation1.getLongitude());
                                 moveCamera(new LatLng
-                                        (currentlocation1.getLatitude(),currentlocation1.getLongitude()),Defult_Zoom,"myLocation");
+                                        (currentlocation1.getLatitude(), currentlocation1.getLongitude()), Defult_Zoom, "myLocation");
 
 //                                String cityName = null;
 
@@ -306,20 +308,19 @@ if (isGpsOpen()) {
 //                                    sb.append(addresses.get(0).getCountryName());
 
                                     }
-                                }
-                                catch (IOException e) {
+                                } catch (IOException e) {
                                     e.printStackTrace();
                                 }
 //                                String s = currentlocation1.getLongitude() + "\n" + currentlocation1.getLatitude() + "\n\nMy Current City is: "
 //                                        + cityName;
                                 address.setText(sb);
-                                lat.setText(currentlocation1.getLatitude()+" ");
-                                log.setText(currentlocation1.getLongitude()+" ");
+                                lat.setText(currentlocation1.getLatitude() + " ");
+                                log.setText(currentlocation1.getLongitude() + " ");
 
 
                             }
 
-                        }else {
+                        } else {
 
                             Log.d(TAG, "onComplete: Not Found");
                             Toast.makeText(MapsActivity.this, "Uenable to get currunt location", Toast.LENGTH_SHORT).show();
@@ -332,22 +333,23 @@ if (isGpsOpen()) {
             }
 
 
-        }catch (SecurityException e){
+        } catch (SecurityException e) {
 
-            Log.d(TAG, "getDeviceLocation: Scyrety exaption"+e.getMessage());
+            Log.d(TAG, "getDeviceLocation: Scyrety exaption" + e.getMessage());
 
-        }catch (NullPointerException e){}
+        } catch (NullPointerException e) {
+        }
 
 
     }
 
 
-    private void moveCamera(LatLng latLng,float zoom,String title   ){
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
+    private void moveCamera(LatLng latLng, float zoom, String title) {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
 
-        if (!title.equals("myLocation")){
-            MarkerOptions options=new MarkerOptions()
+        if (!title.equals("myLocation")) {
+            MarkerOptions options = new MarkerOptions()
                     .position(latLng)
                     .title(title);
 
@@ -359,20 +361,14 @@ if (isGpsOpen()) {
     }
 
 
-
-    private void CheckPermission()
-    {
-        if (ContextCompat.checkSelfPermission(this,FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
-        {
-            String [] perm = {FINE_LOCATION};
-            ActivityCompat.requestPermissions(this,perm,loc_req);
-        }else
-        {
-            if (isGpsOpen())
-            {
+    private void CheckPermission() {
+        if (ContextCompat.checkSelfPermission(this, FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            String[] perm = {FINE_LOCATION};
+            ActivityCompat.requestPermissions(this, perm, loc_req);
+        } else {
+            if (isGpsOpen()) {
                 initMap();
-            }else
-            {
+            } else {
                 CreateGpsDialog();
             }
         }
@@ -384,7 +380,7 @@ if (isGpsOpen()) {
                 .setCancelable(false)
                 .create();
 
-        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog,null);
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
         TextView tv_msg = view.findViewById(R.id.tv_msg);
         tv_msg.setText(R.string.app_open_gps);
         Button doneBtn = view.findViewById(R.id.doneBtn);
@@ -396,17 +392,16 @@ if (isGpsOpen()) {
             }
         });
 
-        gps_dialog.getWindow().getAttributes().windowAnimations=R.style.custom_dialog;
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog;
         gps_dialog.setView(view);
         gps_dialog.setCanceledOnTouchOutside(false);
         gps_dialog.show();
     }
 
 
-    private void OpenGps()
-    {
+    private void OpenGps() {
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        startActivityForResult(intent,gps_req);
+        startActivityForResult(intent, gps_req);
 
 
         sendBroadcast(intent);
@@ -417,29 +412,27 @@ if (isGpsOpen()) {
 
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-        for (Fragment fragment:fragmentList)
-        {
+        for (Fragment fragment : fragmentList) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
 
-        if (requestCode==gps_req)
-        {
-            if (isGpsOpen())
-            {
+        if (requestCode == gps_req) {
+            if (isGpsOpen()) {
 //                StartLocationUpdate();
                 getDeviceLocation();
                 refreshLayout();
 
-            }else
-            {
+            } else {
                 CreateGpsDialog();
             }
         }
     }
+
     private void refreshLayout() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -452,27 +445,20 @@ if (isGpsOpen()) {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-        for (Fragment fragment:fragmentList)
-        {
+        for (Fragment fragment : fragmentList) {
             fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        if (requestCode==loc_req)
-        {
-            if (grantResults.length>0)
-            {
-                if (grantResults[0]==PackageManager.PERMISSION_GRANTED)
-                {
-                    if (isGpsOpen())
-                    {
+        if (requestCode == loc_req) {
+            if (grantResults.length > 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (isGpsOpen()) {
 //                        StartLocationUpdate();
                         getDeviceLocation();
-                    }else
-                    {
+                    } else {
                         CreateGpsDialog();
                     }
-                }else
-                {
+                } else {
                     Toast.makeText(this, "Access location Permission denied", Toast.LENGTH_SHORT).show();
                 }
             }

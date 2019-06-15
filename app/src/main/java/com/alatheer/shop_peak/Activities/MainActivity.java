@@ -18,9 +18,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -294,8 +296,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
                 case R.id.nav_profile:
-                    selectedfragment=new Client_Profile_Fragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
+
+                    if (userModel1==null){
+
+                        CreateGpsDialog();
+                    }
+                    else {
+                        selectedfragment = new Client_Profile_Fragment();
+                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                    }
                     break;
                 //case R.id.nav_add:
                 //startActivity(new Intent(MainActivity.this,AddProductActivity.class));
@@ -385,6 +394,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_join_us:
 
+                if (userModel1==null){
+
+                    CreateGpsDialog();
+                }else {
                 Log.d(TAG, "onNavigationItemSelected: "+type);
                 if (type.equals("2")){
 
@@ -404,7 +417,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(this, R.string.youVonder, Toast.LENGTH_LONG).show();
 
 
-                }
+                }}
 
                 break;
             case R.id.nav_contact_us:
@@ -633,6 +646,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
 
+    }
+
+    private void CreateGpsDialog() {
+
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
+                .setCancelable(false)
+                .create();
+
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(R.string.SH_Log);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                Intent intent = new Intent(MainActivity.this, Login_Activity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
     }
 
 }

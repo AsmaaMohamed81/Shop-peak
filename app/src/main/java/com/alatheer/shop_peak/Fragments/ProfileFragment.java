@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.FollowersActivity;
+import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Activities.MyFollowersActivity;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
@@ -53,7 +54,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class ProfileFragment extends android.app.Fragment {
-    ImageView img_grid,img_ver,add_product,profile_image;
+    ImageView img_grid, img_ver, add_product, profile_image;
     TextView profile_name;
     RecyclerView menu_recycler;
     RecyclerView.LayoutManager verticalmanager;
@@ -62,12 +63,12 @@ public class ProfileFragment extends android.app.Fragment {
     Activity activity;
     Uri uri;
     Bitmap bitmap;
-    String vender_name,image,id_store;
+    String vender_name, image, id_store;
     int flag;
     int PICK_IMAGE_REQUEST;
 
     private ProgressBar progressBar;
-    private TextView txt_no,num_products,followers,myfollow;
+    private TextView txt_no, num_products, followers, myfollow;
 
     private ArrayList<HomeModel> homeModelArrayList;
 
@@ -75,24 +76,25 @@ public class ProfileFragment extends android.app.Fragment {
 
     MySharedPreference mySharedPreference;
     UserModel1 userModel1;
-    String img,id,name;
-    private ArrayList<UserModel1> userModel1ArrayList,Listmyfollow;
+    String img, id, name;
+    private ArrayList<UserModel1> userModel1ArrayList, Listmyfollow;
 
 
-    String type="1";
+    String type = "1";
 
     Button follow;
 
-    boolean flagButton=false;
+    boolean flagButton = false;
 
     public static ProfileFragment getInstance() {
         ProfileFragment fragment = new ProfileFragment();
         return fragment;
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         initview(view);
         return view;
@@ -100,34 +102,34 @@ public class ProfileFragment extends android.app.Fragment {
 
     private void initview(final View view) {
 
-        mySharedPreference=MySharedPreference.getInstance();
-        userModel1=mySharedPreference.Get_UserData(getActivity());
+        mySharedPreference = MySharedPreference.getInstance();
+        userModel1 = mySharedPreference.Get_UserData(getActivity());
 
-        userModel1ArrayList=new ArrayList<>();
-        Listmyfollow=new ArrayList<>();
+        userModel1ArrayList = new ArrayList<>();
+        Listmyfollow = new ArrayList<>();
 
 
-        if (userModel1!=null){
-            img=userModel1.getLogo_img();
-            id=userModel1.getId();
-            name=userModel1.getFull_name();
+        if (userModel1 != null) {
+            img = userModel1.getLogo_img();
+            id = userModel1.getId();
+            name = userModel1.getFull_name();
 
         }
 
-        homeModelArrayList=new ArrayList<>();
-         profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
-         profile_name=view.findViewById(R.id.profile_name);
-         profile_image=view.findViewById(R.id.profile_img);
-         img_grid=view.findViewById(R.id.menu_grid);
-         img_ver=view.findViewById(R.id.menu_vertical);
+        homeModelArrayList = new ArrayList<>();
+        profileDatabase = Room.databaseBuilder(getApplicationContext(), ProfileDatabase.class, "product_db").allowMainThreadQueries().build();
+        profile_name = view.findViewById(R.id.profile_name);
+        profile_image = view.findViewById(R.id.profile_img);
+        img_grid = view.findViewById(R.id.menu_grid);
+        img_ver = view.findViewById(R.id.menu_vertical);
 //         add_product=view.findViewById(R.id.add_product);
-         menu_recycler=view.findViewById(R.id.recycler_menu);
-        num_products=view.findViewById(R.id.num_products);
+        menu_recycler = view.findViewById(R.id.recycler_menu);
+        num_products = view.findViewById(R.id.num_products);
 
-        followers=view.findViewById(R.id.followers);
-        follow=view.findViewById(R.id.follow);
+        followers = view.findViewById(R.id.followers);
+        follow = view.findViewById(R.id.follow);
         follow.setVisibility(view.VISIBLE);
-        myfollow=view.findViewById(R.id.myfollow);
+        myfollow = view.findViewById(R.id.myfollow);
 
         progressBar = view.findViewById(R.id.progBar);
         txt_no = view.findViewById(R.id.tv_no);
@@ -136,35 +138,31 @@ public class ProfileFragment extends android.app.Fragment {
 
 
         getIntent();
-        checkfollow(id_store,id);
+        checkfollow(id_store, id);
 
-        Log.d("asmaa", "initview: "+id_store);
-
-
-
-
+        Log.d("asmaa", "initview: " + id_store);
 
 
         img_grid.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 Viewgrid();
+            @Override
+            public void onClick(View v) {
+                Viewgrid();
 
-             }
-         });
-         img_ver.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 viewvertical();
+            }
+        });
+        img_ver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewvertical();
 
-             }
-         });
+            }
+        });
 
 
-            Picasso.with(getActivity()).load(image).into(profile_image);
-            profile_name.setText(vender_name);
-            getStoreProduct(id_store);
-            Viewgrid();
+        Picasso.with(getActivity()).load(image).into(profile_image);
+        profile_name.setText(vender_name);
+        getStoreProduct(id_store);
+        Viewgrid();
 
         get_storefollow(id_store);
 
@@ -173,8 +171,8 @@ public class ProfileFragment extends android.app.Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(getActivity(), FollowersActivity.class);
-                intent.putExtra("id_store",id_store);
+                Intent intent = new Intent(getActivity(), FollowersActivity.class);
+                intent.putExtra("id_store", id_store);
                 startActivity(intent);
 
             }
@@ -183,8 +181,8 @@ public class ProfileFragment extends android.app.Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(getActivity(), MyFollowersActivity.class);
-                intent.putExtra("id_store",id_store);
+                Intent intent = new Intent(getActivity(), MyFollowersActivity.class);
+                intent.putExtra("id_store", id_store);
                 startActivity(intent);
 
             }
@@ -195,14 +193,22 @@ public class ProfileFragment extends android.app.Fragment {
             @Override
             public void onClick(View view) {
 
-                if (flagButton==true){
 
-                    deleteflow(id_store,id);
+                if (userModel1 == null) {
+
+                    CreateGpsDialog();
+
+                } else {
+
+                    if (flagButton == true) {
+
+                        deleteflow(id_store, id);
 
 
-                }else {
-                    makefollow(id_store,id);
+                    } else {
+                        makefollow(id_store, id);
 
+                    }
                 }
             }
         });
@@ -227,12 +233,12 @@ public class ProfileFragment extends android.app.Fragment {
 
     private void updateUI() {
 
-        if (flagButton==true){
+        if (flagButton == true) {
 
 
             follow.setText(R.string.unfollow);
             follow.setBackgroundResource(R.drawable.btn_field2);
-        }else {
+        } else {
 
 
             follow.setText(R.string.follow);
@@ -243,16 +249,16 @@ public class ProfileFragment extends android.app.Fragment {
     private void makefollow(String id_store, String id) {
 
         Api.getService()
-                .make_follow(id_store,id)
+                .make_follow(id_store, id)
                 .enqueue(new Callback<RatingModel2>() {
                     @Override
                     public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
 
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
 
-                            if (response.body().getSuccess()==1){
+                            if (response.body().getSuccess() == 1) {
 
-                                flagButton=true;
+                                flagButton = true;
                                 updateUI();
                             }
                         }
@@ -269,16 +275,16 @@ public class ProfileFragment extends android.app.Fragment {
     private void deleteflow(String id_store, String id) {
 
         Api.getService()
-                .delete_flow(id_store,id)
+                .delete_flow(id_store, id)
                 .enqueue(new Callback<RatingModel2>() {
                     @Override
                     public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
 
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
 
-                            if (response.body().getSuccess()==1){
+                            if (response.body().getSuccess() == 1) {
 
-                                flagButton=false;
+                                flagButton = false;
                                 updateUI();
                             }
                         }
@@ -299,9 +305,9 @@ public class ProfileFragment extends android.app.Fragment {
                 .enqueue(new Callback<List<UserModel1>>() {
                     @Override
                     public void onResponse(Call<List<UserModel1>> call, Response<List<UserModel1>> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
 
-                            if (response.body().size()>0){
+                            if (response.body().size() > 0) {
 
                                 Listmyfollow.addAll(response.body());
                                 myfollow.setText(Integer.toString(response.body().size()));
@@ -320,20 +326,20 @@ public class ProfileFragment extends android.app.Fragment {
     private void checkfollow(String id_store, String id) {
 
         Api.getService()
-                .get_user_folow(id_store,id)
+                .get_user_folow(id_store, id)
                 .enqueue(new Callback<RatingModel2>() {
                     @Override
                     public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
 
-                            if (response.body().getSuccess()==1){
+                            if (response.body().getSuccess() == 1) {
 
-                                flagButton=true;
+                                flagButton = true;
                                 updateUI();
 
-                            }else {
+                            } else {
 
-                                flagButton=false;
+                                flagButton = false;
                                 updateUI();
 
 
@@ -355,9 +361,9 @@ public class ProfileFragment extends android.app.Fragment {
                 .enqueue(new Callback<List<UserModel1>>() {
                     @Override
                     public void onResponse(Call<List<UserModel1>> call, Response<List<UserModel1>> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
 
-                            if (response.body().size()>0){
+                            if (response.body().size() > 0) {
 
                                 userModel1ArrayList.addAll(response.body());
                                 followers.setText(Integer.toString(response.body().size()));
@@ -374,13 +380,12 @@ public class ProfileFragment extends android.app.Fragment {
     }
 
 
-
     private void getIntent() {
 
-        Bundle bundle=getArguments();
+        Bundle bundle = getArguments();
 
 
-        if(bundle !=null) {
+        if (bundle != null) {
 
             vender_name = bundle.getString("name");
             image = bundle.getString("image");
@@ -397,11 +402,11 @@ public class ProfileFragment extends android.app.Fragment {
                     @Override
                     public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
 
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
 
                             progressBar.setVisibility(View.GONE);
 
-                            if (response.body().size()>0){
+                            if (response.body().size() > 0) {
                                 homeModelArrayList.addAll(response.body());
 //                                profile_gridAdapter.notifyDataSetChanged();
 //                                profile_verticalAdapter.notifyDataSetChanged();
@@ -410,7 +415,6 @@ public class ProfileFragment extends android.app.Fragment {
 
                                 Viewgrid();
                                 txt_no.setVisibility(View.GONE);
-
 
 
                             }
@@ -445,16 +449,16 @@ public class ProfileFragment extends android.app.Fragment {
             }
         }
     }
+
     private void viewvertical() {
         img_ver.setColorFilter(getResources().getColor(R.color.colorPrimary));
         img_grid.setColorFilter(getResources().getColor(R.color.gray));
 
 
-
-        verticalmanager=new LinearLayoutManager(getActivity());
+        verticalmanager = new LinearLayoutManager(getActivity());
         menu_recycler.setHasFixedSize(true);
         menu_recycler.setLayoutManager(verticalmanager);
-        profile_verticalAdapter=new Profile_verticalAdapter(homeModelArrayList,getActivity());
+        profile_verticalAdapter = new Profile_verticalAdapter(homeModelArrayList, getActivity());
         menu_recycler.setAdapter(profile_verticalAdapter);
 
     }
@@ -464,10 +468,10 @@ public class ProfileFragment extends android.app.Fragment {
         img_ver.setColorFilter(getResources().getColor(R.color.gray));
 
 
-        verticalmanager=new GridLayoutManager(getActivity(),3);
+        verticalmanager = new GridLayoutManager(getActivity(), 3);
         menu_recycler.setHasFixedSize(true);
         menu_recycler.setLayoutManager(verticalmanager);
-        profile_verticalAdapter=new Profile_verticalAdapter(homeModelArrayList,getActivity());
+        profile_verticalAdapter = new Profile_verticalAdapter(homeModelArrayList, getActivity());
         menu_recycler.setAdapter(profile_verticalAdapter);
     }
 
@@ -498,6 +502,31 @@ public class ProfileFragment extends android.app.Fragment {
 
         return profilelist ;*/
 
+    private void CreateGpsDialog() {
+
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(getActivity())
+                .setCancelable(false)
+                .create();
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(R.string.SH_Log);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                Intent intent = new Intent(getActivity(), Login_Activity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
+    }
 
 }
 

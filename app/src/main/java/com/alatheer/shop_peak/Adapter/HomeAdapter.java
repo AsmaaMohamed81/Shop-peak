@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,13 +19,16 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.AddProductActivity;
+import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.BuildConfig;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -48,6 +52,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     CustomSwipeAdapter customSwipeAdapter;
 
     HomeModel model;
+    UserModel1 userModel1;
     long id;
     public HomeAdapter(List<HomeModel> listofhome, Context context) {
         this.listofhome = listofhome;
@@ -65,6 +70,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     }
     @Override
     public void onBindViewHolder(@NonNull final Image2holder holder, final int position) {
+
+        MySharedPreference mySharedPreference=MySharedPreference.getInstance();
+        userModel1=mySharedPreference.Get_UserData(context);
+
        // Uri uri = Uri.parse(listofhome.get(position).getProduct_image());
         //final File path = new File(uri.getPath());
         profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
@@ -141,21 +150,26 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                     int pos=holder.getAdapterPosition();
 
 
+                    if (userModel1==null){
 
-                    if (holder.fav.isChecked()) {
-                        accepted = true;
+                        CreateGpsDialog();
 
-                        mainActivity.addfavPos(pos);
-                        Log.e("add_to_favorite","true");
-                    } else {
-                        accepted = false;
+                    }else {
 
-                        mainActivity.deletfavPos(pos);
+                        if (holder.fav.isChecked()) {
+                            accepted = true;
 
-                        Log.e("delete_from_favorite","true");
+                            mainActivity.addfavPos(pos);
+                            Log.e("add_to_favorite", "true");
+                        } else {
+                            accepted = false;
+
+                            mainActivity.deletfavPos(pos);
+
+                            Log.e("delete_from_favorite", "true");
+                        }
+
                     }
-
-
 
 
 
@@ -222,6 +236,30 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         }
     }
 
+    private void CreateGpsDialog() {
 
+            final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(context)
+                .setCancelable(false)
+                .create();
+
+        View view = LayoutInflater.from(context).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(R.string.SH_Log);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                Intent intent = new Intent(context, Login_Activity.class);
+                context.startActivity(intent);
+
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
+    }
 
 }

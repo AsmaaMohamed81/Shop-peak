@@ -71,7 +71,7 @@ public class Category_Activity extends AppCompatActivity {
 
             id_main_cat=intent.getIntExtra("id_main_cats",1);
             Log.d("asmaa_end", "getdataIntent: "+id_main_cat);
-            Toast.makeText(this, ""+id_main_cat, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, ""+id_main_cat, Toast.LENGTH_SHORT).show();
             subsArrayList= (ArrayList<list_cats.Subs>) intent.getSerializableExtra("cats");
 
 

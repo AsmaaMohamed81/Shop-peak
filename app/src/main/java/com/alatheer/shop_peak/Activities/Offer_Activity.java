@@ -159,11 +159,12 @@ public class Offer_Activity extends AppCompatActivity {
         intent.putExtra("store_id",store_id);
         intent.putExtra("like",like);
         Log.v("gggg",store_id);
+        if (userModel1!=null){
         String user_id = userModel1.getId();
         if (user_id!=null) {
             intent.putExtra("user_id", Integer.parseInt(user_id));
 
-        }
+        }}
         intent.putExtra("color",colors);
         startActivity(intent);
         Animatoo.animateInAndOut(Offer_Activity.this);

@@ -55,7 +55,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
      holder.itemView.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-             Toast.makeText(context, navigationModels.get(position).getName(), Toast.LENGTH_SHORT).show();
+//             Toast.makeText(context, navigationModels.get(position).getName(), Toast.LENGTH_SHORT).show();
              int pos=holder.getAdapterPosition();
              mainActivity.list_cats_pos(pos);
 

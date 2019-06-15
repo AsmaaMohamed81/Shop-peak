@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -56,6 +57,7 @@ public class Basket_Activity extends AppCompatActivity {
     String sum;
     int total;
     TextView txt_total;
+    String name,USER_ID,address,phone,type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +77,15 @@ public class Basket_Activity extends AppCompatActivity {
         initRecyclerview();
         mPrefs =MySharedPreference.getInstance();
         userModel1 = mPrefs.Get_UserData(Basket_Activity.this);
-        final String name = userModel1.getFull_name();
-        final String USER_ID = userModel1.getId();
-        final String address = userModel1.getAddress();
-        final String phone = userModel1.getPhone();
-        final String type = userModel1.getType();
+
+        if (userModel1!=null) {
+              name = userModel1.getFull_name();
+              USER_ID = userModel1.getId();
+              address = userModel1.getAddress();
+              phone = userModel1.getPhone();
+              type = userModel1.getType();
+
+        }
         image_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +95,12 @@ public class Basket_Activity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                if (userModel1==null){
+                    CreateGpsDialog();
+
+                }else {
                // BasketModel2 basketModel2 =new BasketModel2(type,basketModelList,USER_ID,name,address
                 //,lat,lon,phone);
                 if(basketModelList.size()>0){
@@ -118,7 +130,7 @@ public class Basket_Activity extends AppCompatActivity {
                     Log.v("eeee",t.getMessage());
                     }
                 });*/
-            }
+            }}
         });
 
     }
@@ -164,5 +176,31 @@ public class Basket_Activity extends AppCompatActivity {
         count_of_item = Integer.parseInt(basketModelList.get(position).sanfAmount);
         total = total + price * count_of_item;
         txt_total.setText("TOTAL : "+ total+"");
+    }
+
+    private void CreateGpsDialog() {
+
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
+                .setCancelable(false)
+                .create();
+
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(R.string.SH_Log);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                Intent intent = new Intent(Basket_Activity.this, Login_Activity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
     }
 }

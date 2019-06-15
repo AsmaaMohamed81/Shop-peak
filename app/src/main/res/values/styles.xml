@@ -22,4 +22,9 @@
         <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
 
     </style>
+
+    <style name="custom_dialog_animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
 </resources>

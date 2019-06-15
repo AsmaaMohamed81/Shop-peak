@@ -108,5 +108,8 @@
     <string name="ordersend">تم ارسال طلبك للانضمام الينا كا تاجر بنجاح من فضلك انتظر</string>
     <string name="youVonder">انت منضم الينا بالفعل مرحبا بك</string>
     <string name="nooffer">لايوجد عروض الان</string>
-    <string name="Skip">Skip</string>
+    <string name="Skip">تخطي</string>
+    <string name="SH_Log">من فضلك قوم بتسجيل الدخول اولا</string>
+    <string name="Succ_send">تم رفع المنتج بنجاح</string>
+    <string name="order_basket_send">تم ارسال طلبك بنجاح</string>
 </resources>

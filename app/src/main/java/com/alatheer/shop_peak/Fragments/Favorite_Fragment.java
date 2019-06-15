@@ -89,6 +89,13 @@ public class Favorite_Fragment extends android.app.Fragment {
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
 
 
+        if (userModel1==null){
+
+            txt_no.setText(R.string.SH_Log);
+            txt_no.setVisibility(View.VISIBLE);
+
+        }
+
 
         initRecyclerview();
 
