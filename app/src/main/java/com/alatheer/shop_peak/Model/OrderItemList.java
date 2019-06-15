@@ -17,7 +17,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 @Entity(tableName = "morders")
-public class OrderItemList  {
+public class OrderItemList implements Serializable  {
     @ColumnInfo(name = "sanf_id_fk")
     @SerializedName("sanf_id_fk")
     @Expose
@@ -50,7 +50,7 @@ public class OrderItemList  {
     }
 
     @ColumnInfo(name = "sanf_image")
-    @SerializedName("sanf_Image")
+    @SerializedName("sanf_image")
     @Expose
     public String sanfImage;
 
@@ -64,7 +64,7 @@ public class OrderItemList  {
 
 
     @ColumnInfo(name = "sanf_title")
-    @SerializedName("sanf_Image")
+    @SerializedName("sanf_title")
 
     @Expose
     public String sanfTitle;

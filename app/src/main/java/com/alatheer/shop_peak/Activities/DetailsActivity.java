@@ -93,9 +93,7 @@ public class DetailsActivity extends AppCompatActivity {
         //plus_circle = findViewById(R.id.add_circle);
         //minus_circle = findViewById(R.id.remove_circle);
         //counter = findViewById(R.id.counter);
-        shopping_cart = findViewById(R.id.shopping_cart);
         //cart_num = findViewById(R.id.cart_num);
-        addcart = findViewById(R.id.add_cart);
         //c_red=findViewById(R.id.checkbox_red);
         //c_blue=findViewById(R.id.checkbox_blue);
         //c_black=findViewById(R.id.checkbox_black);
@@ -139,27 +137,6 @@ public class DetailsActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-        shopping_cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(DetailsActivity.this,Basket_Activity.class);
-                startActivity(intent);
-                Animatoo.animateDiagonal(DetailsActivity.this);
-            }
-        });
-
-        if (myAppDatabase.dao().getdata().size() > 0) {
-            tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
-        } else {
-            tv_not_budget.setText("0");
-
-        }
-
-    }
-    public void init_color_recycler(){
 
     }
 

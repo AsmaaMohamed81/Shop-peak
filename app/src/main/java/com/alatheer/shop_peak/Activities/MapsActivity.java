@@ -36,8 +36,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Model.BasketModel2;
 import com.alatheer.shop_peak.Model.LocationModel;
+import com.alatheer.shop_peak.Model.OrderItemList;
+import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.service.Api;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -62,8 +66,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -118,8 +127,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         lat=findViewById(R.id.lat);
         log=findViewById(R.id.log);
         btn_continue=findViewById(R.id.btn_continue);
+        btn_add_basket = findViewById(R.id.btn_add);
         final Animation animation= AnimationUtils.loadAnimation(this,R.anim.press_anim);
-        Intent intent =getIntent();
+        final Intent intent =getIntent();
         flag = intent.getIntExtra("flag",0);
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,17 +139,42 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 Vlat=lat.getText().toString();
                 Vlang=log.getText().toString();
-                if(flag == 1){
-                    Intent intent=new Intent(MapsActivity.this,Basket_Activity.class);
-                    intent.putExtra("lat",Vlat);
-                    intent.putExtra("lang",Vlang);
-                    startActivity(intent);
-                }else {
+
                     Intent intent = new Intent(MapsActivity.this, Vender_Signup_Activity.class);
                     intent.putExtra("lat", Vlat);
                     intent.putExtra("lang", Vlang);
                     startActivity(intent);
-                }
+
+            }
+        });
+        btn_add_basket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String type= intent.getStringExtra("type");
+                String user_id =intent.getStringExtra("user_id");
+                String name =intent.getStringExtra("name");
+                String address = intent.getStringExtra("address");
+                List<OrderItemList> list = (List<OrderItemList>) intent.getExtras().getSerializable("list");
+                String phone =intent.getStringExtra("phone");
+                Vlat=lat.getText().toString();
+                Vlang=log.getText().toString();
+                BasketModel2 basketModel2 =new BasketModel2(type,list,user_id,name,address
+                        ,Vlat,Vlang,phone);
+                Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
+                    @Override
+                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                        if(response.isSuccessful()){
+                            Log.v("llll", response.message());
+                            Toast.makeText(MapsActivity.this,"data added successfully",Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<RatingModel2> call, Throwable t) {
+                        Log.v("eeee",t.getMessage());
+                    }
+                });
             }
         });
 

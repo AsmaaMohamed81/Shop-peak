@@ -432,63 +432,13 @@
                     android:layout_gravity="center"
                     android:background="@drawable/btn_field"
                     android:text="@string/add_main_image"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/white"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp" />
             </FrameLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:weightSum="3"
-                android:orientation="horizontal"
-                android:background="@color/colorPrimary">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/element"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/description"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="operation"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <TableLayout
-                android:id="@+id/table"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10">
-            </TableLayout>
-                <Button
-                    android:id="@+id/btn_add_element"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:text="@string/add"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/white"
-                    android:background="@drawable/btn_field" />
-        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/relative_btns"
@@ -519,6 +469,87 @@
                 android:background="@drawable/btn_field" />
 
         </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/item_description_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:background="@color/colorPrimary">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/element"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/description"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <TableLayout
+                    android:id="@+id/table"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+                    <TableRow>
+                        <EditText
+                            android:id="@+id/item_name1"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="5">
+                        </EditText>
+                        <EditText
+                            android:id="@+id/des_name1"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="5">
+                        </EditText>
+                    </TableRow>
+                    <TableRow>
+                        <EditText
+                            android:id="@+id/item_name2"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="5">
+                        </EditText>
+                        <EditText
+                            android:id="@+id/des_name2"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="5">
+                        </EditText>
+                    </TableRow>
+                </TableLayout>
+                <Button
+                    android:id="@+id/btn_add_element"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="@string/add"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_field" />
+            </LinearLayout>
+
+            </LinearLayout>
+
         <LinearLayout
             android:id="@+id/color_image_layout"
             android:layout_width="match_parent"

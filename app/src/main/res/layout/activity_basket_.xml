@@ -45,16 +45,21 @@
             android:layout_marginBottom="50dp"
             android:layoutAnimation="@anim/layout_animation_fall_down">
         </android.support.v7.widget.RecyclerView>
-        <Button
-            android:id="@+id/add_lat_lon"
+        <TextView
+            android:id="@+id/txt_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/btn_field"
-            android:textColor="@color/white"
-            android:layout_marginBottom="10dp"
             android:layout_below="@+id/basket_recycler"
-            android:text="lat and lan"/>
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/txt_field"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text="TOTAL : 0"
+            android:maxLines="1"
+            />
         <Button
             android:id="@+id/add"
             android:layout_width="wrap_content"
@@ -64,8 +69,8 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/btn_field"
             android:textColor="@color/white"
-            android:layout_below="@+id/add_lat_lon"
-            android:text="تاكيد شراء"/>
+            android:layout_below="@+id/txt_total"
+            android:text="@string/continuee"/>
     </RelativeLayout>
 </ScrollView>
 
