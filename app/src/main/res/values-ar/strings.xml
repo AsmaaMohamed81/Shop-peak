@@ -43,7 +43,7 @@
     <string name="notifications">الاشعارات</string>
     <string name="profile">الشخصية</string>
     <string name="update_your_profile">تحديث الملف الشخصي</string>
-    <string name="add_cart">Add To Cart</string>
+    <string name="add_cart">اضافه الي السله</string>
     <string name="details">لمزيد من التفاصيل</string>
     <string name="facebook_app_id">713163185768231</string>
     <string name="fb_login_protocol_scheme">fb713163185768231</string>
@@ -72,11 +72,11 @@
     <string name="element_name_req">ادخل اسم العنصر</string>
     <string name="element_description_req">ادخل تفاصيل العنصر</string>
     <string name="element_color_req">ادخل لون العنصر</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="notification">notification</string>
+    <string name="title_activity_maps">خريطه</string>
+    <string name="notification">اشعارات</string>
     <string name="wifi">فتح الانترنت الهوائي </string>
     <string name="app_open_gps">سيقوم التطبيق بفتح ال gps لتحديد موقعك.</string>
-    <string name="ok">ok</string>
+    <string name="ok">تم</string>
     <string name="add_city">أدخل المدينه</string>
     <string name="add_govern">أدخل المحافظه</string>
     <string name="element">العنصر</string>
@@ -89,8 +89,8 @@
     <string name="color">اللون</string>
     <string name="lat">Lat</string>
     <string name="log">LONG</string>
-    <string name="share_loc">Share Your Location</string>
-    <string name="chk_user_pas">Check Your Emeil Or PassWord</string>
+    <string name="share_loc">شارك موقعك</string>
+    <string name="chk_user_pas">تاكد من ايميلك وكلمه المرور</string>
     <string name="inc_img_path">مسار الصور غير صحيح</string>
     <string name="tasnef_req">يجب اختيار تصنيف للمحل اولا</string>
     <string name="lat_lang_req">يجب عليك تحديد موقعك علي الخريطه اولا</string>
@@ -99,7 +99,7 @@
     <string name="addrate">تم تعديل تقيمك بنجاح</string>
     <string name="addfav">تم اضافه العنصر الي المفضله بنجاح</string>
     <string name="deletfav">تم ازاله العنصر الي المفضله بنجاح</string>
-    <string name="unfollow">UnFollow</string>
+    <string name="unfollow">الغاء المتابعه</string>
     <string name="followers">المتابعون</string>
     <string name="products">المنتجات</string>
     <string name="followe">يتابع</string>
@@ -108,4 +108,5 @@
     <string name="ordersend">تم ارسال طلبك للانضمام الينا كا تاجر بنجاح من فضلك انتظر</string>
     <string name="youVonder">انت منضم الينا بالفعل مرحبا بك</string>
     <string name="nooffer">لايوجد عروض الان</string>
+    <string name="Skip">Skip</string>
 </resources>

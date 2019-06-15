@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -69,7 +70,7 @@ public class Signup_Activity extends AppCompatActivity {
 
     private Govern govern;
 
-    private TextView tv_title_govern, tv_title_city;
+    private TextView tv_title_govern, tv_title_city,syasa;
 
 
     @Override
@@ -90,6 +91,7 @@ public class Signup_Activity extends AppCompatActivity {
         root = findViewById(R.id.root);
         checkBox = findViewById(R.id.check_box);
         user_confirm_password=findViewById(R.id.user_confirm_password);
+        syasa=findViewById(R.id.sysa);
 
 
 /////#FFFFFF/////////////////
@@ -162,6 +164,15 @@ public class Signup_Activity extends AppCompatActivity {
                 sign_up.clearAnimation();
                 sign_up.setAnimation(animation);
                 validation();
+            }
+        });
+
+
+        syasa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent  intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://shop-peak.com/Web/about/1"));
+                startActivity(intent);
             }
         });
         CreateProgressDialog();

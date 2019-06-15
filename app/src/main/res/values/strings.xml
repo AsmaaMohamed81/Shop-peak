@@ -41,7 +41,7 @@
     <string name="notifications">Notifications</string>
     <string name="profile">Profile</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="update_your_profile">تحديث الملف الشخصي</string>
+    <string name="update_your_profile">Profile updated</string>
     <string name="add_cart">Add To Cart</string>
     <string name="details">show more details</string>
     <string name="facebook_app_id">713163185768231</string>
@@ -74,7 +74,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="notification">notification</string>
     <string name="wifi">Turn on WiFi</string>
-    <string name="app_open_gps">سيقوم التطبيق بفتح ال gps لتحديد موقعك.</string>
+    <string name="app_open_gps">The app will open the gps to determine your location.</string>
     <string name="ok">ok</string>
     <string name="add_govern">Add Govern</string>
     <string name="add_city">Add City</string>
@@ -90,23 +90,24 @@
     <string name="log">LONG</string>
     <string name="share_loc">Share Your Location</string>
     <string name="chk_user_pas">Check Your Emeil Or PassWord</string>
-    <string name="inc_img_path">مسار الصور غير صحيح</string>
-    <string name="tasnef_req">يجب اختيار تصنيف للمحل اولا</string>
-    <string name="lat_lang_req">يجب عليك تحديد موقعك علي الخريطه اولا</string>
-    <string name="logo_req">اختار لوجولمحل اولا</string>
-    <string name="follow">متـــــــــــابعه</string>
-    <string name="addrate">تم تعديل تقيمك بنجاح</string>
-    <string name="addfav">تم اضافه العنصر الي المفضله بنجاح</string>
-    <string name="deletfav">تم ازاله العنصر الي المفضله بنجاح</string>
+    <string name="inc_img_path">Path of image false</string>
+    <string name="tasnef_req">You must choose a label for the shop first</string>
+    <string name="lat_lang_req">You must point your location on the map first</string>
+    <string name="logo_req">Choose a logo to shop first</string>
+    <string name="follow">Follow up</string>
+    <string name="addrate">Your rating has been successfully edited</string>
+    <string name="addfav">The item has been successfully added to Favorites</string>
+    <string name="deletfav">Favorite element removed successfully</string>
     <string name="unfollow">UnFollow</string>
-    <string name="followers">المتابعون</string>
-    <string name="products">المنتجات</string>
-    <string name="followe">يتابع</string>
-    <string name="noproduct">لا يوجد منتجات الان</string>
-    <string name="nofav">لا يوجد قائمه لمفضلاتك</string>
-    <string name="ordersend">تم ارسال طلبك للانضمام الينا كا تاجر بنجاح من فضلك انتظر</string>
-    <string name="youVonder">انت منضم الينا بالفعل مرحبا بك</string>
-    <string name="nooffer">لايوجد عروض الان</string>
+    <string name="followers">Followers</string>
+    <string name="products">Products</string>
+    <string name="followe">Following</string>
+    <string name="noproduct">There are no products now</string>
+    <string name="nofav">There is no list of your favorites</string>
+    <string name="ordersend">Your order has been successfully sent to us. Please wait....</string>
+    <string name="youVonder">You are already joined to us Welcome</string>
+    <string name="nooffer">There are currently no offers</string>
+    <string name="Skip">Skip</string>
 
 
 </resources>

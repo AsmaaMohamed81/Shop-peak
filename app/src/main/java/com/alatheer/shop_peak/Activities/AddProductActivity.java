@@ -88,7 +88,7 @@ public class AddProductActivity extends AppCompatActivity {
     TableLayout t;
     TableRow tr;
     int DefaultColor;
-    String color1,color2;
+    String  hexColor1, hexColor2;
     ColorPickerDialog pickcolor;
     List<Uri>all_images;
     List<String>all_colors;
@@ -224,8 +224,9 @@ public class AddProductActivity extends AppCompatActivity {
 
 
                         txt_color1.setBackgroundColor(color);
-                        txt_color1.setText("#" + Integer.toHexString(color));
-                        color1 = Integer.toHexString(color);
+                         hexColor1 = String.format("%06X", (0xFFFFFF & color));
+                        Log.d("asmaa", "onColorChanged: "+hexColor1);
+                        txt_color1.setText("#"+hexColor1);
                     }
                 });
 
@@ -247,9 +248,11 @@ public class AddProductActivity extends AppCompatActivity {
                     public void onColorChanged(int color) {
 
 
+
                         txt_color2.setBackgroundColor(color);
-                        txt_color2.setText("#" + Integer.toHexString(color));
-                        color2 = Integer.toHexString(color);
+                        hexColor2 = String.format("%06X", (0xFFFFFF & color));
+                        Log.d("asmaa", "onColorChanged: "+hexColor2);
+                        txt_color2.setText("#"+hexColor2);
                     }
                 });
 
@@ -490,7 +493,7 @@ public class AddProductActivity extends AppCompatActivity {
 
                                 btn_element_color.setBackgroundColor(color);
                                 btn_element_color.setText("#" + Integer.toHexString(color));
-                                color2 = Integer.toHexString(color);
+//                                color2 = Integer.toHexString(color);
                             }
                         });
 
@@ -694,8 +697,8 @@ public class AddProductActivity extends AppCompatActivity {
         items.add(item_name2);
         descriptions.add(des_1);
         descriptions.add(des_2);
-        all_colors.add(color1);
-        all_colors.add(color2);
+        all_colors.add(hexColor1);
+        all_colors.add(hexColor2);
         all_images.add(filePath3);
         all_images.add(filePath4);
         if (!TextUtils.isEmpty(number) &&
@@ -706,8 +709,8 @@ public class AddProductActivity extends AppCompatActivity {
                 main_id !=null &&
                 sub_id !=null &&
                 filePath != null &&
-                color1 != null &&
-                color2 != null
+                hexColor1 != null &&
+                hexColor2 != null
 
                 ) {
 
@@ -799,7 +802,7 @@ public class AddProductActivity extends AppCompatActivity {
         //RequestBody Vcolor = Common.getRequestBodyText(color2);
         //colors.add(Vcolor);
         for(Uri filePath21 :all_images){
-            MultipartBody.Part vimg = Common.getMultiPart(this,filePath21,"images");
+            MultipartBody.Part vimg = Common.getMultiPart(this,filePath21,"images[]");
             images.add(vimg);
 
         }

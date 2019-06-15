@@ -174,16 +174,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.d(TAG, "initview: "+type);
                 Log.d(TAG, "initview: "+order);
 
+                tv_username.setText(name);
+                // Picasso.with(this).load(url).into(img);
+                tv_username.setVisibility(View.VISIBLE);
+                profile_img.setVisibility(View.VISIBLE);
+                login_register.setVisibility(View.GONE);
 
             }
 
           //  String url = userModel1.getPassword();
 //            String url=userModel1.getImage_url();
-            tv_username.setText(name);
-           // Picasso.with(this).load(url).into(img);
-            tv_username.setVisibility(View.VISIBLE);
-            profile_img.setVisibility(View.VISIBLE);
-            login_register.setVisibility(View.GONE);
+
 
             if (Logo_img!=null) {
                 Picasso.with(this).load(Logo_img).into(profile_img);
@@ -490,18 +491,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        flag = intent.getIntExtra("flag", 0);
 
 
-        type=userModel1.getType();
-        Log.d(TAG, "getDataIntent: "+type);
+        if (userModel1 != null) {
+            type = userModel1.getType();
+            Log.d(TAG, "getDataIntent: " + type);
             if (type.equals("1")) {
                 bottomNavigationView2.setVisibility(View.VISIBLE);
                 bottomNavigationView.setVisibility(View.GONE);
-            }else {
+            } else {
 
                 bottomNavigationView2.setVisibility(View.GONE);
                 bottomNavigationView.setVisibility(View.VISIBLE);
             }
         }
-
+    }
 
 
 
