@@ -104,14 +104,14 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
                 basket_activity.senddata2(position);
             }
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+       /* holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(context, "id"+basketModelList.get(position).getId()+"", Toast.LENGTH_SHORT).show();
                 basket_activity.senddata(position);
 
             }
-        });
+        });*/
         //Uri uri= Uri.parse(basketModelList.get(position).getImg());
        // File file =new File(uri.getPath());
         //Picasso.with(context).load(file).into(MyHolder.title_img);
