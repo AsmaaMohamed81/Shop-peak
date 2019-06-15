@@ -13,7 +13,7 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
             android:background="@color/white">
 
             <android.support.v7.widget.Toolbar
@@ -591,7 +591,36 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="10">
+                <TableRow>
+                    <EditText
+                        android:id="@+id/item_color1"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="5">
+                    </EditText>
+                    <EditText
+                        android:id="@+id/item_image1"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="5">
+                    </EditText>
+                </TableRow>
+                <TableRow>
+                    <EditText
+                        android:id="@+id/item_color2"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="5">
+                    </EditText>
+                    <EditText
+                        android:id="@+id/item_image2"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="5">
+                    </EditText>
+                </TableRow>
             </TableLayout>
+
 
 
             <Button

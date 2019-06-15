@@ -79,6 +79,8 @@ import retrofit2.http.Multipart;
 import retrofit2.http.Part;
 
 public class AddProductActivity extends AppCompatActivity {
+    private static final int PICK_IMAGE_REQUEST3 = 4 ;
+    private static final int PICK_IMAGE_REQUEST4 = 5 ;
     ImageView close, main_image, mutiple_image1, mutiple_image2, mutiple_image3, mutiple_image4;
     Button add_main_image, Skip, Continue;
     TextView added_post;
@@ -86,14 +88,16 @@ public class AddProductActivity extends AppCompatActivity {
     TableLayout t;
     TableRow tr;
     int DefaultColor;
-    String color2;
+    String color1,color2;
     ColorPickerDialog pickcolor;
-    List<RequestBody>colors;
+    List<Uri>all_images;
+    List<String>all_colors;
     List<String>items;
     List<String>descriptions;
     List<MultipartBody.Part>images;
     List<RequestBody>names;
     List<RequestBody>values;
+    List<RequestBody>colors;
     int color;
     private Context context2 = null;
     EditText product_num1, product_num, product_name, price_after_discount, price_before_discount, element_description;
@@ -116,12 +120,12 @@ public class AddProductActivity extends AppCompatActivity {
     private list_cats main_cat;
     private TextView tv_title_main, tv_title_sub;
     Button add_product;
-     int PICK_IMAGE_MULTIPLE = 2 ;
+      ;
     int PICK_IMAGE_REQUEST = 3;
     ImageButton add, delete;
     String name1,value1;
     int count = 0;
-    Uri Image_Uri1, Image_Uri2, Image_Uri3, Image_Uri4, filePath,filePath2;
+    Uri Image_Uri1, Image_Uri2, Image_Uri3, Image_Uri4, filePath,filePath2,filePath3,filePath4;
      ArrayList<Uri> mArrayUri;
      List<Product_Specification> product_specifications;
      List<String> imagesEncodedList;
@@ -136,7 +140,7 @@ public class AddProductActivity extends AppCompatActivity {
     private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
     private Context context = null;
 
-    EditText sc1,sc2,item1,item2,des1,des2;
+    EditText sc1,sc2,item1,item2,des1,des2,txt_color1,txt_color2,txt_image1,txt_image2;
 
      TableLayout tableLayout;
 
@@ -164,6 +168,10 @@ public class AddProductActivity extends AppCompatActivity {
         item2= findViewById(R.id.item_name2);
         des1 = findViewById(R.id.des_name1);
         des2 = findViewById(R.id.des_name2);
+        txt_color1 = findViewById(R.id.item_color1);
+        txt_color2 = findViewById(R.id.item_color2);
+        txt_image1 = findViewById(R.id.item_image1);
+        txt_image2 = findViewById(R.id.item_image2);
         item_description_layout = findViewById(R.id.item_description_layout);
         item_database= Room.databaseBuilder(getApplicationContext(),ItemDatabase.class,"item_db").allowMainThreadQueries().build();
         close=findViewById(R.id.close);
@@ -182,6 +190,8 @@ public class AddProductActivity extends AppCompatActivity {
         tv_title_main= findViewById(R.id.tv_title_main);
         tv_title_sub = findViewById(R.id.tv_title_sub);
         t1 = findViewById(R.id.table);
+        all_images = new ArrayList<>();
+        all_colors = new ArrayList<>();
         colors = new ArrayList<>();
         images = new ArrayList<>();
         names = new ArrayList<>();
@@ -200,6 +210,65 @@ public class AddProductActivity extends AppCompatActivity {
         //element_name = findViewById(R.id.element_name);
         // element_color = findViewById(R.id.element_color);
         // element_description = findViewById(R.id.element_description);
+        txt_color1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                color = Color.parseColor("#ffffff");
+                pickcolor = new ColorPickerDialog(AddProductActivity.this, color);
+                pickcolor.setAlphaSliderVisible(true);
+                pickcolor.setTitle("PICK");
+
+                pickcolor.setOnColorChangedListener(new ColorPickerDialog.OnColorChangedListener() {
+                    @Override
+                    public void onColorChanged(int color) {
+
+
+                        txt_color1.setBackgroundColor(color);
+                        txt_color1.setText("#" + Integer.toHexString(color));
+                        color1 = Integer.toHexString(color);
+                    }
+                });
+
+
+                pickcolor.show();
+            }
+
+        });
+        txt_color2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                color = Color.parseColor("#ffffff");
+                pickcolor = new ColorPickerDialog(AddProductActivity.this, color);
+                pickcolor.setAlphaSliderVisible(true);
+                pickcolor.setTitle("PICK");
+
+                pickcolor.setOnColorChangedListener(new ColorPickerDialog.OnColorChangedListener() {
+                    @Override
+                    public void onColorChanged(int color) {
+
+
+                        txt_color2.setBackgroundColor(color);
+                        txt_color2.setText("#" + Integer.toHexString(color));
+                        color2 = Integer.toHexString(color);
+                    }
+                });
+
+
+                pickcolor.show();
+            }
+        });
+        txt_image1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Check_ReadPermission(PICK_IMAGE_REQUEST3);
+            }
+        });
+        txt_image2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Check_ReadPermission(PICK_IMAGE_REQUEST4);
+            }
+        });
         product_num1 = findViewById(R.id.order_num);
         Continue = findViewById(R.id.btn_continue);
         Skip = findViewById(R.id.btn_skip);
@@ -481,7 +550,7 @@ public class AddProductActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+        } /*else if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             filePath2 = data.getData();
             btn_element_image.setText("you selected image");
@@ -490,6 +559,36 @@ public class AddProductActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
 
                  btn_element_image.setText("you selected image");
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            }*/else if(requestCode == PICK_IMAGE_REQUEST3 && resultCode == RESULT_OK
+                    && data != null && data.getData() != null) {
+             filePath3 = data.getData();
+                txt_image1.setText("you selected image");
+
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
+
+                    txt_image1.setText("you selected image");
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }else if(requestCode == PICK_IMAGE_REQUEST4 && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            filePath4 = data.getData();
+            txt_image2.setText("you selected image");
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
+
+                txt_image2.setText("you selected image");
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -595,6 +694,10 @@ public class AddProductActivity extends AppCompatActivity {
         items.add(item_name2);
         descriptions.add(des_1);
         descriptions.add(des_2);
+        all_colors.add(color1);
+        all_colors.add(color2);
+        all_images.add(filePath3);
+        all_images.add(filePath4);
         if (!TextUtils.isEmpty(number) &&
                 !TextUtils.isEmpty(name) &&
                 !TextUtils.isEmpty(priceafter_discount) &&
@@ -602,7 +705,10 @@ public class AddProductActivity extends AppCompatActivity {
                 !TextUtils.isEmpty(elementdescription) &&
                 main_id !=null &&
                 sub_id !=null &&
-                filePath != null
+                filePath != null &&
+                color1 != null &&
+                color2 != null
+
                 ) {
 
 
@@ -685,10 +791,20 @@ public class AddProductActivity extends AppCompatActivity {
             values.add(Vvalue);
 
         }
-        RequestBody Vcolor = Common.getRequestBodyText(color2);
-        colors.add(Vcolor);
-        MultipartBody.Part img = Common.getMultiPart(this,filePath2,"images");
-        images.add(img);
+        for(String color :all_colors){
+            RequestBody Vvalue = Common.getRequestBodyText(color);
+            colors.add(Vvalue);
+
+        }
+        //RequestBody Vcolor = Common.getRequestBodyText(color2);
+        //colors.add(Vcolor);
+        for(Uri filePath21 :all_images){
+            MultipartBody.Part vimg = Common.getMultiPart(this,filePath21,"images");
+            images.add(vimg);
+
+        }
+
+
 
         final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.waitt));
         dialog.setCancelable(true);
