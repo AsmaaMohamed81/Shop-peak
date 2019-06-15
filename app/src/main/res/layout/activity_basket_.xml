@@ -70,7 +70,7 @@
             android:background="@drawable/btn_field"
             android:textColor="@color/white"
             android:layout_below="@+id/txt_total"
-            android:text="تاكيد شراء"/>
+            android:text="@string/continuee"/>
     </RelativeLayout>
 </ScrollView>
 
