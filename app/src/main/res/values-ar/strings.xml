@@ -112,4 +112,5 @@
     <string name="SH_Log">من فضلك قوم بتسجيل الدخول اولا</string>
     <string name="Succ_send">تم رفع المنتج بنجاح</string>
     <string name="order_basket_send">تم ارسال طلبك بنجاح</string>
+    <string name="confirm_req">كلمه المرور غير متشابهه</string>
 </resources>
