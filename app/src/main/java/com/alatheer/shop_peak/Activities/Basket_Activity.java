@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.BasketAdapter;
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
@@ -72,7 +73,6 @@ public class Basket_Activity extends AppCompatActivity {
         myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"myorders_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(),Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         initRecyclerview();
-        getDataFromIntent();
         mPrefs =MySharedPreference.getInstance();
         userModel1 = mPrefs.Get_UserData(Basket_Activity.this);
         final String name = userModel1.getFull_name();
@@ -91,16 +91,20 @@ public class Basket_Activity extends AppCompatActivity {
             public void onClick(View view) {
                // BasketModel2 basketModel2 =new BasketModel2(type,basketModelList,USER_ID,name,address
                 //,lat,lon,phone);
+                if(basketModelList.size()>0){
+                    Intent intent = new Intent(Basket_Activity.this,MapsActivity.class);
+                    intent.putExtra("type",type);
+                    intent.putExtra("user_id",USER_ID);
+                    intent.putExtra("name",name);
+                    intent.putExtra("address",address);
+                    intent.putExtra("flag",1);
+                    intent.putExtra("list",(Serializable) basketModelList);
+                    intent.putExtra("phone",phone);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(Basket_Activity.this,"there is no product in basket",Toast.LENGTH_LONG).show();
+                }
 
-                Intent intent = new Intent(Basket_Activity.this,MapsActivity.class);
-                intent.putExtra("type",type);
-                intent.putExtra("user_id",USER_ID);
-                intent.putExtra("name",name);
-                intent.putExtra("address",address);
-                intent.putExtra("flag",1);
-                intent.putExtra("list",(Serializable) basketModelList);
-                intent.putExtra("phone",phone);
-                 startActivity(intent);
 
                 //basketModel2.withOrderItemList(myAppDatabase.dao().getdata());
                 /*Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
@@ -153,16 +157,6 @@ public class Basket_Activity extends AppCompatActivity {
         finish();
         startActivity(getIntent());
 
-    }
-    private void getDataFromIntent() {
-        Intent intent=getIntent();
-
-        if (intent!=null){
-            lat=intent.getStringExtra("lat");
-            lon=intent.getStringExtra("lang");
-
-
-        }
     }
 
     public void sendBasketData(int position) {
