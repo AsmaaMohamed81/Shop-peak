@@ -172,12 +172,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             if (response.isSuccessful()) {
                                 dialog.dismiss();
 
-                                if (response.body().getSuccess()==1){
+                                if (response.body().getSuccess() == 1) {
 
+                                    CreateDialog();
 
-                                Log.v("llll", response.message());
-                                Toast.makeText(MapsActivity.this, R.string.order_basket_send, Toast.LENGTH_LONG).show();
-                            }}
+                                }
+                            }
 
                         }
 
@@ -465,4 +465,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    private void CreateDialog() {
+
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
+                .setCancelable(false)
+                .create();
+
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(R.string.order_basket_send);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                Intent intent = new Intent(MapsActivity.this, MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
+    }
 }
