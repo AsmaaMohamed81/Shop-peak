@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.Activities;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -37,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel2;
 import com.alatheer.shop_peak.Model.LocationModel;
 import com.alatheer.shop_peak.Model.OrderItemList;
@@ -99,7 +101,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private EditText address, lat, log;
     private Button btn_continue;
     private Button btn_add_basket;
-
+    MyAppDatabase myAppDatabase;
     String Vlat, Vlang;
     int flag;
 
@@ -108,7 +110,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
+        myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"myorders_db").allowMainThreadQueries().build();
 
         initView();
         CheckPermission();
@@ -175,6 +177,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 if (response.body().getSuccess() == 1) {
 
                                     CreateDialog();
+                                    myAppDatabase.dao().deleteproduct();
 
                                 }
                             }

@@ -94,6 +94,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
                 orderItemList.withStoreIdFk(basketModelList.get(position).storeIdFk);
                 orderItemList.setSanfImage(basketModelList.get(position).getSanfImage());
                 orderItemList.setSanfTitle(basketModelList.get(position).sanfTitle);
+                basket_activity.senddata(position);
                 myAppDatabase.dao().editproduct(orderItemList);
             }
         });
