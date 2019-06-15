@@ -51,6 +51,10 @@ public class Basket_Activity extends AppCompatActivity {
     MySharedPreference mPrefs;
     UserModel1 userModel1;
     private String lat,lon;
+    int price,count_of_item;
+    String sum;
+    int total;
+    TextView txt_total;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +68,7 @@ public class Basket_Activity extends AppCompatActivity {
         text_title.setText("Basket");
         image_title=findViewById(R.id.back_image);
         add = findViewById(R.id.add);
-        add_lat_lon = findViewById(R.id.add_lat_lon);
-
+        txt_total = findViewById(R.id.txt_total);
         myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"myorders_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(),Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         initRecyclerview();
@@ -83,33 +86,24 @@ public class Basket_Activity extends AppCompatActivity {
                 finish();
             }
         });
-        add_lat_lon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent =new Intent(Basket_Activity.this,MapsActivity.class);
-                intent.putExtra("flag",1);
-                startActivity(intent);
-
-            }
-        });
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BasketModel2 basketModel2 =new BasketModel2(type,basketModelList,USER_ID,name,address
-                ,lat,lon,phone);
+               // BasketModel2 basketModel2 =new BasketModel2(type,basketModelList,USER_ID,name,address
+                //,lat,lon,phone);
 
-                //Intent intent = new Intent(Basket_Activity.this,MapsActivity.class);
-                //intent.putExtra("type",type);
-                //intent.putExtra("user_id",USER_ID);
-                //intent.putExtra("name",name);
-                //intent.putExtra("address",address);
-                //intent.putExtra("flag",1);
-                //intent.putExtra("list",(Serializable) basketModelList);
-                //intent.putExtra("phone",phone);
-
+                Intent intent = new Intent(Basket_Activity.this,MapsActivity.class);
+                intent.putExtra("type",type);
+                intent.putExtra("user_id",USER_ID);
+                intent.putExtra("name",name);
+                intent.putExtra("address",address);
+                intent.putExtra("flag",1);
+                intent.putExtra("list",(Serializable) basketModelList);
+                intent.putExtra("phone",phone);
+                 startActivity(intent);
 
                 //basketModel2.withOrderItemList(myAppDatabase.dao().getdata());
-                Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
+                /*Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
                     @Override
                     public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
                        Log.v("llll",response.message());
@@ -119,7 +113,7 @@ public class Basket_Activity extends AppCompatActivity {
                     public void onFailure(Call<RatingModel2> call, Throwable t) {
                     Log.v("eeee",t.getMessage());
                     }
-                });
+                });*/
             }
         });
 
@@ -152,7 +146,13 @@ public class Basket_Activity extends AppCompatActivity {
 
     public void senddata2(int position) {
         myAppDatabase.dao().Delete_Item(Integer.parseInt(basketModelList.get(position).sanfIdFk));
-        initRecyclerview();
+        price = Integer.parseInt(basketModelList.get(position).sanfPrice);
+        count_of_item = Integer.parseInt(basketModelList.get(position).sanfAmount);
+        total = total-(price*count_of_item);
+        txt_total.setText("TOTAL : "+ total+"");
+        finish();
+        startActivity(getIntent());
+
     }
     private void getDataFromIntent() {
         Intent intent=getIntent();
@@ -163,5 +163,12 @@ public class Basket_Activity extends AppCompatActivity {
 
 
         }
+    }
+
+    public void sendBasketData(int position) {
+        price = Integer.parseInt(basketModelList.get(position).sanfPrice);
+        count_of_item = Integer.parseInt(basketModelList.get(position).sanfAmount);
+        total = total + price * count_of_item;
+        txt_total.setText("TOTAL : "+ total+"");
     }
 }

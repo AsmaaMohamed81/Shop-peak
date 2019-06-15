@@ -133,7 +133,6 @@ public class Fragment_Details extends Fragment {
         plus_circle = view.findViewById(R.id.add_circle);
         minus_circle = view.findViewById(R.id.remove_circle);
         counter = view.findViewById(R.id.counter);
-        shopping_cart = view.findViewById(R.id.shopping_cart);
         cart_num = view.findViewById(R.id.cart_num);
         addcart = view.findViewById(R.id.add_cart);
         txt_before_discount = view.findViewById(R.id.txt_price_before_discount);
@@ -145,6 +144,7 @@ public class Fragment_Details extends Fragment {
         //details_des=findViewById(R.id.details_des);
         details_price = view.findViewById(R.id.details_price);
         fab_favorite = view.findViewById(R.id.fab_favorite);
+        fab_shopping = view.findViewById(R.id.fab_shopping);
         myAppDatabase = Room.databaseBuilder(getApplicationContext(), MyAppDatabase.class, "myorders_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(), Favorite_Database.class, "favoritedb").allowMainThreadQueries().build();
         getDataFromIntent();
@@ -199,6 +199,7 @@ public class Fragment_Details extends Fragment {
                     orderItemList.setSanfImage(image[0]);
                     orderItemList.setSanfTitle(sanf_name);
                     myAppDatabase.dao().addproduct(orderItemList);
+                    tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
                     Toast.makeText(getActivity(), "data added successfully", Toast.LENGTH_SHORT).show();
 
 
@@ -218,7 +219,7 @@ public class Fragment_Details extends Fragment {
 
             }
         });
-        shopping_cart.setOnClickListener(new View.OnClickListener() {
+        fab_shopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),Basket_Activity.class);
@@ -362,8 +363,10 @@ public class Fragment_Details extends Fragment {
         gender = intent.getStringExtra("gender");
         rating = intent.getStringExtra("rate");
         price =intent.getStringExtra("price");
+
         price_before_dis = intent.getStringExtra("price_before_dis");
         sanf_id = intent.getStringExtra("id");
+        sanf_name = intent.getStringExtra("title");
         store_id =intent.getStringExtra("store_id");
         like =intent.getStringExtra("like");
 

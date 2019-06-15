@@ -64,14 +64,16 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
         holder.basket_title.setText(basketModelList.get(position).getSanfTitle());
         Picasso.with(context).load(basketModelList.get(position).getSanfImage()).into(holder.title_img);
         holder.counter.setText(basketModelList.get(position).sanfAmount);
+        holder.txt_price.setText(basketModelList.get(position).sanfPrice);
         count = Integer.parseInt(holder.counter.getText().toString());
+        basket_activity.sendBasketData(position);
         holder.plus_circle.setOnClickListener(new View.OnClickListener() {
             @Override
 
             public void onClick(View view) {
-                holder.counter.setText(count++);
+                holder.counter.setText(count+++"");
                 OrderItemList orderItemList = new OrderItemList();
-                orderItemList.withSanfAmount(count+++"");
+                orderItemList.withSanfAmount(count+"");
                 orderItemList.withSanfIdFk(basketModelList.get(position).sanfIdFk);
                 orderItemList.withSanfPrice(basketModelList.get(position).sanfPrice);
                 orderItemList.withStoreIdFk(basketModelList.get(position).storeIdFk);
@@ -80,7 +82,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
                 myAppDatabase.dao().editproduct(orderItemList);
             }
         });
-        holder.plus_circle.setOnClickListener(new View.OnClickListener() {
+        holder.minus_circle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -90,6 +92,8 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
                 orderItemList.withSanfIdFk(basketModelList.get(position).sanfIdFk);
                 orderItemList.withSanfPrice(basketModelList.get(position).sanfPrice);
                 orderItemList.withStoreIdFk(basketModelList.get(position).storeIdFk);
+                orderItemList.setSanfImage(basketModelList.get(position).getSanfImage());
+                orderItemList.setSanfTitle(basketModelList.get(position).sanfTitle);
                 myAppDatabase.dao().editproduct(orderItemList);
             }
         });
@@ -143,7 +147,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
 
     class  BasketHolder extends RecyclerView.ViewHolder{
         ImageView plus_circle, minus_circle, title_img, delete_image;
-       TextView basket_title,counter;
+       TextView basket_title,counter,txt_price;
        CheckBox c_red,c_blue,c_black;
         public BasketHolder(View itemView) {
             super(itemView);
@@ -156,6 +160,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
             c_black=itemView.findViewById(R.id.checkbox_black);
             title_img=itemView.findViewById(R.id.img);
             delete_image = itemView.findViewById(R.id.img_delete);
+            txt_price = itemView.findViewById(R.id.txt_price);
         }
     }
 }

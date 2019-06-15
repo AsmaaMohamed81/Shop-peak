@@ -103,7 +103,7 @@ public class AddProductActivity extends AppCompatActivity {
     //////////////
     private RecyclerView recyc_main, recyc_sub;
     TextView title_main,title_sub;
-    private LinearLayout container_main, container_sub,color_image_layout;
+    private LinearLayout container_main, container_sub,color_image_layout,item_description_layout;
     private ExpandableLayout expand_layout_main, expand_layout_sub;
     /////////////
     private ArrayList<list_cats> main_cats_List;
@@ -136,7 +136,7 @@ public class AddProductActivity extends AppCompatActivity {
     private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
     private Context context = null;
 
-    EditText sc1,sc2;
+    EditText sc1,sc2,item1,item2,des1,des2;
 
      TableLayout tableLayout;
 
@@ -160,6 +160,11 @@ public class AddProductActivity extends AppCompatActivity {
         container_sub = findViewById(R.id.sub_category_container);
         expand_layout_main = findViewById(R.id.expand_main_layout);
         expand_layout_sub = findViewById(R.id.expand_sub_layout);
+        item1 = findViewById(R.id.item_name1);
+        item2= findViewById(R.id.item_name2);
+        des1 = findViewById(R.id.des_name1);
+        des2 = findViewById(R.id.des_name2);
+        item_description_layout = findViewById(R.id.item_description_layout);
         item_database= Room.databaseBuilder(getApplicationContext(),ItemDatabase.class,"item_db").allowMainThreadQueries().build();
         close=findViewById(R.id.close);
         color_image_layout= findViewById(R.id.color_image_layout);
@@ -305,7 +310,7 @@ public class AddProductActivity extends AppCompatActivity {
 
 
 
-                for (int i = 0; i < tableLayout.getChildCount(); i++) {
+               /* for (int i = 0; i < tableLayout.getChildCount(); i++) {
                     View child = tableLayout.getChildAt(i);
 
                     if (child instanceof TableRow) {
@@ -326,8 +331,8 @@ public class AddProductActivity extends AppCompatActivity {
                         }
                     }}
 
-                Log.d("item", "onClick: "+items.size());
-
+                Log.d("item", "onClick: "+items.size());*/
+                item_description_layout.setVisibility(View.VISIBLE);
                 color_image_layout.setVisibility(View.VISIBLE);
             }
         });
@@ -502,13 +507,19 @@ public class AddProductActivity extends AppCompatActivity {
         pricebefore_discount = price_before_discount.getText().toString();
         priceafter_discount = price_after_discount.getText().toString();
         elementdescription =element_description.getText().toString();
+
         //elementname = element_name.getText().toString();
         //elementdescription = element_description.getText().toString();
         if (!TextUtils.isEmpty(number) &&
                 !TextUtils.isEmpty(name) &&
                 !TextUtils.isEmpty(priceafter_discount) &&
                 !TextUtils.isEmpty(pricebefore_discount) &&
-                !TextUtils.isEmpty(elementdescription)
+                !TextUtils.isEmpty(elementdescription) &&
+                main_id != null &&
+                sub_id != null &&
+                filePath !=null
+
+
                 ) {
 
 
@@ -547,11 +558,11 @@ public class AddProductActivity extends AppCompatActivity {
                 price_after_discount.setError(null);
             }
             if (TextUtils.isEmpty(elementdescription)) {
-                price_after_discount.setError(getString(R.string.element_description_req));
+                element_description.setError(getString(R.string.element_description_req));
             } else {
-                price_after_discount.setError(null);
+                element_description.setError(null);
             }
-           /* if (main_id==null) {
+            if (main_id==null) {
                 tv_title_main.setError(getString(R.string.governate_req));
             } else {
                 tv_title_main.setError(null);
@@ -560,7 +571,12 @@ public class AddProductActivity extends AppCompatActivity {
                 tv_title_sub.setError(getString(R.string.city_req));
             } else {
                 tv_title_sub.setError(null);
-            }*/
+            }
+            if (filePath == null) {
+                add_main_image.setError(getString(R.string.city_req));
+            } else {
+                add_main_image.setError(null);
+            }
         }
     }
     private void validation2() {
@@ -571,6 +587,14 @@ public class AddProductActivity extends AppCompatActivity {
         elementdescription =element_description.getText().toString();
         //elementname = element_name.getText().toString();
         //elementdescription = element_description.getText().toString();
+        String item_name1 =item1.getText().toString();
+        String item_name2 =item2.getText().toString();
+        String des_1 =des1.getText().toString();
+        String des_2 =des2.getText().toString();
+        items.add(item_name1);
+        items.add(item_name2);
+        descriptions.add(des_1);
+        descriptions.add(des_2);
         if (!TextUtils.isEmpty(number) &&
                 !TextUtils.isEmpty(name) &&
                 !TextUtils.isEmpty(priceafter_discount) &&
@@ -578,7 +602,7 @@ public class AddProductActivity extends AppCompatActivity {
                 !TextUtils.isEmpty(elementdescription) &&
                 main_id !=null &&
                 sub_id !=null &&
-                add_main_image.isClickable()
+                filePath != null
                 ) {
 
 
@@ -590,6 +614,7 @@ public class AddProductActivity extends AppCompatActivity {
             tv_title_main.setError(null);
             tv_title_sub.setError(null);
             element_description.setError(null);
+            add_main_image.setError(null);
             AddProduct2(number, name,main_id,sub_id,priceafter_discount, pricebefore_discount,elementdescription,filePath,filePath2);
 
         } else {
@@ -617,11 +642,11 @@ public class AddProductActivity extends AppCompatActivity {
                 price_after_discount.setError(null);
             }
             if (TextUtils.isEmpty(elementdescription)) {
-                price_after_discount.setError(getString(R.string.element_description_req));
+                element_description.setError(getString(R.string.element_description_req));
             } else {
-                price_after_discount.setError(null);
+                element_description.setError(null);
             }
-           /* if (main_id==null) {
+           if (main_id==null) {
                 tv_title_main.setError(getString(R.string.governate_req));
             } else {
                 tv_title_main.setError(null);
@@ -630,7 +655,10 @@ public class AddProductActivity extends AppCompatActivity {
                 tv_title_sub.setError(getString(R.string.city_req));
             } else {
                 tv_title_sub.setError(null);
-            }*/
+            }
+            if(filePath == null){
+                add_main_image.setError("you must choose main image");
+            }
         }
     }
 
