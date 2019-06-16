@@ -26,7 +26,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.FollowersActivity;
 import com.alatheer.shop_peak.Activities.Login_Activity;
@@ -37,6 +36,8 @@ import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.Tags.Tags;
+import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.squareup.picasso.Picasso;
@@ -45,9 +46,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -85,6 +89,28 @@ public class ProfileFragment extends android.app.Fragment {
     Button follow;
 
     boolean flagButton = false;
+
+    @Override
+    public void onAttach(Context context) {
+
+        Paper.init(context);
+        String lang = Paper.book().read("language");
+
+        if (Paper.book().read("language").equals("ar")) {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.AR_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+
+        } else {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.EN_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
+        super.onAttach(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(context, lang)));
+    }
+
 
     public static ProfileFragment getInstance() {
         ProfileFragment fragment = new ProfileFragment();

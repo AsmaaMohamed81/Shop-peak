@@ -52,5 +52,8 @@ dependencies {
 
     implementation 'net.margaritov.preference.colorpicker.ColorPickerPreference:ColorPickerPreference:1.0.0'
 
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+    implementation 'io.paperdb:paperdb:2.6'
+
 
 }

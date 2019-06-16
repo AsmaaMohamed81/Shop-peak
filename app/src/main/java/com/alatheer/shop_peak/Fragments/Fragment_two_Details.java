@@ -3,7 +3,6 @@ package com.alatheer.shop_peak.Fragments;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -17,12 +16,16 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.alatheer.shop_peak.Activities.Basket_Activity;
-import com.alatheer.shop_peak.Activities.Details_two_Activity;
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.Tags.Tags;
+import com.alatheer.shop_peak.languagehelper.LanguageHelper;
+
+import io.paperdb.Paper;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -53,6 +56,28 @@ public class Fragment_two_Details extends Fragment {
     boolean red_intent;
     boolean blue_intent;
     boolean black_intent;
+
+
+    @Override
+    public void onAttach(Context context) {
+
+        Paper.init(context);
+        String lang = Paper.book().read("language");
+
+        if (Paper.book().read("language").equals("ar")) {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.AR_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+
+        } else {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.EN_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
+        super.onAttach(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(context, lang)));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

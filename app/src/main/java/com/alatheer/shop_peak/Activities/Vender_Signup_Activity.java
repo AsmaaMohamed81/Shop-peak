@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
@@ -27,7 +26,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,11 +40,12 @@ import com.alatheer.shop_peak.Model.Govern;
 import com.alatheer.shop_peak.Model.Tasnefat;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.Tags.Tags;
 import com.alatheer.shop_peak.common.Common;
+import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
-import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -55,11 +54,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.paperdb.Paper;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Vender_Signup_Activity extends AppCompatActivity {
     private static final String TAG ="Vender_Signup_Activity" ;
@@ -97,6 +99,31 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     private String store_tasnef,lat,lang;
     private int IMG=1;
     private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+
+
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        String lang = Paper.book().read("language");
+        if (Paper.book().read("language").equals("ar"))
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.AR_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+
+        }else
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.EN_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
+
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(newBase, lang)));
+
+
+
+    }
 
 
     @Override

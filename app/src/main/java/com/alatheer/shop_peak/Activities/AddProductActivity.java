@@ -53,7 +53,9 @@ import com.alatheer.shop_peak.Model.Tasnefat;
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.list_cats;
+import com.alatheer.shop_peak.Tags.Tags;
 import com.alatheer.shop_peak.common.Common;
+import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
@@ -69,6 +71,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.paperdb.Paper;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -77,6 +80,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Multipart;
 import retrofit2.http.Part;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AddProductActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST3 = 4 ;
@@ -143,6 +148,30 @@ public class AddProductActivity extends AppCompatActivity {
     EditText sc1,sc2,item1,item2,des1,des2,txt_color1,txt_color2,txt_image1,txt_image2;
 
      TableLayout tableLayout;
+
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        String lang = Paper.book().read("language");
+        if (Paper.book().read("language").equals("ar"))
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.AR_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+
+        }else
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.EN_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
+
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(newBase, lang)));
+
+
+
+    }
 
 
 

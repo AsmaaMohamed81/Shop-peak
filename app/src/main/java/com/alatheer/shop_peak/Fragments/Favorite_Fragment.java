@@ -16,24 +16,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.Favourit_Adapter;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
-import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.Tags.Tags;
+import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Favorite_Fragment extends android.app.Fragment {
     RecyclerView recyclerView_favorite;
@@ -52,6 +55,28 @@ public class Favorite_Fragment extends android.app.Fragment {
 
     private ProgressBar progressBar;
     private TextView txt_no;
+
+    @Override
+    public void onAttach(Context context) {
+
+        Paper.init(context);
+        String lang = Paper.book().read("language");
+
+        if (Paper.book().read("language").equals("ar")) {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.AR_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+
+        } else {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.EN_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
+        super.onAttach(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(context, lang)));
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -2,6 +2,7 @@ package com.alatheer.shop_peak.Activities;
 
 import android.animation.Animator;
 import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -25,8 +26,14 @@ import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.Tags.Tags;
+import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.util.CircleAnimationUtil;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+
+import io.paperdb.Paper;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Offer_Details_Activity extends AppCompatActivity {
     ImageView details_img, back_image, plus_circle, minus_circle, shopping_cart;
@@ -54,6 +61,31 @@ public class Offer_Details_Activity extends AppCompatActivity {
     String first_item_String;
     Favorite_Database favorite_database;
     MyAppDatabase myAppDatabase;
+
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        String lang = Paper.book().read("language");
+        if (Paper.book().read("language").equals("ar"))
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.AR_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+
+        }else
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.EN_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
+
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(newBase, lang)));
+
+
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

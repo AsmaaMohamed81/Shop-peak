@@ -44,7 +44,9 @@ import com.alatheer.shop_peak.Model.LocationModel;
 import com.alatheer.shop_peak.Model.OrderItemList;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.Tags.Tags;
 import com.alatheer.shop_peak.common.Common;
+import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.service.Api;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -74,9 +76,12 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -104,6 +109,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     MyAppDatabase myAppDatabase;
     String Vlat, Vlang;
     int flag;
+
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        String lang = Paper.book().read("language");
+        if (Paper.book().read("language").equals("ar"))
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.AR_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+
+        }else
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.EN_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
+
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(newBase, lang)));
+
+
+
+    }
+
 
 
     @Override

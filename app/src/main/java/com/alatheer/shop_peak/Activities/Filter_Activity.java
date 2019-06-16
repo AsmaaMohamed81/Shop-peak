@@ -1,5 +1,6 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +12,15 @@ import com.alatheer.shop_peak.Adapter.FilterAdapterDetails;
 import com.alatheer.shop_peak.Model.FilterModel;
 import com.alatheer.shop_peak.Model.FilterModelDetails;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.Tags.Tags;
+import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.paperdb.Paper;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Filter_Activity extends AppCompatActivity{
     Toolbar toolbar;
@@ -21,6 +28,32 @@ public class Filter_Activity extends AppCompatActivity{
     RecyclerView.LayoutManager layoutManager_filter,layoutManager_filterdetails;
     FilterAdapter filterAdapter;
     FilterAdapterDetails filterAdapterDetails;
+
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        String lang = Paper.book().read("language");
+        if (Paper.book().read("language").equals("ar"))
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.AR_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+
+        }else
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.EN_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
+
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(newBase, lang)));
+
+
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activities.IntroActivity">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activities.IntroActivity">
+
+
+    <ImageView
+        android:id="@+id/logo_img"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:src="@drawable/logo" />
+
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btn_facebook_login"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            app:iconSize="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_gmail_login"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        app:iconSize="20dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        />
+
+    <Button
+        android:id="@+id/btn_sign"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/txt_field_signup"
+        android:text="@string/sign_up"
+        android:textColor="@color/colorPrimary"
+        android:layout_gravity="center"
+        />
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/sysa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray"
+        android:text="@string/TermsNEw"
+        android:textSize="15sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+
+
+
+        />
+    <TextView
+        android:id="@+id/skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Skip"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="20dp"
+        android:textSize="17dp"
+        android:layout_gravity="center"
+
+        />
+</LinearLayout>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/btn_field"
+        android:text="@string/log_in"
+        android:textColor="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        />
+</RelativeLayout>

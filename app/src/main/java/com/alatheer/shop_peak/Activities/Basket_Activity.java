@@ -1,14 +1,13 @@
 package com.alatheer.shop_peak.Activities;
 
 import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.content.Intent;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -17,26 +16,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.BasketAdapter;
-import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
-import com.alatheer.shop_peak.Model.BasketModel;
-import com.alatheer.shop_peak.Model.BasketModel2;
-import com.alatheer.shop_peak.Model.BasketModel3;
 import com.alatheer.shop_peak.Model.OrderItemList;
-import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.Tags.Tags;
+import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
-import com.alatheer.shop_peak.service.Api;
-import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.io.Serializable;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.paperdb.Paper;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Basket_Activity extends AppCompatActivity {
     Toolbar toolbar;
@@ -58,6 +52,31 @@ public class Basket_Activity extends AppCompatActivity {
     int total;
     TextView txt_total;
     String name,USER_ID,address,phone,type;
+
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        String lang = Paper.book().read("language");
+        if (Paper.book().read("language").equals("ar"))
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.AR_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+
+        }else
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.EN_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
+
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(newBase, lang)));
+
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

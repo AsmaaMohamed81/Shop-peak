@@ -112,6 +112,7 @@
     <string name="Succ_send">Product successfully uploaded</string>
     <string name="order_basket_send">Your order has been successfully sent</string>
     <string name="confirm_req">كلمه المرور غير متشابهه</string>
+    <string name="TermsNEw">بمجرد تسجيلك فانت وافقت على الشروط والاحكام</string>
 
 
 </resources>

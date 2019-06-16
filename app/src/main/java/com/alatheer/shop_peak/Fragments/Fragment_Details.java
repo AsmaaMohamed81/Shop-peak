@@ -6,7 +6,6 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,9 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Basket_Activity;
-import com.alatheer.shop_peak.Activities.DetailsActivity;
 import com.alatheer.shop_peak.Activities.Login_Activity;
-import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Adapter.ColorAdapter;
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
 import com.alatheer.shop_peak.Adapter.PassData;
@@ -43,19 +39,22 @@ import com.alatheer.shop_peak.Model.OrderItemList;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.Tags.Tags;
 import com.alatheer.shop_peak.common.Common;
+import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.alatheer.shop_peak.util.CircleAnimationUtil;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -104,6 +103,31 @@ public class Fragment_Details extends Fragment {
     private UserModel1 userModel1;
     private String User_id;
     private String like;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof PassData) {
+            passData = (PassData) context;
+        }
+        Paper.init(context);
+        String lang = Paper.book().read("language");
+
+        if (Paper.book().read("language").equals("ar")) {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.AR_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+
+        } else {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.EN_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
+        super.onAttach(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(context, lang)));
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -341,13 +365,7 @@ if (like!=null){
         }}
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof PassData) {
-            passData = (PassData) context;
-        }
-    }
+
     public  void  init_color_recycler(){
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true);
         color_recycler.setHasFixedSize(true);

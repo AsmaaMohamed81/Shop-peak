@@ -1,27 +1,27 @@
 package com.alatheer.shop_peak.Activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.ImageView;
-import android.widget.Toast;
-import com.alatheer.shop_peak.Model.UserModel;
+
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
+import com.alatheer.shop_peak.Tags.Tags;
+import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 
-import com.blogspot.atifsoftwares.animatoolib.Animatoo;
-import com.facebook.login.LoginManager;
+import io.paperdb.Paper;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.Callback{
     ImageView logo;
@@ -31,6 +31,31 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mp;
     UserModel1 userModel;
+
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        String lang = Paper.book().read("language");
+        if (Paper.book().read("language").equals("ar"))
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.AR_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+
+        }else
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.EN_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
+
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(newBase, lang)));
+
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +113,7 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
                         mp.stop();
                         mp.release();
 
-                        Intent intent = new Intent(Splash_Activity.this,Login_Activity.class);
+                        Intent intent = new Intent(Splash_Activity.this,IntroActivity.class);
                         startActivity(intent);
                         finish();
 
