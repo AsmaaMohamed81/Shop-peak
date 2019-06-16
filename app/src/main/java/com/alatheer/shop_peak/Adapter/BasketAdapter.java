@@ -67,6 +67,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
         holder.txt_price.setText(basketModelList.get(position).sanfPrice);
         count = Integer.parseInt(holder.counter.getText().toString());
         basket_activity.sendBasketData(position);
+
         holder.plus_circle.setOnClickListener(new View.OnClickListener() {
             @Override
 

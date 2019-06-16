@@ -158,6 +158,7 @@ public class Basket_Activity extends AppCompatActivity {
             finish();
             startActivity(getIntent());
         }else {
+
             myAppDatabase.dao().Delete_Item(Integer.parseInt(basketModelList.get(pos).sanfIdFk));
             total = total-(price*count_of_item);
             txt_total.setText("TOTAL : "+ total+"");
