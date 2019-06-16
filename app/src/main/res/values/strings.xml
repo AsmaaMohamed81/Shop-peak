@@ -111,6 +111,7 @@
     <string name="SH_Log">Please Sign in or sign up .</string>
     <string name="Succ_send">Product successfully uploaded</string>
     <string name="order_basket_send">Your order has been successfully sent</string>
+    <string name="confirm_req">كلمه المرور غير متشابهه</string>
 
 
 </resources>

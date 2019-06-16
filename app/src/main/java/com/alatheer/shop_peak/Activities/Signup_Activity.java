@@ -204,6 +204,7 @@ public class Signup_Activity extends AppCompatActivity {
                 !TextUtils.isEmpty(Phone) &&
                 !TextUtils.isEmpty(address) &&
                 passWord.length() >= 8 &&
+                confirm_password.equals(passWord)&&
                 android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches() &&
                 accepted &&
                 city_id != null &&
@@ -236,6 +237,15 @@ public class Signup_Activity extends AppCompatActivity {
                 edt_password.setError(getString(R.string.pass_len));
             } else {
                 edt_password.setError(null);
+            }
+            if (!confirm_password.equals(passWord)) {
+                edt_password.setError(getString(R.string.confirm_req));
+                user_confirm_password.setError(getString(R.string.confirm_req));
+
+            } else {
+                edt_password.setError(null);
+                user_confirm_password.setError(null);
+
             }
             if (TextUtils.isEmpty(Email)) {
                 edt_email.setError(getString(R.string.pass_req));
