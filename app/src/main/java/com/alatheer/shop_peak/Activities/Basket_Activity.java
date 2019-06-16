@@ -143,20 +143,28 @@ public class Basket_Activity extends AppCompatActivity {
          recyclerView_basket.setAdapter(basketAdapter);
      }
 
-    public void senddata(final int pos) {
-        Intent intent=new Intent(Basket_Activity.this, Details_two_Activity.class);
-        //intent.putExtra("id",basketModelList.get(pos).getId());
-        intent.putExtra("counter",basketModelList.get(pos).sanfAmount);
-        intent.putExtra("title",basketModelList.get(pos).sanfIdFk);
-        //intent.putExtra("red",basketModelList.get(pos).isRed_flag());
-        //intent.putExtra("blue",basketModelList.get(pos).isBlue_flag());
-        //intent.putExtra("black",basketModelList.get(pos).isBlack_flag());
-        //intent.putExtra("img",basketModelList.get(pos).getImg());
-        intent.putExtra("price", (basketModelList.get(pos).sanfPrice));
-        //intent.putExtra("des",basketModelList.get(pos).getDescription());
-        //intent.putExtra("gender",basketModelList.get(pos).getGender());
-        startActivity(intent);
-        Animatoo.animateDiagonal(Basket_Activity.this);
+    public void senddata(final int pos,int count) {
+        OrderItemList orderItemList = new OrderItemList();
+        orderItemList.withSanfAmount(count+"");
+        if(count>0){
+            orderItemList.withSanfIdFk(basketModelList.get(pos).sanfIdFk);
+            orderItemList.withSanfPrice(basketModelList.get(pos).sanfPrice);
+            orderItemList.withStoreIdFk(basketModelList.get(pos).storeIdFk);
+            orderItemList.setSanfImage(basketModelList.get(pos).getSanfImage());
+            orderItemList.setSanfTitle(basketModelList.get(pos).sanfTitle);
+            myAppDatabase.dao().editproduct(orderItemList);
+            total = total+(price*count_of_item);
+            txt_total.setText("TOTAL : "+ total+"");
+            finish();
+            startActivity(getIntent());
+        }else {
+            myAppDatabase.dao().Delete_Item(Integer.parseInt(basketModelList.get(pos).sanfIdFk));
+            total = total-(price*count_of_item);
+            txt_total.setText("TOTAL : "+ total+"");
+            finish();
+            startActivity(getIntent());
+        }
+
     }
 
 

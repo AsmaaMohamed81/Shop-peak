@@ -537,15 +537,7 @@
                         </EditText>
                     </TableRow>
                 </TableLayout>
-                <Button
-                    android:id="@+id/btn_add_element"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:text="@string/add"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/white"
-                    android:background="@drawable/btn_field" />
+
             </LinearLayout>
 
             </LinearLayout>
@@ -620,18 +612,6 @@
                     </EditText>
                 </TableRow>
             </TableLayout>
-
-
-
-            <Button
-                android:id="@+id/btn_add_element2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:background="@drawable/btn_field" />
 
             <Button
                 android:id="@+id/add_product"

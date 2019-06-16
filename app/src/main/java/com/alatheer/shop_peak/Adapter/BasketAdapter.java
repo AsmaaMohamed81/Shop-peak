@@ -71,22 +71,17 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
             @Override
 
             public void onClick(View view) {
-                holder.counter.setText(count+++"");
-                OrderItemList orderItemList = new OrderItemList();
-                orderItemList.withSanfAmount(count+"");
-                orderItemList.withSanfIdFk(basketModelList.get(position).sanfIdFk);
-                orderItemList.withSanfPrice(basketModelList.get(position).sanfPrice);
-                orderItemList.withStoreIdFk(basketModelList.get(position).storeIdFk);
-                orderItemList.setSanfImage(basketModelList.get(position).getSanfImage());
-                orderItemList.setSanfTitle(basketModelList.get(position).sanfTitle);
-                myAppDatabase.dao().editproduct(orderItemList);
+                count = count+1;
+                holder.counter.setText(count+"");
+
+                basket_activity.senddata(position,count);
             }
         });
         holder.minus_circle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                holder.counter.setText(count--+"");
+                count = count-1;
+               /* holder.counter.setText(count--+"");
                 OrderItemList orderItemList = new OrderItemList();
                 orderItemList.withSanfAmount(count+"");
                 orderItemList.withSanfIdFk(basketModelList.get(position).sanfIdFk);
@@ -95,7 +90,8 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
                 orderItemList.setSanfImage(basketModelList.get(position).getSanfImage());
                 orderItemList.setSanfTitle(basketModelList.get(position).sanfTitle);
                 basket_activity.senddata(position);
-                myAppDatabase.dao().editproduct(orderItemList);
+                myAppDatabase.dao().editproduct(orderItemList);*/
+               basket_activity.senddata(position,count);
             }
         });
 

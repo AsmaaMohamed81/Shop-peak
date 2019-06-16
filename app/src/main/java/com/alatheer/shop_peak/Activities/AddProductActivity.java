@@ -178,12 +178,6 @@ public class AddProductActivity extends AppCompatActivity {
         color_image_layout= findViewById(R.id.color_image_layout);
         main_image = findViewById(R.id.main_image);
         add_product = findViewById(R.id.add_product);
-        add_row_Element = findViewById(R.id.btn_add_element);
-        add_row_Element2 = findViewById(R.id.btn_add_element2);
-        product_specifications = new ArrayList<>();
-        // add = findViewById(R.id.add_item);
-        //delete = findViewById(R.id.delete_item);
-        //add_row_Element2 = findViewById(R.id.btn_add_element2);
         added_post=findViewById(R.id.added_post);
         add_main_image = findViewById(R.id.add_main_image);
         product_name = findViewById(R.id.product_name);
@@ -285,7 +279,7 @@ public class AddProductActivity extends AppCompatActivity {
                 startActivity(new Intent(AddProductActivity.this,MainActivity.class));
             }
         });
-        add_row_Element.setOnClickListener(new View.OnClickListener() {
+       /* add_row_Element.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Add_row();
@@ -303,7 +297,7 @@ public class AddProductActivity extends AppCompatActivity {
 
 
             }
-        });
+        });*/
         add_main_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -364,46 +358,7 @@ public class AddProductActivity extends AppCompatActivity {
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                name1 =sc1.getText().toString();
-//                value1 = sc2.getText().toString();
-
-//                for (int i = 0; i < tableLayout.getChildCount(); i++) {
 //
-//                    TableRow mRow = (TableRow) tableLayout.getChildAt(i);
-//
-//
-//                    for (int y = 0; y < mRow.getChildCount(); y++) {
-//
-//
-//                        items.add(mRow.getChildAt(y).toString());
-//                    }
-//                }
-
-
-
-
-               /* for (int i = 0; i < tableLayout.getChildCount(); i++) {
-                    View child = tableLayout.getChildAt(i);
-
-                    if (child instanceof TableRow) {
-                        TableRow row = (TableRow) child;
-
-
-
-
-                        for (int x = 0; x < row.getChildCount(); x++) {
-                            //View view = row.getChildAt(x);
-                            EditText text = (EditText) row.getChildAt(x); // get child index on particular row
-
-
-                            String title = text.getText().toString();
-                            Log.i("Value", title);
-
-                            items.add(title);
-                        }
-                    }}
-
-                Log.d("item", "onClick: "+items.size());*/
                 item_description_layout.setVisibility(View.VISIBLE);
                 color_image_layout.setVisibility(View.VISIBLE);
             }
@@ -421,88 +376,6 @@ public class AddProductActivity extends AppCompatActivity {
         t.setColumnStretchable(1, true);
         t.setColumnStretchable(2, true);
         DefaultColor = ContextCompat.getColor(this, R.color.colorPrimary);
-        add_row_Element2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final TableLayout tableLayout = (TableLayout) findViewById(R.id.table2);
-
-                context = getApplicationContext();
-
-
-                // Create a new table row.
-                final TableRow tableRow = new TableRow(context);
-
-                // Set new table row layout parameters.
-                TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-                tableRow.setLayoutParams(layoutParams);
-                ImageButton delete2 = new ImageButton(context);
-                btn_element_image = new Button(AddProductActivity.this);
-                btn_element_color = new Button(AddProductActivity.this);
-
-                btn_element_color.setBackground(getDrawable(R.drawable.element_txt));
-                btn_element_image.setBackground(getDrawable(R.drawable.element_txt));
-
-                delete2.setBackground(getDrawable(R.drawable.ic_close_black_24dp));
-
-
-                TableRow.LayoutParams params2 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4.5f);
-                btn_element_color.setLayoutParams(params2);
-                btn_element_color.setTextSize(20);
-                TableRow.LayoutParams params3 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 4.5f);
-                btn_element_image.setLayoutParams(params3);
-                btn_element_image.setTextSize(20);
-                TableRow.LayoutParams params4 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
-                params4.gravity = Gravity.CENTER;
-                delete2.setLayoutParams(params4);
-
-
-                tableRow.addView(btn_element_color);
-                tableRow.addView(btn_element_image);
-                tableRow.addView(delete2);
-
-                tableLayout.addView(tableRow);
-
-                delete2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        tableLayout.removeView(tableRow);
-
-                    }
-                });
-                btn_element_image.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Check_ReadPermission(PICK_IMAGE_REQUEST);
-                    }
-                });
-                btn_element_color.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-//                        OpenColorPicker(true);
-
-
-                        color = Color.parseColor("#ffffff");
-                        pickcolor = new ColorPickerDialog(AddProductActivity.this, color);
-                        pickcolor.setAlphaSliderVisible(true);
-                        pickcolor.setTitle("PICK");
-
-                        pickcolor.setOnColorChangedListener(new ColorPickerDialog.OnColorChangedListener() {
-                            @Override
-                            public void onColorChanged(int color) {
-
-
-                                btn_element_color.setBackgroundColor(color);
-                                btn_element_color.setText("#" + Integer.toHexString(color));
-//                                color2 = Integer.toHexString(color);
-                            }
-                        });
-
-
-                        pickcolor.show();
-                    }
-                });
-            }
-        });
     }
 
 
@@ -568,7 +441,7 @@ public class AddProductActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            }*/else if(requestCode == PICK_IMAGE_REQUEST3 && resultCode == RESULT_OK
+            }*/ if(requestCode == PICK_IMAGE_REQUEST3 && resultCode == RESULT_OK
                     && data != null && data.getData() != null) {
              filePath3 = data.getData();
                 txt_image1.setText("you selected image");
@@ -598,8 +471,6 @@ public class AddProductActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else{
-            Toast.makeText(this, "some thing error", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -695,7 +566,7 @@ public class AddProductActivity extends AppCompatActivity {
         String des_2 =des2.getText().toString();
         items.add(item_name1);
         descriptions.add(des_1);
-        if(item_name2 != null && des_2 != null  ){
+        if(!item_name2.equals("") && !des_2.equals("")){
             items.add(item_name2);
             descriptions.add(des_2);
         }
@@ -832,7 +703,10 @@ public class AddProductActivity extends AppCompatActivity {
                     if (response.body().getSuccess()==1){
 
                         Toast.makeText(AddProductActivity.this, R.string.Succ_send, Toast.LENGTH_SHORT).show();
-
+                         all_colors.clear();
+                         all_images.clear();
+                         items.clear();
+                         descriptions.clear();
                         Log.v("success",response.message());
 //                    Toast.makeText(AddProductActivity.this, "تم", Toast.LENGTH_SHORT).show();
                 }}
@@ -872,6 +746,7 @@ public class AddProductActivity extends AppCompatActivity {
             public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
                 if(response.isSuccessful()){
                     Log.v("success",response.message());
+                    Toast.makeText(AddProductActivity.this, R.string.Succ_send, Toast.LENGTH_SHORT).show();
                 }
 
             }
