@@ -61,7 +61,7 @@ public class FollowersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_notification);
+        setContentView(R.layout.activity_followers);
         getDataFromIntent();
         initview();
 
@@ -69,7 +69,7 @@ public class FollowersActivity extends AppCompatActivity {
 
     private void initview() {
         getDataFromIntent();
-        recycler = findViewById(R.id.notification_recycler);
+        recycler = findViewById(R.id.followers_recycler);
 
         userModel1ArrayList=new ArrayList<>();
         initrecycler();

@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.service;
 import com.alatheer.shop_peak.Model.BasketModel2;
 import com.alatheer.shop_peak.Model.BasketModel3;
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.NotificationModel;
 import com.alatheer.shop_peak.Model.OfferModel1;
 import com.alatheer.shop_peak.Model.Product_Specification;
 import com.alatheer.shop_peak.Model.RatingModel;
@@ -95,6 +96,9 @@ public interface Services {
                                    @Part List<MultipartBody.Part> images,
                                    @Part("colors[]")List<RequestBody> colors
                                   );
+    @FormUrlEncoded
+    @POST("Api/check_gmail")
+    Call<RatingModel2> validate_email(@Field("email")String email);
 
 
 
@@ -173,5 +177,9 @@ public interface Services {
 
     @GET("Api/get_offer_products/{offer_id}")
     Call<List<HomeModel>> get_offer_products(@Path("offer_id") String offer_id);
+
+    @FormUrlEncoded
+    @POST("Api/get_notification")
+    Call<NotificationModel>get_notification(@Field("user_id")String user_id);
 }
 

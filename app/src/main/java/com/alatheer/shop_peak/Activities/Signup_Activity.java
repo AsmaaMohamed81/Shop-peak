@@ -29,6 +29,7 @@ import com.alatheer.shop_peak.Adapter.cityAdapter;
 import com.alatheer.shop_peak.Adapter.governAdapter;
 import com.alatheer.shop_peak.Model.City;
 import com.alatheer.shop_peak.Model.Govern;
+import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
@@ -60,7 +61,7 @@ public class Signup_Activity extends AppCompatActivity {
     private String userName, passWord, Phone, Email, address, city_id, govern_id,confirm_password;
     private View root;
     private Snackbar snackbar;
-
+    long success;
     private RecyclerView recyc_govern, recyc_city;
     private LinearLayout container_city, container_govern;
     private ExpandableLayout expand_layout_city, expand_layout_govern;
@@ -224,6 +225,23 @@ public class Signup_Activity extends AppCompatActivity {
         Email = edt_email.getText().toString();
         Phone = edt_phone.getText().toString();
         address = edt_address.getText().toString();
+        Api.getService().validate_email(Email).enqueue(new Callback<RatingModel2>() {
+            @Override
+            public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                if (response.isSuccessful()){
+                    if(response.body().getSuccess()== 0){
+                        success = 0;
+                    }else {
+                        success = 1;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+            }
+        });
 
         if (!TextUtils.isEmpty(userName) &&
                 !TextUtils.isEmpty(passWord) &&
@@ -235,7 +253,9 @@ public class Signup_Activity extends AppCompatActivity {
                 android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches() &&
                 accepted &&
                 city_id != null &&
-                govern_id != null) {
+                govern_id != null &&
+                success != 0
+                ) {
 
             Common.CloseKeyBoard(this, edt_name2);
             edt_name2.setError(null);
@@ -295,6 +315,11 @@ public class Signup_Activity extends AppCompatActivity {
             } else {
                 edt_address.setError(null);
             }
+            if (success == 0) {
+                edt_email.setError("الايميل غير صحيح ");
+            } else {
+                edt_email.setError(null);
+            }
 
             if (!accepted) {
 
@@ -330,7 +355,6 @@ public class Signup_Activity extends AppCompatActivity {
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
-
         Api.getService()
                 .register(userName, email, phone, govern_id, city_id, address, passWord)
                 .enqueue(new Callback<UserModel1>() {

@@ -307,9 +307,39 @@ public class Login_Activity extends AppCompatActivity {
                 //editor.putString("name",personName);
                 //editor.putString("image_url",personPhoto.toString());
                 //editor.apply();
+
                 try {
                     userModel = new UserModel(personName, personPhoto.toString(), personEmail);
+                    Api.getService().register(personName,personEmail,"","","","","").enqueue(new Callback<UserModel1>() {
+                        @Override
+                        public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
+                            if (response.isSuccessful()) {
 
+
+                                dialog.dismiss();
+
+                                if (response.body().getSuccess() == 1) {
+
+
+                                    UserModel1 userModel = response.body();
+
+                                    MySharedPreference mySharedPreference = MySharedPreference.getInstance();
+
+                                    mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
+
+                                    Log.d("model",mySharedPreference.Get_UserData(Login_Activity.this).getFull_name());
+
+
+                                    Intent intent = new Intent(Login_Activity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<UserModel1> call, Throwable t) {
+
+                        }
+                    });
 
                 } catch (Exception e) {
                     userModel = new UserModel(personName, "https://www.wpclipart.com/buildings/shop.png", personEmail);
