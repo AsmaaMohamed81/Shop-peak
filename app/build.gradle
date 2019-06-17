@@ -52,6 +52,9 @@ dependencies {
 
     implementation 'net.margaritov.preference.colorpicker.ColorPickerPreference:ColorPickerPreference:1.0.0'
 
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation 'io.paperdb:paperdb:2.6'
 
