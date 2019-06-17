@@ -31,7 +31,7 @@
             android:name=".Activities.MainActivity"
             android:windowSoftInputMode="adjustNothing"/>
         <activity
-            android:name=".Activities.IntroActivity"
+            android:name=".Activities.Splash_Activity"
             tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

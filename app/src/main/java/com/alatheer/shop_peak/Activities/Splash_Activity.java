@@ -2,6 +2,7 @@ package com.alatheer.shop_peak.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -9,6 +10,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.ImageView;
@@ -20,10 +23,11 @@ import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 
 import io.paperdb.Paper;
+import java.util.Locale;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.Callback{
+public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.Callback {
     ImageView logo;
     MySharedPreference mPrefs;
 
@@ -32,29 +36,34 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
     private MediaPlayer mp;
     UserModel1 userModel;
 
+
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
         String lang = Paper.book().read("language");
-        if (Paper.book().read("language").equals("ar"))
-        {
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.AR_FONT_NAME)
-                    .setFontAttrId(R.attr.fontPath)
-                    .build());
+        Log.e("Asmaaa", "attachBaseContext: "+ lang);
 
-        }else
-        {
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.EN_FONT_NAME)
-                    .setFontAttrId(R.attr.fontPath)
-                    .build());
-        }
+            if (Paper.book().read("language").equals("ar"))
+            {
+                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath(Tags.AR_FONT_NAME)
+                        .setFontAttrId(R.attr.fontPath)
+                        .build());
 
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(newBase, lang)));
+            }else
+            {
+                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath(Tags.EN_FONT_NAME)
+                        .setFontAttrId(R.attr.fontPath)
+                        .build());
+            }
+
+            super.attachBaseContext(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(newBase, lang)));
+
 
 
 
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +79,7 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -95,13 +105,13 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
     }
 
 
-    private class AsynkTask extends AsyncTask<SurfaceHolder,Void,Void> {
+    private class AsynkTask extends AsyncTask<SurfaceHolder, Void, Void> {
 
 
         @Override
         protected Void doInBackground(SurfaceHolder... voids) {
             try {
-                String path = "android.resource://"+getPackageName()+"/"+R.raw.shop;
+                String path = "android.resource://" + getPackageName() + "/" + R.raw.shop;
                 mp = MediaPlayer.create(Splash_Activity.this, Uri.parse(path));
                 mp.setDisplay(voids[0]);
                 mp.setLooping(false);
@@ -113,15 +123,16 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
                         mp.stop();
                         mp.release();
 
-                        Intent intent = new Intent(Splash_Activity.this,IntroActivity.class);
+                        Intent intent = new Intent(Splash_Activity.this, IntroActivity.class);
                         startActivity(intent);
                         finish();
 
 
                     }
                 });
-            }catch (IllegalStateException e){}
-            catch (Exception e){}
+            } catch (IllegalStateException e) {
+            } catch (Exception e) {
+            }
 
             return null;
         }
@@ -131,7 +142,7 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
     protected void onDestroy() {
         super.onDestroy();
         mp.release();
-        mp=null;
+        mp = null;
     }
 }
 
