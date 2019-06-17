@@ -69,7 +69,6 @@ public class Basket_Activity extends AppCompatActivity {
                     .setDefaultFontPath(Tags.AR_FONT_NAME)
                     .setFontAttrId(R.attr.fontPath)
                     .build());
-
         }else
         {
             CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
