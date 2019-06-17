@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -19,16 +20,21 @@ import com.alatheer.shop_peak.Adapter.BasketAdapter;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.OrderItemList;
+import com.alatheer.shop_peak.Model.Pill;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.Tags.Tags;
 import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
+import com.alatheer.shop_peak.service.Api;
 
 import java.io.Serializable;
 import java.util.List;
 
 import io.paperdb.Paper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -51,6 +57,7 @@ public class Basket_Activity extends AppCompatActivity {
     String sum;
     int total;
     TextView txt_total;
+    long pill_num;
     String name,USER_ID,address,phone,type;
 
     protected void attachBaseContext(Context newBase) {
@@ -122,6 +129,21 @@ public class Basket_Activity extends AppCompatActivity {
                 }else {
                // BasketModel2 basketModel2 =new BasketModel2(type,basketModelList,USER_ID,name,address
                 //,lat,lon,phone);
+                    Api.getService().get_pill().enqueue(new Callback<Pill>() {
+                        @Override
+                        public void onResponse(Call<Pill> call, Response<Pill> response) {
+                            if(response.isSuccessful()){
+                              Pill pill = response.body();
+                              pill_num = pill.pillNum;
+                              Log.v("pill_num",pill_num+"");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Pill> call, Throwable t) {
+
+                        }
+                    });
                 if(basketModelList.size()>0){
                     Intent intent = new Intent(Basket_Activity.this,MapsActivity.class);
                     intent.putExtra("type",type);
@@ -131,6 +153,7 @@ public class Basket_Activity extends AppCompatActivity {
                     intent.putExtra("flag",1);
                     intent.putExtra("list",(Serializable) basketModelList);
                     intent.putExtra("phone",phone);
+                    intent.putExtra("pill_num",pill_num);
                     startActivity(intent);
                 }else {
                     Toast.makeText(Basket_Activity.this,"there is no product in basket",Toast.LENGTH_LONG).show();

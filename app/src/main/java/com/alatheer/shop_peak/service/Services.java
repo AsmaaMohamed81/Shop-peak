@@ -5,6 +5,7 @@ import com.alatheer.shop_peak.Model.BasketModel3;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.NotificationModel;
 import com.alatheer.shop_peak.Model.OfferModel1;
+import com.alatheer.shop_peak.Model.Pill;
 import com.alatheer.shop_peak.Model.Product_Specification;
 import com.alatheer.shop_peak.Model.RatingModel;
 import com.alatheer.shop_peak.Model.RatingModel2;
@@ -181,5 +182,8 @@ public interface Services {
     @FormUrlEncoded
     @POST("Api/get_notification")
     Call<NotificationModel>get_notification(@Field("user_id")String user_id);
+
+    @GET("Api/get_last_pill")
+    Call<Pill>get_pill();
 }
 

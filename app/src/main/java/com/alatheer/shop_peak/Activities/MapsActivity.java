@@ -188,10 +188,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     String address = intent.getStringExtra("address");
                     List<OrderItemList> list = (List<OrderItemList>) intent.getExtras().getSerializable("list");
                     String phone = intent.getStringExtra("phone");
+                    long pill_num = intent.getLongExtra("pill_num",0);
                     Vlat = lat.getText().toString();
                     Vlang = log.getText().toString();
                     BasketModel2 basketModel2 = new BasketModel2(type, list, user_id, name, address
-                            , Vlat, Vlang, phone);
+                            , Vlat, Vlang, phone,pill_num);
 
                     final ProgressDialog dialog = Common.createProgressDialog(MapsActivity.this, getString(R.string.waitt));
                     dialog.setCancelable(true);

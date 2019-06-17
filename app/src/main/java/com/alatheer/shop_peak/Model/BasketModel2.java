@@ -34,6 +34,17 @@ public class BasketModel2 {
     @SerializedName("phone")
     @Expose
     private String phone;
+    @SerializedName("pill_num")
+    @Expose
+    private long pill_num;
+
+    public long getPill_num() {
+        return pill_num;
+    }
+
+    public void setPill_num(long pill_num) {
+        this.pill_num = pill_num;
+    }
 
     public String getType() {
         return type;
@@ -99,7 +110,7 @@ public class BasketModel2 {
         this.phone = phone;
     }
 
-    public BasketModel2(String type, List<OrderItemList> orderItemList, String userId, String clientName, String address, String userLat, String userLang, String phone) {
+    public BasketModel2(String type, List<OrderItemList> orderItemList, String userId, String clientName, String address, String userLat, String userLang, String phone,long pill_num) {
         this.type = type;
         this.orderItemList = orderItemList;
         this.userId = userId;
@@ -108,6 +119,7 @@ public class BasketModel2 {
         this.userLat = userLat;
         this.userLang = userLang;
         this.phone = phone;
+        this.pill_num=pill_num;
     }
 }
 
