@@ -66,7 +66,6 @@ public class IntroActivity extends AppCompatActivity {
         initView();
 
         mySharedPreference = new MySharedPreference(this);
-        callbackManager = CallbackManager.Factory.create();
 
         String session = mySharedPreference.getSession(this);
         if (!TextUtils.isEmpty(session) || session != null) {
@@ -100,6 +99,7 @@ public class IntroActivity extends AppCompatActivity {
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         googleSignInClient = GoogleSignIn.getClient(this, gso);
+        callbackManager = CallbackManager.Factory.create();
         facebook_login.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -113,8 +113,9 @@ public class IntroActivity extends AppCompatActivity {
                             String last_name = object.getString("last_name");
                             String id = object.getString("id");
                             String EMAIL = object.getString("Email");
+                            String phone = object.getString("phone");
                             String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
-                            Api.getService().register(first_name +" " +last_name,EMAIL,"","","","","").enqueue(new Callback<UserModel1>() {
+                            Api.getService().register(first_name +" " +last_name,EMAIL,phone,"","","","").enqueue(new Callback<UserModel1>() {
                                 @Override
                                 public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
                                     if (response.isSuccessful()) {
