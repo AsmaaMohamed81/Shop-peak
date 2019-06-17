@@ -69,7 +69,7 @@ public class FollowersActivity extends AppCompatActivity {
 
     private void initview() {
         getDataFromIntent();
-        recycler = findViewById(R.id.followers_recycler);
+        recycler = findViewById(R.id.notification_recycler);
 
         userModel1ArrayList=new ArrayList<>();
         initrecycler();
