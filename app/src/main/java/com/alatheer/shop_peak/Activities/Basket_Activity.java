@@ -128,21 +128,7 @@ public class Basket_Activity extends AppCompatActivity {
                 }else {
                // BasketModel2 basketModel2 =new BasketModel2(type,basketModelList,USER_ID,name,address
                 //,lat,lon,phone);
-                    Api.getService().get_pill().enqueue(new Callback<Pill>() {
-                        @Override
-                        public void onResponse(Call<Pill> call, Response<Pill> response) {
-                            if(response.isSuccessful()){
-                              Pill pill = response.body();
-                              pill_num = pill.pillNum;
-                              Log.v("pill_num",pill_num+"");
-                            }
-                        }
 
-                        @Override
-                        public void onFailure(Call<Pill> call, Throwable t) {
-
-                        }
-                    });
                 if(basketModelList.size()>0){
                     Intent intent = new Intent(Basket_Activity.this,MapsActivity.class);
                     intent.putExtra("type",type);
@@ -152,6 +138,21 @@ public class Basket_Activity extends AppCompatActivity {
                     intent.putExtra("flag",1);
                     intent.putExtra("list",(Serializable) basketModelList);
                     intent.putExtra("phone",phone);
+                    Api.getService().get_pill().enqueue(new Callback<Pill>() {
+                        @Override
+                        public void onResponse(Call<Pill> call, Response<Pill> response) {
+                            if(response.isSuccessful()){
+                                Pill pill = response.body();
+                                pill_num = pill.pillNum;
+                                Log.v("pill_num",pill_num+"");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Pill> call, Throwable t) {
+                            Log.v("error",t.getMessage());
+                        }
+                    });
                     intent.putExtra("pill_num",pill_num);
                     startActivity(intent);
                 }else {
