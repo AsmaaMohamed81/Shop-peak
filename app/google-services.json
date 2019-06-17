@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "571382632769",
+    "firebase_url": "https://shoppeak-1554761732877.firebaseio.com",
+    "project_id": "shoppeak-1554761732877",
+    "storage_bucket": "shoppeak-1554761732877.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:571382632769:android:20ef30d41f425b72",
+        "android_client_info": {
+          "package_name": "com.alatheer.shop_peak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "571382632769-frcv5g2r5dup17ns2g5d8irmkh1m78rn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alatheer.shop_peak",
+            "certificate_hash": "b26ab7e49364f3a88e0f8a3f4ddd9188824c5b85"
+          }
+        },
+        {
+          "client_id": "571382632769-2ion5bnbed6bdj9f8tcomlgnuig3fd0b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAslnnqLQGu1yGFcGT7JIyvFp3SZEXM1ck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "571382632769-2ion5bnbed6bdj9f8tcomlgnuig3fd0b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

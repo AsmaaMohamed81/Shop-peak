@@ -56,6 +56,7 @@ import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.facebook.login.LoginManager;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -143,6 +144,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
     private void initview() {
+
+
+        Log.d("Token", "onClick: " + FirebaseInstanceId.getInstance().getToken());
 
         list_cats =new ArrayList<>();
         final FragmentManager fm = getSupportFragmentManager();
