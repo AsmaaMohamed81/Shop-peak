@@ -66,7 +66,7 @@ public class IntroActivity extends AppCompatActivity {
         initView();
 
         mySharedPreference = new MySharedPreference(this);
-        callbackManager = CallbackManager.Factory.create();
+
 
         String session = mySharedPreference.getSession(this);
         if (!TextUtils.isEmpty(session) || session != null) {
@@ -92,6 +92,7 @@ public class IntroActivity extends AppCompatActivity {
         btn_sign = findViewById(R.id.btn_sign);
         btn_login = findViewById(R.id.btn_login);
         sysa = findViewById(R.id.sysa);
+        callbackManager = CallbackManager.Factory.create();
         skip = findViewById(R.id.skip);
         CreateProgressDialog();
         skip.setPaintFlags(skip.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
