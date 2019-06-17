@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -13,50 +14,36 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.alatheer.shop_peak.Adapter.Notification_Adapter;
+import com.alatheer.shop_peak.Adapter.Follows_Adapter;
+import com.alatheer.shop_peak.Adapter.Like_Adapter;
+import com.alatheer.shop_peak.Model.Follow;
+import com.alatheer.shop_peak.Model.Like;
 import com.alatheer.shop_peak.Model.NotificationModel;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
-import com.alatheer.shop_peak.Tags.Tags;
-import com.alatheer.shop_peak.languagehelper.LanguageHelper;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
+import com.alatheer.shop_peak.service.Api;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.paperdb.Paper;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class NotificationFragment extends android.app.Fragment {
-    RecyclerView notification_recycler;
-    Notification_Adapter notification_adapter;
+    RecyclerView follow_recycler;
+    RecyclerView like_recycler;
+    Follows_Adapter follows_adapter;
+    Like_Adapter like_adapter;
     RecyclerView.LayoutManager notificationManager;
-    List<NotificationModel>list;
+    MySharedPreference mprefs;
+    List<Follow>followList;
+    List<Like>likeList;
     Activity activity;
-
-    @Override
-    public void onAttach(Context context) {
-
-        Paper.init(context);
-        String lang = Paper.book().read("language");
-
-        if (Paper.book().read("language").equals("ar")) {
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.AR_FONT_NAME)
-                    .setFontAttrId(R.attr.fontPath)
-                    .build());
-
-        } else {
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.EN_FONT_NAME)
-                    .setFontAttrId(R.attr.fontPath)
-                    .build());
-        }
-        super.onAttach(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(context, lang)));
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,7 +56,15 @@ public class NotificationFragment extends android.app.Fragment {
     }
 
     private void initview(View view) {
-        notification_recycler=view.findViewById(R.id.notification_recycler);
+        follow_recycler=view.findViewById(R.id.follow_recycler);
+        like_recycler = view.findViewById(R.id.like_recycler);
+        notificationManager=new LinearLayoutManager(getActivity());
+        like_recycler.setLayoutManager(notificationManager);
+        follow_recycler.setLayoutManager(notificationManager);
+        mprefs =MySharedPreference.getInstance();
+        like_recycler.setHasFixedSize(true);
+        follow_recycler.setHasFixedSize(true);
+        get_notification_list();
         if (!isConnected()) {
             new AlertDialog.Builder(getActivity()).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
                     .setMessage(getString(R.string.check_connection))
@@ -83,21 +78,36 @@ public class NotificationFragment extends android.app.Fragment {
                     }).show();
         } else {
         }
-        notification_recycler.setHasFixedSize(true);
-        notification_adapter=new Notification_Adapter(notificationModelList(),getActivity());
-        notification_recycler.setAdapter(notification_adapter);
-        notificationManager=new LinearLayoutManager(getActivity());
-        notification_recycler.setLayoutManager(notificationManager);
+
+
 
     }
-    private List<NotificationModel>notificationModelList(){
-        list=new ArrayList<>();
-        list.add(new NotificationModel("aaaaaa","bbbbbbbbb"));
-        list.add(new NotificationModel("cccccc","ddddddddd"));
-        list.add(new NotificationModel("eeeeee","fffffffff"));
-        list.add(new NotificationModel("gggggg","hhhhhhhhh"));
-        return list;
+
+    private void get_notification_list() {
+        UserModel1 userModel1 =mprefs.Get_UserData(getActivity());
+        String user_id = userModel1.getId();
+        Api.getService().get_notification(user_id).enqueue(new Callback<NotificationModel>() {
+            @Override
+            public void onResponse(Call<NotificationModel> call, Response<NotificationModel> response) {
+                if(response.isSuccessful()){
+                    followList = response.body().follows;
+                    likeList = response.body().like;
+                    like_adapter = new Like_Adapter(likeList,getActivity());
+                    like_recycler.setAdapter(like_adapter);
+                    follows_adapter = new Follows_Adapter(followList,getActivity());
+                    follow_recycler.setAdapter(follows_adapter);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NotificationModel> call, Throwable t) {
+
+            }
+        });
+
     }
+
 
     private boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);

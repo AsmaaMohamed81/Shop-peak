@@ -4,28 +4,27 @@ package com.alatheer.shop_peak.Model;
  * Created by M.Hamada on 06/05/2019.
  */
 
+import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class NotificationModel {
-    String title ;
-    String details;
 
-    public NotificationModel(String title, String details) {
-        this.title = title;
-        this.details = details;
+    @SerializedName("like")
+    @Expose
+    public List<Like> like = null;
+    @SerializedName("follows")
+    @Expose
+    public List<Follow> follows = null;
+
+    public NotificationModel withLike(List<Like> like) {
+        this.like = like;
+        return this;
     }
 
-    public String getTitle() {
-        return title;
+    public NotificationModel withFollows(List<Follow> follows) {
+        this.follows = follows;
+        return this;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
 }

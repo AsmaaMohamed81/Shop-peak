@@ -4,14 +4,25 @@
     android:id="@+id/fragment_notification"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:weightSum="2"
+    android:orientation="horizontal"
     tools:context="com.alatheer.shop_peak.Fragments.NotificationFragment">
 
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/notification_recycler"
+        android:id="@+id/follow_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layoutAnimation="@anim/layout_animation_fall_down"></android.support.v7.widget.RecyclerView>
+        android:layout_margin="5dp"
+        android:layoutAnimation="@anim/layout_animation_fall_down">
+    </android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/like_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layoutAnimation="@anim/layout_animation_fall_down">
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
