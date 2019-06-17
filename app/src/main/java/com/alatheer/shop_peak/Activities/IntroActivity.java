@@ -115,14 +115,37 @@ public class IntroActivity extends AppCompatActivity {
                             String id = object.getString("id");
                             String EMAIL = object.getString("Email");
                             String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
+                            Api.getService().register(first_name +" " +last_name,EMAIL,"","","","","").enqueue(new Callback<UserModel1>() {
+                                @Override
+                                public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
+                                    if (response.isSuccessful()) {
 
-                            userModel = mySharedPreference.Get_UserData(IntroActivity.this);
 
-//                            mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
-                            Intent i = new Intent(IntroActivity.this, MainActivity.class);
-                            //i.putExtra("personName",first_name);
-                            //i.putExtra("image_url",image_url);
-                            startActivity(i);
+                                        dialog.dismiss();
+
+                                        if (response.body().getSuccess() == 1) {
+
+
+                                            userModel = response.body();
+
+                                            MySharedPreference mySharedPreference = MySharedPreference.getInstance();
+
+                                            mySharedPreference.Create_Update_UserData(IntroActivity.this,userModel);
+
+                                            Log.d("model",mySharedPreference.Get_UserData(IntroActivity.this).getFull_name());
+
+
+                                            Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<UserModel1> call, Throwable t) {
+
+                                }
+                            });
                             Toast.makeText(IntroActivity.this, "log in with facebook connected successfully", Toast.LENGTH_SHORT).show();
 
                         } catch (JSONException e) {
