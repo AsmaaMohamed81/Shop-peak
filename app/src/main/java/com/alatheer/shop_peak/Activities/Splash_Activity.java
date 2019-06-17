@@ -42,28 +42,38 @@ public class Splash_Activity extends AppCompatActivity implements SurfaceHolder.
         String lang = Paper.book().read("language");
         Log.e("Asmaaa", "attachBaseContext: "+ lang);
 
-            if (Paper.book().read("language").equals("ar"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.AR_FONT_NAME)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
 
-            }else
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.EN_FONT_NAME)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-            }
+        if (lang == null){
 
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(newBase, lang)));
+            String langg =Locale.getDefault().getLanguage();
+            Log.e("Asmaaanew", "attachBaseContext: "+ langg);
+            if(!(langg.equals("fr") || langg.equals("en") || langg.equals("ar")))
+                langg = "en";
 
+            Paper.book().write("language", langg);
+            Locale.getDefault().getLanguage();
 
+        }
+
+        if (Paper.book().read("language").equals("ar"))
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.AR_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+
+        }else
+        {
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.EN_FONT_NAME)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
+
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(newBase, lang)));
 
 
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
