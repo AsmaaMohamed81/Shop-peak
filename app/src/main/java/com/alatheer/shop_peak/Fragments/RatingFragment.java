@@ -21,6 +21,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Activities.IntroActivity;
 import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Adapter.RatingAdapter;
 import com.alatheer.shop_peak.Model.RatingModel;
@@ -118,7 +119,7 @@ public class RatingFragment extends Fragment {
 
                 if (userModel1==null){
 
-                    CreateGpsDialog();
+                    CreateDialog();
                 }else {
                 Add_Rate();
                 initrecycler();}
@@ -232,7 +233,7 @@ public class RatingFragment extends Fragment {
        // user_id = getActivity().getIntent().getIntExtra("user_id", 0);
     }
 
-    private void CreateGpsDialog() {
+    private void CreateDialog() {
 
         final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(getActivity())
                 .setCancelable(false)
@@ -246,7 +247,7 @@ public class RatingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 gps_dialog.dismiss();
-                Intent intent = new Intent(getActivity(), Login_Activity.class);
+                Intent intent = new Intent(getActivity(), IntroActivity.class);
                 startActivity(intent);
 
             }

@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Basket_Activity;
+import com.alatheer.shop_peak.Activities.IntroActivity;
 import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Adapter.ColorAdapter;
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
@@ -271,7 +272,7 @@ public class Fragment_Details extends Fragment {
 
                 if (userModel1==null){
 
-                    CreateGpsDialog();
+                    CreateDialog();
                 }else{
                 int id2 = Integer.parseInt(order_num.getText().toString());
 
@@ -434,7 +435,7 @@ if (like!=null){
 
     }
 
-    private void CreateGpsDialog() {
+    private void CreateDialog() {
 
         final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(getActivity())
                 .setCancelable(false)
@@ -448,7 +449,7 @@ if (like!=null){
             @Override
             public void onClick(View v) {
                 gps_dialog.dismiss();
-                Intent intent = new Intent(getActivity(), Login_Activity.class);
+                Intent intent = new Intent(getActivity(), IntroActivity.class);
                 startActivity(intent);
 
             }

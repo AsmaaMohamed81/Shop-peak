@@ -123,7 +123,7 @@ public class Basket_Activity extends AppCompatActivity {
 
 
                 if (userModel1==null){
-                    CreateGpsDialog();
+                    CreateDialog();
 
                 }else {
                // BasketModel2 basketModel2 =new BasketModel2(type,basketModelList,USER_ID,name,address
@@ -230,7 +230,7 @@ public class Basket_Activity extends AppCompatActivity {
         txt_total.setText("TOTAL : "+ total+"");
     }
 
-    private void CreateGpsDialog() {
+    private void CreateDialog() {
 
         final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
                 .setCancelable(false)
@@ -244,7 +244,7 @@ public class Basket_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 gps_dialog.dismiss();
-                Intent intent = new Intent(Basket_Activity.this, Login_Activity.class);
+                Intent intent = new Intent(Basket_Activity.this, IntroActivity.class);
                 startActivity(intent);
 
             }

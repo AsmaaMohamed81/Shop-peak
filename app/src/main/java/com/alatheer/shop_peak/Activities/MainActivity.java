@@ -56,7 +56,10 @@ import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -65,6 +68,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,6 +114,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String type,order;
     String TAG="MainActivity";
 
+
+    String Token;
+
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
         String lang = Paper.book().read("language");
@@ -144,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
     private void initview() {
+
 
 
         Log.d("Token", "onClick: " + FirebaseInstanceId.getInstance().getToken());
@@ -191,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         login_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, Login_Activity.class));
+                startActivity(new Intent(MainActivity.this, IntroActivity.class));
             }
         });
         try{
@@ -207,6 +215,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                  type=userModel1.getType();
                  Logo_img=userModel1.getLogo_img();
                  order=userModel1.getSend_order();
+
+                user_id = userModel1.getId();
 
 
                 Log.d(TAG, "initview: "+type);
@@ -251,10 +261,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getDataIntent();
 
+
+
+        update_Token();
+
         HomeFragment homeFragment=new HomeFragment();
         android.app.FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
 
+    }
+
+    private void update_Token( ) {
+        if (userModel1!=null)
+        {
+            FirebaseInstanceId.getInstance().getInstanceId()
+                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                            if (task.isSuccessful())
+                            {
+                                String fireBaseToken = task.getResult().getToken();
+                                Log.d("Token", "onComplete: "+fireBaseToken);
+                                String user_id = userModel1.getId();
+                                Log.d("id", "onComplete: "+user_id);
+
+                                Api.getService()
+                                        .update_Token(fireBaseToken,user_id)
+                                        .enqueue(new Callback<RatingModel2>() {
+                                            @Override
+                                            public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+
+                                                if (response.isSuccessful())
+                                                {
+                                                    if (response.body().getSuccess()==1) {
+                                                        Log.e("user_token_update", "success");
+                                                    }
+
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+                                                try {
+                                                    Log.e("Error",t.getMessage());
+                                                }catch (Exception e){}
+                                            }
+                                        });
+                            }
+                        }
+                    });
+        }
     }
 
     private void get_list_cats() {
@@ -335,7 +393,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     if (userModel1==null){
 
-                        CreateGpsDialog();
+                        CreateDialog();
                     }
                     else {
                         selectedfragment = new Client_Profile_Fragment();
@@ -424,7 +482,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mPrefs.ClearData(MainActivity.this);
                 LoginManager.getInstance().logOut();
                 myAppDatabase.dao().deleteproduct();
-                startActivity(new Intent(MainActivity.this, Login_Activity.class));
+                startActivity(new Intent(MainActivity.this, IntroActivity.class));
 
                 Animatoo.animateInAndOut(MainActivity.this);
                 break;
@@ -432,7 +490,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 if (userModel1==null){
 
-                    CreateGpsDialog();
+                    CreateDialog();
                 }else {
                 Log.d(TAG, "onNavigationItemSelected: "+type);
                 if (type.equals("2")){
@@ -578,9 +636,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         String sanf_id = homeModels.get(pos).id;
 
-        if (userModel1 != null){
-            user_id = userModel1.getId();
-    }
+
 
         Log.d("Mainasmaaa", "favPos: "+sanf_id);
         Log.d("Mainasmaaa", "favPos: "+user_id);
@@ -684,7 +740,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void CreateGpsDialog() {
+    private void CreateDialog() {
 
         final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
                 .setCancelable(false)
@@ -698,7 +754,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 gps_dialog.dismiss();
-                Intent intent = new Intent(MainActivity.this, Login_Activity.class);
+                Intent intent = new Intent(MainActivity.this, IntroActivity.class);
                 startActivity(intent);
 
             }

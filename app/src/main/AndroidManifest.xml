@@ -126,7 +126,6 @@
         <activity
             android:name=".Activities.MapsActivity"
             android:label="@string/title_activity_maps"/>
-        <activity android:name=".Activities.Add_Product_Activity_Details"/>
         <activity android:name=".Activities.Offer_Activity"/>
         <activity android:name=".Activities.FollowersActivity"/>
         <activity android:name=".Activities.MyFollowersActivity"/>

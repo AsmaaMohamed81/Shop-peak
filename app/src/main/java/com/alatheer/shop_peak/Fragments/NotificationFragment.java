@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class NotificationFragment extends android.app.Fragment {
     RecyclerView like_recycler;
     Follows_Adapter follows_adapter;
     Like_Adapter like_adapter;
-    RecyclerView.LayoutManager notificationManager;
+    RecyclerView.LayoutManager notificationManager,followManager;
     MySharedPreference mprefs;
     List<Follow>followList;
     List<Like>likeList;
@@ -60,7 +61,10 @@ public class NotificationFragment extends android.app.Fragment {
         like_recycler = view.findViewById(R.id.like_recycler);
         notificationManager=new LinearLayoutManager(getActivity());
         like_recycler.setLayoutManager(notificationManager);
-        follow_recycler.setLayoutManager(notificationManager);
+        followManager=new LinearLayoutManager(getActivity());
+        followList = new ArrayList<>();
+        likeList = new ArrayList<>();
+        follow_recycler.setLayoutManager(followManager);
         mprefs =MySharedPreference.getInstance();
         like_recycler.setHasFixedSize(true);
         follow_recycler.setHasFixedSize(true);
@@ -102,7 +106,7 @@ public class NotificationFragment extends android.app.Fragment {
 
             @Override
             public void onFailure(Call<NotificationModel> call, Throwable t) {
-
+                Log.v("error",t.getMessage());
             }
         });
 

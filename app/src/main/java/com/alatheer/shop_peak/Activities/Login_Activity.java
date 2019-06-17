@@ -71,28 +71,26 @@ public class Login_Activity extends AppCompatActivity {
     private View root;
     private Snackbar snackbar;
     MySharedPreference mySharedPreference;
-    private  int PICK_IMAGE_REQUEST=1;
+    private int PICK_IMAGE_REQUEST = 1;
     private CallbackManager callbackManager;
     public GoogleSignInOptions gso;
     SharedPreferences preferences;
     GoogleSignInClient googleSignInClient;
-    int GmailSignInRequest=0;
+    int GmailSignInRequest = 0;
     UserModel userModel;
     Uri image_path;
-    TextView Skip,link;
+    TextView Skip, link;
 
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
         String lang = Paper.book().read("language");
-        if (Paper.book().read("language").equals("ar"))
-        {
+        if (Paper.book().read("language").equals("ar")) {
             CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                     .setDefaultFontPath(Tags.AR_FONT_NAME)
                     .setFontAttrId(R.attr.fontPath)
                     .build());
 
-        }else
-        {
+        } else {
             CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                     .setDefaultFontPath(Tags.EN_FONT_NAME)
                     .setFontAttrId(R.attr.fontPath)
@@ -100,7 +98,6 @@ public class Login_Activity extends AppCompatActivity {
         }
 
         super.attachBaseContext(CalligraphyContextWrapper.wrap(LanguageHelper.onAttach(newBase, lang)));
-
 
 
     }
@@ -115,22 +112,18 @@ public class Login_Activity extends AppCompatActivity {
 
 
         String session = mySharedPreference.getSession(this);
-        if (!TextUtils.isEmpty(session)|| session!=null)
-        {
-            if (session.equals(Tags.session_login))
-            {
+        if (!TextUtils.isEmpty(session) || session != null) {
+            if (session.equals(Tags.session_login)) {
                 UserModel1 userModel1 = mySharedPreference.Get_UserData(this);
 
-                if (userModel1!=null)
-                {
-                    Intent intent = new Intent(Login_Activity.this,MainActivity.class);
+                if (userModel1 != null) {
+                    Intent intent = new Intent(Login_Activity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
             }
 
         }
-
 
 
     }
@@ -142,35 +135,35 @@ public class Login_Activity extends AppCompatActivity {
         edt_email = findViewById(R.id.email);
         edt_password = findViewById(R.id.user_password);
         log_in = findViewById(R.id.btn_login);
-        root=findViewById(R.id.root);
-        facebook_login=findViewById(R.id.btn_facebook_login);
+        root = findViewById(R.id.root);
+        facebook_login = findViewById(R.id.btn_facebook_login);
         //facebook_login.setReadPermissions("email", "public_profile", "user_friends");
-        gmail_login=findViewById(R.id.btn_gmail_login);
-        gmail_login.setSize(SignInButton.SIZE_STANDARD);
-        callbackManager=CallbackManager.Factory.create();
-        Skip=findViewById(R.id.skip);
+        //gmail_login=findViewById(R.id.btn_gmail_login);
+        //gmail_login.setSize(SignInButton.SIZE_STANDARD);
+        callbackManager = CallbackManager.Factory.create();
+        Skip = findViewById(R.id.skip);
 
-        link=findViewById(R.id.link);
+        link = findViewById(R.id.link);
 
         link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
-              Intent  intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.shop-peak.com/"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.shop-peak.com/"));
                 startActivity(intent);
             }
         });
 
 
-        Skip.setPaintFlags(Skip.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        Skip.setPaintFlags(Skip.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
-        googleSignInClient = GoogleSignIn.getClient(this, gso);
+       /* googleSignInClient = GoogleSignIn.getClient(this, gso);
         facebook_login.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -214,7 +207,7 @@ public class Login_Activity extends AppCompatActivity {
             public void onError(FacebookException error) {
                  Log.e("error",error.toString());
             }
-        });
+        });*/
         /*gmail_login.setOnClickListener(new View.OnClickListener() {
            @Override
             public void onClick(View v) {
@@ -223,8 +216,8 @@ public class Login_Activity extends AppCompatActivity {
             }
         });*/
 
-        final Animation animation=AnimationUtils.loadAnimation(this,R.anim.press_anim);
-        final Animation animation2=AnimationUtils.loadAnimation(this,R.anim.fade_in);
+        final Animation animation = AnimationUtils.loadAnimation(this, R.anim.press_anim);
+        final Animation animation2 = AnimationUtils.loadAnimation(this, R.anim.fade_in);
 
 
 //        checkBox.setOnClickListener(new View.OnClickListener() {
@@ -246,7 +239,7 @@ public class Login_Activity extends AppCompatActivity {
 
 
                 Intent intent = new Intent(Login_Activity.this, Signup_Activity.class);
-                        startActivity(intent);
+                startActivity(intent);
                 Animatoo.animateSlideRight(Login_Activity.this);
 
 
@@ -262,13 +255,13 @@ public class Login_Activity extends AppCompatActivity {
             }
         });
         CreateProgressDialog();
-        gmail_login.setOnClickListener(new View.OnClickListener() {
+       /* gmail_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent signInIntent = googleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, GmailSignInRequest);
             }
-        });
+        });*/
 
         Skip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -280,7 +273,7 @@ public class Login_Activity extends AppCompatActivity {
         });
     }
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GmailSignInRequest) {
@@ -350,7 +343,7 @@ public class Login_Activity extends AppCompatActivity {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
 
-                /*try {
+                try {
                     String image_url = acct.getPhotoUrl().toString(); //photo_url is String
                      intent.putExtra("personName",personName);
                      intent.putExtra("image_url",image_url);
@@ -362,7 +355,7 @@ public class Login_Activity extends AppCompatActivity {
                     //intent.putExtra("image_url",image_path.toString());
 
                     startActivity(intent);
-                }*/
+                }
 
                 }
 
@@ -380,7 +373,7 @@ public class Login_Activity extends AppCompatActivity {
 
     private void updateUI(GoogleSignInAccount account) {
 
-    }
+    }*/
 
 
 
@@ -512,7 +505,7 @@ public class Login_Activity extends AppCompatActivity {
 
         }
     }
-
+/*
     @Override
     protected void onStart() {
         // Check for existing Google Sign In account, if the user is already signed in
@@ -520,5 +513,5 @@ public class Login_Activity extends AppCompatActivity {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
         super.onStart();
-    }
+    }*/
 }

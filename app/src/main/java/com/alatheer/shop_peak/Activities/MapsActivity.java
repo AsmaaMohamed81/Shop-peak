@@ -169,10 +169,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Vlat = lat.getText().toString();
                     Vlang = log.getText().toString();
 
-                    Intent intent = new Intent(MapsActivity.this, Vender_Signup_Activity.class);
+                    Intent intent = new Intent();
                     intent.putExtra("lat", Vlat);
                     intent.putExtra("lang", Vlang);
-                    startActivity(intent);
+                    setResult(RESULT_OK,intent);
+                    finish();
 
                 }
             });
@@ -380,9 +381,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     private void moveCamera(LatLng latLng, float zoom, String title) {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
 
+        if (CameraUpdateFactory.newLatLngZoom(latLng, zoom)!=null) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+
+        }
         if (!title.equals("myLocation")) {
             MarkerOptions options = new MarkerOptions()
                     .position(latLng)

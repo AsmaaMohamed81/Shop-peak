@@ -28,6 +28,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.FollowersActivity;
+import com.alatheer.shop_peak.Activities.IntroActivity;
 import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Activities.MyFollowersActivity;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
@@ -222,7 +223,7 @@ public class ProfileFragment extends android.app.Fragment {
 
                 if (userModel1 == null) {
 
-                    CreateGpsDialog();
+                    CreateDialog();
 
                 } else {
 
@@ -528,7 +529,7 @@ public class ProfileFragment extends android.app.Fragment {
 
         return profilelist ;*/
 
-    private void CreateGpsDialog() {
+    private void CreateDialog() {
 
         final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(getActivity())
                 .setCancelable(false)
@@ -542,7 +543,7 @@ public class ProfileFragment extends android.app.Fragment {
             @Override
             public void onClick(View v) {
                 gps_dialog.dismiss();
-                Intent intent = new Intent(getActivity(), Login_Activity.class);
+                Intent intent = new Intent(getActivity(), IntroActivity.class);
                 startActivity(intent);
 
             }

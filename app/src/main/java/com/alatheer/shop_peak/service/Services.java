@@ -172,8 +172,7 @@ public interface Services {
     @FormUrlEncoded
     @POST("Api/delete_flow")
     Call<RatingModel2> delete_flow(@Field("store_id_fk") String sanf_id_fk,
-                                   @Field("client_id_fk") String client_id_fk
-    );
+                                   @Field("client_id_fk") String client_id_fk);
 
 
 
@@ -186,5 +185,11 @@ public interface Services {
 
     @GET("Api/get_last_pill")
     Call<Pill>get_pill();
+
+
+    @FormUrlEncoded
+    @POST("Api/update_token")
+    Call<RatingModel2> update_Token(@Field("token") String token,
+                                   @Field("user_id") String user_id);
 }
 

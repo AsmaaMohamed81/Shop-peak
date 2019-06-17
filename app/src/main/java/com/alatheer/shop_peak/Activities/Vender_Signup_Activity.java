@@ -99,6 +99,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     private String store_tasnef,lat,lang;
     private int IMG=1;
     private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+    private int MapCode=300;
 
 
     protected void attachBaseContext(Context newBase) {
@@ -283,7 +284,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Vender_Signup_Activity.this,MapsActivity.class);
                 intent.putExtra("flag",0);
-                startActivity(intent);
+                startActivityForResult(intent,MapCode);
             }
         });
         List<Address> addressList = getaddresslist();
@@ -383,6 +384,12 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
 
         }
+       else if (requestCode==MapCode&&resultCode==Activity.RESULT_OK)
+        {
+            lat=data.getStringExtra("lat");
+            lang=data.getStringExtra("lang");
+        }
+
     }
     private void validation() {
         String id=userModel1.getId();
@@ -544,7 +551,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mySharedPreference.ClearData(Vender_Signup_Activity.this);
-                startActivity(new Intent(Vender_Signup_Activity.this, Login_Activity.class));
+                startActivity(new Intent(Vender_Signup_Activity.this, IntroActivity.class));
                 Animatoo.animateInAndOut(Vender_Signup_Activity.this);
 
             }
