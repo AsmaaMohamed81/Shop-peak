@@ -10,21 +10,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class NotificationModel {
 
-    @SerializedName("like")
-    @Expose
-    public List<Like> like = null;
-    @SerializedName("follows")
-    @Expose
-    public List<Follow> follows = null;
+    public String message ;
+    public String date ;
 
-    public NotificationModel withLike(List<Like> like) {
-        this.like = like;
-        return this;
+
+    public String getMessage() {
+        return message;
     }
-
-    public NotificationModel withFollows(List<Follow> follows) {
-        this.follows = follows;
-        return this;
-    }
-
 }

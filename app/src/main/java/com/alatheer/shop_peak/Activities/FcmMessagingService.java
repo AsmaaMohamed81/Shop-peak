@@ -60,8 +60,8 @@ public class FcmMessagingService extends FirebaseMessagingService {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         notificationBuilder.setSound(soundUri);
 
-        notificationBuilder.setSmallIcon(R.drawable.icons_exit);
-        notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.map));
+        notificationBuilder.setSmallIcon(R.mipmap.icon_round);
+        notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.icon_round));
 
         notificationBuilder.setAutoCancel(true);
 

@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +17,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alatheer.shop_peak.Adapter.Follows_Adapter;
+import com.alatheer.shop_peak.Adapter.Notifi_Adapter;
 import com.alatheer.shop_peak.Adapter.Like_Adapter;
 import com.alatheer.shop_peak.Model.Follow;
 import com.alatheer.shop_peak.Model.Like;
@@ -36,15 +40,24 @@ import retrofit2.Response;
 
 
 public class NotificationFragment extends android.app.Fragment {
-    RecyclerView follow_recycler;
-    RecyclerView like_recycler;
-    Follows_Adapter follows_adapter;
+    RecyclerView notif_recycler;
+    Notifi_Adapter notifi_adapter;
     Like_Adapter like_adapter;
     RecyclerView.LayoutManager notificationManager,followManager;
     MySharedPreference mprefs;
-    List<Follow>followList;
-    List<Like>likeList;
+    List<NotificationModel> Llist;
+
     Activity activity;
+
+    String user_id;
+
+
+    private ProgressBar progressBar;
+    private TextView txt_no;
+    private MySharedPreference preferences;
+
+    private UserModel1 userModel1;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,18 +70,47 @@ public class NotificationFragment extends android.app.Fragment {
     }
 
     private void initview(View view) {
-        follow_recycler=view.findViewById(R.id.follow_recycler);
-        like_recycler = view.findViewById(R.id.like_recycler);
+        notif_recycler=view.findViewById(R.id.notif_recycler);
+
+
+        preferences=MySharedPreference.getInstance();
+        userModel1=preferences.Get_UserData(getActivity());
+
+
+        if (userModel1==null){
+
+            txt_no.setText(R.string.SH_Log);
+            txt_no.setVisibility(View.VISIBLE);
+
+        }else {
+
+            user_id=userModel1.getId();
+            Log.e("Asmaa", "initview: "+user_id );
+        }
+
+        Llist = new ArrayList<>();
+
+
         notificationManager=new LinearLayoutManager(getActivity());
-        like_recycler.setLayoutManager(notificationManager);
-        followManager=new LinearLayoutManager(getActivity());
-        followList = new ArrayList<>();
-        likeList = new ArrayList<>();
-        follow_recycler.setLayoutManager(followManager);
-        mprefs =MySharedPreference.getInstance();
-        like_recycler.setHasFixedSize(true);
-        follow_recycler.setHasFixedSize(true);
-        get_notification_list();
+        notif_recycler.setLayoutManager(notificationManager);
+        notif_recycler.setHasFixedSize(true);
+        notifi_adapter=new Notifi_Adapter(Llist,getActivity());
+        notif_recycler.setAdapter(notifi_adapter);
+
+
+
+        get_notification_list(user_id);
+
+
+
+        progressBar = view.findViewById(R.id.progBar);
+        txt_no = view.findViewById(R.id.tv_no);
+
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+
+
+
+
         if (!isConnected()) {
             new AlertDialog.Builder(getActivity()).setIcon(R.drawable.ic_warning).setTitle(getString(R.string.networkconnectionAlert))
                     .setMessage(getString(R.string.check_connection))
@@ -87,29 +129,40 @@ public class NotificationFragment extends android.app.Fragment {
 
     }
 
-    private void get_notification_list() {
-        UserModel1 userModel1 =mprefs.Get_UserData(getActivity());
-        String user_id = userModel1.getId();
-        Api.getService().get_notification(user_id).enqueue(new Callback<NotificationModel>() {
-            @Override
-            public void onResponse(Call<NotificationModel> call, Response<NotificationModel> response) {
-                if(response.isSuccessful()){
-                    followList = response.body().follows;
-                    likeList = response.body().like;
-                    like_adapter = new Like_Adapter(likeList,getActivity());
-                    like_recycler.setAdapter(like_adapter);
-                    follows_adapter = new Follows_Adapter(followList,getActivity());
-                    follow_recycler.setAdapter(follows_adapter);
+    private void get_notification_list(String user_id) {
 
-                }
-            }
 
-            @Override
-            public void onFailure(Call<NotificationModel> call, Throwable t) {
-                Log.v("error",t.getMessage());
-            }
-        });
+        Api.getService()
+                .get_notification(user_id)
+                .enqueue(new Callback<List<NotificationModel>>() {
+                    @Override
+                    public void onResponse(Call<List<NotificationModel>> call, Response<List<NotificationModel>> response) {
+                        if (response.isSuccessful()) {
 
+                            progressBar.setVisibility(View.GONE);
+
+                            if (response.body().size() > 0) {
+
+                                Llist.addAll(response.body());
+                                notifi_adapter.notifyDataSetChanged();
+                                txt_no.setVisibility(View.GONE);
+
+                            }else {
+
+                                txt_no.setVisibility(View.VISIBLE);
+
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<NotificationModel>> call, Throwable t) {
+                        progressBar.setVisibility(View.GONE);
+
+
+                    }
+                });
     }
 
 

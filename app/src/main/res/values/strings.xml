@@ -112,8 +112,9 @@
     <string name="SH_Log">Please Sign in or sign up .</string>
     <string name="Succ_send">Product successfully uploaded</string>
     <string name="order_basket_send">Your order has been successfully sent</string>
-    <string name="confirm_req">كلمه المرور غير متشابهه</string>
-    <string name="TermsNEw">بمجرد تسجيلك فانت وافقت على الشروط والاحكام</string>
+    <string name="confirm_req">The password is not the same</string>
+    <string name="TermsNEw">Once you register, you agree to the terms and conditions</string>
+    <string name="nonotif">لايوجد اشعارات الان</string>
 
 
 </resources>

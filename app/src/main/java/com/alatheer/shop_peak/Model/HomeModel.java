@@ -105,6 +105,14 @@ public class HomeModel implements Serializable {
 
     private  String like;
 
+    public String getMainImg() {
+        return mainImg;
+    }
+
+    public String getStoreImg() {
+        return storeImg;
+    }
+
     public HomeModel withId(String id) {
         this.id = id;
         return this;

@@ -180,8 +180,8 @@ public interface Services {
     Call<List<HomeModel>> get_offer_products(@Path("offer_id") String offer_id);
 
     @FormUrlEncoded
-    @POST("Api/get_notification")
-    Call<NotificationModel>get_notification(@Field("user_id")String user_id);
+    @POST("Api/get_my_notification")
+    Call<List<NotificationModel>>get_notification(@Field("user_id_fk")String user_id);
 
     @GET("Api/get_last_pill")
     Call<Pill>get_pill();

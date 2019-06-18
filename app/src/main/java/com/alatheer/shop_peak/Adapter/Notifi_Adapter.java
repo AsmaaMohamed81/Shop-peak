@@ -8,21 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alatheer.shop_peak.Model.Follow;
 import com.alatheer.shop_peak.Model.NotificationModel;
 import com.alatheer.shop_peak.R;
 
 import java.util.List;
 
-/**
- * Created by M.Hamada on 16/06/2019.
- */
 
-public class Follows_Adapter extends RecyclerView.Adapter<Follows_Adapter.Follow_Holder> {
-    List<Follow> followList;
+
+public class Notifi_Adapter extends RecyclerView.Adapter<Notifi_Adapter.Follow_Holder> {
+    List<NotificationModel> followList;
     Context context;
 
-    public Follows_Adapter(List<Follow> followList, Context context) {
+    public Notifi_Adapter(List<NotificationModel> followList, Context context) {
         this.followList = followList;
         this.context = context;
     }
@@ -36,7 +33,7 @@ public class Follows_Adapter extends RecyclerView.Adapter<Follows_Adapter.Follow
 
     @Override
     public void onBindViewHolder(@NonNull Follow_Holder follow_holder, int i) {
-      follow_holder.details.setText(" بمتابعتك"+followList.get(i).clientName+"قام ");
+      follow_holder.details.setText(followList.get(i).getMessage());
     }
 
     @Override

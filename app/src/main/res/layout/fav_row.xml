@@ -75,7 +75,7 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_weight=".25"
-                android:layout_height="45dp"
+                android:layout_height="35dp"
                 android:clickable="false"
                 android:longClickable="false"
                 >

@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -282,6 +283,13 @@ public class HomeFragment extends android.app.Fragment {
                         txt_no.setVisibility(View.VISIBLE);
 
                     }
+
+                }
+                else {
+
+                    ResponseBody body = (ResponseBody) response.body();
+
+                        body.close();
 
                 }
 
