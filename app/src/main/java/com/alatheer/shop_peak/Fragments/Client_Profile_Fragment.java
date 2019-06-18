@@ -1,27 +1,35 @@
 package com.alatheer.shop_peak.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.Tags.Tags;
+import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
+import com.alatheer.shop_peak.service.Api;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
+import okhttp3.MultipartBody;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -34,7 +42,10 @@ public class Client_Profile_Fragment extends android.app.Fragment{
     UserModel1 userModel1;
 
     EditText user_name,adress,email,city,govern,phone;
-
+    ImageView edit_name,edit_loc,edit_phone,edit_city,edit_govern;
+    Button edit;
+    int PICK_IMAGE_REQUEST = 2;
+    Uri filePath;
     CircleImageView img_profile;
 
     @Override
@@ -94,9 +105,12 @@ public class Client_Profile_Fragment extends android.app.Fragment{
         govern=view.findViewById(R.id.govern);
         phone=view.findViewById(R.id.phone);
         img_profile=view.findViewById(R.id.img_profile);
-
-
-
+        edit = view.findViewById(R.id.edit_profile);
+        edit_name = view.findViewById(R.id.edit_name);
+        edit_phone = view.findViewById(R.id.edit_phone);
+        edit_loc = view.findViewById(R.id.edit_loc);
+        edit_govern= view.findViewById(R.id.edit_govern);
+        edit_city = view.findViewById(R.id.edit_city);
         preferences=MySharedPreference.getInstance();
         userModel1=preferences.Get_UserData(getActivity());
 
@@ -115,10 +129,74 @@ public class Client_Profile_Fragment extends android.app.Fragment{
 
             Toast.makeText(getActivity(), "you Shoud Sign First", Toast.LENGTH_SHORT).show();
         }
-
-
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edit_your_profile();
+            }
+        });
+        edit_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                user_name.setEnabled(true);
+            }
+        });
+        edit_phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                phone.setEnabled(true);
+            }
+        });
+        edit_city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                city.setEnabled(true);
+            }
+        });
+        edit_govern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                govern.setEnabled(true);
+            }
+        });
+        edit_loc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adress.setEnabled(true);
+            }
+        });
     }
 
+    private void edit_your_profile() {
+
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               chooseImage();
+            }
+        });
+        MultipartBody.Part logo_img = Common.getMultiPart(getActivity(),filePath,"logo_img");
+        String name = user_name.getText().toString();
+        String address = adress.getText().toString();
+        String phone1 = phone.getText().toString();
+        String city1 = city.getText().toString();
+        String govern1 = govern.getText().toString();
+    }
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK
+                && data != null && data.getData() != null) {
+            filePath = data.getData();
+        }
+    }
     private boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();

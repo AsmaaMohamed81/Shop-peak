@@ -88,6 +88,7 @@
     <string name="color">color</string>
     <string name="lat">Lat</string>
     <string name="log">LONG</string>
+    <string name="edit_profile">Edit profile</string>
     <string name="share_loc">Share Your Location</string>
     <string name="chk_user_pas">Check Your Emeil Or PassWord</string>
     <string name="inc_img_path">Path of image false</string>

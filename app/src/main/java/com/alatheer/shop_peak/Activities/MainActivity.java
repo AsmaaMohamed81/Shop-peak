@@ -497,8 +497,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
                     if (order.equals("0")){
-
-                        startActivity(new Intent(MainActivity.this, Vender_Signup_Activity.class));
+                        Intent intent = new Intent(MainActivity.this, Vender_Signup_Activity.class);
+                        intent.putExtra("flag",2);
+                        startActivity(intent);
                         Animatoo.animateInAndOut(MainActivity.this);
                     }else {
 

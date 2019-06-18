@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.FollowersActivity;
 import com.alatheer.shop_peak.Activities.MyFollowersActivity;
+import com.alatheer.shop_peak.Activities.Vender_Signup_Activity;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
 import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
@@ -60,6 +61,7 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
     TextView profile_name;
     RecyclerView menu_recycler;
     RecyclerView.LayoutManager verticalmanager;
+    Button edit;
     GridLayoutManager gridmanager;
     ProfileDatabase profileDatabase;
     Activity activity;
@@ -124,7 +126,8 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
     }
 
     private void initview(final View view) {
-
+        edit = view.findViewById(R.id.edit_profile);
+        edit.setVisibility(view.VISIBLE);
         mySharedPreference=MySharedPreference.getInstance();
         userModel1=mySharedPreference.Get_UserData(getActivity());
 
@@ -154,7 +157,6 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
 
         progressBar = view.findViewById(R.id.progBar);
         txt_no = view.findViewById(R.id.tv_no);
-
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
 
 
@@ -212,7 +214,14 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
 
             }
         });
-
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), Vender_Signup_Activity.class);
+                intent.putExtra("flag",1);
+                startActivity(intent);
+            }
+        });
 
 
 

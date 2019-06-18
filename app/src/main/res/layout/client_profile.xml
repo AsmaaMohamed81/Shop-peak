@@ -61,42 +61,64 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
-
-                <EditText
-                    android:id="@+id/user_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="20dp"
-                    android:enabled="false"
-                    android:gravity="center"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="27dp"
-                    android:text="client name"
-                    android:textStyle="bold"
-                    android:background="@drawable/et_update_profile"
-
-
-
-                    />
-                <EditText
-                    android:id="@+id/adress"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:drawableLeft="@drawable/map"
-                    android:drawablePadding="5dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorPrimary"
-                    android:enabled="false"
-                    android:background="@drawable/et_update_profile"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_margin="10dp">
+                    <EditText
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:enabled="false"
+                        android:gravity="center"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="27dp"
+                        android:text="client name"
+                        android:layout_marginRight="10dp"
+                        android:textStyle="bold"
+
+                        android:background="@drawable/et_update_profile"
 
 
-                    />
+
+                        />
+                    <ImageView
+                        android:id="@+id/edit_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edit"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/adress"
+                        android:layout_width="320dp"
+                        android:layout_height="42dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
+                        android:drawableLeft="@drawable/map"
+                        android:drawablePadding="5dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorPrimary"
+                        android:enabled="false"
+                        android:background="@drawable/et_update_profile"
+                        />
+                    <ImageView
+                        android:id="@+id/edit_loc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edit"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/email"
@@ -115,55 +137,94 @@
 
 
                     />
-
-                <EditText
-                    android:id="@+id/phone"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:drawableLeft="@drawable/phone"
-                    android:drawablePadding="5dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorPrimary"
-                    android:enabled="false"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_update_profile"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/phone"
+                        android:layout_width="320dp"
+                        android:layout_height="42dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:drawableLeft="@drawable/phone"
+                        android:drawablePadding="5dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorPrimary"
+                        android:enabled="false"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/et_update_profile"
 
 
-                    />
-                <EditText
-                    android:id="@+id/govern"
+                        />
+                    <ImageView
+                        android:id="@+id/edit_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edit"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:drawableLeft="@drawable/govern"
-                    android:drawablePadding="5dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorPrimary"
-                    android:enabled="false"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_update_profile"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/govern"
+                        android:layout_width="320dp"
+                        android:layout_height="42dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:drawableLeft="@drawable/govern"
+                        android:drawablePadding="5dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorPrimary"
+                        android:enabled="false"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/et_update_profile"
 
 
-                    />
-                <EditText
-                    android:id="@+id/city"
+                        />
+                    <ImageView
+                        android:id="@+id/edit_govern"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edit"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:drawableLeft="@drawable/city"
-                    android:drawablePadding="5dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorPrimary"
-                    android:enabled="false"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_update_profile"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/city"
+                        android:layout_width="320dp"
+                        android:layout_height="42dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:drawableLeft="@drawable/city"
+                        android:drawablePadding="5dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorPrimary"
+                        android:enabled="false"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/et_update_profile" />
+                    <ImageView
+                        android:id="@+id/edit_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edit"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
 
-
-                    />
+                <Button
+                    android:id="@+id/edit_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_profile"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_field"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center_horizontal"/>
                 <!--<TextView
                     android:id="@+id/pass"
                     android:layout_width="match_parent"

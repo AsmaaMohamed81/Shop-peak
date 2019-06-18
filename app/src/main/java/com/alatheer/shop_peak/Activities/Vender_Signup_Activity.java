@@ -72,6 +72,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     List<Address> addressList;
     Button add_product;
     List<String> cities;
+    int flag;
     private String Name, Email, Governate, City, Address, Category, city_id, govern_id;
     int PICK_IMAGE_REQUEST = 1 ;
     android.support.v7.widget.Toolbar toolbar;
@@ -137,6 +138,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
     private void getDataFromIntent() {
         Intent intent=getIntent();
+        flag = intent.getIntExtra("flag",0);
 
         if (intent!=null){
             lat=intent.getStringExtra("lat");
@@ -417,7 +419,10 @@ public class Vender_Signup_Activity extends AppCompatActivity {
             address.setError(null);
             tv_title_govern.setError(null);
             tv_title_city.setError(null);
-            subscribre_vendor(id,Full_name ,govern_id ,city_id, Address,store_tasnef,lat,lang, filePath);
+            if(flag != 1) {
+                subscribre_vendor(id, Full_name, govern_id, city_id, Address, store_tasnef, lat, lang, filePath);
+            }else
+                edit_profile(id, Full_name, govern_id, city_id, Address, store_tasnef, lat, lang, filePath);
 
         } else {
             if (TextUtils.isEmpty(Full_name)) {
@@ -476,6 +481,10 @@ public class Vender_Signup_Activity extends AppCompatActivity {
 
 
         }
+
+    }
+
+    private void edit_profile(String id, String full_name, String govern_id, String city_id, String address, String store_tasnef, String lat, String lang, Uri filePath) {
 
     }
 

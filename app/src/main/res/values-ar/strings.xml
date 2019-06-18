@@ -89,6 +89,7 @@
     <string name="color">اللون</string>
     <string name="lat">Lat</string>
     <string name="log">LONG</string>
+    <string name="edit_profile">تعديل الملف الشخصي</string>
     <string name="share_loc">شارك موقعك</string>
     <string name="chk_user_pas">تاكد من ايميلك وكلمه المرور</string>
     <string name="inc_img_path">مسار الصور غير صحيح</string>
