@@ -485,6 +485,15 @@ public class Vender_Signup_Activity extends AppCompatActivity {
     }
 
     private void edit_profile(String id, String full_name, String govern_id, String city_id, String address, String store_tasnef, String lat, String lang, Uri filePath) {
+        RequestBody Vid = Common.getRequestBodyText(id);
+        RequestBody Vfull_name = Common.getRequestBodyText(full_name);
+        RequestBody Vmohafza = Common.getRequestBodyText(govern_id);
+        RequestBody Vmadina = Common.getRequestBodyText(city_id);
+        RequestBody Vaddress = Common.getRequestBodyText(address);
+        RequestBody Vstore_tasnef = Common.getRequestBodyText(store_tasnef);
+        RequestBody Vlat = Common.getRequestBodyText(lat);
+        RequestBody Vlang = Common.getRequestBodyText(lang);
+        MultipartBody.Part logo_img = Common.getMultiPart(this,filePath,"logo_img");
 
     }
 

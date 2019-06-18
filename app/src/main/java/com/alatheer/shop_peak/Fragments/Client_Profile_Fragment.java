@@ -197,8 +197,6 @@ public class Client_Profile_Fragment extends android.app.Fragment{
                 if(response.isSuccessful()){
                     if(response.body().getSuccess() == 1){
                         UserModel1 userModel=response.body();
-
-
                         MySharedPreference mySharedPreference = MySharedPreference.getInstance();
                         mySharedPreference.Create_Update_UserData(getActivity(),userModel);
                         Log.d("model",mySharedPreference.Get_UserData(getActivity()).getFull_name());
