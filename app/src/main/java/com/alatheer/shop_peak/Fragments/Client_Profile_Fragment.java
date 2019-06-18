@@ -205,6 +205,7 @@ public class Client_Profile_Fragment extends android.app.Fragment{
                          Picasso.with(getActivity()).load(userModel.getLogo_img()).into(img_profile);
                          city.setText(userModel.getCity());
 
+
                         //Intent intent = new Intent(getActivity(), MainActivity.class);
                         //startActivity(intent);
                     }
