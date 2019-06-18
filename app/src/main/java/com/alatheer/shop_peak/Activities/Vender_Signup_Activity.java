@@ -529,6 +529,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
                             if (response.isSuccessful()){
                                 dialog.dismiss();
 
+
                                 if (response.body().getSuccess()==1){
 
                                   Toast.makeText(Vender_Signup_Activity.this, "تم ارسال طلبك", Toast.LENGTH_SHORT).show();
