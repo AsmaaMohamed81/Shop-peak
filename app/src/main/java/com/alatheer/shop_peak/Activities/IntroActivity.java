@@ -159,6 +159,7 @@ public class IntroActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Call<UserModel1> call, Throwable t) {
+                                    Log.e("error",t.getMessage());
 
                                 }
                             });
