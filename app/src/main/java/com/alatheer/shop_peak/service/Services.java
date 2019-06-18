@@ -191,5 +191,16 @@ public interface Services {
     @POST("Api/update_token")
     Call<RatingModel2> update_Token(@Field("token") String token,
                                    @Field("user_id") String user_id);
+    @FormUrlEncoded
+    @POST("Api/edit_user/{id}")
+    Call<UserModel1>update_user(@Path("id")String id,@Field("full_name") String full_name,
+                                @Field("mohafza") String mohafza,
+                                @Field("madina") String madina,
+                                @Field("address")String address,
+                                @Field("store_tasnef")String store_tasnef ,
+                                @Field("lat") String lat,
+                                @Field("lang") String lang,
+                                @Part MultipartBody.Part logo_img,
+                                @Field("type")String type);
 }
 

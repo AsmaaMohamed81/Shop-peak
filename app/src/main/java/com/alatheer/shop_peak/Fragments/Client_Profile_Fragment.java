@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Activities.MainActivity;
+import com.alatheer.shop_peak.Activities.Signup_Activity;
+import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.Tags.Tags;
@@ -30,6 +34,9 @@ import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
 import okhttp3.MultipartBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -42,7 +49,7 @@ public class Client_Profile_Fragment extends android.app.Fragment{
     UserModel1 userModel1;
 
     EditText user_name,adress,email,city,govern,phone;
-    ImageView edit_name,edit_loc,edit_phone,edit_city,edit_govern;
+    ImageView edit_name,edit_loc,edit_phone,edit_city,edit_govern,edit_image;
     Button edit;
     int PICK_IMAGE_REQUEST = 2;
     Uri filePath;
@@ -104,6 +111,7 @@ public class Client_Profile_Fragment extends android.app.Fragment{
         city=view.findViewById(R.id.city);
         govern=view.findViewById(R.id.govern);
         phone=view.findViewById(R.id.phone);
+        edit_image= view.findViewById(R.id.edit_image);
         img_profile=view.findViewById(R.id.img_profile);
         edit = view.findViewById(R.id.edit_profile);
         edit_name = view.findViewById(R.id.edit_name);
@@ -147,6 +155,12 @@ public class Client_Profile_Fragment extends android.app.Fragment{
                 phone.setEnabled(true);
             }
         });
+        edit_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage();
+            }
+        });
         edit_city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,20 +182,44 @@ public class Client_Profile_Fragment extends android.app.Fragment{
     }
 
     private void edit_your_profile() {
-
-        img_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               chooseImage();
-            }
-        });
         MultipartBody.Part logo_img = Common.getMultiPart(getActivity(),filePath,"logo_img");
-        String name = user_name.getText().toString();
+        final String name = user_name.getText().toString();
         String address = adress.getText().toString();
         String phone1 = phone.getText().toString();
         String city1 = city.getText().toString();
         String govern1 = govern.getText().toString();
+        String id = userModel1.getId();
+        String email = userModel1.getEmail();
+        String type = userModel1.getType();
+        Api.getService().update_user(id,name,govern1,city1,address,"","","",logo_img,type).enqueue(new Callback<UserModel1>() {
+            @Override
+            public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getSuccess() == 1){
+                        UserModel1 userModel=response.body();
+
+                        MySharedPreference mySharedPreference = MySharedPreference.getInstance();
+                        mySharedPreference.Create_Update_UserData(getActivity(),userModel);
+                        Log.d("model",mySharedPreference.Get_UserData(getActivity()).getFull_name());
+                         user_name.setText(userModel.getFull_name());
+                         Picasso.with(getActivity()).load(userModel.getLogo_img()).into(img_profile);
+                         city.setText(userModel.getCity());
+
+                        //Intent intent = new Intent(getActivity(), MainActivity.class);
+                        //startActivity(intent);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<UserModel1> call, Throwable t) {
+
+            }
+        });
     }
+
+
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
