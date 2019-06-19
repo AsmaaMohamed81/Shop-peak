@@ -2,7 +2,7 @@ package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,9 +33,10 @@ public class governAdapter extends RecyclerView.Adapter<governAdapter.Holder>{
         this.governsList = governsList;
 
     }
-    public governAdapter(Fragment fragment, List<Govern> governsList) {
-        this.context = context;
+    public governAdapter(Context context,Fragment fragment, List<Govern> governsList) {
+        this.fragment = fragment;
         this.governsList = governsList;
+        this.context=context;
 
     }
 

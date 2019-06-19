@@ -14,7 +14,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -192,7 +192,7 @@ public class Client_Profile_Fragment extends Fragment {
 
         recyc_govern.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        governAdapter = new governAdapter(getActivity(), governArrayList);
+        governAdapter = new governAdapter(getActivity(),this, governArrayList);
 
         recyc_govern.setAdapter(governAdapter);
 
@@ -238,6 +238,7 @@ public class Client_Profile_Fragment extends Fragment {
     }
 
     private void edit_your_profile() {
+        if (filePath==null){}
         MultipartBody.Part logo_img = Common.getMultiPart(getActivity(),filePath,"logo_img");
         final String name = user_name.getText().toString();
         String address = adress.getText().toString();
@@ -381,7 +382,7 @@ public class Client_Profile_Fragment extends Fragment {
             cityArrayList = govern.getCity();
 
             recyc_city.setLayoutManager(new LinearLayoutManager(getActivity()));
-            cityAdapter = new cityAdapter(getActivity(), cityArrayList);
+            cityAdapter = new cityAdapter(getActivity(), cityArrayList,this);
 
             recyc_city.setAdapter(cityAdapter);
 
@@ -391,5 +392,7 @@ public class Client_Profile_Fragment extends Fragment {
 
         }
     }
+
+
 }
 

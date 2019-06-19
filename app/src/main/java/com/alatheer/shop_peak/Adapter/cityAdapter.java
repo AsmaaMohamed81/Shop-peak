@@ -2,7 +2,7 @@ package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,9 +31,10 @@ public class cityAdapter extends RecyclerView.Adapter<cityAdapter.Holder>{
 
     Fragment fragment;
 
-    public cityAdapter(List<City> cityList, Fragment fragment) {
+    public cityAdapter(Context context,List<City> cityList, Fragment fragment) {
         this.cityList = cityList;
         this.fragment = fragment;
+        this.context=context;
     }
 
     public cityAdapter(Context context, List<City> cityList) {

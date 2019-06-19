@@ -50,7 +50,8 @@ public interface Services {
                               @Part("mohafza") String mohafza,
                               @Part("madina") String madina,
                               @Part("address")String address,
-                              @Part("password")String password,@Part MultipartBody.Part logo_img);
+                              @Part("password")String password
+                              ,@Part MultipartBody.Part logo_img);
 
     @FormUrlEncoded
     @POST("Api/login")
