@@ -42,6 +42,16 @@ public interface Services {
                               @Field("address")String address,
                               @Field("password")String password);
     @FormUrlEncoded
+    @POST("Api/addUser")
+    Call<UserModel1> register_facebook_and_gmail(@Part("full_name") String full_name,
+                              @Part("email") String email,
+                              @Part("phone") String phone,
+                              @Part("mohafza") String mohafza,
+                              @Part("madina") String madina,
+                              @Part("address")String address,
+                              @Part("password")String password,@Part MultipartBody.Part logo_img);
+
+    @FormUrlEncoded
     @POST("Api/login")
     Call<UserModel1> login(@Field("email") String email,
                            @Field("password") String password
@@ -191,16 +201,17 @@ public interface Services {
     @POST("Api/update_token")
     Call<RatingModel2> update_Token(@Field("token") String token,
                                    @Field("user_id") String user_id);
-    @FormUrlEncoded
+    @Multipart
     @POST("Api/edit_user/{id}")
-    Call<UserModel1>update_user(@Path("id")String id,@Field("full_name") String full_name,
-                                @Field("mohafza") String mohafza,
-                                @Field("madina") String madina,
-                                @Field("address")String address,
-                                @Field("store_tasnef")String store_tasnef ,
-                                @Field("lat") String lat,
-                                @Field("lang") String lang,
+    Call<UserModel1>update_user(@Path("id")String id,
+                                @Part("full_name") RequestBody full_name,
+                                @Part("mohafza") RequestBody mohafza,
+                                @Part("madina") RequestBody madina,
+                                @Part("address")RequestBody address,
+                                @Part("store_tasnef")RequestBody store_tasnef ,
+                                @Part("lat") RequestBody lat,
+                                @Part("lang") RequestBody lang,
                                 @Part MultipartBody.Part logo_img,
-                                @Field("type")String type);
+                                @Part("type")RequestBody type);
 }
 

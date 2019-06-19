@@ -493,13 +493,44 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         RequestBody Vstore_tasnef = Common.getRequestBodyText(store_tasnef);
         RequestBody Vlat = Common.getRequestBodyText(lat);
         RequestBody Vlang = Common.getRequestBodyText(lang);
+        String type = userModel1.getType();
+        RequestBody Vtype = Common.getRequestBodyText(type);
         MultipartBody.Part logo_img = Common.getMultiPart(this,filePath,"logo_img");
+        final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.waitt));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        Api.getService().update_user(id,Vfull_name,Vmohafza,Vmadina,Vaddress,Vstore_tasnef,Vlat,Vlang,logo_img,Vtype).enqueue(new Callback<UserModel1>() {
+            @Override
+            public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getSuccess() == 1){
+                        dialog.dismiss();
+                        UserModel1 userModel=response.body();
+                        mySharedPreference.Create_Update_UserData(Vender_Signup_Activity.this,userModel);
+                        Log.d("model",mySharedPreference.Get_UserData(Vender_Signup_Activity.this).getFull_name());
+                       // user_name.setText(userModel.getFull_name());
+                        //Picasso.with(getActivity()).load(userModel.getLogo_img()).into(img_profile);
+                        //city.setText(userModel.getCity());
+                        Toast.makeText(Vender_Signup_Activity.this, "your profile updated successfully", Toast.LENGTH_SHORT).show();
+
+                        //Intent intent = new Intent(getActivity(), MainActivity.class);
+                        //startActivity(intent);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserModel1> call, Throwable t) {
+
+            }
+        });
 
     }
 
     private void subscribre_vendor(String id, String full_name, String mohafza, String madina, String address, String store_tasnef, String lat, String lang, Uri filePath) {
-
-
+        ;
         RequestBody Vid = Common.getRequestBodyText(id);
         RequestBody Vfull_name = Common.getRequestBodyText(full_name);
         RequestBody Vmohafza = Common.getRequestBodyText(mohafza);
@@ -508,12 +539,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
         RequestBody Vstore_tasnef = Common.getRequestBodyText(store_tasnef);
         RequestBody Vlat = Common.getRequestBodyText(lat);
         RequestBody Vlang = Common.getRequestBodyText(lang);
-
-
-
-
-            MultipartBody.Part logo_img = Common.getMultiPart(this,filePath,"logo_img");
-
+        MultipartBody.Part logo_img = Common.getMultiPart(this,filePath,"logo_img");
 
         final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.waitt));
         dialog.setCancelable(true);

@@ -1,14 +1,20 @@
 package com.alatheer.shop_peak.Fragments;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +40,7 @@ import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,7 +61,7 @@ public class Client_Profile_Fragment extends android.app.Fragment{
     int PICK_IMAGE_REQUEST = 2;
     Uri filePath;
     CircleImageView img_profile;
-
+    private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
     @Override
     public void onAttach(Context context) {
 
@@ -158,7 +165,7 @@ public class Client_Profile_Fragment extends android.app.Fragment{
         edit_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseImage();
+                Check_ReadPermission(PICK_IMAGE_REQUEST);
             }
         });
         edit_city.setOnClickListener(new View.OnClickListener() {
@@ -191,19 +198,33 @@ public class Client_Profile_Fragment extends android.app.Fragment{
         String id = userModel1.getId();
         String email = userModel1.getEmail();
         String type = userModel1.getType();
-        Api.getService().update_user(id,name,govern1,city1,address,"","","",logo_img,type).enqueue(new Callback<UserModel1>() {
+
+        //RequestBody Vid = Common.getRequestBodyText(id);
+        RequestBody Vfull_name = Common.getRequestBodyText(name);
+        RequestBody Vmohafza = Common.getRequestBodyText(govern1);
+        RequestBody Vmadina = Common.getRequestBodyText(city1);
+        RequestBody Vaddress = Common.getRequestBodyText(address);
+        RequestBody Vstore_tasnef = Common.getRequestBodyText("");
+        RequestBody Vlat = Common.getRequestBodyText("");
+        RequestBody Vlang = Common.getRequestBodyText("");
+        RequestBody Vtype = Common.getRequestBodyText(type);
+        final ProgressDialog dialog = Common.createProgressDialog(getActivity(),getString(R.string.waitt));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        Api.getService().update_user(id,Vfull_name,Vmohafza,Vmadina,Vaddress,Vstore_tasnef,Vlat,Vlang,logo_img,Vtype).enqueue(new Callback<UserModel1>() {
             @Override
             public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
                 if(response.isSuccessful()){
                     if(response.body().getSuccess() == 1){
+                        dialog.dismiss();
                         UserModel1 userModel=response.body();
-                        MySharedPreference mySharedPreference = MySharedPreference.getInstance();
-                        mySharedPreference.Create_Update_UserData(getActivity(),userModel);
-                        Log.d("model",mySharedPreference.Get_UserData(getActivity()).getFull_name());
+                        preferences.Create_Update_UserData(getActivity(),userModel);
+                        Log.d("model",preferences.Get_UserData(getActivity()).getFull_name());
                          user_name.setText(userModel.getFull_name());
                          Picasso.with(getActivity()).load(userModel.getLogo_img()).into(img_profile);
                          city.setText(userModel.getCity());
-
+                         Toast.makeText(getActivity(), "your profile updated successfully", Toast.LENGTH_SHORT).show();
 
                         //Intent intent = new Intent(getActivity(), MainActivity.class);
                         //startActivity(intent);
@@ -218,13 +239,30 @@ public class Client_Profile_Fragment extends android.app.Fragment{
             }
         });
     }
+    private void Check_ReadPermission(int img) {
+        if (ContextCompat.checkSelfPermission(getActivity(),read_permission)!= PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{read_permission},img);
+        }else
+        {
+            chooseImage(img);
+        }
+    }
 
+    private void chooseImage(int img) {
+        Intent intent ;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        }else
+        {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
 
-    private void chooseImage() {
-        Intent intent = new Intent();
+        }
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(intent,img);
     }
 
     @Override
@@ -233,6 +271,7 @@ public class Client_Profile_Fragment extends android.app.Fragment{
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK
                 && data != null && data.getData() != null) {
             filePath = data.getData();
+            img_profile.setImageURI(filePath);
         }
     }
     private boolean isConnected() {

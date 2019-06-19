@@ -21,6 +21,7 @@ import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.Tags.Tags;
+import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.facebook.AccessToken;
@@ -42,6 +43,8 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -115,7 +118,11 @@ public class IntroActivity extends AppCompatActivity {
                             String email = object.getString("email");
                           //  String phone = object.getString("phone");
                             String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
-                            Api.getService().register(first_name,email,"","","","","").enqueue(new Callback<UserModel1>() {
+                            Uri image_file = Uri.parse(image_url);
+                            RequestBody Vfirst_name = Common.getRequestBodyText(first_name);
+                            RequestBody VEmail = Common.getRequestBodyText(email);
+                            MultipartBody.Part logo_img = Common.getMultiPart(IntroActivity.this,image_file,"logo_img");
+                            Api.getService().register_facebook_and_gmail(first_name,email,"","","","","",logo_img).enqueue(new Callback<UserModel1>() {
                                 @Override
                                 public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
                                     if (response.isSuccessful()) {
@@ -261,13 +268,17 @@ public class IntroActivity extends AppCompatActivity {
                 String personEmail = account.getEmail();
                 String personId = account.getId();
                 Uri personPhoto = account.getPhotoUrl();
+                RequestBody Vpersonname = Common.getRequestBodyText(personName);
+                RequestBody VEmail = Common.getRequestBodyText(personEmail);
+                MultipartBody.Part logo_img = Common.getMultiPart(this,personPhoto,"logo_img");
                 //SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
                 //editor.putString("name",personName);
                 //editor.putString("image_url",personPhoto.toString());
                 //editor.apply();
+
                 try {
                    // userModel = mySharedPreference.Get_UserData(IntroActivity.this);
-                    Api.getService().register(personName,personEmail,"","","","","").enqueue(new Callback<UserModel1>() {
+                    Api.getService().register_facebook_and_gmail(personName,personEmail,"","","","","",logo_img).enqueue(new Callback<UserModel1>() {
                         @Override
                         public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
                             if (response.isSuccessful()) {
