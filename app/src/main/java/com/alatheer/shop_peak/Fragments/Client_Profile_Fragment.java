@@ -180,7 +180,12 @@ public class Client_Profile_Fragment extends Fragment {
 
             }
         });
-
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Check_ReadPermission(PICK_IMAGE_REQUEST);
+            }
+        });
 
         /////////////////////////////////////
 
@@ -238,8 +243,6 @@ public class Client_Profile_Fragment extends Fragment {
     }
 
     private void edit_your_profile() {
-        if (filePath==null){}
-        MultipartBody.Part logo_img = Common.getMultiPart(getActivity(),filePath,"logo_img");
         final String name = user_name.getText().toString();
         String address = adress.getText().toString();
         String phone1 = phone.getText().toString();
@@ -248,8 +251,50 @@ public class Client_Profile_Fragment extends Fragment {
         String id = userModel1.getId();
         String email = userModel1.getEmail();
         String type = userModel1.getType();
+        if (filePath==null){
+            RequestBody Vfull_name = Common.getRequestBodyText(name);
+            RequestBody Vmohafza = Common.getRequestBodyText(govern_id);
+            RequestBody Vmadina = Common.getRequestBodyText(city_id);
+            RequestBody Vaddress = Common.getRequestBodyText(address);
+            RequestBody Vstore_tasnef = Common.getRequestBodyText("");
+            RequestBody Vlat = Common.getRequestBodyText("");
+            RequestBody Vlang = Common.getRequestBodyText("");
+            RequestBody Vtype = Common.getRequestBodyText(type);
+            MultipartBody.Part logo_img = Common.getMultiPart(getActivity(),Uri.parse(userModel1.getLogo_img()),"logo_img");
+            final ProgressDialog dialog = Common.createProgressDialog(getActivity(),getString(R.string.waitt));
+            dialog.setCancelable(true);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+            Api.getService().update_user(id,Vfull_name,Vmohafza,Vmadina,Vaddress,Vstore_tasnef,Vlat,Vlang,logo_img,Vtype).enqueue(new Callback<UserModel1>() {
+                @Override
+                public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
+                    if(response.isSuccessful()){
+                        if(response.body().getSuccess() == 1){
+                            dialog.dismiss();
+                            UserModel1 userModel=response.body();
+                            preferences.Create_Update_UserData(getActivity(),userModel);
+                            Log.d("model",preferences.Get_UserData(getActivity()).getFull_name());
+                            user_name.setText(userModel.getFull_name());
+                            Picasso.with(getActivity()).load(userModel.getLogo_img()).into(img_profile);
+                            phone.setText(userModel.getPhone());
+                            city.setText(userModel.getCity());
+                            Toast.makeText(getActivity(), "your profile updated successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getActivity(), IntroActivity.class));
 
-        //RequestBody Vid = Common.getRequestBodyText(id);
+                            //Intent intent = new Intent(getActivity(), MainActivity.class);
+                            //startActivity(intent);
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<UserModel1> call, Throwable t) {
+
+                }
+            });
+
+        }
         RequestBody Vfull_name = Common.getRequestBodyText(name);
         RequestBody Vmohafza = Common.getRequestBodyText(govern2);
         RequestBody Vmadina = Common.getRequestBodyText(city1);
@@ -258,6 +303,9 @@ public class Client_Profile_Fragment extends Fragment {
         RequestBody Vlat = Common.getRequestBodyText("");
         RequestBody Vlang = Common.getRequestBodyText("");
         RequestBody Vtype = Common.getRequestBodyText(type);
+        MultipartBody.Part logo_img = Common.getMultiPart(getActivity(),filePath,"logo_img");
+        //RequestBody Vid = Common.getRequestBodyText(id);
+
         final ProgressDialog dialog = Common.createProgressDialog(getActivity(),getString(R.string.waitt));
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(false);
