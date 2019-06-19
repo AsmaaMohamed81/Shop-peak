@@ -31,7 +31,6 @@ import com.alatheer.shop_peak.Activities.FollowersActivity;
 import com.alatheer.shop_peak.Activities.MyFollowersActivity;
 import com.alatheer.shop_peak.Activities.Vender_Signup_Activity;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
-import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
@@ -63,7 +62,6 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
     RecyclerView.LayoutManager verticalmanager;
     Button edit;
     GridLayoutManager gridmanager;
-    ProfileDatabase profileDatabase;
     Activity activity;
     Uri uri;
     Bitmap bitmap;
@@ -143,7 +141,6 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
         }
 
         homeModelArrayList=new ArrayList<>();
-         profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
          profile_name=view.findViewById(R.id.profile_name);
          profile_image=view.findViewById(R.id.profile_img);
          img_grid=view.findViewById(R.id.menu_grid);

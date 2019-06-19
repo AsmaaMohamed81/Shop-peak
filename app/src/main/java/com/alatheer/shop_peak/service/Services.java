@@ -42,16 +42,7 @@ public interface Services {
                               @Field("address")String address,
                               @Field("password")String password);
 
-    @Multipart
-    @POST("Api/addUser")
-    Call<UserModel1> register_facebook_and_gmail(@Part("full_name") String full_name,
-                              @Part("email") String email,
-                              @Part("phone") String phone,
-                              @Part("mohafza") String mohafza,
-                              @Part("madina") String madina,
-                              @Part("address")String address,
-                              @Part("password")String password
-                              ,@Part MultipartBody.Part logo_img);
+
 
     @FormUrlEncoded
     @POST("Api/login")

@@ -18,12 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.alatheer.shop_peak.Activities.AddProductActivity;
 import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Activities.MainActivity;
-import com.alatheer.shop_peak.BuildConfig;
 import com.alatheer.shop_peak.Local.Favorite_Database;
-import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.UserModel1;
@@ -35,8 +32,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 /**
  * Created by M.Hamada on 22/03/2019.
  */
@@ -47,7 +42,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
     MainActivity mainActivity;
     List<HomeModel> full_list_ofhome;
     Favorite_Database favorite_database;
-    ProfileDatabase profileDatabase;
     boolean accepted = false;
     CustomSwipeAdapter customSwipeAdapter;
 
@@ -76,7 +70,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
 
        // Uri uri = Uri.parse(listofhome.get(position).getProduct_image());
         //final File path = new File(uri.getPath());
-        profileDatabase= Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(context,Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         final String details = listofhome.get(position).details;
         final List<Item> itemList = listofhome.get(position).items;

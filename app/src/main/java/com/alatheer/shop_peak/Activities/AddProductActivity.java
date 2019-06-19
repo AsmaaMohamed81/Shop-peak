@@ -3,17 +3,13 @@ package com.alatheer.shop_peak.Activities;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -25,7 +21,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -41,45 +36,32 @@ import android.widget.Toast;
 import com.alatheer.shop_peak.Adapter.Main_cats_Adapter;
 import com.alatheer.shop_peak.Adapter.Sub_cat_Adapter;
 import com.alatheer.shop_peak.Adapter.TasnefAdapter;
-import com.alatheer.shop_peak.Adapter.cityAdapter;
-import com.alatheer.shop_peak.Adapter.governAdapter;
 import com.alatheer.shop_peak.Local.ItemDatabase;
-import com.alatheer.shop_peak.Local.MyAppDatabase;
-import com.alatheer.shop_peak.Model.City;
-import com.alatheer.shop_peak.Model.Govern;
 import com.alatheer.shop_peak.Model.Product_Specification;
 import com.alatheer.shop_peak.Model.RatingModel2;
-import com.alatheer.shop_peak.Model.Tasnefat;
-import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.list_cats;
 import com.alatheer.shop_peak.Tags.Tags;
 import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
-import com.alatheer.shop_peak.Local.ProfileDatabase;
-import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.service.Api;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 import net.margaritov.preference.colorpicker.ColorPickerDialog;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.paperdb.Paper;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
-import retrofit2.http.Part;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -137,7 +119,6 @@ public class AddProductActivity extends AppCompatActivity {
     TableLayout t1, t2;
     TableRow tr1, tr2;
      String imageEncoded;
-     ProfileDatabase profileDatabase;
      ItemDatabase item_database;
     //HomeDatabase homeDatabase;
      MySharedPreference mprefs;
@@ -300,7 +281,6 @@ public class AddProductActivity extends AppCompatActivity {
         Skip = findViewById(R.id.btn_skip);
         mprefs=new MySharedPreference(this);
         // homeDatabase = Room.databaseBuilder(getApplicationContext(), HomeDatabase.class, "home_db").allowMainThreadQueries().build();
-        profileDatabase = Room.databaseBuilder(getApplicationContext(),ProfileDatabase.class,"product_db").allowMainThreadQueries().build();
         //homeDatabase= Room.databaseBuilder(getApplicationContext(),HomeDatabase.class,"home_db").allowMainThreadQueries().build();
         close.setOnClickListener(new View.OnClickListener() {
             @Override

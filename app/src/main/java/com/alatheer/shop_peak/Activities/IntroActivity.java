@@ -121,8 +121,7 @@ public class IntroActivity extends AppCompatActivity {
                             Uri image_file = Uri.parse(image_url);
                             RequestBody Vfirst_name = Common.getRequestBodyText(first_name);
                             RequestBody VEmail = Common.getRequestBodyText(email);
-                            MultipartBody.Part logo_img = Common.getMultiPart(IntroActivity.this,image_file,"logo_img");
-                            Api.getService().register_facebook_and_gmail(first_name,email,"","","","","",logo_img).enqueue(new Callback<UserModel1>() {
+                            Api.getService().register(first_name,email,"","","","","").enqueue(new Callback<UserModel1>() {
                                 @Override
                                 public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
                                     if (response.isSuccessful()) {
@@ -169,7 +168,6 @@ public class IntroActivity extends AppCompatActivity {
 
                                 }
                             });
-                            Toast.makeText(IntroActivity.this, "log in with facebook connected successfully", Toast.LENGTH_SHORT).show();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -270,15 +268,13 @@ public class IntroActivity extends AppCompatActivity {
                 Uri personPhoto = account.getPhotoUrl();
                 RequestBody Vpersonname = Common.getRequestBodyText(personName);
                 RequestBody VEmail = Common.getRequestBodyText(personEmail);
-                MultipartBody.Part logo_img = Common.getMultiPart(this,personPhoto,"logo_img");
                 //SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
                 //editor.putString("name",personName);
                 //editor.putString("image_url",personPhoto.toString());
                 //editor.apply();
-
                 try {
                    // userModel = mySharedPreference.Get_UserData(IntroActivity.this);
-                    Api.getService().register_facebook_and_gmail(personName,personEmail,"","","","","",logo_img).enqueue(new Callback<UserModel1>() {
+                    Api.getService().register(personName,personEmail,"","","","","").enqueue(new Callback<UserModel1>() {
                         @Override
                         public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
                             if (response.isSuccessful()) {

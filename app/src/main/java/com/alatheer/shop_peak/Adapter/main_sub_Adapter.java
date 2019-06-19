@@ -3,20 +3,16 @@ package com.alatheer.shop_peak.Adapter;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.Category_Activity;
-import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Local.Favorite_Database;
-import com.alatheer.shop_peak.Local.ProfileDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.R;
@@ -34,7 +30,6 @@ public class main_sub_Adapter extends RecyclerView.Adapter {
     Category_Activity category_activity;
     List<HomeModel> full_list_ofhome;
     Favorite_Database favorite_database;
-    ProfileDatabase profileDatabase;
     boolean accepted = false;
     CustomSwipeAdapter customSwipeAdapter;
     HomeModel homeModel;

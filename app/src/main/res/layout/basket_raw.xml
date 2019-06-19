@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="title"
-                    android:textSize="30sp"/>
+                    android:textSize="12sp"/>
 
                 <ImageView
                     android:id="@+id/img_delete"
