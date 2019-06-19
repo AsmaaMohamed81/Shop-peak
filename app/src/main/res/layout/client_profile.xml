@@ -54,12 +54,6 @@
                         app:civ_border_width="5dp"
                         android:src="@mipmap/icon_round"
                         />
-                    <ImageView
-                        android:id="@+id/edit_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_edit"
-                        android:layout_gravity="right"/>
                 </LinearLayout>
 
 
@@ -96,12 +90,6 @@
 
 
                         />
-                    <ImageView
-                        android:id="@+id/edit_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_edit"
-                        android:layout_gravity="center_vertical"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -122,12 +110,7 @@
                         android:enabled="false"
                         android:background="@drawable/et_update_profile"
                         />
-                    <ImageView
-                        android:id="@+id/edit_loc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_edit"
-                        android:layout_gravity="center_vertical"/>
+
 
                 </LinearLayout>
 
@@ -154,7 +137,7 @@
                     android:orientation="horizontal">
                     <EditText
                         android:id="@+id/phone"
-                        android:layout_width="320dp"
+                        android:layout_width="match_parent"
                         android:layout_height="42dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
@@ -168,64 +151,366 @@
 
 
                         />
-                    <ImageView
-                        android:id="@+id/edit_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_edit"
-                        android:layout_gravity="center_vertical"/>
+
                 </LinearLayout>
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/govern"
-                        android:layout_width="320dp"
-                        android:layout_height="42dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:drawableLeft="@drawable/govern"
-                        android:drawablePadding="5dp"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorPrimary"
-                        android:enabled="false"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/et_update_profile"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:id="@+id/linear_before_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:id="@+id/govern"
+                                android:layout_width="match_parent"
+                                android:layout_height="42dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:drawableLeft="@drawable/govern"
+                                android:drawablePadding="5dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/colorPrimary"
+                                android:enabled="false"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/et_update_profile"
 
 
-                        />
-                    <ImageView
-                        android:id="@+id/edit_govern"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_edit"
-                        android:layout_gravity="center_vertical"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/city"
-                        android:layout_width="320dp"
-                        android:layout_height="42dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:drawableLeft="@drawable/city"
-                        android:drawablePadding="5dp"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorPrimary"
-                        android:enabled="false"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/et_update_profile" />
-                    <ImageView
-                        android:id="@+id/edit_city"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_edit"
-                        android:layout_gravity="center_vertical"/>
-                </LinearLayout>
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:id="@+id/city"
+                                android:layout_width="match_parent"
+                                android:layout_height="42dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:drawableLeft="@drawable/city"
+                                android:drawablePadding="5dp"
+                                android:textSize="14sp"
+                                android:textColor="@color/colorPrimary"
+                                android:enabled="false"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/et_update_profile" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:id="@+id/linear_make_edit"
+
+                        >
+
+                        <LinearLayout
+                            android:id="@+id/linear_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+
+                            android:weightSum="2"
+                            >
+
+                            <LinearLayout
+                                android:id="@+id/container_govern"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_horizontal"
+                                android:orientation="vertical"
+                                android:layout_marginBottom="30dp"
+
+
+
+
+                                >
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
+                                    android:background="@color/transparent"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+
+
+                                    >
+
+                                    <ProgressBar
+                                        android:id="@+id/progBar"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_horizontal"
+                                        android:clickable="false"
+                                        android:indeterminateTint="@color/colorPrimary"
+                                        android:longClickable="false"
+                                        android:visibility="gone" />
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical"
+                                        >
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="45dp"
+                                            android:clickable="false"
+                                            android:descendantFocusability="blocksDescendants"
+                                            android:gravity="center_vertical"
+                                            android:longClickable="false"
+                                            android:orientation="horizontal"
+                                            android:background="@drawable/txt_field"
+
+                                            >
+
+
+
+                                            <TextView
+                                                android:id="@+id/tv_title_govern"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginLeft="12dp"
+                                                android:layout_marginRight="60dp"
+                                                android:layout_marginStart="12dp"
+                                                android:clickable="false"
+                                                android:longClickable="false"
+                                                android:text="@string/add_govern"
+                                                android:textColor="@color/colorAccent"
+                                                android:textSize="16sp"
+                                                android:textStyle="bold" />
+
+                                            <ImageView
+                                                android:id="@+id/arrow_govern"
+                                                android:layout_width="20dp"
+                                                android:layout_height="20dp"
+                                                android:clickable="false"
+                                                android:longClickable="false"
+                                                android:layout_marginRight="5dp"
+                                                android:layout_marginLeft="5dp"
+                                                android:src="@drawable/left_circle_arrow" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                </FrameLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    >
+                                    <net.cachapa.expandablelayout.ExpandableLayout
+                                        android:id="@+id/expand_layout_govern"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:el_duration="1000"
+                                        app:el_parallax=".5"
+                                        app:el_expanded="false"
+                                        android:background="@color/transparent"
+                                        android:layout_gravity="center_horizontal"
+
+                                        >
+                                        <android.support.v7.widget.RecyclerView
+                                            android:id="@+id/recView_govern"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="2dp"
+                                            android:background="@color/transparent"
+                                            >
+
+
+                                        </android.support.v7.widget.RecyclerView>
+
+
+
+
+                                    </net.cachapa.expandablelayout.ExpandableLayout>
+                                    <View
+                                        android:id="@+id/view"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="2dp"
+                                        android:background="@color/gray2"
+                                        android:layout_marginBottom="3dp"
+                                        android:visibility="invisible"
+                                        />
+                                </LinearLayout>
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/container_city"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_horizontal"
+                                android:orientation="vertical"
+                                android:layout_marginBottom="30dp"
+
+
+
+
+                                >
+
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
+                                    android:background="@color/transparent"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+
+
+                                    >
+
+                                    <ProgressBar
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_horizontal"
+                                        android:clickable="false"
+                                        android:indeterminateTint="@color/colorPrimary"
+                                        android:longClickable="false"
+                                        android:visibility="gone" />
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        >
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="45dp"
+                                            android:clickable="false"
+                                            android:descendantFocusability="blocksDescendants"
+                                            android:gravity="center_vertical"
+                                            android:longClickable="false"
+                                            android:orientation="horizontal"
+                                            android:background="@drawable/txt_field"
+
+                                            >
+
+
+
+                                            <TextView
+                                                android:id="@+id/tv_title_city"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginLeft="12dp"
+                                                android:layout_marginRight="60dp"
+                                                android:layout_marginStart="12dp"
+                                                android:clickable="false"
+                                                android:longClickable="false"
+                                                android:text="@string/add_city"
+                                                android:textColor="@color/colorAccent"
+                                                android:textSize="16sp"
+                                                android:textStyle="bold" />
+
+                                            <ImageView
+                                                android:id="@+id/arrow_city"
+                                                android:layout_width="20dp"
+                                                android:layout_height="20dp"
+                                                android:layout_marginRight="15dp"
+                                                android:layout_marginLeft="15dp"
+                                                android:clickable="false"
+                                                android:autoMirrored="true"
+                                                android:longClickable="false"
+                                                android:src="@drawable/left_circle_arrow" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                </FrameLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    >
+                                    <net.cachapa.expandablelayout.ExpandableLayout
+                                        android:id="@+id/expand_layout_city"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:el_duration="1000"
+                                        app:el_parallax=".5"
+                                        app:el_expanded="false"
+                                        android:background="@color/transparent"
+                                        android:layout_gravity="center_horizontal"
+
+                                        >
+                                        <android.support.v7.widget.RecyclerView
+                                            android:id="@+id/recView_city"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="100dp"
+                                            android:layout_marginTop="2dp"
+                                            android:background="@color/transparent"
+                                            >
+                                        </android.support.v7.widget.RecyclerView>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_marginBottom="90dp"
+                                            android:textColor="@color/black"
+                                            android:textSize="17sp"
+                                            android:textAllCaps="true"
+                                            android:text="NO Data"
+                                            android:visibility="gone"
+
+                                            />
+
+                                    </net.cachapa.expandablelayout.ExpandableLayout>
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="2dp"
+                                        android:background="@color/gray2"
+                                        android:layout_marginBottom="3dp"
+                                        android:visibility="invisible"
+                                        />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+
+                        <TextView
+                            android:id="@+id/tv_no1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="90dp"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:text="NO Data"
+                            android:textAllCaps="true"
+                            android:visibility="gone"
+
+                            />
+
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+
+
 
                 <Button
                     android:id="@+id/edit_profile"

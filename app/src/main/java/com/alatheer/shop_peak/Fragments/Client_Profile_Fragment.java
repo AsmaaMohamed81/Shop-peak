@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +25,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Activities.Signup_Activity;
+import com.alatheer.shop_peak.Adapter.cityAdapter;
+import com.alatheer.shop_peak.Adapter.governAdapter;
+import com.alatheer.shop_peak.Model.City;
+import com.alatheer.shop_peak.Model.Govern;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
@@ -36,6 +44,11 @@ import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.squareup.picasso.Picasso;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
@@ -55,12 +68,26 @@ public class Client_Profile_Fragment extends android.app.Fragment{
 
     UserModel1 userModel1;
 
-    EditText user_name,adress,email,city,govern,phone;
+    EditText user_name,adress,email,city,govern1,phone;
     ImageView edit_name,edit_loc,edit_phone,edit_city,edit_govern,edit_image;
+    LinearLayout before_edit,make_edit;
     Button edit;
     int PICK_IMAGE_REQUEST = 2;
     Uri filePath;
     CircleImageView img_profile;
+    ImageView done;
+    String  city_id, govern_id;
+    private RecyclerView recyc_govern, recyc_city;
+    private LinearLayout container_city, container_govern;
+    private ExpandableLayout expand_layout_city, expand_layout_govern;
+    private TextView tv_title_govern, tv_title_city;
+    private ArrayList<Govern> governArrayList;
+    private ArrayList<City> cityArrayList;
+
+    private cityAdapter cityAdapter;
+    private com.alatheer.shop_peak.Adapter.governAdapter governAdapter;
+
+    private Govern govern;
     private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
     @Override
     public void onAttach(Context context) {
@@ -110,22 +137,19 @@ public class Client_Profile_Fragment extends android.app.Fragment{
 
         }
 
-
-
+        before_edit = view.findViewById(R.id.linear_before_edit);
+        make_edit = view.findViewById(R.id.linear_make_edit);
+        done = view.findViewById(R.id.done);
         user_name=view.findViewById(R.id.user_name);
         adress=view.findViewById(R.id.adress);
         email=view.findViewById(R.id.email);
         city=view.findViewById(R.id.city);
-        govern=view.findViewById(R.id.govern);
+        govern1=view.findViewById(R.id.govern);
         phone=view.findViewById(R.id.phone);
-        edit_image= view.findViewById(R.id.edit_image);
+        tv_title_govern = view.findViewById(R.id.tv_title_govern);
+        tv_title_city = view.findViewById(R.id.tv_title_city);
         img_profile=view.findViewById(R.id.img_profile);
         edit = view.findViewById(R.id.edit_profile);
-        edit_name = view.findViewById(R.id.edit_name);
-        edit_phone = view.findViewById(R.id.edit_phone);
-        edit_loc = view.findViewById(R.id.edit_loc);
-        edit_govern= view.findViewById(R.id.edit_govern);
-        edit_city = view.findViewById(R.id.edit_city);
         preferences=MySharedPreference.getInstance();
         userModel1=preferences.Get_UserData(getActivity());
 
@@ -136,7 +160,7 @@ public class Client_Profile_Fragment extends android.app.Fragment{
             adress.setText(userModel1.getAddress());
             email.setText(userModel1.getEmail());
             city.setText(userModel1.getMadina());
-            govern.setText(userModel1.getMohafza());
+            govern1.setText(userModel1.getMohafza());
             phone.setText(userModel1.getPhone());
 
             Picasso.with(getActivity()).load(userModel1.getLogo_img()).into(img_profile);
@@ -147,45 +171,22 @@ public class Client_Profile_Fragment extends android.app.Fragment{
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                user_name.setEnabled(true);
+                phone.setEnabled(true);
+                adress.setEnabled(true);
+                before_edit.setVisibility(View.GONE);
+                make_edit.setVisibility(View.VISIBLE);
+
+            }
+        });
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 edit_your_profile();
             }
         });
-        edit_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                user_name.setEnabled(true);
-            }
-        });
-        edit_phone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                phone.setEnabled(true);
-            }
-        });
-        edit_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Check_ReadPermission(PICK_IMAGE_REQUEST);
-            }
-        });
-        edit_city.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                city.setEnabled(true);
-            }
-        });
-        edit_govern.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                govern.setEnabled(true);
-            }
-        });
-        edit_loc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adress.setEnabled(true);
-            }
-        });
+
+
     }
 
     private void edit_your_profile() {
@@ -194,14 +195,14 @@ public class Client_Profile_Fragment extends android.app.Fragment{
         String address = adress.getText().toString();
         String phone1 = phone.getText().toString();
         String city1 = city.getText().toString();
-        String govern1 = govern.getText().toString();
+        String govern2 = govern1.getText().toString();
         String id = userModel1.getId();
         String email = userModel1.getEmail();
         String type = userModel1.getType();
 
         //RequestBody Vid = Common.getRequestBodyText(id);
         RequestBody Vfull_name = Common.getRequestBodyText(name);
-        RequestBody Vmohafza = Common.getRequestBodyText(govern1);
+        RequestBody Vmohafza = Common.getRequestBodyText(govern2);
         RequestBody Vmadina = Common.getRequestBodyText(city1);
         RequestBody Vaddress = Common.getRequestBodyText(address);
         RequestBody Vstore_tasnef = Common.getRequestBodyText("");
@@ -286,6 +287,60 @@ public class Client_Profile_Fragment extends android.app.Fragment{
                 return false;
         }
         return false;
+    }
+    private void get_govern() {
+
+        Api.getService()
+                .getGovern()
+                .enqueue(new Callback<List<Govern>>() {
+                    @Override
+                    public void onResponse(Call<List<Govern>> call, Response<List<Govern>> response) {
+
+                        if (response.isSuccessful()) {
+
+                            governArrayList.addAll(response.body());
+                            governAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Govern>> call, Throwable t) {
+
+                    }
+                });
+
+
+    }
+
+    public void pos_city(int pos) {
+
+
+        tv_title_city.setText(cityArrayList.get(pos).getName());
+        city_id = cityArrayList.get(pos).getId();
+        expand_layout_city.toggle(true);
+
+    }
+
+    public void pos_govern(int pos) {
+
+
+        govern = governArrayList.get(pos);
+        govern_id = govern.getId();
+
+
+        if (govern.getCity().size() > 0) {
+            cityArrayList = govern.getCity();
+
+            recyc_city.setLayoutManager(new LinearLayoutManager(getActivity()));
+            cityAdapter = new cityAdapter(getActivity(), cityArrayList);
+
+            recyc_city.setAdapter(cityAdapter);
+
+            tv_title_govern.setText(governArrayList.get(pos).getName());
+
+            expand_layout_govern.toggle(true);
+
+        }
     }
 }
 
