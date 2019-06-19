@@ -41,7 +41,8 @@ public interface Services {
                               @Field("madina") String madina,
                               @Field("address")String address,
                               @Field("password")String password);
-    @FormUrlEncoded
+
+    @Multipart
     @POST("Api/addUser")
     Call<UserModel1> register_facebook_and_gmail(@Part("full_name") String full_name,
                               @Part("email") String email,

@@ -2,6 +2,7 @@ package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.Signup_Activity;
 import com.alatheer.shop_peak.Activities.Vender_Signup_Activity;
+import com.alatheer.shop_peak.Fragments.Client_Profile_Fragment;
 import com.alatheer.shop_peak.Model.City;
 import com.alatheer.shop_peak.R;
 
@@ -24,7 +26,15 @@ public class cityAdapter extends RecyclerView.Adapter<cityAdapter.Holder>{
 
     Signup_Activity signup_activity;
     Vender_Signup_Activity vender_signup_activity;
+    Client_Profile_Fragment client_profile_fragment;
 
+
+    Fragment fragment;
+
+    public cityAdapter(List<City> cityList, Fragment fragment) {
+        this.cityList = cityList;
+        this.fragment = fragment;
+    }
 
     public cityAdapter(Context context, List<City> cityList) {
         this.context = context;
@@ -63,6 +73,9 @@ public class cityAdapter extends RecyclerView.Adapter<cityAdapter.Holder>{
                     vender_signup_activity.pos_city(pos);
 
 
+                }else if(fragment instanceof  Client_Profile_Fragment){
+                         client_profile_fragment = (Client_Profile_Fragment) fragment;
+                         client_profile_fragment.pos_city(pos);
                 }
 
 

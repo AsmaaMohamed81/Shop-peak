@@ -14,6 +14,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Activities.IntroActivity;
 import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Activities.Signup_Activity;
 import com.alatheer.shop_peak.Adapter.cityAdapter;
@@ -61,7 +63,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
-public class Client_Profile_Fragment extends android.app.Fragment{
+public class Client_Profile_Fragment extends Fragment {
 
 
     MySharedPreference preferences;
@@ -153,6 +155,51 @@ public class Client_Profile_Fragment extends android.app.Fragment{
         preferences=MySharedPreference.getInstance();
         userModel1=preferences.Get_UserData(getActivity());
 
+        recyc_govern = view.findViewById(R.id.recView_govern);
+        recyc_city = view.findViewById(R.id.recView_city);
+
+        container_city = view.findViewById(R.id.container_city);
+        container_govern = view.findViewById(R.id.container_govern);
+
+        expand_layout_city = view.findViewById(R.id.expand_layout_city);
+        expand_layout_govern = view.findViewById(R.id.expand_layout_govern);
+
+
+        container_govern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expand_layout_govern.toggle(true);
+
+            }
+        });
+
+        container_city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expand_layout_city.toggle(true);
+
+            }
+        });
+
+
+        /////////////////////////////////////
+
+        get_govern();
+
+        governArrayList = new ArrayList<>();
+        cityArrayList = new ArrayList<>();
+
+
+        recyc_govern.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        governAdapter = new governAdapter(getActivity(), governArrayList);
+
+        recyc_govern.setAdapter(governAdapter);
+
+        governAdapter.notifyDataSetChanged();
+
+
+
         if (userModel1!=null){
 
 
@@ -174,6 +221,7 @@ public class Client_Profile_Fragment extends android.app.Fragment{
                 user_name.setEnabled(true);
                 phone.setEnabled(true);
                 adress.setEnabled(true);
+                done.setVisibility(View.VISIBLE);
                 before_edit.setVisibility(View.GONE);
                 make_edit.setVisibility(View.VISIBLE);
 
@@ -226,6 +274,7 @@ public class Client_Profile_Fragment extends android.app.Fragment{
                          Picasso.with(getActivity()).load(userModel.getLogo_img()).into(img_profile);
                          city.setText(userModel.getCity());
                          Toast.makeText(getActivity(), "your profile updated successfully", Toast.LENGTH_SHORT).show();
+                         startActivity(new Intent(getActivity(), IntroActivity.class));
 
                         //Intent intent = new Intent(getActivity(), MainActivity.class);
                         //startActivity(intent);

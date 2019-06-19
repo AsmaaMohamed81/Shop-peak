@@ -514,6 +514,7 @@ public class Vender_Signup_Activity extends AppCompatActivity {
                         //Picasso.with(getActivity()).load(userModel.getLogo_img()).into(img_profile);
                         //city.setText(userModel.getCity());
                         Toast.makeText(Vender_Signup_Activity.this, "your profile updated successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Vender_Signup_Activity.this,IntroActivity.class));
 
                         //Intent intent = new Intent(getActivity(), MainActivity.class);
                         //startActivity(intent);
