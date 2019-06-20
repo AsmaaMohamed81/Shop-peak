@@ -34,22 +34,39 @@
                     android:textSize="20sp"/>
             </RelativeLayout>
         </android.support.design.widget.AppBarLayout>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/basket_recycler"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_margin="10dp"
+        <FrameLayout
+            android:id="@+id/recycler_frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/appbar"
-            android:layout_marginBottom="50dp"
-            android:layoutAnimation="@anim/layout_animation_fall_down">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_margin="10dp"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/basket_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:layoutAnimation="@anim/layout_animation_fall_down">
+            </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:id="@+id/txt__no_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorPrimary"
+                android:visibility="gone"
+                android:text="@string/basket_data"/>
+
+        </FrameLayout>
+
         <TextView
             android:id="@+id/txt_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/basket_recycler"
+            android:layout_below="@+id/recycler_frame"
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
             android:layout_centerHorizontal="true"

@@ -115,13 +115,13 @@ public class IntroActivity extends AppCompatActivity {
                             String first_name = object.getString("first_name");
                             String last_name = object.getString("last_name");
                             String id = object.getString("id");
-                            String email = object.getString("email");
+                           // String email = object.getString("email");
                           //  String phone = object.getString("phone");
                             String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
                             Uri image_file = Uri.parse(image_url);
                             RequestBody Vfirst_name = Common.getRequestBodyText(first_name);
-                            RequestBody VEmail = Common.getRequestBodyText(email);
-                            Api.getService().register(first_name,email,"","","","","").enqueue(new Callback<UserModel1>() {
+                            RequestBody VEmail = Common.getRequestBodyText("");
+                            Api.getService().register(last_name,"","","","","","").enqueue(new Callback<UserModel1>() {
                                 @Override
                                 public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
                                     if (response.isSuccessful()) {

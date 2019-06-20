@@ -115,5 +115,6 @@
     <string name="order_basket_send">تم ارسال طلبك بنجاح</string>
     <string name="confirm_req">كلمه المرور غير متشابهه</string>
     <string name="TermsNEw">بمجرد تسجيلك فانت وافقت على الشروط والاحكام</string>
+    <string name="basket_data">"عفوا لايوجد منتجات في السلة"</string>
     <string name="nonotif">لايوجد اشعارات الان</string>
 </resources>

@@ -114,6 +114,7 @@
     <string name="order_basket_send">Your order has been successfully sent</string>
     <string name="confirm_req">The password is not the same</string>
     <string name="TermsNEw">Once you register, you agree to the terms and conditions</string>
+    <string name="basket_data">"there is no products in basket"</string>
     <string name="nonotif">لايوجد اشعارات الان</string>
 
 

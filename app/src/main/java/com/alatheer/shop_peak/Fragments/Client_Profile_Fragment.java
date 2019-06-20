@@ -214,10 +214,12 @@ public class Client_Profile_Fragment extends Fragment {
             city.setText(userModel1.getMadina());
             govern1.setText(userModel1.getMohafza());
             phone.setText(userModel1.getPhone());
-
-            Picasso.with(getActivity()).load(userModel1.getLogo_img()).into(img_profile);
+            if(userModel1.getLogo_img().equals("https://shop-peak.com/uploads/images/")){
+                img_profile.setImageResource(R.mipmap.icon_round);
+            }else {
+                Picasso.with(getActivity()).load(userModel1.getLogo_img()).into(img_profile);
+            }
         }else {
-
             Toast.makeText(getActivity(), "you Shoud Sign First", Toast.LENGTH_SHORT).show();
         }
         edit.setOnClickListener(new View.OnClickListener() {
@@ -227,6 +229,7 @@ public class Client_Profile_Fragment extends Fragment {
                 phone.setEnabled(true);
                 adress.setEnabled(true);
                 done.setVisibility(View.VISIBLE);
+                img_profile.setClickable(true);
                 before_edit.setVisibility(View.GONE);
                 make_edit.setVisibility(View.VISIBLE);
 
@@ -251,7 +254,7 @@ public class Client_Profile_Fragment extends Fragment {
         String id = userModel1.getId();
         String email = userModel1.getEmail();
         String type = userModel1.getType();
-        if (filePath==null){
+        if (filePath!=null && govern_id !=null && city_id != null ){
             RequestBody Vfull_name = Common.getRequestBodyText(name);
             RequestBody Vmohafza = Common.getRequestBodyText(govern_id);
             RequestBody Vmadina = Common.getRequestBodyText(city_id);
@@ -260,7 +263,7 @@ public class Client_Profile_Fragment extends Fragment {
             RequestBody Vlat = Common.getRequestBodyText("");
             RequestBody Vlang = Common.getRequestBodyText("");
             RequestBody Vtype = Common.getRequestBodyText(type);
-            MultipartBody.Part logo_img = Common.getMultiPart(getActivity(),Uri.parse(userModel1.getLogo_img()),"logo_img");
+            MultipartBody.Part logo_img = Common.getMultiPart(getActivity(),filePath,"logo_img");
             final ProgressDialog dialog = Common.createProgressDialog(getActivity(),getString(R.string.waitt));
             dialog.setCancelable(true);
             dialog.setCanceledOnTouchOutside(false);
@@ -276,10 +279,13 @@ public class Client_Profile_Fragment extends Fragment {
                             Log.d("model",preferences.Get_UserData(getActivity()).getFull_name());
                             user_name.setText(userModel.getFull_name());
                             Picasso.with(getActivity()).load(userModel.getLogo_img()).into(img_profile);
+                            make_edit.setVisibility(View.GONE);
+                            before_edit.setVisibility(View.VISIBLE);
                             phone.setText(userModel.getPhone());
-                            city.setText(userModel.getCity());
+                            city.setText(userModel.getMadina());
+                            govern1.setText(userModel.getMohafza());
                             Toast.makeText(getActivity(), "your profile updated successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getActivity(), IntroActivity.class));
+                            //startActivity(new Intent(getActivity(), IntroActivity.class));
 
                             //Intent intent = new Intent(getActivity(), MainActivity.class);
                             //startActivity(intent);
@@ -294,49 +300,20 @@ public class Client_Profile_Fragment extends Fragment {
                 }
             });
 
+        }else{
+            if (govern_id == null) {
+                Toast.makeText(getActivity(), "choose Govern first", Toast.LENGTH_SHORT).show();
+            }
+            if (city_id == null) {
+                Toast.makeText(getActivity(), "choose city first", Toast.LENGTH_SHORT).show();
+            }
+            if(filePath == null){
+                Toast.makeText(getActivity(), "choose image", Toast.LENGTH_SHORT).show();
+            }
         }
-        RequestBody Vfull_name = Common.getRequestBodyText(name);
-        RequestBody Vmohafza = Common.getRequestBodyText(govern2);
-        RequestBody Vmadina = Common.getRequestBodyText(city1);
-        RequestBody Vaddress = Common.getRequestBodyText(address);
-        RequestBody Vstore_tasnef = Common.getRequestBodyText("");
-        RequestBody Vlat = Common.getRequestBodyText("");
-        RequestBody Vlang = Common.getRequestBodyText("");
-        RequestBody Vtype = Common.getRequestBodyText(type);
-        MultipartBody.Part logo_img = Common.getMultiPart(getActivity(),filePath,"logo_img");
-        //RequestBody Vid = Common.getRequestBodyText(id);
 
-        final ProgressDialog dialog = Common.createProgressDialog(getActivity(),getString(R.string.waitt));
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-        Api.getService().update_user(id,Vfull_name,Vmohafza,Vmadina,Vaddress,Vstore_tasnef,Vlat,Vlang,logo_img,Vtype).enqueue(new Callback<UserModel1>() {
-            @Override
-            public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
-                if(response.isSuccessful()){
-                    if(response.body().getSuccess() == 1){
-                        dialog.dismiss();
-                        UserModel1 userModel=response.body();
-                        preferences.Create_Update_UserData(getActivity(),userModel);
-                        Log.d("model",preferences.Get_UserData(getActivity()).getFull_name());
-                         user_name.setText(userModel.getFull_name());
-                         Picasso.with(getActivity()).load(userModel.getLogo_img()).into(img_profile);
-                         city.setText(userModel.getCity());
-                         Toast.makeText(getActivity(), "your profile updated successfully", Toast.LENGTH_SHORT).show();
-                         startActivity(new Intent(getActivity(), IntroActivity.class));
 
-                        //Intent intent = new Intent(getActivity(), MainActivity.class);
-                        //startActivity(intent);
-                    }
-                }
 
-            }
-
-            @Override
-            public void onFailure(Call<UserModel1> call, Throwable t) {
-
-            }
-        });
     }
     private void Check_ReadPermission(int img) {
         if (ContextCompat.checkSelfPermission(getActivity(),read_permission)!= PackageManager.PERMISSION_GRANTED)

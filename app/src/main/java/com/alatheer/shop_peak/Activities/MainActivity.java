@@ -234,10 +234,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            String url=userModel1.getImage_url();
 
 
-            if (Logo_img!=null) {
-                Picasso.with(this).load(Logo_img).into(profile_img);
-            }else {
+            if (Logo_img.equals("https://shop-peak.com/uploads/images/")) {
                 profile_img.setImageResource(R.mipmap.icon_round);
+
+            }else {
+                Picasso.with(this).load(Logo_img).into(profile_img);
             }
 
         }catch (Exception e){

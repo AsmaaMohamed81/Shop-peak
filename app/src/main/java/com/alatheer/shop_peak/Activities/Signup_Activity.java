@@ -226,23 +226,6 @@ public class Signup_Activity extends AppCompatActivity {
         Email = edt_email.getText().toString();
         Phone = edt_phone.getText().toString();
         address = edt_address.getText().toString();
-        Api.getService().validate_email(Email).enqueue(new Callback<RatingModel2>() {
-            @Override
-            public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
-                if (response.isSuccessful()){
-                    if(response.body().getSuccess()== 0){
-                        success = 0;
-                    }else {
-                        success = 1;
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RatingModel2> call, Throwable t) {
-
-            }
-        });
 
         if (!TextUtils.isEmpty(userName) &&
                 !TextUtils.isEmpty(passWord) &&
@@ -251,11 +234,10 @@ public class Signup_Activity extends AppCompatActivity {
                 !TextUtils.isEmpty(address) &&
                 passWord.length() >= 8 &&
                 confirm_password.equals(passWord)&&
-                android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches() &&
                 accepted &&
                 city_id != null &&
-                govern_id != null &&
-                success != 0
+                govern_id != null
+
                 ) {
 
             Common.CloseKeyBoard(this, edt_name2);
@@ -300,11 +282,7 @@ public class Signup_Activity extends AppCompatActivity {
             } else {
                 edt_email.setError(null);
             }
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
-                edt_email.setError(getString(R.string.email_patt));
-            } else {
-                edt_email.setError(null);
-            }
+
             if (TextUtils.isEmpty(Phone)) {
                 edt_phone.setError(getString(R.string.phone_req));
             } else {
@@ -315,11 +293,6 @@ public class Signup_Activity extends AppCompatActivity {
                 edt_address.setError(getString(R.string.address_req));
             } else {
                 edt_address.setError(null);
-            }
-            if (success == 0) {
-                edt_email.setError("الايميل غير صحيح ");
-            } else {
-                edt_email.setError(null);
             }
 
             if (!accepted) {

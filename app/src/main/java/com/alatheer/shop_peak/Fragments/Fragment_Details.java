@@ -62,7 +62,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Fragment_Details extends Fragment {
     ImageView details_img, back_image, plus_circle, minus_circle, shopping_cart;
-    TextView details_title, details_des, counter, cart_num, tv_not_budget,txt_before_discount;
+    TextView details_title, details_des, counter, cart_num, tv_not_budget,tv_not_budget2,txt_before_discount;
     CheckBox c_red, c_blue, c_black;
     Button details_price, addcart, editcart;
     MyAppDatabase myAppDatabase;
@@ -182,7 +182,7 @@ public class Fragment_Details extends Fragment {
         init_color_recycler();
 
         tv_not_budget = view.findViewById(R.id.tv_not_budget);
-
+        tv_not_budget2 = view.findViewById(R.id.tv_not_budget2);
         details_price.setText(price + "" + "LE");
         customSwipeAdapter = new CustomSwipeAdapter(image, getActivity());
         viewPager.setAdapter(customSwipeAdapter);
@@ -226,6 +226,7 @@ public class Fragment_Details extends Fragment {
                     orderItemList.setSanfTitle(sanf_name);
                     myAppDatabase.dao().addproduct(orderItemList);
                     tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
+                    tv_not_budget2.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
                     Toast.makeText(getActivity(), "data added successfully", Toast.LENGTH_SHORT).show();
 
 
@@ -256,8 +257,12 @@ public class Fragment_Details extends Fragment {
 
         if (myAppDatabase.dao().getdata().size() > 0) {
             tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
+            tv_not_budget2.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
+
         } else {
             tv_not_budget.setText("0");
+            tv_not_budget2.setText("0");
+
 
         }
 

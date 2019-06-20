@@ -41,7 +41,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class Basket_Activity extends AppCompatActivity {
     Toolbar toolbar;
     ImageView image_title;
-    TextView text_title;
+    TextView text_title,txt_no_data;
     RecyclerView recyclerView_basket;
     RecyclerView.LayoutManager basket_manager;
     BasketAdapter basketAdapter;
@@ -97,6 +97,7 @@ public class Basket_Activity extends AppCompatActivity {
         image_title=findViewById(R.id.back_image);
         add = findViewById(R.id.add);
         txt_total = findViewById(R.id.txt_total);
+        txt_no_data = findViewById(R.id.txt__no_data);
         myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"myorders_db").allowMainThreadQueries().build();
         favorite_database = Room.databaseBuilder(getApplicationContext(),Favorite_Database.class,"favoritedb").allowMainThreadQueries().build();
         initRecyclerview();
@@ -110,6 +111,9 @@ public class Basket_Activity extends AppCompatActivity {
               phone = userModel1.getPhone();
               type = userModel1.getType();
 
+        }
+        if(basketModelList.size()==0){
+            txt_no_data.setVisibility(View.VISIBLE);
         }
         image_title.setOnClickListener(new View.OnClickListener() {
             @Override
