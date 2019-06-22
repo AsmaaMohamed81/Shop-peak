@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
@@ -115,13 +114,14 @@ public class IntroActivity extends AppCompatActivity {
                             String first_name = object.getString("first_name");
                             String last_name = object.getString("last_name");
                             String id = object.getString("id");
-                           // String email = object.getString("email");
+                            String email = object.getString("email");
+                            Log.v("email",email);
                           //  String phone = object.getString("phone");
                             String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
                             Uri image_file = Uri.parse(image_url);
-                            RequestBody Vfirst_name = Common.getRequestBodyText(first_name);
+                            //RequestBody Vfirst_name = Common.getRequestBodyText(first_name);
                             RequestBody VEmail = Common.getRequestBodyText("");
-                            Api.getService().register(last_name,"","","","","","").enqueue(new Callback<UserModel1>() {
+                            Api.getService().register(first_name,"mohamedhamada12344@yahoo.com","","","","","").enqueue(new Callback<UserModel1>() {
                                 @Override
                                 public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
                                     if (response.isSuccessful()) {
@@ -245,6 +245,7 @@ public class IntroActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GmailSignInRequest) {
             // The Task returned from this call is always completed, no need to attach
@@ -252,7 +253,7 @@ public class IntroActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
-        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
@@ -322,6 +323,8 @@ public class IntroActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     //userModel = new UserModel(personName, "https://www.wpclipart.com/buildings/shop.png", personEmail);
+                    Log.w("Google Sign In Error", "signInResult:failed code=" + e.getMessage());
+                    Toast.makeText(IntroActivity.this, "Failed", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -340,4 +343,7 @@ public class IntroActivity extends AppCompatActivity {
         drawable.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         dialog.setIndeterminateDrawable(drawable);
     }
+
+
+
 }
