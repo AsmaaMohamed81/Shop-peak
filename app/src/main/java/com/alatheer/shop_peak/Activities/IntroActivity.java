@@ -167,7 +167,7 @@ public class IntroActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Call<UserModel1> call, Throwable t) {
-                                    Log.e("error",t.getMessage());
+                                    Log.e("error1",t.getMessage());
                                     Toast.makeText(IntroActivity.this, "error "+t.getMessage(), Toast.LENGTH_SHORT).show();
 
                                 }
@@ -192,6 +192,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
                 Log.e("error", error.toString());
+                Toast.makeText(IntroActivity.this, "error2 "+error.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -254,6 +255,7 @@ public class IntroActivity extends AppCompatActivity {
         if (requestCode == GmailSignInRequest) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
+            Toast.makeText(IntroActivity.this, "handle result " , Toast.LENGTH_SHORT).show();
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
@@ -322,20 +324,22 @@ public class IntroActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<UserModel1> call, Throwable t) {
                              Log.v("error",t.getMessage());
-                            Toast.makeText(IntroActivity.this, "error "+t.getMessage() , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(IntroActivity.this, "error1 "+t.getMessage() , Toast.LENGTH_SHORT).show();
                         }
                     });
 
                 } catch (Exception e) {
                     //userModel = new UserModel(personName, "https://www.wpclipart.com/buildings/shop.png", personEmail);
                     Log.w("Google Sign In Error", "signInResult:failed code=" + e.getMessage());
-                    Toast.makeText(IntroActivity.this, "Failed"+e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(IntroActivity.this, "error2"+e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
             }
         } catch (ApiException e) {
             e.printStackTrace();
             //userModel = new UserModel("", "https://www.wpclipart.com/buildings/shop.png", "");
+            Toast.makeText(IntroActivity.this, "error3"+e.getMessage(), Toast.LENGTH_LONG).show();
+
         }
     }
     private void CreateProgressDialog() {
