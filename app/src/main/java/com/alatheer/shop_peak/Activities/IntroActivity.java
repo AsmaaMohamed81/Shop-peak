@@ -42,6 +42,8 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -102,6 +104,7 @@ public class IntroActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         googleSignInClient = GoogleSignIn.getClient(this, gso);
         callbackManager = CallbackManager.Factory.create();
+        facebook_login.setReadPermissions(Arrays.asList("public_profile","email","user_birthday","user_friends"));
         facebook_login.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -165,6 +168,7 @@ public class IntroActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(Call<UserModel1> call, Throwable t) {
                                     Log.e("error",t.getMessage());
+                                    Toast.makeText(IntroActivity.this, "error "+t.getMessage(), Toast.LENGTH_SHORT).show();
 
                                 }
                             });
@@ -318,13 +322,14 @@ public class IntroActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<UserModel1> call, Throwable t) {
                              Log.v("error",t.getMessage());
+                            Toast.makeText(IntroActivity.this, "error "+t.getMessage() , Toast.LENGTH_SHORT).show();
                         }
                     });
 
                 } catch (Exception e) {
                     //userModel = new UserModel(personName, "https://www.wpclipart.com/buildings/shop.png", personEmail);
                     Log.w("Google Sign In Error", "signInResult:failed code=" + e.getMessage());
-                    Toast.makeText(IntroActivity.this, "Failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(IntroActivity.this, "Failed"+e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
             }

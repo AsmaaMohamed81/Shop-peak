@@ -6,8 +6,8 @@ android {
         applicationId "com.alatheer.shop_peak"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -35,7 +35,7 @@ dependencies {
     implementation 'com.borjabravo:readmoretextview:2.1.0'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.5.1'
     implementation 'android.arch.persistence.room:runtime:1.1.1'
-    implementation 'com.facebook.android:facebook-login:[4,5)'
+    implementation 'com.facebook.android:facebook-login:[5,6)'
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     //noinspection GradleCompatible
