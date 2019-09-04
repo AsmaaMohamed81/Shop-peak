@@ -7,8 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 
 import com.alatheer.shop_peak.Adapter.FollowersAdapter;
+import com.alatheer.shop_peak.Adapter.Seller_Search_Adapter;
+import com.alatheer.shop_peak.Fragments.HomeFragment;
+import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.SellerSearch;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.Tags.Tags;
@@ -26,10 +31,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
-public class FollowersActivity extends AppCompatActivity {
+public class Seller_Search_Activity extends AppCompatActivity {
     RecyclerView recycler;
-    FollowersAdapter followersAdapter;
-    private List<UserModel1> userModel1ArrayList;
+    Seller_Search_Adapter seller_search_adapter;
+    private List<SellerSearch> SellerSearchList;
+    HomeFragment homeFragment;
+    Toolbar toolbar;
+    String title;
 
     String store_id;
 
@@ -68,11 +76,15 @@ public class FollowersActivity extends AppCompatActivity {
     }
 
     private void initview() {
+        toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getDataFromIntent();
         recycler = findViewById(R.id.notification_recycler);
-
-        userModel1ArrayList=new ArrayList<>();
         initrecycler();
+        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
     }
@@ -83,7 +95,9 @@ public class FollowersActivity extends AppCompatActivity {
 
         if (intent!=null){
 
-            store_id=intent.getStringExtra("id_store");
+            homeFragment=new HomeFragment();
+            title = intent.getStringExtra("sanf_name");
+            SellerSearchList = (List<SellerSearch>) intent.getExtras().getSerializable("list");
 
         }
     }
@@ -91,35 +105,11 @@ public class FollowersActivity extends AppCompatActivity {
     private void initrecycler() {
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setHasFixedSize(true);
-        followersAdapter = new FollowersAdapter(userModel1ArrayList, this);
-        recycler.setAdapter(followersAdapter);
+        seller_search_adapter = new Seller_Search_Adapter(SellerSearchList, this);
+        recycler.setAdapter(seller_search_adapter);
 
-        get_storefollow(store_id);
+       // get_storefollow(store_id);
     }
 
-    private void get_storefollow(String id_store) {
-
-        Api.getService()
-                .get_storefollow(id_store)
-                .enqueue(new Callback<List<UserModel1>>() {
-                    @Override
-                    public void onResponse(Call<List<UserModel1>> call, Response<List<UserModel1>> response) {
-                        if (response.isSuccessful()){
-
-                            if (response.body().size()>0){
-
-                                userModel1ArrayList.addAll(response.body());
-                                followersAdapter.notifyDataSetChanged();
-
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<UserModel1>> call, Throwable t) {
-
-                    }
-                });
-    }
 
 }

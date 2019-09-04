@@ -12,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="10dp"
+            android:orientation="vertical"
             android:paddingLeft="10dp">
             <EditText
                 android:id="@+id/txt_search"
@@ -27,6 +28,29 @@
                 android:hint="عن ماذا تبحث"
                 android:imeOptions="actionSearch"
                 android:inputType="text"/>
+            <RadioGroup
+                android:id="@+id/radiogroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/product_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/product"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_margin="10dp"
+                    android:checked="true"/>
+                <RadioButton
+                    android:id="@+id/seller_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vender"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_margin="10dp"/>
+            </RadioGroup>
         </LinearLayout>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_offer"

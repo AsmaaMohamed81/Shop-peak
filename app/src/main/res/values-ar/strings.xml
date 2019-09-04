@@ -20,6 +20,7 @@
     <string name="pass_req">مطلوب كلمه المرور اولا</string>
     <string name="email_req">مطلوب رقم الحساب </string>
     <string name="phone_req">مطلوب رقم التليفون</string>
+    <string name="phone_error">رقم التليفون غير صحيح</string>
     <string name="subject_req">الرجاء اضافة العنصر</string>
     <string name="message_req">الرجاء اضافة الرسالة</string>
     <string name="shopname_req">مطلوب اسم المحل</string>
@@ -117,4 +118,11 @@
     <string name="TermsNEw">بمجرد تسجيلك فانت وافقت على الشروط والاحكام</string>
     <string name="basket_data">"عفوا لايوجد منتجات في السلة"</string>
     <string name="nonotif">لايوجد اشعارات الان</string>
+    <string name="success_login">تم تسجيل الدخول بنجاح</string>
+    <string name="success_added">"تم اضافة المنتج بنجاج "</string>
+    <string name="vender">بائع</string>
+    <string name="product">منتج</string>
+    <string name="success_register">تم تسجيل الدخول بنجاح</string>
+    <string name="following">المتابعون</string>
+
 </resources>

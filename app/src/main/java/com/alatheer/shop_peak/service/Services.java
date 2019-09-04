@@ -2,6 +2,7 @@ package com.alatheer.shop_peak.service;
 
 import com.alatheer.shop_peak.Model.BasketModel2;
 import com.alatheer.shop_peak.Model.BasketModel3;
+import com.alatheer.shop_peak.Model.Follow_Vender;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.NotificationModel;
 import com.alatheer.shop_peak.Model.OfferModel1;
@@ -9,11 +10,13 @@ import com.alatheer.shop_peak.Model.Pill;
 import com.alatheer.shop_peak.Model.Product_Specification;
 import com.alatheer.shop_peak.Model.RatingModel;
 import com.alatheer.shop_peak.Model.RatingModel2;
+import com.alatheer.shop_peak.Model.SellerSearch;
 import com.alatheer.shop_peak.Model.Tasnefat;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.Govern;
 import com.alatheer.shop_peak.Model.list_cats;
 
+import java.io.File;
 import java.lang.ref.SoftReference;
 import java.util.List;
 
@@ -41,7 +44,16 @@ public interface Services {
                               @Field("madina") String madina,
                               @Field("address")String address,
                               @Field("password")String password);
-
+    @FormUrlEncoded
+    @POST("Api/addUser")
+    Call<UserModel1> register2(@Field("full_name") String full_name,
+                              @Field("email") String email,
+                              @Field("phone") String phone,
+                              @Field("mohafza") String mohafza,
+                              @Field("madina") String madina,
+                              @Field("address")String address,
+                              @Field("password")String password,
+                              @Field("logo_img")String logo_img);
 
 
     @FormUrlEncoded
@@ -159,7 +171,7 @@ public interface Services {
 
     @FormUrlEncoded
     @POST("Api/get_user_folow")
-    Call<RatingModel2> get_user_folow(@Field("store_id_fk") String sanf_id_fk,
+    Call<RatingModel2> get_user_folow(@Field("store_id_fk") String store_id_fk,
                                       @Field("client_id_fk") String client_id_fk
                                         );
 
@@ -168,7 +180,7 @@ public interface Services {
 
     @FormUrlEncoded
     @POST("Api/make_follow")
-    Call<RatingModel2> make_follow(@Field("store_id_fk") String sanf_id_fk,
+    Call<RatingModel2> make_follow(@Field("store_id_fk") String store_id_fk,
                                       @Field("client_id_fk") String client_id_fk
     );
 
@@ -206,5 +218,12 @@ public interface Services {
                                 @Part("lang") RequestBody lang,
                                 @Part MultipartBody.Part logo_img,
                                 @Part("type")RequestBody type);
+    @FormUrlEncoded
+    @POST("Api/get_user_followers")
+    Call<List<Follow_Vender>>get_follow(@Field("user_id_fk") String user_id_fk,@Field("type") String type);
+    @FormUrlEncoded
+    @POST("Api/filter_by_tager")
+    Call<List<SellerSearch>>get_seller(@Field("name")String name);
+
 }
 

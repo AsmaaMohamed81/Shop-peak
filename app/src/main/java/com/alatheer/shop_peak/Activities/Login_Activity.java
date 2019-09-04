@@ -1,7 +1,9 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
@@ -52,6 +54,8 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -80,6 +84,7 @@ public class Login_Activity extends AppCompatActivity {
     UserModel userModel;
     Uri image_path;
     TextView Skip, link;
+    AlertDialog alertDialog;
 
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -137,6 +142,7 @@ public class Login_Activity extends AppCompatActivity {
         log_in = findViewById(R.id.btn_login);
         root = findViewById(R.id.root);
         facebook_login = findViewById(R.id.btn_facebook_login);
+        CreateAlertDialog2();
         //facebook_login.setReadPermissions("email", "public_profile", "user_friends");
         //gmail_login=findViewById(R.id.btn_gmail_login);
         //gmail_login.setSize(SignInButton.SIZE_STANDARD);
@@ -392,8 +398,9 @@ public class Login_Activity extends AppCompatActivity {
         email = edt_email.getText().toString();
         passWord = edt_password.getText().toString();
 
-        if (!TextUtils.isEmpty(email) &&
-                !TextUtils.isEmpty(passWord) ) {
+        if (    !TextUtils.isEmpty(email) &&
+                !TextUtils.isEmpty(passWord) /*&&
+                 passWord.length()>=8*/) {
 
             Common.CloseKeyBoard(this, edt_email);
             edt_email.setError(null);
@@ -414,9 +421,13 @@ public class Login_Activity extends AppCompatActivity {
             }else {
                 edt_email.setError(null);
             }
-
             if (TextUtils.isEmpty(passWord)){
                 edt_password.setError(getString(R.string.pass_req));
+            }else {
+                edt_password.setError(null);
+            }
+            if(passWord.length()<8){
+                edt_password.setError(getString(R.string.pass_len));
             }else {
                 edt_password.setError(null);
             }
@@ -457,8 +468,7 @@ public class Login_Activity extends AppCompatActivity {
 
                                 Log.d("model",mySharedPreference.Get_UserData(Login_Activity.this).getFull_name());
 
-                                Intent intent = new Intent(Login_Activity.this, MainActivity.class);
-                                startActivity(intent);
+                                alertDialog.show();
                             }
                             else {
 
@@ -514,4 +524,21 @@ public class Login_Activity extends AppCompatActivity {
         updateUI(account);
         super.onStart();
     }*/
+private void CreateAlertDialog2() {
+    alertDialog = new AlertDialog.Builder(this)
+            .setCancelable(true)
+            .setMessage(R.string.success_login)
+            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(Login_Activity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }).create();
+
+    alertDialog.setCanceledOnTouchOutside(false);
+
+
+}
 }

@@ -1,7 +1,6 @@
 package com.alatheer.shop_peak.Fragments;
 
 import android.app.Activity;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,10 +26,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.alatheer.shop_peak.Activities.FollowersActivity;
 import com.alatheer.shop_peak.Activities.IntroActivity;
-import com.alatheer.shop_peak.Activities.Login_Activity;
-import com.alatheer.shop_peak.Activities.MyFollowersActivity;
+import com.alatheer.shop_peak.Activities.FollowingActivity;
+import com.alatheer.shop_peak.Adapter.Profile_gridAdapter;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.RatingModel2;
@@ -54,7 +52,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.app.Activity.RESULT_OK;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class ProfileFragment extends android.app.Fragment {
@@ -76,7 +73,7 @@ public class ProfileFragment extends android.app.Fragment {
     private ArrayList<HomeModel> homeModelArrayList;
 
     Profile_verticalAdapter profile_verticalAdapter;
-
+    Profile_gridAdapter profile_gridAdapter;
     MySharedPreference mySharedPreference;
     UserModel1 userModel1;
     String img, id, name;
@@ -132,11 +129,12 @@ public class ProfileFragment extends android.app.Fragment {
 
         userModel1ArrayList = new ArrayList<>();
         Listmyfollow = new ArrayList<>();
-
+        id_store = getArguments().getString("store_id");
 
         if (userModel1 != null) {
             img = userModel1.getLogo_img();
             id = userModel1.getId();
+            Log.v("kkk",id);
             name = userModel1.getFull_name();
 
         }
@@ -191,21 +189,21 @@ public class ProfileFragment extends android.app.Fragment {
         get_storefollow(id_store);
 
 
-        followers.setOnClickListener(new View.OnClickListener() {
+        /*followers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(getActivity(), FollowersActivity.class);
-                intent.putExtra("id_store", id_store);
+                intent.putExtra("id", id_store);
                 startActivity(intent);
 
             }
-        });
+        });*/
         myfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getActivity(), MyFollowersActivity.class);
+                Intent intent = new Intent(getActivity(), FollowingActivity.class);
                 intent.putExtra("id_store", id_store);
                 startActivity(intent);
 
@@ -262,15 +260,17 @@ public class ProfileFragment extends android.app.Fragment {
 
             follow.setText(R.string.unfollow);
             follow.setBackgroundResource(R.drawable.btn_field2);
+
         } else {
 
 
             follow.setText(R.string.follow);
             follow.setBackgroundResource(R.drawable.edite_profile);
+
         }
     }
 
-    private void makefollow(String id_store, String id) {
+    private void makefollow(final String id_store, final String id) {
 
         Api.getService()
                 .make_follow(id_store, id)
@@ -283,7 +283,13 @@ public class ProfileFragment extends android.app.Fragment {
                             if (response.body().getSuccess() == 1) {
 
                                 flagButton = true;
-                                updateUI();
+                                //updateUI();
+                                follow.setText(R.string.unfollow);
+                                follow.setBackgroundResource(R.drawable.btn_field2);
+                                followers.setText(Integer.parseInt(followers.getText().toString())+1+"");
+                                Log.v("makefollow",response.body().getSuccess()+"");
+
+
                             }
                         }
 
@@ -291,7 +297,7 @@ public class ProfileFragment extends android.app.Fragment {
 
                     @Override
                     public void onFailure(Call<RatingModel2> call, Throwable t) {
-
+                     Log.e("error",t.getMessage());
                     }
                 });
     }
@@ -309,7 +315,10 @@ public class ProfileFragment extends android.app.Fragment {
                             if (response.body().getSuccess() == 1) {
 
                                 flagButton = false;
+                                followers.setText(Integer.parseInt(followers.getText().toString())-1+"");
                                 updateUI();
+
+
                             }
                         }
 
@@ -492,11 +501,11 @@ public class ProfileFragment extends android.app.Fragment {
         img_ver.setColorFilter(getResources().getColor(R.color.gray));
 
 
-        verticalmanager = new GridLayoutManager(getActivity(), 3);
+        gridmanager = new GridLayoutManager(getActivity(), 2);
         menu_recycler.setHasFixedSize(true);
-        menu_recycler.setLayoutManager(verticalmanager);
-        profile_verticalAdapter = new Profile_verticalAdapter(homeModelArrayList, getActivity());
-        menu_recycler.setAdapter(profile_verticalAdapter);
+        menu_recycler.setLayoutManager(gridmanager);
+        profile_gridAdapter = new Profile_gridAdapter(homeModelArrayList, getActivity());
+        menu_recycler.setAdapter(profile_gridAdapter);
     }
 
     private boolean isConnected() {

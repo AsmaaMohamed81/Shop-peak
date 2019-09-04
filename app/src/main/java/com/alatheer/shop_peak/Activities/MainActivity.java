@@ -39,6 +39,7 @@ import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Fragments.NotificationFragment;
 import com.alatheer.shop_peak.Fragments.ProfileFragment;
 import com.alatheer.shop_peak.Fragments.ProfileVendor_Fragment;
+import com.alatheer.shop_peak.Fragments.SettingFragment;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.HomeModel;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     HomeFragment homeFragment;
     MySharedPreference mPrefs;
     ProfileFragment profileFragment;
+    ProfileVendor_Fragment profileVendor_fragment;
     EditText search;
     HomeAdapter homeAdapter;
     String title1;
@@ -342,6 +344,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+
     private void chooseimage() {
 
     }
@@ -527,13 +530,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     shareIntent.setType("text/plain");
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, "SHOP_PEAK");
                     String shareMessage= "\nLet me recommend you this application\n\n";
-                    shareMessage = shareMessage + "n,,jhhhkhhkkkk";
+                    shareMessage = shareMessage + Tags.base_url;
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     startActivity(Intent.createChooser(shareIntent, "choose one"));
                 } catch(Exception e) {
                     //e.toString();
                 }
                 break;
+            case R.id.nav_setting:
+                SettingFragment settingFragment = new SettingFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,settingFragment).commit();
+                break;
+            case R.id.nav_following:
+                 Intent intent = new Intent(MainActivity.this,FollowingActivity.class);
+                 intent.putExtra("type",type);
+                 intent.putExtra("user_id_fk",user_id);
+                 startActivity(intent);
+                 break;
+
         }
 
         closeDrawer();
@@ -723,22 +737,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void profilePos(HomeModel model) {
 
+        if(model.storeIdFk.equals(userModel1.getId())) {
+            if(profileVendor_fragment==null){
+                profileVendor_fragment = new ProfileVendor_Fragment();
+            }
+            Log.d("asmaa", "profilePos: "+model);
+            Bundle bundle =new Bundle();
+            bundle.putString("name",model.storeName);
+            bundle.putString("image",model.storeImg);
+            bundle.putString("id",model.storeIdFk);
+            bundle.putString("type",type);
 
-        if (profileFragment==null)
-        {
-            profileFragment = profileFragment.getInstance();
+            profileVendor_fragment.setArguments(bundle);
+
+            getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileVendor_fragment).commit();
+
+        }else {
+            if (profileFragment==null)
+            {
+                profileFragment = profileFragment.getInstance();
+            }
+
+            Log.d("asmaa", "profilePos: "+model);
+            Bundle bundle =new Bundle();
+            bundle.putString("name",model.storeName);
+            bundle.putString("image",model.storeImg);
+            bundle.putString("id",model.storeIdFk);
+            bundle.putString("type",type);
+
+            profileFragment.setArguments(bundle);
+
+            getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
         }
 
-        Log.d("asmaa", "profilePos: "+model);
-        Bundle bundle =new Bundle();
-        bundle.putString("name",model.storeName);
-        bundle.putString("image",model.storeImg);
-        bundle.putString("id",model.storeIdFk);
-        bundle.putString("type","1");
-
-        profileFragment.setArguments(bundle);
-
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
 
     }
 

@@ -19,6 +19,7 @@
     <string name="pass_req">PassWord Is Required</string>
     <string name="email_req">Email is Required</string>
     <string name="phone_req">Phone is Required</string>
+    <string name="phone_error">Phone is Invalid</string>
     <string name="subject_req">Subject is required</string>
     <string name="message_req">Message is required</string>
     <string name="shopname_req">Shop name is required</string>
@@ -31,7 +32,6 @@
     <string name="accept_terms">You cannot sign up without accepting terms and conditions</string>
     <string name="undo">undo</string>
     <string name="home">Home</string>
-    <string name="setting">Settings</string>
     <string name="share">Share</string>
     <string name="favorite">Favorite</string>
     <string name="search">Search</string>
@@ -95,7 +95,7 @@
     <string name="tasnef_req">You must choose a label for the shop first</string>
     <string name="lat_lang_req">You must point your location on the map first</string>
     <string name="logo_req">Choose a logo to shop first</string>
-    <string name="follow">Follow up</string>
+    <string name="follow">Follow</string>
     <string name="addrate">Your rating has been successfully edited</string>
     <string name="addfav">The item has been successfully added to Favorites</string>
     <string name="deletfav">Favorite element removed successfully</string>
@@ -116,6 +116,13 @@
     <string name="TermsNEw">Once you register, you agree to the terms and conditions</string>
     <string name="basket_data">"there is no products in basket"</string>
     <string name="nonotif">لايوجد اشعارات الان</string>
+    <string name="success_login">Successfully login</string>
+    <string name="success_added">Product Successfully Added</string>
+    <string name="vender">seller</string>
+    <string name="product">Product</string>
+    <string name="setting">Setting</string>
+    <string name="success_register">Successfully Register</string>
+    <string name="following">Following</string>
 
 
 </resources>

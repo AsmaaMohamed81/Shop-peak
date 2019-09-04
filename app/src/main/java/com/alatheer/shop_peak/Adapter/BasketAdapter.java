@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Basket_Activity;
 import com.alatheer.shop_peak.Activities.DetailsActivity;
-import com.alatheer.shop_peak.Activities.Details_two_Activity;
 import com.alatheer.shop_peak.Activities.Favorite_Activity;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;

@@ -1,6 +1,8 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -42,13 +45,16 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.Arrays;
 
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -62,6 +68,7 @@ public class IntroActivity extends AppCompatActivity {
     MySharedPreference mySharedPreference;
     private CallbackManager callbackManager;
     UserModel1 userModel;
+    AlertDialog alertDialog,alertDialog2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +103,13 @@ public class IntroActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login);
         sysa = findViewById(R.id.sysa);
         skip = findViewById(R.id.skip);
+        //GOOGLE PLAY SIGNING SHA-1 KEY: 52:49:F9:6B:44:89:BC:A6:DA:8F:AC:B9:1F:FD:1E:DD:98:81:E7:69
+        byte[] sha1 = {0x52, 0x49, (byte) 0xF9, 0x6B, 0x44, (byte) 0x89, (byte) 0xBC, (byte) 0xA6, (byte) 0xDA, (byte) 0x8F, (byte) 0xAC, (byte) 0xB9, 0x1F, (byte) 0xFD
+                , 0X1E, (byte) 0xDD, (byte) 0x98, (byte) 0x81, (byte) 0xE7, 0X69};
+        Log.v("keyhashGOOGLESIGNIN", Base64.encodeToString(sha1, Base64.NO_WRAP));
         CreateProgressDialog();
+        CreateAlertDialog();
+        CreateAlertDialog2();
         skip.setPaintFlags(skip.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -104,7 +117,7 @@ public class IntroActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         googleSignInClient = GoogleSignIn.getClient(this, gso);
         callbackManager = CallbackManager.Factory.create();
-        facebook_login.setReadPermissions(Arrays.asList("public_profile","email","user_birthday","user_friends"));
+        facebook_login.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
         facebook_login.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -118,13 +131,13 @@ public class IntroActivity extends AppCompatActivity {
                             String last_name = object.getString("last_name");
                             String id = object.getString("id");
                             String email = object.getString("email");
-                            Log.v("email",email);
-                          //  String phone = object.getString("phone");
+                            Log.v("email", email);
+                            //  String phone = object.getString("phone");
                             String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
                             Uri image_file = Uri.parse(image_url);
                             //RequestBody Vfirst_name = Common.getRequestBodyText(first_name);
                             RequestBody VEmail = Common.getRequestBodyText("");
-                            Api.getService().register(first_name,"mohamedhamada12344@yahoo.com","","","","","").enqueue(new Callback<UserModel1>() {
+                            Api.getService().register2(first_name, email, "", "", "", "", "",image_url).enqueue(new Callback<UserModel1>() {
                                 @Override
                                 public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
                                     if (response.isSuccessful()) {
@@ -139,27 +152,26 @@ public class IntroActivity extends AppCompatActivity {
 
                                             MySharedPreference mySharedPreference = MySharedPreference.getInstance();
 
-                                            mySharedPreference.Create_Update_UserData(IntroActivity.this,userModel);
+                                            mySharedPreference.Create_Update_UserData(IntroActivity.this, userModel);
 
-                                            Log.d("model",mySharedPreference.Get_UserData(IntroActivity.this).getFull_name());
+                                            Log.d("model", mySharedPreference.Get_UserData(IntroActivity.this).getFull_name());
 
-
-                                            Intent intent = new Intent(IntroActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                        }
-
-                                        else if (response.body().getSuccess() == 2){
+                                            alertDialog.show();
+                                            //Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                                            //startActivity(intent);
+                                        } else if (response.body().getSuccess() == 2) {
                                             userModel = response.body();
 
                                             MySharedPreference mySharedPreference = MySharedPreference.getInstance();
 
-                                            mySharedPreference.Create_Update_UserData(IntroActivity.this,userModel);
+                                            mySharedPreference.Create_Update_UserData(IntroActivity.this, userModel);
 
-                                            Log.d("model",mySharedPreference.Get_UserData(IntroActivity.this).getFull_name());
+                                            Log.d("model", mySharedPreference.Get_UserData(IntroActivity.this).getFull_name());
 
 
                                             Intent intent = new Intent(IntroActivity.this, MainActivity.class);
                                             startActivity(intent);
+                                            alertDialog2.show();
 
                                         }
                                     }
@@ -167,8 +179,8 @@ public class IntroActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Call<UserModel1> call, Throwable t) {
-                                    Log.e("error1",t.getMessage());
-                                    Toast.makeText(IntroActivity.this, "error "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.e("error1", t.getMessage());
+                                    Toast.makeText(IntroActivity.this, "error " + t.getMessage(), Toast.LENGTH_SHORT).show();
 
                                 }
                             });
@@ -192,7 +204,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
                 Log.e("error", error.toString());
-                Toast.makeText(IntroActivity.this, "error2 "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IntroActivity.this, "error2 " + error.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -255,7 +267,7 @@ public class IntroActivity extends AppCompatActivity {
         if (requestCode == GmailSignInRequest) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
-            Toast.makeText(IntroActivity.this, "handle result " , Toast.LENGTH_SHORT).show();
+            Toast.makeText(IntroActivity.this, "handle result ", Toast.LENGTH_SHORT).show();
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
@@ -275,73 +287,128 @@ public class IntroActivity extends AppCompatActivity {
                 Uri personPhoto = account.getPhotoUrl();
                 RequestBody Vpersonname = Common.getRequestBodyText(personName);
                 RequestBody VEmail = Common.getRequestBodyText(personEmail);
-                //SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
-                //editor.putString("name",personName);
-                //editor.putString("image_url",personPhoto.toString());
-                //editor.apply();
-                try {
-                   // userModel = mySharedPreference.Get_UserData(IntroActivity.this);
-                    Api.getService().register(personName,personEmail,"","","","","").enqueue(new Callback<UserModel1>() {
-                        @Override
-                        public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
-                            if (response.isSuccessful()) {
+                RequestBody Vphone = Common.getRequestBodyText("");
+                RequestBody Vmohafza = Common.getRequestBodyText("");
+                RequestBody Vmadina = Common.getRequestBodyText("");
+                RequestBody Vaddress = Common.getRequestBodyText("");
 
 
-                                dialog.dismiss();
-
-                                if (response.body().getSuccess() == 1) {
-
-
-                                    userModel = response.body();
-
-                                    MySharedPreference mySharedPreference = MySharedPreference.getInstance();
-
-                                    mySharedPreference.Create_Update_UserData(IntroActivity.this,userModel);
-
-                                    Log.d("model",mySharedPreference.Get_UserData(IntroActivity.this).getFull_name());
-
-
-                                    Intent intent = new Intent(IntroActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                }
-
-                                else if (response.body().getSuccess() == 2){
-                                    userModel = response.body();
-
-                                    MySharedPreference mySharedPreference = MySharedPreference.getInstance();
-
-                                    mySharedPreference.Create_Update_UserData(IntroActivity.this,userModel);
-
-                                    Log.d("model",mySharedPreference.Get_UserData(IntroActivity.this).getFull_name());
+                    //MultipartBody.Part logo_img = Common.getMultiPart(this,personPhoto,"logo_img");
+                    //SharedPreferences.Editor editor=getSharedPreferences("user_data",MODE_PRIVATE).edit();
+                    //editor.putString("name",personName);
+                    //editor.putString("image_url",personPhoto.toString());
+                    //editor.apply();
+                    try {
+                        String filepath = personPhoto.toString();
+                        Log.e("filepath",filepath);
+                        // userModel = mySharedPreference.Get_UserData(IntroActivity.this);
+                        Api.getService().register2(personName,personEmail,"", "","","", "",filepath).enqueue(new Callback<UserModel1>() {
+                            @Override
+                            public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
+                                if (response.isSuccessful()) {
 
 
-                                    Intent intent = new Intent(IntroActivity.this, MainActivity.class);
-                                    startActivity(intent);
+                                    dialog.dismiss();
 
+                                    if (response.body().getSuccess() == 1) {
+
+
+                                        userModel = response.body();
+
+                                        MySharedPreference mySharedPreference = MySharedPreference.getInstance();
+
+                                        mySharedPreference.Create_Update_UserData(IntroActivity.this, userModel);
+
+                                        Log.d("model", mySharedPreference.Get_UserData(IntroActivity.this).getFull_name());
+
+                                        alertDialog.show();
+                                        //Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                                        //startActivity(intent);
+                                    } else if (response.body().getSuccess() == 2) {
+                                        userModel = response.body();
+
+                                        MySharedPreference mySharedPreference = MySharedPreference.getInstance();
+
+                                        mySharedPreference.Create_Update_UserData(IntroActivity.this, userModel);
+
+                                        Log.d("model", mySharedPreference.Get_UserData(IntroActivity.this).getFull_name());
+
+                                        alertDialog2.show();
+                                        //Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                                        //startActivity(intent);
+
+                                    }
                                 }
                             }
-                        }
-                        @Override
-                        public void onFailure(Call<UserModel1> call, Throwable t) {
-                             Log.v("error",t.getMessage());
-                            Toast.makeText(IntroActivity.this, "error1 "+t.getMessage() , Toast.LENGTH_SHORT).show();
-                        }
-                    });
+
+                            @Override
+                            public void onFailure(Call<UserModel1> call, Throwable t) {
+                                Log.v("error", t.getMessage());
+                                Toast.makeText(IntroActivity.this, "error1 " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
 
                 } catch (Exception e) {
+                        Api.getService().register(personName,personEmail,"", "","","", "").enqueue(new Callback<UserModel1>() {
+                            @Override
+                            public void onResponse(Call<UserModel1> call, Response<UserModel1> response) {
+                                if (response.isSuccessful()) {
+
+
+                                    dialog.dismiss();
+
+                                    if (response.body().getSuccess() == 1) {
+
+
+                                        userModel = response.body();
+
+                                        MySharedPreference mySharedPreference = MySharedPreference.getInstance();
+
+                                        mySharedPreference.Create_Update_UserData(IntroActivity.this, userModel);
+
+                                        Log.d("model", mySharedPreference.Get_UserData(IntroActivity.this).getFull_name());
+
+                                        alertDialog.show();
+                                        //Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                                        //startActivity(intent);
+                                    } else if (response.body().getSuccess() == 2) {
+                                        userModel = response.body();
+
+                                        MySharedPreference mySharedPreference = MySharedPreference.getInstance();
+
+                                        mySharedPreference.Create_Update_UserData(IntroActivity.this, userModel);
+
+                                        Log.d("model", mySharedPreference.Get_UserData(IntroActivity.this).getFull_name());
+
+                                        alertDialog2.show();
+                                        //Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                                        //startActivity(intent);
+
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<UserModel1> call, Throwable t) {
+                                Log.v("error", t.getMessage());
+                                Toast.makeText(IntroActivity.this, "error1 " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                     //userModel = new UserModel(personName, "https://www.wpclipart.com/buildings/shop.png", personEmail);
-                    Log.w("Google Sign In Error", "signInResult:failed code=" + e.getMessage());
-                    Toast.makeText(IntroActivity.this, "error2"+e.getMessage(), Toast.LENGTH_LONG).show();
+
                 }
 
             }
         } catch (ApiException e) {
             e.printStackTrace();
             //userModel = new UserModel("", "https://www.wpclipart.com/buildings/shop.png", "");
-            Toast.makeText(IntroActivity.this, "error3"+e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(IntroActivity.this, "api error" + e.getMessage(), Toast.LENGTH_LONG).show();
 
         }
     }
+
     private void CreateProgressDialog() {
         dialog = new ProgressDialog(this);
         dialog.setCanceledOnTouchOutside(false);
@@ -352,7 +419,39 @@ public class IntroActivity extends AppCompatActivity {
         drawable.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         dialog.setIndeterminateDrawable(drawable);
     }
+    private void CreateAlertDialog() {
+        alertDialog = new AlertDialog.Builder(this)
+                .setCancelable(true)
+                .setMessage(R.string.success_register)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                }).create();
+
+        alertDialog.setCanceledOnTouchOutside(false);
 
 
+    }
 
+    private void CreateAlertDialog2() {
+        alertDialog2 = new AlertDialog.Builder(this)
+                .setCancelable(true)
+                .setMessage(R.string.success_login)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                }).create();
+
+        alertDialog2.setCanceledOnTouchOutside(false);
+
+
+    }
 }

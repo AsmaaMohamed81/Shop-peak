@@ -462,7 +462,7 @@
                 android:id="@+id/btn_skip"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="@string/skip"
+                android:text="@string/Add_product"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white"
                 android:layout_alignParentEnd="true"

@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.Adapter;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -83,8 +84,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         final String store_id = listofhome.get(position).storeIdFk;
         final String[]colors= listofhome.get(position).colors;
         final String link = listofhome.get(position).link;
-
-         final String like = listofhome.get(position).getLike();
+        final String like = listofhome.get(position).getLike();
+        ///////////////////
+        holder.text_profile.setText(vender_name);
+        holder.item_name.setText(sanf_name);
+        holder.price_before.setPaintFlags(holder.price_before.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.price_before.setText(price_before_discount);
+        holder.price_after.setText(price);
 
          if (like.equals("1")){
 
@@ -99,12 +105,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
          if (!vender_image.isEmpty()) {
              Picasso.with(context).load(vender_image).into(holder.img_profile);
          }
-        holder.text_profile.setText(vender_name);
+
 
            final String[] image_resources = {listofhome.get(position).mainImg};
            final String[] image_resources2 =listofhome.get(position).img;
            if(image_resources2.length <1){
-               customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
+               customSwipeAdapter = new CustomSwipeAdapter(image_resources,itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like ,context);
                holder.viewPager.setAdapter(customSwipeAdapter);
                holder.itemView.setOnClickListener(new View.OnClickListener() {
                    @Override
@@ -116,7 +122,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
                });
 
            }else {
-               customSwipeAdapter = new CustomSwipeAdapter(image_resources2, context);
+               customSwipeAdapter = new CustomSwipeAdapter(image_resources2,itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like,context);
                holder.viewPager.setAdapter(customSwipeAdapter);
                holder.itemView.setOnClickListener(new View.OnClickListener() {
                    @Override
@@ -211,7 +217,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         CheckBox fav;
         ViewPager viewPager;
         CircleImageView img_profile;
-        TextView text_profile;
+        TextView text_profile,item_name,price_before,price_after;
         RatingBar ratbar;
         LinearLayout home_linear;
         EditText order_num;
@@ -225,6 +231,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
             ratbar=itemView.findViewById(R.id.ratbar);
             home_linear=itemView.findViewById(R.id.home_linear);
             order_num=itemView.findViewById(R.id.order_num);
+            item_name= itemView.findViewById(R.id.item_name);
+            price_before= itemView.findViewById(R.id.item_price_before);
+            price_after = itemView.findViewById(R.id.item_price_after);
 
         }
     }

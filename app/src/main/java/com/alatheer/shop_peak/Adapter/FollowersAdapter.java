@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alatheer.shop_peak.Model.Follow_Vender;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
@@ -17,10 +18,10 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Holder> {
-    List<UserModel1> model1List;
+    List<Follow_Vender> model1List;
     Context context;
 
-    public FollowersAdapter(List<UserModel1> ModelList, Context context) {
+    public FollowersAdapter(List<Follow_Vender> ModelList, Context context) {
         this.model1List = ModelList;
         this.context = context;
     }
@@ -34,7 +35,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Hold
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        holder.client_name.setText(model1List.get(position).getFull_name());
+        holder.client_name.setText(model1List.get(position).getName());
 
         if (model1List.get(position).getLogo_img()!=null) {
             Picasso.with(context).load(model1List.get(position).getLogo_img()).into(holder.client_img);

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alatheer.shop_peak.Model.HomeModel;
+import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.R;
 
 import java.util.List;
@@ -38,7 +39,19 @@ public class Profile_verticalAdapter extends RecyclerView.Adapter<Profile_vertic
       //  final String image1 = profileModels.get(position).getImage1();
         //final String image2 = profileModels.get(position).getImage2();
       //  final String[] image_resources = {image1,image2};
-
+        final String details = mHomeModelList.get(position).details;
+        final List<Item> itemList = mHomeModelList.get(position).items;
+        final String price = (String) mHomeModelList.get(position).priceAfterDis;
+        final String price_before_discount = mHomeModelList.get(position).priceBeforeDis;
+        final String sanf_name = mHomeModelList.get(position).sanfName;
+        final String vender_name = mHomeModelList.get(position).storeName;
+        final String vender_image = mHomeModelList.get(position).storeImg;
+        final String sanf_id = mHomeModelList.get(position).id;
+        final String rating = mHomeModelList.get(position).rate;
+        final String store_id = mHomeModelList.get(position).storeIdFk;
+        final String[]colors= mHomeModelList.get(position).colors;
+        final String link = mHomeModelList.get(position).link;
+        final String like = mHomeModelList.get(position).getLike();
 
         holder.viewPager.setAdapter(customSwipeAdapter);
 
@@ -46,12 +59,12 @@ public class Profile_verticalAdapter extends RecyclerView.Adapter<Profile_vertic
         final String[] image_resources = {mHomeModelList.get(position).mainImg};
         final String[] image_resources2 =mHomeModelList.get(position).img;
         if(image_resources2.length <1){
-            customSwipeAdapter = new CustomSwipeAdapter(image_resources, context);
+            customSwipeAdapter = new CustomSwipeAdapter(image_resources,itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like,context);
             holder.viewPager.setAdapter(customSwipeAdapter);
 
 
         }else {
-            customSwipeAdapter = new CustomSwipeAdapter(image_resources2, context);
+            customSwipeAdapter = new CustomSwipeAdapter(image_resources2,itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like,context);
             holder.viewPager.setAdapter(customSwipeAdapter);
 
         }

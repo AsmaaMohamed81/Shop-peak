@@ -29,7 +29,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class Fragment_two_Details extends Fragment {
+/*public class Fragment_two_Details extends Fragment {
     ImageView details_img, back_image, plus_circle, minus_circle, shopping_cart;
     TextView details_title, details_des, counter, cart_num;
     ViewPager viewPager;
@@ -109,7 +109,7 @@ public class Fragment_two_Details extends Fragment {
             public void onClick(View v) {
                 finish();
             }
-        });*/
+        });
         plus_circle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,7 +182,7 @@ public class Fragment_two_Details extends Fragment {
                 Intent intent = new Intent(getActivity(), Basket_Activity.class);
                 startActivity(intent);
             }
-        });*/
+        });
     }
 
     public void getDatafromIntent() {
@@ -231,3 +231,4 @@ public class Fragment_two_Details extends Fragment {
         }
     }
 }
+*/

@@ -1,7 +1,6 @@
 package com.alatheer.shop_peak.Fragments;
 
 import android.app.Activity;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,9 +26,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.alatheer.shop_peak.Activities.FollowersActivity;
-import com.alatheer.shop_peak.Activities.MyFollowersActivity;
+
+import com.alatheer.shop_peak.Activities.FollowingActivity;
 import com.alatheer.shop_peak.Activities.Vender_Signup_Activity;
+import com.alatheer.shop_peak.Adapter.Profile_gridAdapter;
 import com.alatheer.shop_peak.Adapter.Profile_verticalAdapter;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.UserModel1;
@@ -52,7 +52,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.app.Activity.RESULT_OK;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class ProfileVendor_Fragment extends android.app.Fragment {
@@ -75,7 +74,7 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
     private ArrayList<HomeModel> homeModelArrayList;
 
     Profile_verticalAdapter profile_verticalAdapter;
-
+    Profile_gridAdapter profile_gridAdapter;
     MySharedPreference mySharedPreference;
     UserModel1 userModel1;
     String img,id,name;
@@ -191,7 +190,7 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
 
         get_storefollow(id);
 
-        followers.setOnClickListener(new View.OnClickListener() {
+        /*followers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -200,12 +199,12 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
                 startActivity(intent);
 
             }
-        });
+        });*/
         myfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(getActivity(), MyFollowersActivity.class);
+                Intent intent=new Intent(getActivity(), FollowingActivity.class);
                 intent.putExtra("id_store",id);
                 startActivity(intent);
 
@@ -245,11 +244,11 @@ public class ProfileVendor_Fragment extends android.app.Fragment {
         img_ver.setColorFilter(getResources().getColor(R.color.gray));
 
 
-        verticalmanager=new GridLayoutManager(getActivity(),3);
+        gridmanager=new GridLayoutManager(getActivity(),2);
         menu_recycler.setHasFixedSize(true);
-        menu_recycler.setLayoutManager(verticalmanager);
-        profile_verticalAdapter=new Profile_verticalAdapter(homeModelArrayList,getActivity());
-        menu_recycler.setAdapter(profile_verticalAdapter);
+        menu_recycler.setLayoutManager(gridmanager);
+        profile_gridAdapter=new Profile_gridAdapter(homeModelArrayList,getActivity());
+        menu_recycler.setAdapter(profile_gridAdapter);
     }
 
     private void ViewLinear() {

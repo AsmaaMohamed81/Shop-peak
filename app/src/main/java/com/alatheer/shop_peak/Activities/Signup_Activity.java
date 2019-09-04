@@ -1,7 +1,9 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -74,6 +76,7 @@ public class Signup_Activity extends AppCompatActivity {
     private governAdapter governAdapter;
 
     private Govern govern;
+    AlertDialog alertDialog;
 
     private TextView tv_title_govern, tv_title_city,syasa;
 
@@ -121,6 +124,7 @@ public class Signup_Activity extends AppCompatActivity {
         checkBox = findViewById(R.id.check_box);
         user_confirm_password=findViewById(R.id.user_confirm_password);
         syasa=findViewById(R.id.sysa);
+
 
 
 /////#FFFFFF/////////////////
@@ -205,6 +209,24 @@ public class Signup_Activity extends AppCompatActivity {
             }
         });
         CreateProgressDialog();
+        CreateAlertDialog2();
+    }
+    private void CreateAlertDialog2() {
+        alertDialog = new AlertDialog.Builder(this)
+                .setCancelable(true)
+                .setMessage(R.string.success_login)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(Signup_Activity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                }).create();
+
+        alertDialog.setCanceledOnTouchOutside(false);
+
+
     }
 
     private void CreateProgressDialog() {
@@ -231,6 +253,7 @@ public class Signup_Activity extends AppCompatActivity {
                 !TextUtils.isEmpty(passWord) &&
                 !TextUtils.isEmpty(Email) &&
                 !TextUtils.isEmpty(Phone) &&
+                Phone.length()==11        &&
                 !TextUtils.isEmpty(address) &&
                 passWord.length() >= 8 &&
                 confirm_password.equals(passWord)&&
@@ -286,6 +309,11 @@ public class Signup_Activity extends AppCompatActivity {
             if (TextUtils.isEmpty(Phone)) {
                 edt_phone.setError(getString(R.string.phone_req));
             } else {
+                edt_phone.setError(null);
+            }
+            if(Phone.length()!=11){
+                edt_phone.setError(getString(R.string.phone_error));
+            }else {
                 edt_phone.setError(null);
             }
 
@@ -352,9 +380,8 @@ public class Signup_Activity extends AppCompatActivity {
 
                                 Log.d("model",mySharedPreference.Get_UserData(Signup_Activity.this).getFull_name());
 
+                                alertDialog.show();
 
-                                Intent intent = new Intent(Signup_Activity.this, MainActivity.class);
-                                startActivity(intent);
 
 
                             }

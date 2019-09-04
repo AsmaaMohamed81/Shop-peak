@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.alatheer.shop_peak.Adapter.FollowersAdapter;
+import com.alatheer.shop_peak.Model.Follow_Vender;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.Tags.Tags;
@@ -26,12 +27,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
-public class MyFollowersActivity extends AppCompatActivity {
+public class FollowingActivity extends AppCompatActivity {
     RecyclerView recycler;
     FollowersAdapter followersAdapter;
-    private List<UserModel1> userModel1ArrayList;
+    private List<Follow_Vender> userModel1ArrayList;
 
-    String store_id;
+    String store_id,type,user_id_fk;
 
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -83,7 +84,8 @@ public class MyFollowersActivity extends AppCompatActivity {
 
         if (intent!=null){
 
-            store_id=intent.getStringExtra("id_store");
+            type=intent.getStringExtra("type");
+            user_id_fk= intent.getStringExtra("user_id_fk");
 
         }
     }
@@ -94,16 +96,16 @@ public class MyFollowersActivity extends AppCompatActivity {
         followersAdapter = new FollowersAdapter(userModel1ArrayList, this);
         recycler.setAdapter(followersAdapter);
 
-        get_storefollow(store_id);
+        getfollow(user_id_fk,type);
     }
 
-    private void get_storefollow(String id_store) {
+    private void getfollow(String user_id_fk,String type) {
 
         Api.getService()
-                .get_my_flow(id_store)
-                .enqueue(new Callback<List<UserModel1>>() {
+                .get_follow(user_id_fk,type)
+                .enqueue(new Callback<List<Follow_Vender>>() {
                     @Override
-                    public void onResponse(Call<List<UserModel1>> call, Response<List<UserModel1>> response) {
+                    public void onResponse(Call<List<Follow_Vender>> call, Response<List<Follow_Vender>> response) {
                         if (response.isSuccessful()){
 
                             if (response.body().size()>0){
@@ -116,7 +118,7 @@ public class MyFollowersActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<List<UserModel1>> call, Throwable t) {
+                    public void onFailure(Call<List<Follow_Vender>> call, Throwable t) {
 
                     }
                 });

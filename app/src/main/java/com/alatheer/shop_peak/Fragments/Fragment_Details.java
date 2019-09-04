@@ -184,7 +184,7 @@ public class Fragment_Details extends Fragment {
         tv_not_budget = view.findViewById(R.id.tv_not_budget);
         tv_not_budget2 = view.findViewById(R.id.tv_not_budget2);
         details_price.setText(price + "" + "LE");
-        customSwipeAdapter = new CustomSwipeAdapter(image, getActivity());
+        customSwipeAdapter = new CustomSwipeAdapter(image,items,sanf_name,des,price,sanf_id,rating,store_id,colors,price_before_dis,like,getActivity());
         viewPager.setAdapter(customSwipeAdapter);
        /* back_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -385,6 +385,7 @@ if (like!=null){
         Bundle extras = intent.getExtras();
         image = extras.getStringArray("homeimage");
         items = (List<Item>) extras.getSerializable("itemlist");
+
         colors = intent.getStringArrayExtra("color");
         //first_item_String = first_item.toString();
         title = intent.getStringExtra("title");

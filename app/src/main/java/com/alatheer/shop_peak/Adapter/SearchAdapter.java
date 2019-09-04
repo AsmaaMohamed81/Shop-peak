@@ -2,6 +2,7 @@ package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
@@ -64,7 +65,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
 
         String image = listofhome.get(position).mainImg;
         final String[] images = {listofhome.get(position).mainImg};
-        customSwipeAdapter = new CustomSwipeAdapter(images, context);
         holder.viewPager.setAdapter(customSwipeAdapter);
         final List<Item> itemList = listofhome.get(position).items;
         final String price = (String) listofhome.get(position).priceAfterDis;
@@ -78,9 +78,27 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         final String store_id = listofhome.get(position).storeIdFk;
         final String[]colors= listofhome.get(position).colors;
         final String link = listofhome.get(position).link;
+        final String like = listofhome.get(position).getLike();
         holder.viewPager.setAdapter(customSwipeAdapter);
+        holder.item_name.setText(sanf_name);
+        holder.price_before.setPaintFlags(holder.price_before.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.price_before.setText(price_before_discount);
+        holder.price_after.setText(price);
         Picasso.with(context).load(vender_image).into(holder.img);
         holder.textView.setText(vender_name);
+        final String[] image_resources = {listofhome.get(position).mainImg};
+        final String[] image_resources2 =listofhome.get(position).img;
+        if(image_resources2.length <1){
+            customSwipeAdapter = new CustomSwipeAdapter(image_resources,itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like,context);
+            holder.viewPager.setAdapter(customSwipeAdapter);
+
+
+        }else {
+            customSwipeAdapter = new CustomSwipeAdapter(image_resources2,itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like,context);
+            holder.viewPager.setAdapter(customSwipeAdapter);
+
+        }
+        //customSwipeAdapter = new CustomSwipeAdapter(images,itemList, sanf_name, details, price, sanf_id, rating, store_id,colors,price_before_discount,like,context);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,7 +184,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         CheckBox fav;
         ViewPager viewPager;
         CircleImageView img;
-        TextView textView;
+        TextView textView,item_name,price_before,price_after;
         RatingBar ratbar;
         public SearchHolder(View itemView) {
             super(itemView);
@@ -176,6 +194,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
             img=itemView.findViewById(R.id.img_c);
             textView=itemView.findViewById(R.id.txt_name);
             ratbar=itemView.findViewById(R.id.ratbar);
+            item_name= itemView.findViewById(R.id.item_name);
+            price_before= itemView.findViewById(R.id.item_price_before);
+            price_after = itemView.findViewById(R.id.item_price_after);
         }
     }
 }

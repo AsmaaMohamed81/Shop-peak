@@ -20,14 +20,18 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Search_Activity;
+import com.alatheer.shop_peak.Activities.Seller_Search_Activity;
 import com.alatheer.shop_peak.Adapter.HomeAdapter;
 import com.alatheer.shop_peak.Adapter.OfferAdapter;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.OfferModel1;
+import com.alatheer.shop_peak.Model.SellerSearch;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.Tags.Tags;
@@ -54,7 +58,9 @@ public class HomeFragment extends android.app.Fragment {
     RecyclerView recyclerView, recyclerView2, recyclerView3;
     RecyclerView.LayoutManager layoutManager, layoutManager2;
     HomeAdapter homeAdapter;
+    RadioGroup radioGroup;
     OfferAdapter offerAdapter;
+    RadioButton product_radio,seller_radio;
     EditText search;
     List<HomeModel> homelist;
     List<OfferModel1> offerlist;
@@ -109,6 +115,9 @@ public class HomeFragment extends android.app.Fragment {
         homelist=new ArrayList<>();
         offerlist=new ArrayList<>();
         search = v.findViewById(R.id.txt_search);
+        radioGroup = v.findViewById(R.id.radiogroup);
+        product_radio = v.findViewById(R.id.product_radio);
+        seller_radio = v.findViewById(R.id.seller_radio);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,23 +128,41 @@ public class HomeFragment extends android.app.Fragment {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if(i == EditorInfo.IME_ACTION_SEARCH){
-                    final String sanf_name = search.getText().toString();
-                    Api.getService().search_Home(sanf_name).enqueue(new Callback<List<HomeModel>>() {
-                        @Override
-                        public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
-                            Intent intent = new Intent(getActivity(),Search_Activity.class);
-                            Log.v("ggg",response.message());
-                            intent.putExtra("list",(Serializable)response.body());
-                            intent.putExtra("sanf_name",sanf_name);
-                            startActivity(intent);
-                        }
+                    final String name = search.getText().toString();
+                    if(product_radio.isChecked()){
+                        Api.getService().search_Home(name).enqueue(new Callback<List<HomeModel>>() {
+                            @Override
+                            public void onResponse(Call<List<HomeModel>> call, Response<List<HomeModel>> response) {
+                                Intent intent = new Intent(getActivity(),Search_Activity.class);
+                                Log.v("ggg",response.message());
+                                intent.putExtra("list",(Serializable)response.body());
+                                intent.putExtra("sanf_name",name);
+                                startActivity(intent);
+                            }
 
-                        @Override
-                        public void onFailure(Call<List<HomeModel>> call, Throwable t) {
-                            Log.v("jjj",t.getMessage());
-                        }
-                    });
-                    return true;
+                            @Override
+                            public void onFailure(Call<List<HomeModel>> call, Throwable t) {
+                                Log.v("jjj",t.getMessage());
+                            }
+                        });
+                        return true;
+                    }else {
+                         Api.getService().get_seller(name).enqueue(new Callback<List<SellerSearch>>() {
+                             @Override
+                             public void onResponse(Call<List<SellerSearch>> call, Response<List<SellerSearch>> response) {
+                                 Intent intent = new Intent(getActivity(), Seller_Search_Activity.class);
+                                 Log.v("ggg",response.message());
+                                 intent.putExtra("list",(Serializable)response.body());
+                                 intent.putExtra("sanf_name",name);
+                                 startActivity(intent);
+                             }
+
+                             @Override
+                             public void onFailure(Call<List<SellerSearch>> call, Throwable t) {
+
+                             }
+                         });                 }
+
                 }
                 return false;
             }

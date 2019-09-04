@@ -1,9 +1,11 @@
 package com.alatheer.shop_peak.Activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -85,6 +87,8 @@ public class AddProductActivity extends AppCompatActivity {
     List<RequestBody>names;
     List<RequestBody>values;
     List<RequestBody>colors;
+    AlertDialog alertDialog;
+    ProgressDialog dialog;
     int color;
     private Context context2 = null;
     EditText product_num1, product_num, product_name, price_after_discount, price_before_discount, element_description;
@@ -193,6 +197,8 @@ public class AddProductActivity extends AppCompatActivity {
         product_name = findViewById(R.id.product_name);
         tv_title_main= findViewById(R.id.tv_title_main);
         tv_title_sub = findViewById(R.id.tv_title_sub);
+        createprogressDialog();
+        CreateAlertDialog();
         t1 = findViewById(R.id.table);
         all_images = new ArrayList<>();
         all_colors = new ArrayList<>();
@@ -691,14 +697,7 @@ public class AddProductActivity extends AppCompatActivity {
             images.add(vimg);
 
         }
-
-
-
-        final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.waitt));
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-
+         dialog.show();
         Api.getService()
                 .Add_Product2
                         (Vid,Vnumber,Vname,Vmain_id,Vsub_id,Vprice_after_discount,Vprice_before_discount,Velementdescription,
@@ -711,7 +710,7 @@ public class AddProductActivity extends AppCompatActivity {
 
                     if (response.body().getSuccess()==1){
 
-                        Toast.makeText(AddProductActivity.this, R.string.Succ_send, Toast.LENGTH_SHORT).show();
+                        alertDialog.show();
                          all_colors.clear();
                          all_images.clear();
                          items.clear();
@@ -747,6 +746,7 @@ public class AddProductActivity extends AppCompatActivity {
         RequestBody Vprice_before_discount = Common.getRequestBodyText(price_before_discount);
         RequestBody Velementdescription = Common.getRequestBodyText(elementdescription);
         MultipartBody.Part main_image = Common.getMultiPart(this,filePath,"main_img");
+        dialog.show();
         //RequestBody Vcolor = Common.getRequestBodyText(color2);
         //RequestBody[] Vcolors= new RequestBody[]{Vcolor};
         //MultipartBody.Part[] Vimage= new MultipartBody.Part[]{main_image};
@@ -755,14 +755,18 @@ public class AddProductActivity extends AppCompatActivity {
             public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
                 if(response.isSuccessful()){
                     Log.v("success",response.message());
-                    Toast.makeText(AddProductActivity.this, R.string.Succ_send, Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    alertDialog.show();
+
                 }
 
             }
 
             @Override
             public void onFailure(Call<RatingModel2> call, Throwable t) {
-
+                    dialog.dismiss();
+                    alertDialog.show();
+                    Log.v("error",t.getMessage());
             }
         });
     }
@@ -914,5 +918,28 @@ public class AddProductActivity extends AppCompatActivity {
                         Log.v("kkkkk",t.getMessage());
                     }
                 });
+    }
+    public void createprogressDialog(){
+        dialog = Common.createProgressDialog(this,getString(R.string.waitt));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+
+    }
+    private void CreateAlertDialog() {
+        alertDialog = new AlertDialog.Builder(this)
+                .setCancelable(true)
+                .setMessage(R.string.success_added)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(AddProductActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                }).create();
+
+        alertDialog.setCanceledOnTouchOutside(false);
+
+
     }
 }

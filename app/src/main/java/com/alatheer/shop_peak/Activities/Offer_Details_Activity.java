@@ -35,7 +35,7 @@ import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class Offer_Details_Activity extends AppCompatActivity {
+/*public class Offer_Details_Activity extends AppCompatActivity {
     ImageView details_img, back_image, plus_circle, minus_circle, shopping_cart;
     TextView details_title, details_des, counter, cart_num, tv_not_budget;
     CheckBox c_red, c_blue, c_black;
@@ -306,5 +306,5 @@ public class Offer_Details_Activity extends AppCompatActivity {
 
 
     }
-}
+}*/
 
