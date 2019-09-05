@@ -128,7 +128,13 @@
             android:name=".Activities.MapsActivity"
             android:label="@string/title_activity_maps"/>
         <activity android:name=".Activities.Offer_Activity"/>
-        <activity android:name=".Activities.Seller_Search_Activity"/>
+        <activity android:name=".Activities.Seller_Search_Activity"
+            android:parentActivityName=".Activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.alatheer.shop_peak.Activities.Search_Activity"/>
+
+        </activity>
         <activity android:name=".Activities.FollowingActivity"/>
         <activity android:name=".Activities.IntroActivity">
         </activity>

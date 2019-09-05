@@ -41,7 +41,6 @@ public class Seller_Search_Adapter extends RecyclerView.Adapter<Seller_Search_Ad
         }else {
             seller_search_holder.client_img.setImageResource(R.mipmap.icon_round);
         }
-
     }
 
     @Override
