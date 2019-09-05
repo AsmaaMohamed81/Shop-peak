@@ -399,8 +399,8 @@ public class Login_Activity extends AppCompatActivity {
         passWord = edt_password.getText().toString();
 
         if (    !TextUtils.isEmpty(email) &&
-                !TextUtils.isEmpty(passWord) /*&&
-                 passWord.length()>=8*/) {
+                !TextUtils.isEmpty(passWord) &&
+                 passWord.length()>=8) {
 
             Common.CloseKeyBoard(this, edt_email);
             edt_email.setError(null);
