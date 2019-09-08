@@ -180,10 +180,11 @@ public class ProfileFragment extends android.app.Fragment {
             }
         });
 
-        if(image != null){
-            Picasso.with(getActivity()).load(image).into(profile_image);
-        }else {
+        if(image.equals("https://shop-peak.com/uploads/images/")){
             profile_image.setImageResource(R.mipmap.icon_round);
+
+        }else {
+            Picasso.with(getActivity()).load(image).into(profile_image);
         }
 
         profile_name.setText(vender_name);
