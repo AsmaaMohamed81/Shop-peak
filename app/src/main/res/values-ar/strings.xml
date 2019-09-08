@@ -124,5 +124,6 @@
     <string name="product">منتج</string>
     <string name="success_register">تم تسجيل الدخول بنجاح</string>
     <string name="following">المتابعون</string>
+    <string name="Really_Exit">هل أنت متأكد أنك تريد الخروج؟</string>
 
 </resources>

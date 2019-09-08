@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alatheer.shop_peak.Activities.Seller_Search_Activity;
 import com.alatheer.shop_peak.Model.SellerSearch;
 import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
@@ -19,10 +20,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Seller_Search_Adapter extends RecyclerView.Adapter<Seller_Search_Adapter.Seller_Search_Holder>{
     List<SellerSearch>list;
     Context context;
-
+    Seller_Search_Activity seller_search_activity;
+    SellerSearch sellerSearch;
     public Seller_Search_Adapter(List<SellerSearch> list, Context context) {
         this.list = list;
         this.context = context;
+        this.seller_search_activity= (Seller_Search_Activity) context;
     }
 
     @NonNull
@@ -33,14 +36,20 @@ public class Seller_Search_Adapter extends RecyclerView.Adapter<Seller_Search_Ad
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Seller_Search_Holder seller_search_holder, int position) {
+    public void onBindViewHolder(@NonNull final Seller_Search_Holder seller_search_holder, final int position) {
         seller_search_holder.client_name.setText(list.get(position).getFull_name());
-
         if (list.get(position).getLogo_img()!=null) {
-            Picasso.with(context).load("https://shop-peak.com/uploads/images/"+list.get(position).getLogo_img()).into(seller_search_holder.client_img);
+            Picasso.with(context).load(list.get(position).getStore_img()).into(seller_search_holder.client_img);
         }else {
             seller_search_holder.client_img.setImageResource(R.mipmap.icon_round);
         }
+        seller_search_holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sellerSearch=list.get(position);
+                seller_search_activity.send_data(sellerSearch);
+            }
+        });
     }
 
     @Override

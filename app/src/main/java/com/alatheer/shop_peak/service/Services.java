@@ -219,10 +219,10 @@ public interface Services {
                                 @Part MultipartBody.Part logo_img,
                                 @Part("type")RequestBody type);
     @FormUrlEncoded
-    @POST("Api/get_user_followers")
+    @POST("Api/get_user_followers")//(2/9/2019)//
     Call<List<Follow_Vender>>get_follow(@Field("user_id_fk") String user_id_fk,@Field("type") String type);
     @FormUrlEncoded
-    @POST("Api/filter_by_tager")
+    @POST("Api/filter_by_tager")//(2/9/2019)//
     Call<List<SellerSearch>>get_seller(@Field("name")String name);
 
 }

@@ -177,7 +177,7 @@ public class Fragment_Details extends Fragment {
 
 
         txt_before_discount.setPaintFlags(txt_before_discount.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-        txt_before_discount.setText(price_before_dis);
+        txt_before_discount.setText(price_before_dis+"LE");
         Log.v("color",colors.length+"");
         init_color_recycler();
 

@@ -123,6 +123,7 @@
     <string name="setting">Setting</string>
     <string name="success_register">Successfully Register</string>
     <string name="following">Following</string>
+    <string name="Really_Exit">Are you sure you want to exit?</string>
 
 
 </resources>

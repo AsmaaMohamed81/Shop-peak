@@ -82,8 +82,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         holder.viewPager.setAdapter(customSwipeAdapter);
         holder.item_name.setText(sanf_name);
         holder.price_before.setPaintFlags(holder.price_before.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.price_before.setText(price_before_discount);
-        holder.price_after.setText(price);
+        holder.price_before.setText(price_before_discount+"LE");
+        holder.price_after.setText(price+"LE");
         Picasso.with(context).load(vender_image).into(holder.img);
         holder.textView.setText(vender_name);
         final String[] image_resources = {listofhome.get(position).mainImg};

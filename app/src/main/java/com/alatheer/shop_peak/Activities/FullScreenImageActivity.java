@@ -4,8 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.alatheer.shop_peak.Fragments.ProfileFragment;
+import com.alatheer.shop_peak.Model.SellerSearch;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.Tags.Tags;
 import com.alatheer.shop_peak.languagehelper.LanguageHelper;
@@ -15,7 +20,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class FullScreenImageActivity extends AppCompatActivity {
-     ImageView full_screen_image;
+     FrameLayout full_screen_image;
+     Toolbar toolbar;
+     SellerSearch sellerSearch;
+     ProfileFragment profileFragment;
 
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -45,14 +53,37 @@ public class FullScreenImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen_image);
+        getDataIntent();
         initview();
     }
 
+    private void getDataIntent() {
+        sellerSearch = (SellerSearch) getIntent().getSerializableExtra("obj");
+    }
+
     private void initview() {
-        full_screen_image=findViewById(R.id.full_image);
-        Intent intent=getIntent();
-         int img=intent.getIntExtra("img",1);
-         full_screen_image.setImageResource(img);
+        full_screen_image=findViewById(R.id.fragment_container);
+        toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(sellerSearch.getFull_name());
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (profileFragment==null)
+        {
+            profileFragment = profileFragment.getInstance();
+        }
+
+        Log.d("asmaa", "profilePos: "+sellerSearch);
+        Bundle bundle =new Bundle();
+        bundle.putString("name",sellerSearch.getFull_name());
+        bundle.putString("image",sellerSearch.getStore_img());
+        bundle.putString("id",sellerSearch.getId());
+        bundle.putString("type","1");
+
+        profileFragment.setArguments(bundle);
+
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
+         //full_screen_image.setImageResource(img);
 
         }
     }

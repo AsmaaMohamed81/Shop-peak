@@ -4,7 +4,15 @@ import java.io.Serializable;
 
 public class SellerSearch implements Serializable {
     String id,full_name,logo_img,mohafza,madina,address,phone,email,password,type,lang,lat, send_order,
-            store_tasnef,store_rkm,token,type_register,date_approved,publisher_approved,date_s,date,status;
+            store_tasnef,store_rkm,token,type_register,date_approved,publisher_approved,date_s,date,status,store_img;
+
+    public String getStore_img() {
+        return store_img;
+    }
+
+    public void setStore_img(String store_img) {
+        this.store_img = store_img;
+    }
 
     public String getId() {
         return id;

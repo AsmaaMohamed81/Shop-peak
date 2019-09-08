@@ -3,6 +3,7 @@ package com.alatheer.shop_peak.Activities;
 import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,6 +48,7 @@ import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.Model.RatingModel2;
+import com.alatheer.shop_peak.Model.SellerSearch;
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.list_cats;
@@ -105,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int flag;
     UserModel userModel;
     UserModel1 userModel1;
-
     Favorite_Database favoriteDatabase;
 
     ArrayList<list_cats> list_cats;
@@ -530,7 +532,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     shareIntent.setType("text/plain");
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, "SHOP_PEAK");
                     String shareMessage= "\nLet me recommend you this application\n\n";
-                    shareMessage = shareMessage + Tags.base_url;
+                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=com.alatheer.shop_peak";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     startActivity(Intent.createChooser(shareIntent, "choose one"));
                 } catch(Exception e) {
@@ -603,33 +605,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //    }
     @Override
     public void onBackPressed() {
-        selectedfragment=new HomeFragment();
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
-        bottomNavigationView.setSelectedItemId(R.id.nav_home);
-
+        //selectedfragment=new HomeFragment();
+        //getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
+        //bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        new AlertDialog.Builder(this)
+                .setTitle("Really Exit?")
+                .setMessage(R.string.Really_Exit)
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                       finish();
+                    }
+                }).create().show();
     }
+
+
 
     void getDataIntent() {
-//        Intent intent = getIntent();
-//        flag = intent.getIntExtra("flag", 0);
 
+            if (userModel1 != null) {
+                type = userModel1.getType();
+                Log.d(TAG, "getDataIntent: " + type);
+                if (type.equals("1")) {
+                    bottomNavigationView2.setVisibility(View.VISIBLE);
+                    bottomNavigationView.setVisibility(View.GONE);
+                } else {
 
-        if (userModel1 != null) {
-            type = userModel1.getType();
-            Log.d(TAG, "getDataIntent: " + type);
-            if (type.equals("1")) {
-                bottomNavigationView2.setVisibility(View.VISIBLE);
-                bottomNavigationView.setVisibility(View.GONE);
-            } else {
-
-                bottomNavigationView2.setVisibility(View.GONE);
-                bottomNavigationView.setVisibility(View.VISIBLE);
+                    bottomNavigationView2.setVisibility(View.GONE);
+                    bottomNavigationView.setVisibility(View.VISIBLE);
+                }
             }
-        }
+
     }
-
-
-
 
     public void list_cats_pos(int pos) {
 

@@ -133,8 +133,8 @@ public class Favourit_Adapter extends RecyclerView.Adapter {
 
             tv_before_discount.setPaintFlags(tv_before_discount.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
 
-            tv_before_discount.setText(homeModel.priceBeforeDis);
-                tv_after_discount.setText(String.valueOf(homeModel.priceAfterDis));
+            tv_before_discount.setText(homeModel.priceBeforeDis+"LE");
+                tv_after_discount.setText(String.valueOf(homeModel.priceAfterDis+"LE"));
 
 
         }

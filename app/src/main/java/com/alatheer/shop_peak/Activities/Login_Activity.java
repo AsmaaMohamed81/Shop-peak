@@ -533,6 +533,7 @@ private void CreateAlertDialog2() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     Intent intent = new Intent(Login_Activity.this, MainActivity.class);
+                    intent.putExtra("flag",0);
                     startActivity(intent);
                 }
             }).create();

@@ -78,7 +78,6 @@ public class Seller_Search_Activity extends AppCompatActivity {
     private void initview() {
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getDataFromIntent();
         recycler = findViewById(R.id.notification_recycler);
         initrecycler();
         getSupportActionBar().setTitle(title);
@@ -112,4 +111,9 @@ public class Seller_Search_Activity extends AppCompatActivity {
     }
 
 
+    public void send_data(SellerSearch sellerSearch) {
+        Intent intent = new Intent(Seller_Search_Activity.this,FullScreenImageActivity.class);
+        intent.putExtra("obj",sellerSearch);
+        startActivity(intent);
+    }
 }

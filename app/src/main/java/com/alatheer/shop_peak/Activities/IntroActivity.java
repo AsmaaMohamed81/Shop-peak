@@ -446,6 +446,7 @@ public class IntroActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                        intent.putExtra("flag",0);
                         startActivity(intent);
                     }
                 }).create();

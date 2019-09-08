@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 
 import com.alatheer.shop_peak.Adapter.FollowersAdapter;
 import com.alatheer.shop_peak.Model.Follow_Vender;
@@ -29,6 +30,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class FollowingActivity extends AppCompatActivity {
     RecyclerView recycler;
+    Toolbar toolbar;
     FollowersAdapter followersAdapter;
     private List<Follow_Vender> userModel1ArrayList;
 
@@ -69,9 +71,12 @@ public class FollowingActivity extends AppCompatActivity {
     }
 
     private void initview() {
-        getDataFromIntent();
+        toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(R.string.following));
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recycler = findViewById(R.id.notification_recycler);
-
         userModel1ArrayList=new ArrayList<>();
         initrecycler();
 

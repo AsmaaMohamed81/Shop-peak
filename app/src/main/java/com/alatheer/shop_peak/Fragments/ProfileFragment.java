@@ -180,8 +180,12 @@ public class ProfileFragment extends android.app.Fragment {
             }
         });
 
+        if(image != null){
+            Picasso.with(getActivity()).load(image).into(profile_image);
+        }else {
+            profile_image.setImageResource(R.mipmap.icon_round);
+        }
 
-        Picasso.with(getActivity()).load(image).into(profile_image);
         profile_name.setText(vender_name);
         getStoreProduct(id_store);
         Viewgrid();

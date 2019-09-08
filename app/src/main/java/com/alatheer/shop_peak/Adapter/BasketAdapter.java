@@ -63,7 +63,7 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
         holder.basket_title.setText(basketModelList.get(position).getSanfTitle());
         Picasso.with(context).load(basketModelList.get(position).getSanfImage()).into(holder.title_img);
         holder.counter.setText(basketModelList.get(position).sanfAmount);
-        holder.txt_price.setText(basketModelList.get(position).sanfPrice);
+        holder.txt_price.setText(basketModelList.get(position).sanfPrice+"LE");
         count = Integer.parseInt(holder.counter.getText().toString());
         basket_activity.sendBasketData(position);
 

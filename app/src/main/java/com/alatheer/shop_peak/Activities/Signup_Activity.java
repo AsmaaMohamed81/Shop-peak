@@ -220,6 +220,7 @@ public class Signup_Activity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         Intent intent = new Intent(Signup_Activity.this, MainActivity.class);
+                        intent.putExtra("flag",0);
                         startActivity(intent);
                     }
                 }).create();

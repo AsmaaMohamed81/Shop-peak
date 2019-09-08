@@ -54,7 +54,14 @@
         <activity
             android:name=".Activities.Signup_Activity"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
-        <activity android:name=".Activities.FullScreenImageActivity"/>
+        <activity android:name=".Activities.FullScreenImageActivity"
+            android:parentActivityName=".Activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.alatheer.shop_peak.Activities.FullScreenImageActivity"/>
+
+
+        </activity>
         <activity android:name=".Activities.DetailsActivity"/>
         <activity android:name=".Activities.AddProductActivity"/>
         <activity
@@ -132,10 +139,16 @@
             android:parentActivityName=".Activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.alatheer.shop_peak.Activities.Search_Activity"/>
+                android:value="com.alatheer.shop_peak.Activities.Seller_Search_Activity"/>
 
         </activity>
-        <activity android:name=".Activities.FollowingActivity"/>
+        <activity android:name=".Activities.FollowingActivity"
+            android:parentActivityName=".Activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.alatheer.shop_peak.Activities.FollowingActivity"/>
+
+        </activity>
         <activity android:name=".Activities.IntroActivity">
         </activity>
     </application>

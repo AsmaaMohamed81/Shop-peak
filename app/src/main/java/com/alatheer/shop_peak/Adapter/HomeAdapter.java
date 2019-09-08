@@ -89,8 +89,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
         holder.text_profile.setText(vender_name);
         holder.item_name.setText(sanf_name);
         holder.price_before.setPaintFlags(holder.price_before.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.price_before.setText(price_before_discount);
-        holder.price_after.setText(price);
+        holder.price_before.setText(price_before_discount+"LE");
+        holder.price_after.setText(price+"LE");
 
          if (like.equals("1")){
 
