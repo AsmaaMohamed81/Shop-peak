@@ -3,8 +3,6 @@ package com.alatheer.shop_peak.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -15,6 +13,8 @@ import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.Tags.Tags;
 import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -82,7 +82,7 @@ public class FullScreenImageActivity extends AppCompatActivity {
 
         profileFragment.setArguments(bundle);
 
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
          //full_screen_image.setImageResource(img);
 
         }

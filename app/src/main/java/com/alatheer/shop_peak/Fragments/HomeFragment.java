@@ -8,10 +8,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -43,6 +42,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import io.paperdb.Paper;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -54,7 +56,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 //import com.alatheer.shop_peak.Local.HomeDatabase;
 
 
-public class HomeFragment extends android.app.Fragment {
+public class HomeFragment extends Fragment {
     RecyclerView recyclerView, recyclerView2, recyclerView3;
     RecyclerView.LayoutManager layoutManager, layoutManager2;
     HomeAdapter homeAdapter;

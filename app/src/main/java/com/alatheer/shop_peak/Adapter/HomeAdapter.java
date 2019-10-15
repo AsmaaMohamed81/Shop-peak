@@ -1,12 +1,12 @@
 package com.alatheer.shop_peak.Adapter;
 
-import android.arch.persistence.room.Room;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
+
+
+import androidx.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +31,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+import androidx.viewpager.widget.ViewPager;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**

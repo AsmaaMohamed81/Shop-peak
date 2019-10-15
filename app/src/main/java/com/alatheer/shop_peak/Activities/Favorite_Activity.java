@@ -1,10 +1,5 @@
 package com.alatheer.shop_peak.Activities;
 
-import android.arch.persistence.room.Room;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +12,8 @@ import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.R;
 
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Favorite_Activity extends AppCompatActivity {
     /*ImageView image_title;

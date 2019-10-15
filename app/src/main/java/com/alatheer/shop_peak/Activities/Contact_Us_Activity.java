@@ -3,8 +3,10 @@ package com.alatheer.shop_peak.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +27,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Contact_Us_Activity extends AppCompatActivity {
-    android.support.v7.widget.Toolbar toolbar;
+    Toolbar toolbar;
     EditText contact_name,contact_email,contact_phone,contact_subject,contact_message;
     Button send;
 

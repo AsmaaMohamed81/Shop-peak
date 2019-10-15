@@ -1,15 +1,12 @@
 package com.alatheer.shop_peak.Activities;
 
 import android.animation.Animator;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,6 +17,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
+import com.alatheer.shop_peak.Adapter.PagerAdapter;
 import com.alatheer.shop_peak.Fragments.Fragment_Details;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
@@ -30,11 +28,16 @@ import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.Tags.Tags;
 import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.util.CircleAnimationUtil;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.view.ViewParentCompat;
+import androidx.room.Room;
+import androidx.viewpager.widget.ViewPager;
 import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;

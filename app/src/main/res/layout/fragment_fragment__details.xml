@@ -11,7 +11,7 @@
         android:layout_below="@+id/appbar"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="15dp"
@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <android.support.v4.view.ViewPager
+                <androidx.viewpager.widget.ViewPager
                     android:id="@+id/viewpager"
                     android:scaleType="fitXY"
                     android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                         android:textSize="16sp" />
                 </RelativeLayout>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 
@@ -83,13 +83,13 @@
         android:layout_marginTop="15dp"
         android:layout_below="@+id/relative_card">
 
-      <android.support.v7.widget.RecyclerView
+      <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/recycler_color"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_centerInParent="true"
           android:layout_centerHorizontal="true">
-      </android.support.v7.widget.RecyclerView>
+      </androidx.recyclerview.widget.RecyclerView>
 
     </RelativeLayout>
 
@@ -133,7 +133,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp">
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_shopping"
             android:layout_alignParentEnd="true"
             android:layout_width="50dp"
@@ -202,7 +202,7 @@
             android:visibility="invisible"
             android:text="0" />
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_favorite"
             android:layout_alignParentEnd="true"
             android:layout_width="50dp"

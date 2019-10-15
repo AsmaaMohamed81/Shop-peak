@@ -1,8 +1,6 @@
 package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,8 @@ import com.alatheer.shop_peak.Model.FilterModelDetails;
 import com.alatheer.shop_peak.R;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by M.Hamada on 13/04/2019.
@@ -30,15 +30,15 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterHold
         this.filter_activity= (Filter_Activity) context;
     }
 
-    @NonNull
+
     @Override
-    public FilterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FilterHolder onCreateViewHolder( ViewGroup parent, int viewType) {
        View view= LayoutInflater.from(context).inflate(R.layout.filter_raw,parent,false);
        return new FilterHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final FilterHolder holder, final int position) {
+    public void onBindViewHolder( final FilterHolder holder, final int position) {
      holder.filter_text.setText(filterModelList.get(position).getTitle());
      holder.filter_layout.setOnClickListener(new View.OnClickListener() {
          @Override

@@ -2,8 +2,6 @@ package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +24,8 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * Created by M.Hamada on 24/03/2019.
  */
@@ -40,16 +40,16 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
         this.context=context;
         mainActivity=(MainActivity) context;
     }
-    @NonNull
+
     @Override
-    public NavigationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NavigationHolder onCreateViewHolder( ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.navigation_raw,parent,false);
         NavigationHolder navigationHolder=new NavigationHolder(view);
         return navigationHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final NavigationHolder holder, final int position) {
+    public void onBindViewHolder( final NavigationHolder holder, final int position) {
      holder.txt_raw.setText(navigationModels.get(position).getName());
 //     MyHolder.image_raw.setImageResource(navigationModels.get(position).getItem_image());
      holder.itemView.setOnClickListener(new View.OnClickListener() {

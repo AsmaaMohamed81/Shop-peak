@@ -173,7 +173,7 @@
            android:layout_height="wrap_content"
            android:layout_below="@+id/menu_root"
            android:layout_marginTop="20dp">
-           <android.support.v7.widget.RecyclerView
+           <androidx.recyclerview.widget.RecyclerView
                android:id="@+id/recycler_menu"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
                android:layout_marginBottom="55dp">
 
 
-           </android.support.v7.widget.RecyclerView>
+           </androidx.recyclerview.widget.RecyclerView>
 
 
            <ProgressBar

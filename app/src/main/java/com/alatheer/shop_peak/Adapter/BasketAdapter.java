@@ -1,33 +1,23 @@
 package com.alatheer.shop_peak.Adapter;
 
-import android.app.Activity;
-import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Basket_Activity;
-import com.alatheer.shop_peak.Activities.DetailsActivity;
-import com.alatheer.shop_peak.Activities.Favorite_Activity;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
-import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.OrderItemList;
 import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -50,15 +40,15 @@ public class  BasketAdapter extends RecyclerView.Adapter<BasketAdapter.BasketHol
 
     }
 
-    @NonNull
+
     @Override
-    public BasketHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BasketHolder onCreateViewHolder( ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.basket_raw,parent,false);
         return new BasketHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final BasketHolder holder, final int position) {
+    public void onBindViewHolder( final BasketHolder holder, final int position) {
         myAppDatabase = Room.databaseBuilder(getApplicationContext(), MyAppDatabase.class, "productdb").allowMainThreadQueries().build();
         holder.basket_title.setText(basketModelList.get(position).getSanfTitle());
         Picasso.with(context).load(basketModelList.get(position).getSanfImage()).into(holder.title_img);

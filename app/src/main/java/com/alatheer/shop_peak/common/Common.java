@@ -13,8 +13,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,9 +22,11 @@ import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.Vender_Signup_Activity;
 import com.alatheer.shop_peak.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 
+import androidx.core.content.ContextCompat;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -64,7 +64,7 @@ public class Common {
         });
 
         Snackbar.SnackbarLayout layout = (Snackbar.SnackbarLayout) snackbar.getView();
-        TextView textView = layout.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = layout.findViewById(R.id.snackbar_text);
         textView.setVisibility(View.INVISIBLE);
         layout.setPadding(0,0,0,0);
         layout.addView(view);

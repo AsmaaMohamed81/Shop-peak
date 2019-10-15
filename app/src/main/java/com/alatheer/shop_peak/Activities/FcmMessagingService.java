@@ -2,14 +2,13 @@ package com.alatheer.shop_peak.Activities;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Vibrator;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 
 import com.alatheer.shop_peak.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -61,7 +60,8 @@ public class FcmMessagingService extends FirebaseMessagingService {
         notificationBuilder.setSound(soundUri);
 
         notificationBuilder.setSmallIcon(R.mipmap.icon_round);
-        notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.icon_round));
+
+        notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.ic_contact));
 
         notificationBuilder.setAutoCancel(true);
 

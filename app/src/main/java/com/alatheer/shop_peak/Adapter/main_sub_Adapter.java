@@ -2,8 +2,6 @@ package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +17,8 @@ import com.alatheer.shop_peak.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by M.Hamada on 22/03/2019.
@@ -51,15 +51,15 @@ public class main_sub_Adapter extends RecyclerView.Adapter {
 
     }
 
-    @NonNull
+
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.sub_category_row, parent, false);
         MyHolder MyHolder = new MyHolder(view);
         return MyHolder;
     }
     @Override
-    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder MyHolder, final int position) {
+    public void onBindViewHolder( final RecyclerView.ViewHolder MyHolder, final int position) {
         if (MyHolder instanceof MyHolder)
         {
             MyHolder myHolder = (MyHolder) MyHolder;

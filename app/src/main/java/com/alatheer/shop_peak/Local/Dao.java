@@ -1,10 +1,6 @@
 package com.alatheer.shop_peak.Local;
 
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
+
 
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.OrderItemList;
@@ -12,11 +8,15 @@ import com.alatheer.shop_peak.Model.ProfileModel;
 
 import java.util.List;
 
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
+import androidx.room.Update;
+
 /**
  * Created by M.Hamada on 02/04/2019.
  */
-
-@android.arch.persistence.room.Dao
+@androidx.room.Dao
 public interface Dao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
      void addproduct(OrderItemList orderItemList);

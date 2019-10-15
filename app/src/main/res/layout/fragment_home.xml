@@ -52,26 +52,26 @@
                     android:layout_margin="10dp"/>
             </RadioGroup>
         </LinearLayout>
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_offer"
             android:layout_width="match_parent"
             android:layout_marginTop="6dp"
             android:layout_height="wrap_content"
             android:layoutAnimation="@anim/layout_animation_from_right">
 
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="55dp">
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="6dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/recycler_home"
             android:layoutAnimation="@anim/layout_animation_fall_down">
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <ProgressBar
             android:id="@+id/progBar"

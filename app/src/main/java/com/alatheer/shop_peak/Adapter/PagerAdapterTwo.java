@@ -1,12 +1,5 @@
 package com.alatheer.shop_peak.Adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-
-import com.alatheer.shop_peak.Fragments.DescriptionFragment;
-import com.alatheer.shop_peak.Fragments.Fragment_Details;
-import com.alatheer.shop_peak.Fragments.RatingFragment;
 
 /**
  * Created by M.Hamada on 23/05/2019.

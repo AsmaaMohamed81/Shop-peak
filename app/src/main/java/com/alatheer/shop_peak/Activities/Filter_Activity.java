@@ -1,11 +1,9 @@
 package com.alatheer.shop_peak.Activities;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
 
 import com.alatheer.shop_peak.Adapter.FilterAdapter;
 import com.alatheer.shop_peak.Adapter.FilterAdapterDetails;
@@ -18,11 +16,15 @@ import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class Filter_Activity extends AppCompatActivity{
+public class Filter_Activity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView recyclerView_filter,recyclerView_filterdetails;
     RecyclerView.LayoutManager layoutManager_filter,layoutManager_filterdetails;

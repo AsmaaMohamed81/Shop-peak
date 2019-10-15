@@ -1,8 +1,6 @@
 package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +11,8 @@ import com.alatheer.shop_peak.Model.Color;
 import com.alatheer.shop_peak.R;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by M.Hamada on 03/06/2019.
@@ -27,16 +27,16 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorHolder>
         this.colors = colors;
     }
 
-    @NonNull
+
     @Override
-    public ColorHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ColorHolder onCreateViewHolder( ViewGroup viewGroup, int i) {
         View view =LayoutInflater.from(context).inflate(R.layout.color_item,viewGroup,false);
         ColorHolder colorHolder = new ColorHolder(view);
         return colorHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ColorHolder colorHolder, int i) {
+    public void onBindViewHolder( ColorHolder colorHolder, int i) {
         if (!colors[i].isEmpty()) {
             colorHolder.linearLayout_color.setBackgroundColor(android.graphics.Color.parseColor("#" + colors[i]));
         }
@@ -49,7 +49,7 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorHolder>
 
     class ColorHolder extends  RecyclerView.ViewHolder{
         Button linearLayout_color;
-        public ColorHolder(@NonNull View itemView) {
+        public ColorHolder( View itemView) {
             super(itemView);
             linearLayout_color = itemView.findViewById(R.id.btn_color);
         }

@@ -1,24 +1,20 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.view.GravityCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -28,7 +24,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TabHost;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,11 +40,10 @@ import com.alatheer.shop_peak.Fragments.ProfileVendor_Fragment;
 import com.alatheer.shop_peak.Fragments.SettingFragment;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
+import com.alatheer.shop_peak.Local.NotificationReceiver;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
-import com.alatheer.shop_peak.Model.NavigationModel;
 import com.alatheer.shop_peak.Model.RatingModel2;
-import com.alatheer.shop_peak.Model.SellerSearch;
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.list_cats;
@@ -62,22 +57,32 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.RemoteMessage;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static com.alatheer.shop_peak.Local.App.CHANNEL_ID;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
@@ -85,13 +90,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView img_menu;
     Toolbar toolbar;
     MyAppDatabase myAppDatabase;
-    BottomNavigationView bottomNavigationView, bottomNavigationView2;
+    BottomNavigationView bottomNavigationView, bottomNavigationView2,bottomNavigationView3;
     NavigationAdapter navigationAdapter;
     Search_Navigation_Adapter search_navigation_adapter;
     RecyclerView.LayoutManager navigation_manager;
     RecyclerView navigationrecycler;
     CircleImageView profile_img;
-    android.app.Fragment selectedfragment;
+    Fragment selectedfragment;
     HomeFragment homeFragment;
     MySharedPreference mPrefs;
     ProfileFragment profileFragment;
@@ -260,9 +265,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initRecyclerview();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView2 = findViewById(R.id.bottom_navigation2);
+        bottomNavigationView3 = findViewById(R.id.bottom_navigation3);
         //BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(nav_listner);
         bottomNavigationView2.setOnNavigationItemSelectedListener(nav_listner2);
+        bottomNavigationView3.setOnNavigationItemSelectedListener(nav_listner3);
 
         getDataIntent();
 
@@ -271,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         update_Token();
 
         HomeFragment homeFragment=new HomeFragment();
-        android.app.FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
 
     }
@@ -282,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             FirebaseInstanceId.getInstance().getInstanceId()
                     .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                         @Override
-                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        public void onComplete( Task<InstanceIdResult> task) {
                             if (task.isSuccessful())
                             {
                                 String fireBaseToken = task.getResult().getToken();
@@ -362,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bundle.putString("image1",image1);
         bundle.putString("image2",image2);
         profileFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
     }
     public void initRecyclerview(){
         navigationrecycler=findViewById(R.id.navigation_recycler_list);
@@ -380,20 +387,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private BottomNavigationView.OnNavigationItemSelectedListener nav_listner= new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        public boolean onNavigationItemSelected( MenuItem item) {
             selectedfragment= null;
             switch (item.getItemId()){
                 case R.id.nav_notification:
                     selectedfragment=new NotificationFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
                 case R.id.nav_home:
                     selectedfragment=new HomeFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
                 case R.id.nav_favorite:
                     selectedfragment = new Favorite_Fragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
                     break;
                 case R.id.nav_profile:
 
@@ -403,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                     else {
                         selectedfragment = new Client_Profile_Fragment();
-                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
                     }
                     break;
                 //case R.id.nav_add:
@@ -415,30 +422,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     };
     private BottomNavigationView.OnNavigationItemSelectedListener nav_listner2 = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        public boolean onNavigationItemSelected( MenuItem item) {
             selectedfragment = null;
             switch (item.getItemId()) {
                 case R.id.nav_notification:
                     selectedfragment = new NotificationFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
                     break;
                 case R.id.nav_home:
                     selectedfragment = new HomeFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
                     break;
                 case R.id.nav_favorite:
                     selectedfragment = new Favorite_Fragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
                     break;
                 case R.id.nav_profile:
                     selectedfragment = new ProfileVendor_Fragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
                     break;
                 case R.id.nav_add:
                     startActivity(new Intent(MainActivity.this, AddProductActivity.class));
                     break;
             }
             return true;
+        }
+    };
+    private BottomNavigationView.OnNavigationItemSelectedListener nav_listner3= new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            return false;
         }
     };
    /* public void chooseimage(){
@@ -480,7 +494,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         openDrawer();
     }
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected( MenuItem item) {
         String itemName = (String) item.getTitle();
         int id = item.getItemId();
         switch (id) {
@@ -630,11 +644,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (type.equals("1")) {
                     bottomNavigationView2.setVisibility(View.VISIBLE);
                     bottomNavigationView.setVisibility(View.GONE);
-                } else {
+                } else if(type.equals("2")) {
 
                     bottomNavigationView2.setVisibility(View.GONE);
                     bottomNavigationView.setVisibility(View.VISIBLE);
+                } else if(type.equals("3")){
+                    bottomNavigationView2.setVisibility(View.GONE);
+                    bottomNavigationView.setVisibility(View.GONE);
                 }
+
             }
 
     }
@@ -758,7 +776,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             profileVendor_fragment.setArguments(bundle);
 
-            getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileVendor_fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,profileVendor_fragment).commit();
 
         }else {
             if (profileFragment==null)
@@ -775,7 +793,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             profileFragment.setArguments(bundle);
 
-            getFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
+           getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
         }
 
 
@@ -806,5 +824,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         gps_dialog.setCanceledOnTouchOutside(false);
         gps_dialog.show();
     }
+    /*public void showNotification() {
+        RemoteViews collapsedView = new RemoteViews(getPackageName(),
+                R.layout.notification_collapsed);
+        RemoteViews expandedView = new RemoteViews(getPackageName(),
+                R.layout.notification_expanded);
 
+        Intent clickIntent = new Intent(this, NotificationReceiver.class);
+        PendingIntent clickPendingIntent = PendingIntent.getBroadcast(this,
+                0, clickIntent, 0);
+
+        collapsedView.setTextViewText(R.id.text_view_collapsed_1, "Hello World!");
+
+        expandedView.setImageViewResource(R.id.image_view_expanded, R.mipmap.icon_round);
+        expandedView.setOnClickPendingIntent(R.id.image_view_expanded, clickPendingIntent);
+
+        RemoteMessage.Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.icon_round)
+                .setCustomContentView(collapsedView)
+                .setCustomBigContentView(expandedView)
+                //.setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                .build();
+
+        notificationManager.notify(1, notification);
+    }*/
 }

@@ -1,8 +1,6 @@
 package com.alatheer.shop_peak.Local;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.Query;
+
 
 import com.alatheer.shop_peak.Model.Description;
 import com.alatheer.shop_peak.Model.Item2;

@@ -3,13 +3,13 @@ package com.alatheer.shop_peak.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.support.annotation.Nullable;
 
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.Tags.Tags;
 import com.alatheer.shop_peak.languagehelper.LanguageHelper;
 import com.alatheer.shop_peak.preferance.MySharedPreference;
 
+import androidx.annotation.Nullable;
 import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;

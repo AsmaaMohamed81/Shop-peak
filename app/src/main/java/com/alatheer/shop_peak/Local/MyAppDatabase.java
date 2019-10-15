@@ -1,11 +1,11 @@
 package com.alatheer.shop_peak.Local;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
-
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.OrderItemList;
 import com.alatheer.shop_peak.Model.ProfileModel;
+
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 
 /**
  * Created by M.Hamada on 02/04/2019.

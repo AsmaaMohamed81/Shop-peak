@@ -1,33 +1,6 @@
 package com.alatheer.shop_peak.Fragments;
 
-import android.arch.persistence.room.Room;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
-import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
-import com.alatheer.shop_peak.Local.MyAppDatabase;
-import com.alatheer.shop_peak.Model.BasketModel;
-import com.alatheer.shop_peak.R;
-import com.alatheer.shop_peak.Tags.Tags;
-import com.alatheer.shop_peak.languagehelper.LanguageHelper;
-
-import io.paperdb.Paper;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 /*public class Fragment_two_Details extends Fragment {
     ImageView details_img, back_image, plus_circle, minus_circle, shopping_cart;

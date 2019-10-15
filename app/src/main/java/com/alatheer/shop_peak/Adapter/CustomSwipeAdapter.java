@@ -3,9 +3,7 @@ package com.alatheer.shop_peak.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,28 +12,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alatheer.shop_peak.Activities.DetailsActivity;
-import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Model.Item;
-import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
-import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.PagerAdapter;
 
 /**
  * Created by M.Hamada on 02/04/2019.
  */
 
-public class CustomSwipeAdapter extends PagerAdapter{
+public class CustomSwipeAdapter extends PagerAdapter {
     private String[] images_resources,colors;
     List<Item> item;
     String sanf_name,details,price,product_id,rating,store_id,price_before_dis,like;
     private Context context;
 
-    public CustomSwipeAdapter(String[] images_resources, List<Item> item, String sanf_name, String details, String price, String product_id, String rating, String store_id, String[] colors,String price_before_dis,String like, Context context) {
+
+        public CustomSwipeAdapter(String[] images_resources, List<Item> item, String sanf_name, String details, String price, String product_id, String rating, String store_id, String[] colors, String price_before_dis, String like, Context context) {
         this.images_resources = images_resources;
         this.item= item;
         this.sanf_name=sanf_name;

@@ -1,6 +1,6 @@
 package com.alatheer.shop_peak.Local;
 
-import android.arch.persistence.room.*;
+
 
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.ProfileModel;

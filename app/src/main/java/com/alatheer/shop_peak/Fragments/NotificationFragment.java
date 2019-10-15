@@ -3,28 +3,23 @@ package com.alatheer.shop_peak.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.Notifi_Adapter;
 import com.alatheer.shop_peak.Adapter.Like_Adapter;
-import com.alatheer.shop_peak.Model.Follow;
-import com.alatheer.shop_peak.Model.Like;
 import com.alatheer.shop_peak.Model.NotificationModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
@@ -34,12 +29,15 @@ import com.alatheer.shop_peak.service.Api;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class NotificationFragment extends android.app.Fragment {
+public class NotificationFragment extends Fragment {
     RecyclerView notif_recycler;
     Notifi_Adapter notifi_adapter;
     Like_Adapter like_adapter;

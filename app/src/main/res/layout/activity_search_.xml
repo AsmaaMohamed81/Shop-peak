@@ -6,21 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.alatheer.shop_peak.Activities.Search_Activity">
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:theme="@style/ToolbarColorbackArrow"
         app:popupTheme="@style/AppTheme"
         app:titleTextColor="@color/colorPrimary"
         android:layout_height="?attr/actionBarSize">
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:id="@+id/recycler_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

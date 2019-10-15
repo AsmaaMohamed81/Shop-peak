@@ -1,11 +1,10 @@
 package com.alatheer.shop_peak.Adapter;
 
-import android.app.Fragment;
-import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +12,8 @@ import android.view.animation.AlphaAnimation;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alatheer.shop_peak.Activities.Basket_Activity;
-import com.alatheer.shop_peak.Activities.Favorite_Activity;
-import com.alatheer.shop_peak.Activities.MainActivity;
 import com.alatheer.shop_peak.Fragments.Favorite_Fragment;
-import com.alatheer.shop_peak.Fragments.HomeFragment;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel;

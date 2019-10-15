@@ -2,17 +2,11 @@ package com.alatheer.shop_peak.Fragments;
 
 import android.animation.Animator;
 import android.app.ProgressDialog;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +22,6 @@ import android.widget.Toast;
 
 import com.alatheer.shop_peak.Activities.Basket_Activity;
 import com.alatheer.shop_peak.Activities.IntroActivity;
-import com.alatheer.shop_peak.Activities.Login_Activity;
 import com.alatheer.shop_peak.Adapter.ColorAdapter;
 import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
 import com.alatheer.shop_peak.Adapter.PassData;
@@ -47,9 +40,15 @@ import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.alatheer.shop_peak.util.CircleAnimationUtil;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+import androidx.viewpager.widget.ViewPager;
 import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,8 +1,6 @@
 package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +16,8 @@ import com.alatheer.shop_peak.preferance.MySharedPreference;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * Created by M.Hamada on 24/03/2019.
  */
@@ -32,16 +32,16 @@ public class Sub_product_Adapter extends RecyclerView.Adapter<Sub_product_Adapte
         this.context=context;
         category_activity=(Category_Activity) context;
     }
-    @NonNull
+
     @Override
-    public NavigationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NavigationHolder onCreateViewHolder( ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.filter_raw,parent,false);
         NavigationHolder navigationHolder=new NavigationHolder(view);
         return navigationHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final NavigationHolder holder, final int position) {
+    public void onBindViewHolder( final NavigationHolder holder, final int position) {
      holder.txt_raw.setText(subsList.get(position).getName());
 //     MyHolder.image_raw.setImageResource(navigationModels.get(position).getItem_image());
      holder.itemView.setOnClickListener(new View.OnClickListener() {

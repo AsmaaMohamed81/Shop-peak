@@ -1,9 +1,6 @@
 package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +15,16 @@ import com.alatheer.shop_peak.R;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class governAdapter extends RecyclerView.Adapter<governAdapter.Holder>{
 
     Context context;
 
     List<Govern> governsList;
-    Fragment fragment;
+    androidx.fragment.app.Fragment fragment;
     Signup_Activity signup_activity;
     Vender_Signup_Activity vender_signup_activity;
      Client_Profile_Fragment client_profile_fragment;
@@ -33,7 +34,7 @@ public class governAdapter extends RecyclerView.Adapter<governAdapter.Holder>{
         this.governsList = governsList;
 
     }
-    public governAdapter(Context context,Fragment fragment, List<Govern> governsList) {
+    public governAdapter(Context context, Fragment fragment, List<Govern> governsList) {
         this.fragment = fragment;
         this.governsList = governsList;
         this.context=context;

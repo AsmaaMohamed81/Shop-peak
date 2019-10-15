@@ -3,10 +3,10 @@ package com.alatheer.shop_peak.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -28,6 +28,8 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import java.io.Serializable;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,8 +39,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 //import com.alatheer.shop_peak.Local.HomeDatabase;
 
-public class Search_Activity extends AppCompatActivity  {
- android.support.v7.widget.Toolbar toolbar;
+public class Search_Activity extends AppCompatActivity {
+    Toolbar toolbar;
     RecyclerView recyclerView_search;
     RecyclerView.LayoutManager layoutManager_search;
     SearchAdapter searchAdapter;

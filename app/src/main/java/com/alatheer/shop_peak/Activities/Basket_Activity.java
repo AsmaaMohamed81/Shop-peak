@@ -1,13 +1,9 @@
 package com.alatheer.shop_peak.Activities;
 
-import android.arch.persistence.room.Room;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +27,11 @@ import com.alatheer.shop_peak.service.Api;
 import java.io.Serializable;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;

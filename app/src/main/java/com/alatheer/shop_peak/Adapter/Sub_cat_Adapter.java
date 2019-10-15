@@ -1,8 +1,6 @@
 package com.alatheer.shop_peak.Adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +15,8 @@ import com.alatheer.shop_peak.R;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 public class Sub_cat_Adapter extends RecyclerView.Adapter<Sub_cat_Adapter.Sub_cat_Holder> {
     Context context;
     List<list_cats.Subs> sub_list;
@@ -27,15 +27,14 @@ public class Sub_cat_Adapter extends RecyclerView.Adapter<Sub_cat_Adapter.Sub_ca
         this.sub_list = sub_list;
     }
 
-    @NonNull
     @Override
-    public Sub_cat_Holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public Sub_cat_Holder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view= LayoutInflater.from(context).inflate(R.layout.item_txt,viewGroup,false);
         return new Sub_cat_Holder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final Sub_cat_Holder sub_cat_holder, int i) {
+    public void onBindViewHolder(final Sub_cat_Holder sub_cat_holder, int i) {
         final list_cats.Subs city=sub_list.get(i);
         sub_cat_holder.Bind(city);
 
@@ -62,7 +61,7 @@ public class Sub_cat_Adapter extends RecyclerView.Adapter<Sub_cat_Adapter.Sub_ca
 
     class Sub_cat_Holder extends  RecyclerView.ViewHolder{
          TextView textView;
-        public Sub_cat_Holder(@NonNull View itemView) {
+        public Sub_cat_Holder(View itemView) {
             super(itemView);
             textView=itemView.findViewById(R.id.text);
         }

@@ -1,8 +1,5 @@
 package com.alatheer.shop_peak.Model;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;

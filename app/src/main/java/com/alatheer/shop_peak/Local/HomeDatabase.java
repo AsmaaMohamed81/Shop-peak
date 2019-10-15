@@ -1,7 +1,5 @@
 package com.alatheer.shop_peak.Local;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
 
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.HomeModel;

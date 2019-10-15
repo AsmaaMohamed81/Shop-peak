@@ -41,7 +41,7 @@
         android:inputType="text"
         android:textColorHint="@color/colorPrimary" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -52,14 +52,14 @@
 
 
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/navigation_recycler_list">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
-            <android.support.design.widget.NavigationView
+            <com.google.android.material.navigation.NavigationView
                 android:id="@+id/nav_view2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -67,10 +67,10 @@
                 android:layout_gravity="start"
                 app:menu="@menu/home_menu">
 
-            </android.support.design.widget.NavigationView>
+            </com.google.android.material.navigation.NavigationView>
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </LinearLayout>
