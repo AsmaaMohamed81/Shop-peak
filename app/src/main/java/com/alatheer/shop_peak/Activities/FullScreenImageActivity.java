@@ -62,7 +62,7 @@ public class FullScreenImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen_image);
         LocalBroadcastManager.getInstance(this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
-        mSong = MediaPlayer.create(FullScreenImageActivity.this,R.raw.song);
+        mSong = MediaPlayer.create(FullScreenImageActivity.this,R.raw.music);
 
         if(getIntent().getExtras() != null){
             for(String key : getIntent().getExtras().keySet()){

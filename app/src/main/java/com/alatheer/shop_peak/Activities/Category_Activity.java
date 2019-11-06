@@ -94,7 +94,7 @@ public class Category_Activity extends AppCompatActivity {
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
-        mSong = MediaPlayer.create(Category_Activity.this,R.raw.song);
+        mSong = null;
         LocalBroadcastManager.getInstance(this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
         if(getIntent().getExtras() != null){
             for(String key : getIntent().getExtras().keySet()){
@@ -267,18 +267,21 @@ public class Category_Activity extends AppCompatActivity {
         final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
                 .setCancelable(false)
                 .create();
-
+        stopPlaying();
         View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
         TextView tv_msg = view.findViewById(R.id.tv_msg);
         tv_msg.setText(message);
         Button doneBtn = view.findViewById(R.id.doneBtn);
+        mSong = MediaPlayer.create(Category_Activity.this,R.raw.music);
+        mSong.setLooping(true);
         mSong.start();
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gps_dialog.dismiss();
-                mSong.pause();
-                mSong.seekTo(0);
+                //mSong.pause();
+                //mSong.seekTo(0);
+                stopPlaying();
             }
         });
 
@@ -286,5 +289,13 @@ public class Category_Activity extends AppCompatActivity {
         gps_dialog.setView(view);
         gps_dialog.setCanceledOnTouchOutside(false);
         gps_dialog.show();
+    }
+
+    private void stopPlaying() {
+        if(mSong != null){
+            mSong.stop();
+            mSong.release();
+            mSong = null;
+        }
     }
 }

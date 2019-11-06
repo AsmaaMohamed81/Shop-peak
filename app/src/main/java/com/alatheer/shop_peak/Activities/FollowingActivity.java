@@ -73,7 +73,7 @@ public class FollowingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_followers);
         LocalBroadcastManager.getInstance(this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
-        mSong = MediaPlayer.create(FollowingActivity.this,R.raw.song);
+        mSong = MediaPlayer.create(FollowingActivity.this,R.raw.music);
 
         if(getIntent().getExtras() != null){
             for(String key : getIntent().getExtras().keySet()){

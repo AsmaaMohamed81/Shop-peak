@@ -78,7 +78,7 @@ public class Seller_Search_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_followers);
         LocalBroadcastManager.getInstance(this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
-        mSong = MediaPlayer.create(Seller_Search_Activity.this,R.raw.song);
+        mSong = MediaPlayer.create(Seller_Search_Activity.this,R.raw.music);
 
         if(getIntent().getExtras() != null){
             for(String key : getIntent().getExtras().keySet()){

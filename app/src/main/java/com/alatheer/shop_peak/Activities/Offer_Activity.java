@@ -90,7 +90,7 @@ public class Offer_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_);
-        mSong = MediaPlayer.create(Offer_Activity.this,R.raw.song);
+        mSong = MediaPlayer.create(Offer_Activity.this,R.raw.music);
         LocalBroadcastManager.getInstance(this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
         if(getIntent().getExtras() != null){
             for(String key : getIntent().getExtras().keySet()){
