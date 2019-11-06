@@ -1,8 +1,15 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.alatheer.shop_peak.Adapter.FilterAdapter;
@@ -30,7 +37,7 @@ public class Filter_Activity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager_filter,layoutManager_filterdetails;
     FilterAdapter filterAdapter;
     FilterAdapterDetails filterAdapterDetails;
-
+   MediaPlayer mSong;
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
         String lang = Paper.book().read("language");
@@ -60,6 +67,14 @@ public class Filter_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_);
+        mSong = null ;
+
+        if(getIntent().getExtras() != null){
+            for(String key : getIntent().getExtras().keySet()){
+                String msg = getIntent().getExtras().getString(key);
+
+            }
+        }
         initview();
     }
 
@@ -146,5 +161,49 @@ public class Filter_Activity extends AppCompatActivity {
         recyclerView_filterdetails.setHasFixedSize(true);
         recyclerView_filterdetails.setLayoutManager(layoutManager_filterdetails);
         recyclerView_filterdetails.setAdapter(filterAdapterDetails);
+    }
+    private BroadcastReceiver mhandler = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String msg = intent.getStringExtra("message");
+            //message.setText(msg);
+
+            showNotificationInADialog(msg);
+        }
+    };
+    private void showNotificationInADialog(final String message) {
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
+                .setCancelable(false)
+                .create();
+        stopPlaying();
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(message);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        mSong = MediaPlayer.create(Filter_Activity.this,R.raw.music);
+        mSong.setLooping(true);
+        mSong.start();
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                //mSong.pause();
+                //mSong.seekTo(0);
+                stopPlaying();
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
+    }
+
+    private void stopPlaying() {
+        if(mSong != null){
+            mSong.stop();
+            mSong.release();
+            mSong = null;
+        }
     }
 }

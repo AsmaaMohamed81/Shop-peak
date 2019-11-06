@@ -9,6 +9,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Vibrator;
 import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.alatheer.shop_peak.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -30,6 +31,7 @@ public class FcmMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             type = "message";
             sendNotification(remoteMessage.getNotification().getBody());
+
         }
     }
 
@@ -47,8 +49,13 @@ public class FcmMessagingService extends FirebaseMessagingService {
         } else if (type.equals("message")) {
             message = messageBody;
         }
+        Intent intent = new Intent("com.alatheer.shop_peak_FCM-MESSAGE");
+        intent.putExtra("message",message);
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        localBroadcastManager.sendBroadcast(intent);
 
-        Intent intent = new Intent(FcmMessagingService.this, MainActivity.class);
+
+        /*Intent intent = new Intent(FcmMessagingService.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
@@ -71,6 +78,6 @@ public class FcmMessagingService extends FirebaseMessagingService {
         notificationBuilder.setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notificationBuilder.build());
+        notificationManager.notify(0, notificationBuilder.build());*/
     }
 }

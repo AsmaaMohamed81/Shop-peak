@@ -1,15 +1,20 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.PorterDuff;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +34,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,7 +60,7 @@ public class Category_Activity extends AppCompatActivity {
 
     list_cats list_catss;
     list_cats.Subs subs;
-
+    MediaPlayer mSong;
 
     private ProgressBar progressBar;
     private TextView txt_no;
@@ -88,6 +94,14 @@ public class Category_Activity extends AppCompatActivity {
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+        mSong = MediaPlayer.create(Category_Activity.this,R.raw.song);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
+        if(getIntent().getExtras() != null){
+            for(String key : getIntent().getExtras().keySet()){
+                String msg = getIntent().getExtras().getString(key);
+
+            }
+        }
         getdataIntent();
         initView();
     }
@@ -239,5 +253,38 @@ public class Category_Activity extends AppCompatActivity {
         intent.putExtra("color",colors);
         startActivity(intent);
         Animatoo.animateInAndOut(Category_Activity.this);
+    }
+    private BroadcastReceiver mhandler = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String msg = intent.getStringExtra("message");
+            //message.setText(msg);
+
+            showNotificationInADialog(msg);
+        }
+    };
+    private void showNotificationInADialog(final String message) {
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
+                .setCancelable(false)
+                .create();
+
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(message);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        mSong.start();
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                mSong.pause();
+                mSong.seekTo(0);
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
     }
 }

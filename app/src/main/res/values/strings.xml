@@ -124,6 +124,9 @@
     <string name="success_register">Successfully Register</string>
     <string name="following">Following</string>
     <string name="Really_Exit">Are you sure you want to exit?</string>
+    <string name="order">Orders</string>
+    <string name="online">Online</string>
+    <string name="Offline">Offline</string>
 
 
 </resources>

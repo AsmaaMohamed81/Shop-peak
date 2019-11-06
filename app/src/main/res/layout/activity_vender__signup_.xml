@@ -12,7 +12,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             app:title="@string/join_us"
@@ -20,7 +20,7 @@
             app:popupTheme="@style/AppTheme"
             app:titleTextColor="@color/colorPrimary"
             android:layout_alignParentTop="true"
-            android:layout_height="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
+            android:layout_height="?attr/actionBarSize"></androidx.appcompat.widget.Toolbar>
 
         <ImageView
             android:id="@+id/logo_img"
@@ -183,7 +183,7 @@
                                 android:layout_gravity="center_horizontal"
 
                                 >
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/recView_govern"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -192,7 +192,7 @@
                                     >
 
 
-                                </android.support.v7.widget.RecyclerView>
+                                </androidx.recyclerview.widget.RecyclerView>
 
 
 
@@ -311,14 +311,14 @@
                                 android:layout_gravity="center_horizontal"
 
                                 >
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/recView_city"
                                     android:layout_width="match_parent"
                                     android:layout_height="100dp"
                                     android:layout_marginTop="2dp"
                                     android:background="@color/transparent"
                                     >
-                                </android.support.v7.widget.RecyclerView>
+                                </androidx.recyclerview.widget.RecyclerView>
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -489,7 +489,7 @@
                         android:layout_gravity="center_horizontal"
 
                         >
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recView_tasnefat"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -498,7 +498,7 @@
                             >
 
 
-                        </android.support.v7.widget.RecyclerView>
+                        </androidx.recyclerview.widget.RecyclerView>
 
 
 

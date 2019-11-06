@@ -24,9 +24,18 @@ public class UserModel1 implements Serializable {
     private Integer success;
 
     private String type;
-
+    private String active;
     private String logo_img;
     private String send_order;
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
 
 
     public String getSend_order() {

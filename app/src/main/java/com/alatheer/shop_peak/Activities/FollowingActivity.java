@@ -1,8 +1,16 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.alatheer.shop_peak.Adapter.FollowersAdapter;
 import com.alatheer.shop_peak.Model.Follow_Vender;
 import com.alatheer.shop_peak.Model.UserModel1;
@@ -16,6 +24,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.paperdb.Paper;
@@ -33,7 +42,7 @@ public class FollowingActivity extends AppCompatActivity {
     private List<Follow_Vender> userModel1ArrayList;
 
     String store_id,type,user_id_fk;
-
+    MediaPlayer mSong;
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
         String lang = Paper.book().read("language");
@@ -63,6 +72,15 @@ public class FollowingActivity extends AppCompatActivity {
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_followers);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
+        mSong = MediaPlayer.create(FollowingActivity.this,R.raw.song);
+
+        if(getIntent().getExtras() != null){
+            for(String key : getIntent().getExtras().keySet()){
+                String msg = getIntent().getExtras().getString(key);
+
+            }
+        }
         getDataFromIntent();
         initview();
 
@@ -125,6 +143,39 @@ public class FollowingActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+    private BroadcastReceiver mhandler = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String msg = intent.getStringExtra("message");
+            //message.setText(msg);
+
+            showNotificationInADialog(msg);
+        }
+    };
+    private void showNotificationInADialog(final String message) {
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
+                .setCancelable(false)
+                .create();
+
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(message);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        mSong.start();
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                mSong.pause();
+                mSong.seekTo(0);
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
     }
 
 }

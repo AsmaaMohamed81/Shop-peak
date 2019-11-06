@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.UserModel;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
@@ -39,7 +40,11 @@ import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -54,6 +59,7 @@ public class Login_Activity extends AppCompatActivity {
     SignInButton gmail_login;
     LoginButton facebook_login;
     private String email, passWord;
+    UserModel1 userModel1;
     private ProgressDialog dialog;
     private CheckBox checkBox;
     private Boolean accepted = false;
@@ -384,8 +390,8 @@ public class Login_Activity extends AppCompatActivity {
         passWord = edt_password.getText().toString();
 
         if (    !TextUtils.isEmpty(email) &&
-                !TextUtils.isEmpty(passWord) /*&&
-                 passWord.length()>=*/) {
+                !TextUtils.isEmpty(passWord) &&
+                 passWord.length()>=8) {
 
             Common.CloseKeyBoard(this, edt_email);
             edt_email.setError(null);
@@ -445,11 +451,12 @@ public class Login_Activity extends AppCompatActivity {
                             if (response.body().getSuccess()==1) {
 //                                Toast.makeText(Login_Activity.this, "name:" +response.body().getFull_name(), Toast.LENGTH_SHORT).show();
 
-                                UserModel1 userModel=response.body();
+                                userModel1=response.body();
+                                update_Token();
 
                                 mySharedPreference=MySharedPreference.getInstance();
 
-                                mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel);
+                                mySharedPreference.Create_Update_UserData(Login_Activity.this,userModel1);
 
                                 Log.d("model",mySharedPreference.Get_UserData(Login_Activity.this).getFull_name());
 
@@ -491,13 +498,47 @@ public class Login_Activity extends AppCompatActivity {
         snackbar = Common.CreateSnackBar(this,root,msg);
         snackbar.show();
     }
-
-    public void dismissSnackBar()
-    {
-        if (snackbar!=null)
+    private void update_Token( ) {
+        if (userModel1!=null)
         {
-            snackbar.dismiss();
+            FirebaseInstanceId.getInstance().getInstanceId()
+                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                        @Override
+                        public void onComplete( Task<InstanceIdResult> task) {
+                            if (task.isSuccessful())
+                            {
+                                String fireBaseToken = task.getResult().getToken();
+                                Log.d("Token", "onComplete: "+fireBaseToken);
+                                String user_id = userModel1.getId();
+                                Log.d("id", "onComplete: "+user_id);
 
+                                Api.getService()
+                                        .update_Token(fireBaseToken,user_id)
+                                        .enqueue(new Callback<RatingModel2>() {
+                                            @Override
+                                            public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+
+                                                if (response.isSuccessful())
+                                                {
+                                                    if (response.body().getSuccess()==1) {
+                                                        Log.e("user_token_update", "success");
+                                                    }
+
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+                                                try {
+                                                    Log.e("Error",t.getMessage());
+                                                }catch (Exception e){}
+                                            }
+                                        });
+                            }
+                        }
+                    });
         }
     }
 /*

@@ -1,20 +1,28 @@
 package com.alatheer.shop_peak.Activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NavUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.SearchAdapter;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
+import com.alatheer.shop_peak.Model.AddFavorite;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.RatingModel2;
@@ -28,6 +36,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import java.io.Serializable;
 import java.util.List;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.paperdb.Paper;
@@ -53,7 +62,7 @@ public class Search_Activity extends AppCompatActivity {
     String title;
     List<HomeModel>homeModelList;
     String user_id;
-
+    MediaPlayer mSong;
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
         String lang = Paper.book().read("language");
@@ -83,6 +92,15 @@ public class Search_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
+        mSong = MediaPlayer.create(Search_Activity.this,R.raw.song);
+
+        if(getIntent().getExtras() != null){
+            for(String key : getIntent().getExtras().keySet()){
+                String msg = getIntent().getExtras().getString(key);
+
+            }
+        }
         i=getIntent();
         initview();
     }
@@ -180,14 +198,14 @@ public class Search_Activity extends AppCompatActivity {
 
         Api.getService()
                 .add_to_favourite(user_id,sanf_id)
-                .enqueue(new Callback<RatingModel2>() {
+                .enqueue(new Callback<AddFavorite>() {
                     @Override
-                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                    public void onResponse(Call<AddFavorite> call, Response<AddFavorite> response) {
 
                     }
 
                     @Override
-                    public void onFailure(Call<RatingModel2> call, Throwable t) {
+                    public void onFailure(Call<AddFavorite> call, Throwable t) {
 
                     }
                 });
@@ -218,4 +236,38 @@ public class Search_Activity extends AppCompatActivity {
                     }
                 });
     }
+    private BroadcastReceiver mhandler = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String msg = intent.getStringExtra("message");
+            //message.setText(msg);
+
+            showNotificationInADialog(msg);
+        }
+    };
+    private void showNotificationInADialog(final String message) {
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
+                .setCancelable(false)
+                .create();
+
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(message);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        mSong.start();
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                mSong.pause();
+                mSong.seekTo(0);
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
+    }
+
 }

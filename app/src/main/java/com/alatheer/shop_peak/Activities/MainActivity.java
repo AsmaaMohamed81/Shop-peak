@@ -2,10 +2,13 @@ package com.alatheer.shop_peak.Activities;
 
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -18,19 +21,25 @@ import androidx.core.view.GravityCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Adapter.HomeAdapter;
 import com.alatheer.shop_peak.Adapter.NavigationAdapter;
+import com.alatheer.shop_peak.Adapter.PagerAdapter;
+import com.alatheer.shop_peak.Adapter.PagerAdapterTwo;
 import com.alatheer.shop_peak.Adapter.Search_Navigation_Adapter;
+import com.alatheer.shop_peak.Fragments.All_Orders_Delivary;
 import com.alatheer.shop_peak.Fragments.Client_Profile_Fragment;
 import com.alatheer.shop_peak.Fragments.Favorite_Fragment;
 import com.alatheer.shop_peak.Fragments.HomeFragment;
@@ -41,6 +50,7 @@ import com.alatheer.shop_peak.Fragments.SettingFragment;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Local.NotificationReceiver;
+import com.alatheer.shop_peak.Model.AddFavorite;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.RatingModel2;
@@ -58,7 +68,9 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.RemoteMessage;
@@ -71,9 +83,11 @@ import java.util.List;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+import androidx.viewpager.widget.ViewPager;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -99,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Fragment selectedfragment;
     HomeFragment homeFragment;
     MySharedPreference mPrefs;
+    RelativeLayout delivary_tabs;
     ProfileFragment profileFragment;
     ProfileVendor_Fragment profileVendor_fragment;
     EditText search;
@@ -106,12 +121,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String title1;
     TextView login_register, tv_username;
     List<HomeModel> homeModels;
-    String sanf_name;
-    private int PICK_IMAGE_FROM_GALEARY_REQUEST=0;
-    Uri uri;
-    Bitmap bitmap;
-    int flag;
-    UserModel userModel;
     UserModel1 userModel1;
     Favorite_Database favoriteDatabase;
 
@@ -122,10 +131,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String user_id,name,Logo_img;
     String type,order;
     String TAG="MainActivity";
-
-
+    MediaPlayer mSong;
+    Toolbar delivary_toolbar;
+    FloatingActionButton fab_out,fab_profile;
     String Token;
-
+    ViewPager viewPager;
+    PagerAdapterTwo pagerAdapter;
+    TabLayout tabLayout;
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
         String lang = Paper.book().read("language");
@@ -155,10 +167,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
+        mSong = null ;
+        if(getIntent().getExtras() != null){
+            for(String key : getIntent().getExtras().keySet()){
+                    String msg = getIntent().getExtras().getString(key);
+
+            }
+        }
+
         initview();
 
 
     }
+
     private void initview() {
 
 
@@ -170,14 +192,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         img_menu = findViewById(R.id.menu_img);
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
+        fab_out = findViewById(R.id.fab_logout);
+        fab_profile = findViewById(R.id.fab_profile);
         navigationView = findViewById(R.id.nav_view);
         navigationView2 = findViewById(R.id.nav_view2);
         search = findViewById(R.id.txt_search2);
+        delivary_tabs = findViewById(R.id.delivery_tabs);
         login_register = findViewById(R.id.tv_login_register);
         View headview=navigationView.getHeaderView(0);
         profile_img = headview.findViewById(R.id.profile_img);
         tv_username = headview.findViewById(R.id.txtname);
+        delivary_toolbar = findViewById(R.id.delivary_toolbar);
+        setSupportActionBar(delivary_toolbar);
         login_register = headview.findViewById(R.id.tv_login_register);
+        tabLayout = findViewById(R.id.delivary_tabs);
+        tabLayout.addTab(tabLayout.newTab().setText("all orders"));
+        tabLayout.addTab(tabLayout.newTab().setText("Accepted orders"));
+        tabLayout.addTab(tabLayout.newTab().setText("delivered orders"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+         viewPager = findViewById(R.id.pager);
+         pagerAdapter = new com.alatheer.shop_peak.Adapter.PagerAdapterTwo(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"myorders_db").allowMainThreadQueries().build();
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -255,12 +308,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //img.setImageResource(R.mipmap.icon_round);
             //textView.setText(personname);
         }
-        profile_img.setOnClickListener(new View.OnClickListener() {
+        /*profile_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseimage();
             }
-        });
+        });*/
         get_list_cats();
         initRecyclerview();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -327,6 +380,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
     private void get_list_cats() {
 
 
@@ -353,24 +407,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
-    private void chooseimage() {
-
-    }
-
-    public void setSelectProfile(String vender_name,int vender_image,String image1,String image2){
-        if (profileFragment==null)
-        {
-            profileFragment = profileFragment.getInstance();
-        }
-        Bundle bundle =new Bundle();
-        bundle.putString("name",vender_name);
-        bundle.putInt("image",vender_image);
-        bundle.putString("image1",image1);
-        bundle.putString("image2",image2);
-        profileFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,profileFragment).commit();
-    }
     public void initRecyclerview(){
         navigationrecycler=findViewById(R.id.navigation_recycler_list);
         navigationrecycler.setHasFixedSize(true);
@@ -450,9 +486,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     };
     private BottomNavigationView.OnNavigationItemSelectedListener nav_listner3= new BottomNavigationView.OnNavigationItemSelectedListener() {
 
+
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            return false;
+            selectedfragment = null;
+            switch (menuItem.getItemId()){
+                case R.id.nav_notification:
+                    selectedfragment = new NotificationFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                    break;
+                case R.id.nav_home:
+                    selectedfragment = new HomeFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedfragment).commit();
+                    break;
+            }
+            return true;
         }
     };
    /* public void chooseimage(){
@@ -499,9 +547,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_logout:
+                Delete_token(userModel1.getId());
                 mPrefs.ClearData(MainActivity.this);
                 LoginManager.getInstance().logOut();
                 myAppDatabase.dao().deleteproduct();
+                stopPlaying();
                 startActivity(new Intent(MainActivity.this, IntroActivity.class));
 
                 Animatoo.animateInAndOut(MainActivity.this);
@@ -644,18 +694,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (type.equals("1")) {
                     bottomNavigationView2.setVisibility(View.VISIBLE);
                     bottomNavigationView.setVisibility(View.GONE);
+                    bottomNavigationView3.setVisibility(View.GONE);
+                    drawerLayout.setVisibility(View.VISIBLE);
+                    delivary_tabs.setVisibility(View.GONE);
                 } else if(type.equals("2")) {
 
                     bottomNavigationView2.setVisibility(View.GONE);
                     bottomNavigationView.setVisibility(View.VISIBLE);
+                    bottomNavigationView3.setVisibility(View.GONE);
+                    drawerLayout.setVisibility(View.VISIBLE);
+                    delivary_tabs.setVisibility(View.GONE);
                 } else if(type.equals("3")){
                     bottomNavigationView2.setVisibility(View.GONE);
                     bottomNavigationView.setVisibility(View.GONE);
+                    bottomNavigationView3.setVisibility(View.GONE);
+                    delivary_tabs.setVisibility(View.VISIBLE);
+                    drawerLayout.setVisibility(View.GONE);
+
                 }
 
             }
 
     }
+
 
     public void list_cats_pos(int pos) {
 
@@ -691,18 +752,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Api.getService()
                 .add_to_favourite(user_id,sanf_id)
-                .enqueue(new Callback<RatingModel2>() {
+                .enqueue(new Callback<AddFavorite>() {
                     @Override
-                    public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                    public void onResponse(Call<AddFavorite> call, Response<AddFavorite> response) {
 
 
                         if (response.isSuccessful()){
                             dialog.dismiss();
 
-                            if (response.body().getSuccess() == 1) {
+
 
                                 Toast.makeText(MainActivity.this, R.string.addfav, Toast.LENGTH_SHORT).show();
-                            }
+
 
 
                         }
@@ -710,7 +771,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
 
                     @Override
-                    public void onFailure(Call<RatingModel2> call, Throwable t) {
+                    public void onFailure(Call<AddFavorite> call, Throwable t) {
 
                         dialog.dismiss();
 
@@ -759,6 +820,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         dialog.dismiss();
                     }
                 });
+    }
+    public void Delete_token(String user_id){
+        Api.getService().delete_token(user_id).enqueue(new Callback<RatingModel2>() {
+            @Override
+            public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getSuccess()==1){
+                        Toast.makeText(MainActivity.this,"logout Successfully",Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RatingModel2> call, Throwable t) {
+
+            }
+        });
     }
 
     public void profilePos(HomeModel model) {
@@ -823,6 +901,104 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         gps_dialog.setView(view);
         gps_dialog.setCanceledOnTouchOutside(false);
         gps_dialog.show();
+    }
+    private BroadcastReceiver mhandler = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String msg = intent.getStringExtra("message");
+            //message.setText(msg);
+
+            showNotificationInADialog(msg);
+        }
+    };
+    private void showNotificationInADialog(final String message) {
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
+                .setCancelable(false)
+                .create();
+        stopPlaying();
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(message);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+
+        mSong = MediaPlayer.create(MainActivity.this,R.raw.music);
+        mSong.setLooping(true);
+        mSong.start();
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                //getSupportFragmentManager().beginTransaction().replace(R.id.pager,new All_Orders_Delivary()).commit();
+                stopPlaying();
+                //viewPager.setCurrentItem(0);
+
+                //mSong.pause();
+                //mSong.seekTo(0);
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
+    }
+        // show a dialog with the provided title and message
+        /*builder3 = new AlertDialog.Builder(this);
+
+        builder3.setMessage(message);
+        mSong.start();
+        builder3.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                mSong.pause();
+                mSong.seekTo(0);
+
+                    Intent intent = new Intent(MainActivity.this,Notification_Message.class);
+                    intent.putExtra("message",message);
+                    startActivity(intent);
+
+            }
+        }).show();*/
+
+
+    /*private void stopNotificationInADialog() {
+
+        // show a dialog with the provided title and message
+        builder2 = new AlertDialog.Builder(this);
+
+        builder2.setMessage("Accept order");
+        builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+
+                    /*Intent intent = new Intent(MainActivity.this,Notification_Message.class);
+                    intent.putExtra("message",message);
+                    startActivity(intent);
+
+            }
+        }).show();
+
+    }*/
+
+    public void logout(View view) {
+        Delete_token(userModel1.getId());
+        mPrefs.ClearData(MainActivity.this);
+        LoginManager.getInstance().logOut();
+        myAppDatabase.dao().deleteproduct();
+        startActivity(new Intent(MainActivity.this, IntroActivity.class));
+
+        Animatoo.animateInAndOut(MainActivity.this);
+    }
+
+    public void go_to_profile(View view) {
+        startActivity(new Intent(MainActivity.this,Delivery_Profile.class));
+    }
+    public void stopPlaying(){
+        if(mSong != null){
+            mSong.stop();
+            mSong.release();
+            mSong = null;
+        }
     }
     /*public void showNotification() {
         RemoteViews collapsedView = new RemoteViews(getPackageName(),

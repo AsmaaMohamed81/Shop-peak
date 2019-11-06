@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
         android:id="@+id/basket_card"
         android:layout_marginTop="20dp"
-        android:layout_width="300dp"
+        android:layout_width="150dp"
         android:layout_height="200dp"
-        app:cardCornerRadius="25dp"
+        app:cardCornerRadius="20dp"
         app:cardBackgroundColor="@color/white"
         app:cardElevation="3dp"
-        android:layout_margin="5dp">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -28,7 +30,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="title"
-                    android:textSize="12sp"/>
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
 
                 <ImageView
                     android:id="@+id/img_delete"
@@ -41,24 +44,26 @@
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="5dp"
+
                 android:gravity="center_horizontal">
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp" />
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:layout_marginTop="5dp">
                 <TextView
                     android:id="@+id/txt_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="14sp"/>
+                    android:textSize="16sp"/>
 
             </LinearLayout>
 
@@ -79,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:text="1"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorPrimary"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"/>
                 <ImageView

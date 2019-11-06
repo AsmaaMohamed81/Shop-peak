@@ -1,16 +1,21 @@
 package com.alatheer.shop_peak.service;
 
+import com.alatheer.shop_peak.Model.AddFavorite;
 import com.alatheer.shop_peak.Model.BasketModel2;
 import com.alatheer.shop_peak.Model.BasketModel3;
+import com.alatheer.shop_peak.Model.DeliveryOrder;
 import com.alatheer.shop_peak.Model.Follow_Vender;
 import com.alatheer.shop_peak.Model.HomeModel;
 import com.alatheer.shop_peak.Model.NotificationModel;
 import com.alatheer.shop_peak.Model.OfferModel1;
+import com.alatheer.shop_peak.Model.OnlineModel;
+import com.alatheer.shop_peak.Model.OrderNotify;
 import com.alatheer.shop_peak.Model.Pill;
 import com.alatheer.shop_peak.Model.Product_Specification;
 import com.alatheer.shop_peak.Model.RatingModel;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.SellerSearch;
+import com.alatheer.shop_peak.Model.SendNotify;
 import com.alatheer.shop_peak.Model.Tasnefat;
 import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.Model.Govern;
@@ -141,8 +146,8 @@ public interface Services {
 
     @FormUrlEncoded
     @POST("Api/add_to_favourite")
-    Call<RatingModel2> add_to_favourite(@Field("client_id_fk") String client_id_fk,
-                                 @Field("sanf_id_fk") String sanf_id_fk);
+    Call<AddFavorite> add_to_favourite(@Field("client_id_fk") String client_id_fk,
+                                       @Field("sanf_id_fk") String sanf_id_fk);
 
 
 
@@ -224,6 +229,29 @@ public interface Services {
     @FormUrlEncoded
     @POST("Api/filter_by_tager")//(2/9/2019)//
     Call<List<SellerSearch>>get_seller(@Field("name")String name);
+
+    @GET("Api/send_notify")
+    Call<SendNotify>send_notification();
+    @FormUrlEncoded
+    @POST("Api/get_delivery_order")
+    Call<List<DeliveryOrder>>get_all_ordeers(@Field("delivery_id_fk")String delivery_id_fk,@Field("accept_val")String accept_val);
+    @FormUrlEncoded
+    @POST("Api/accept_order")
+    Call<RatingModel2>accept_order(@Field("order_id_fk")String order_id_fk,@Field("delivery_id_fk")String delivery_id_fk,
+                                   @Field("store_id_fk")String store_id_fk,@Field("client_id_fk")String client_id_fk,@Field("pill_num")String pill_num);
+    @FormUrlEncoded
+    @POST("Api/delivered_order")
+    Call<RatingModel2>delivered_order(@Field("order_id_fk")String order_id_fk,@Field("delivery_id_fk")String delivery_id_fk
+    ,@Field("store_id_fk")String store_id_fk,@Field("client_id_fk")String client_id_fk,@Field("pill_num")String Pill_num);
+    @FormUrlEncoded
+    @POST("Api/delete_token")
+    Call<RatingModel2>delete_token(@Field("user_id")String user_id);
+    @FormUrlEncoded
+    @POST("Api/online_offline")
+    Call<OnlineModel>online_offline(@Field("delivery_id_fk")String delivery_id_fk);
+    @FormUrlEncoded
+    @POST("Api/send_accept_notify")
+    Call<OrderNotify>send_order_notify(@Field("delivery_id_fk")String delivery_id_fk, @Field("message")String message);
 
 }
 

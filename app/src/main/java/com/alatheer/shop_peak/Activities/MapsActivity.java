@@ -3,19 +3,25 @@ package com.alatheer.shop_peak.Activities;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.provider.Settings;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
+
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,10 +37,13 @@ import com.alatheer.shop_peak.Local.MyAppDatabase;
 import com.alatheer.shop_peak.Model.BasketModel2;
 import com.alatheer.shop_peak.Model.OrderItemList;
 import com.alatheer.shop_peak.Model.RatingModel2;
+import com.alatheer.shop_peak.Model.SendNotify;
+import com.alatheer.shop_peak.Model.UserModel1;
 import com.alatheer.shop_peak.R;
 import com.alatheer.shop_peak.Tags.Tags;
 import com.alatheer.shop_peak.common.Common;
 import com.alatheer.shop_peak.languagehelper.LanguageHelper;
+import com.alatheer.shop_peak.preferance.MySharedPreference;
 import com.alatheer.shop_peak.service.Api;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -54,6 +63,7 @@ import java.util.List;
 import java.util.Locale;
 
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.room.Room;
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -82,13 +92,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap;
     private ImageView gps;
     private Intent intentService = null;
-    private EditText address, lat, log;
+    private EditText edit_address,edit_phone, lat, log;
     private Button btn_continue;
     private Button btn_add_basket;
     MyAppDatabase myAppDatabase;
     String Vlat, Vlang;
+    MediaPlayer mSong;
+    UserModel1 userModel1;
+    MySharedPreference mySharedPreference;
     int flag;
-
+    String user_phone;
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
         String lang = Paper.book().read("language");
@@ -120,7 +133,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         myAppDatabase= Room.databaseBuilder(getApplicationContext(),MyAppDatabase.class,"myorders_db").allowMainThreadQueries().build();
-
+        mySharedPreference = MySharedPreference.getInstance();
+        userModel1 = mySharedPreference.Get_UserData(this);
         initView();
         CheckPermission();
 
@@ -129,8 +143,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void initView() {
 
+        if(getIntent().getExtras() != null){
+            for(String key : getIntent().getExtras().keySet()){
+                String msg = getIntent().getExtras().getString(key);
+
+            }
+        }
+
         gps = findViewById(R.id.img_gps);
-        address = findViewById(R.id.address);
+        edit_address = findViewById(R.id.address);
+        edit_phone = findViewById(R.id.phone);
         lat = findViewById(R.id.lat);
         log = findViewById(R.id.log);
         btn_continue = findViewById(R.id.btn_continue);
@@ -157,61 +179,107 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             });
         } else {
+            edit_phone.setVisibility(View.VISIBLE);
             btn_continue.setVisibility(View.GONE);
             btn_add_basket.setVisibility(View.VISIBLE);
             btn_add_basket.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     String type = intent.getStringExtra("type");
                     String user_id = intent.getStringExtra("user_id");
                     String name = intent.getStringExtra("name");
-                    String address = intent.getStringExtra("address");
+                    String address = edit_address.getText().toString();
                     List<OrderItemList> list = (List<OrderItemList>) intent.getExtras().getSerializable("list");
-                    String phone = intent.getStringExtra("phone");
+                    user_phone = edit_phone.getText().toString();
                     long pill_num = intent.getLongExtra("pill_num",0);
                     Vlat = lat.getText().toString();
                     Vlang = log.getText().toString();
-                    BasketModel2 basketModel2 = new BasketModel2(type, list, user_id, name, address
-                            , Vlat, Vlang, phone,pill_num);
+                    if(!TextUtils.isEmpty(user_phone)&& user_phone.length()==11){
+                        BasketModel2 basketModel2 = new BasketModel2(type, list, user_id, name, address
+                                , Vlat, Vlang, user_phone,pill_num);
 
-                    final ProgressDialog dialog = Common.createProgressDialog(MapsActivity.this, getString(R.string.waitt));
-                    dialog.setCancelable(true);
-                    dialog.setCanceledOnTouchOutside(false);
-                    dialog.show();
+                        final ProgressDialog dialog = Common.createProgressDialog(MapsActivity.this, getString(R.string.waitt));
+                        dialog.setCancelable(true);
+                        dialog.setCanceledOnTouchOutside(false);
+                        dialog.show();
+                        Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
+                            @Override
+                            public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                                if (response.isSuccessful()) {
 
-                    Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
-                        @Override
-                        public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
-                            if (response.isSuccessful()) {
-                                dialog.dismiss();
-
-                                if (response.body().getSuccess() == 1) {
-
-                                    CreateDialog();
-                                    myAppDatabase.dao().deleteproduct();
+                                    dialog.dismiss();
 
 
+                                    if (response.body().getSuccess() == 1) {
+                                        if(userModel1.getType().equals("1")){
+                                            LocalBroadcastManager.getInstance(MapsActivity.this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
+                                            mSong = MediaPlayer.create(MapsActivity.this,R.raw.music);
+
+
+                                        }
+
+                                        Api.getService().send_notification().enqueue(new Callback<SendNotify>() {
+                                            @Override
+                                            public void onResponse(Call<SendNotify> call, Response<SendNotify> response) {
+                                                CreateDialog();
+                                                myAppDatabase.dao().deleteproduct();
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<SendNotify> call, Throwable t) {
+
+                                            }
+                                        });
+
+
+
+                                    }
                                 }
+
                             }
 
+                            @Override
+                            public void onFailure(Call<RatingModel2> call, Throwable t) {
+                                Log.v("eeee", t.getMessage());
+                                dialog.dismiss();
+
+
+                                Toast.makeText(MapsActivity.this, "Check Internet", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else {
+                        if (TextUtils.isEmpty(user_phone)) {
+                            edit_phone.setError(getString(R.string.phone_req));
+                        } else {
+                            edit_phone.setError(null);
+                        }
+                        if(user_phone.length()!=11){
+                            edit_phone.setError(getString(R.string.phone_error));
+                        }else {
+                            edit_phone.setError(null);
                         }
 
-                        @Override
-                        public void onFailure(Call<RatingModel2> call, Throwable t) {
-                            Log.v("eeee", t.getMessage());
-                            dialog.dismiss();
+                    }
+                    }
 
 
-                            Toast.makeText(MapsActivity.this, "Check Internet", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+
             });
 
         }
 
 
     }
+    BroadcastReceiver mhandler = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String msg = intent.getStringExtra("message");
+            //message.setText(msg);
+            mSong.start();
+            showNotificationInADialog(msg);
+        }
+    };
 
 
     @Override
@@ -328,7 +396,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 }
 //                                String s = currentlocation1.getLongitude() + "\n" + currentlocation1.getLatitude() + "\n\nMy Current City is: "
 //                                        + cityName;
-                                address.setText(sb);
+                                edit_address.setText(sb);
                                 lat.setText(currentlocation1.getLatitude() + " ");
                                 log.setText(currentlocation1.getLongitude() + " ");
 
@@ -507,5 +575,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         gps_dialog.setView(view);
         gps_dialog.setCanceledOnTouchOutside(false);
         gps_dialog.show();
+    }
+
+    private void showNotificationInADialog(final String message) {
+
+        // show a dialog with the provided title and message
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                if(userModel1.getType().equals("1")){
+                    mSong.stop();
+                    Intent intent = new Intent(MapsActivity.this,Notification_Message.class);
+                    intent.putExtra("message",message);
+                    startActivity(intent);
+                }
+            }
+        });
+        androidx.appcompat.app.AlertDialog alert = builder.create();
+        alert.show();
     }
 }

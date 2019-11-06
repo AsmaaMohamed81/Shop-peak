@@ -36,10 +36,11 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Hold
     public void onBindViewHolder( Holder holder, int position) {
         holder.client_name.setText(model1List.get(position).getName());
 
-        if (model1List.get(position).getLogo_img()!=null) {
-            Picasso.with(context).load(model1List.get(position).getLogo_img()).into(holder.client_img);
-        }else {
+        if (model1List.get(position).getLogo_img().equals("https://shop-peak.com/uploads/images/")) {
             holder.client_img.setImageResource(R.mipmap.icon_round);
+
+        }else {
+            Picasso.with(context).load(model1List.get(position).getLogo_img()).into(holder.client_img);
         }
     }
 

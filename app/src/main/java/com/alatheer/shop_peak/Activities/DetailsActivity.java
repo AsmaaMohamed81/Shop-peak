@@ -1,12 +1,16 @@
 package com.alatheer.shop_peak.Activities;
 
 import android.animation.Animator;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -36,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.core.view.ViewParentCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 import io.paperdb.Paper;
@@ -72,7 +77,7 @@ public class DetailsActivity extends AppCompatActivity {
     String gender;
     String first_item_String;
     List<OrderItemList>listorder;
-
+    MediaPlayer mSong;
 
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -103,6 +108,15 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
+        mSong = null;
+
+        if(getIntent().getExtras() != null){
+            for(String key : getIntent().getExtras().keySet()){
+                String msg = getIntent().getExtras().getString(key);
+
+            }
+        }
         initview();
     }
 
@@ -221,22 +235,47 @@ public class DetailsActivity extends AppCompatActivity {
 
 
     }
+    private BroadcastReceiver mhandler = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String msg = intent.getStringExtra("message");
+            //message.setText(msg);
 
-
-    /*@Override
-    public void getBasketModel(OrderItemList basketModel) {
-        makeFlyAnimation(viewPager);
-        myAppDatabase.dao().addproduct(basketModel);
-        if (myAppDatabase.dao().getdata().size() > 0) {
-            tv_not_budget.setText(String.valueOf(myAppDatabase.dao().getdata().size()));
-        } else {
-            tv_not_budget.setText("0");
-
+            showNotificationInADialog(msg);
         }
+    };
+    private void showNotificationInADialog(final String message) {
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
+                .setCancelable(false)
+                .create();
+        stopPlaying();
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(message);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        mSong = MediaPlayer.create(DetailsActivity.this,R.raw.music);
+        mSong.setLooping(true);
+        mSong.start();
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                mSong.pause();
+                mSong.seekTo(0);
+            }
+        });
 
-    }*/
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
+    }
 
-    public void send(List<OrderItemList> orders_list) {
-
+    private void stopPlaying() {
+        if(mSong != null){
+            mSong.stop();
+            mSong.release();
+            mSong = null;
+        }
     }
 }

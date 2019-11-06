@@ -1,8 +1,11 @@
 package com.alatheer.shop_peak.Activities;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +32,8 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -44,7 +49,7 @@ public class Basket_Activity extends AppCompatActivity {
     ImageView image_title;
     TextView text_title,txt_no_data;
     RecyclerView recyclerView_basket;
-    RecyclerView.LayoutManager basket_manager;
+    GridLayoutManager basket_manager;
     BasketAdapter basketAdapter;
     MyAppDatabase myAppDatabase;
     Favorite_Database favorite_database;
@@ -60,7 +65,7 @@ public class Basket_Activity extends AppCompatActivity {
     TextView txt_total;
     long pill_num;
     String name,USER_ID,address,phone,type;
-
+    MediaPlayer mSong;
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
         String lang = Paper.book().read("language");
@@ -88,6 +93,15 @@ public class Basket_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket_);
+        mSong = null ;
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
+        if(getIntent().getExtras() != null){
+            for(String key : getIntent().getExtras().keySet()){
+                String msg = getIntent().getExtras().getString(key);
+
+            }
+        }
         initview();
     }
 
@@ -185,7 +199,7 @@ public class Basket_Activity extends AppCompatActivity {
     public void initRecyclerview(){
          basketModelList=myAppDatabase.dao().getdata();
          recyclerView_basket.setHasFixedSize(true);
-         basket_manager=new LinearLayoutManager(this);
+         basket_manager=new GridLayoutManager(this,2);
          recyclerView_basket.setLayoutManager(basket_manager);
          basketAdapter=new BasketAdapter(this,basketModelList);
          recyclerView_basket.setAdapter(basketAdapter);
@@ -240,7 +254,7 @@ public class Basket_Activity extends AppCompatActivity {
         final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
                 .setCancelable(false)
                 .create();
-
+        stopPlaying();
         View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
         TextView tv_msg = view.findViewById(R.id.tv_msg);
         tv_msg.setText(R.string.SH_Log);
@@ -259,5 +273,49 @@ public class Basket_Activity extends AppCompatActivity {
         gps_dialog.setView(view);
         gps_dialog.setCanceledOnTouchOutside(false);
         gps_dialog.show();
+    }
+    private BroadcastReceiver mhandler = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String msg = intent.getStringExtra("message");
+            //message.setText(msg);
+
+            showNotificationInADialog(msg);
+        }
+    };
+    private void showNotificationInADialog(final String message) {
+        final android.app.AlertDialog gps_dialog = new android.app.AlertDialog.Builder(this)
+                .setCancelable(false)
+                .create();
+
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(message);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        mSong = MediaPlayer.create(Basket_Activity.this,R.raw.music);
+        mSong.setLooping(true);
+        mSong.start();
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps_dialog.dismiss();
+                stopPlaying();
+                //mSong.pause();
+                //mSong.seekTo(0);
+            }
+        });
+
+        gps_dialog.getWindow().getAttributes().windowAnimations = R.style.custom_dialog_animation;
+        gps_dialog.setView(view);
+        gps_dialog.setCanceledOnTouchOutside(false);
+        gps_dialog.show();
+    }
+
+    private void stopPlaying() {
+        if(mSong != null){
+            mSong.stop();
+            mSong.release();
+            mSong = null;
+        }
     }
 }

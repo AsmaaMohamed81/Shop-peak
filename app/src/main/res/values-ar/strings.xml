@@ -125,5 +125,8 @@
     <string name="success_register">تم تسجيل الدخول بنجاح</string>
     <string name="following">المتابعون</string>
     <string name="Really_Exit">هل أنت متأكد أنك تريد الخروج؟</string>
+    <string name="order">الطلبات</string>
+    <string name="online">نشط</string>
+    <string name="Offline">غير نشط</string>
 
 </resources>

@@ -1,10 +1,18 @@
 package com.alatheer.shop_peak.Adapter;
 
 
+import com.alatheer.shop_peak.Fragments.All_Orders_Delivary;
+import com.alatheer.shop_peak.Fragments.Orders_Accepted;
+import com.alatheer.shop_peak.Fragments.Orders_Delivered;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+
 /**
  * Created by M.Hamada on 23/05/2019.
  */
-/*
+
 public class PagerAdapterTwo extends FragmentStatePagerAdapter {
     int mNoOfTaps;
 
@@ -17,14 +25,14 @@ public class PagerAdapterTwo extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
         switch (i) {
             case 0:
-                Fragment_two_Details fragment_two_details = new Fragment_two_Details();
-                return fragment_two_details;
+                All_Orders_Delivary all_orders_delivary = new All_Orders_Delivary();
+                return all_orders_delivary;
             case 1:
-                DescriptionFragment descriptionFragment = new DescriptionFragment();
-                return descriptionFragment;
+                Orders_Accepted orders_delivered = new Orders_Accepted();
+                return orders_delivered;
             case 2:
-                RatingFragment ratingFragment = new RatingFragment();
-                return ratingFragment;
+                Orders_Delivered orders_un_delivered = new Orders_Delivered();
+                return orders_un_delivered;
             default:
                 return null;
         }
@@ -36,4 +44,3 @@ public class PagerAdapterTwo extends FragmentStatePagerAdapter {
         return mNoOfTaps;
     }
 }
-*/

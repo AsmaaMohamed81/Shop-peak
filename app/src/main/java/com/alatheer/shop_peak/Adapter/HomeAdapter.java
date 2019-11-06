@@ -105,7 +105,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.Image2holder> 
          }
 
 
-         if (!vender_image.isEmpty()) {
+         if (vender_image.equals("https://shop-peak.com/uploads/images/")) {
+             holder.img_profile.setImageResource(R.mipmap.icon_round);
+         }else {
              Picasso.with(context).load(vender_image).into(holder.img_profile);
          }
 

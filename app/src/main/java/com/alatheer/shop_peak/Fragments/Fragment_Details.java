@@ -27,6 +27,7 @@ import com.alatheer.shop_peak.Adapter.CustomSwipeAdapter;
 import com.alatheer.shop_peak.Adapter.PassData;
 import com.alatheer.shop_peak.Local.Favorite_Database;
 import com.alatheer.shop_peak.Local.MyAppDatabase;
+import com.alatheer.shop_peak.Model.AddFavorite;
 import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.Item;
 import com.alatheer.shop_peak.Model.OrderItemList;
@@ -293,24 +294,22 @@ public class Fragment_Details extends Fragment {
 
                     Api.getService()
                             .add_to_favourite(User_id,sanf_id)
-                            .enqueue(new Callback<RatingModel2>() {
+                            .enqueue(new Callback<AddFavorite>() {
                                 @Override
-                                public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                                public void onResponse(Call<AddFavorite> call, Response<AddFavorite> response) {
 
                                     if (response.isSuccessful()){
-                                        dialog.dismiss();
 
-                                        if (response.body().getSuccess() == 1) {
 
                                             Toast.makeText(getActivity(), R.string.addfav, Toast.LENGTH_SHORT).show();
-                                        }
+
 
 
                                     }
                                 }
 
                                 @Override
-                                public void onFailure(Call<RatingModel2> call, Throwable t) {
+                                public void onFailure(Call<AddFavorite> call, Throwable t) {
 
                                     dialog.dismiss();
                                 }
