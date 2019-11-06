@@ -603,10 +603,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     //e.toString();
                 }
                 break;
-            case R.id.nav_setting:
-                SettingFragment settingFragment = new SettingFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,settingFragment).commit();
-                break;
             case R.id.nav_following:
                  Intent intent = new Intent(MainActivity.this,FollowingActivity.class);
                  intent.putExtra("type",type);
