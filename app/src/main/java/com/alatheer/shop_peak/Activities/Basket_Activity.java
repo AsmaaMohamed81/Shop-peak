@@ -150,13 +150,7 @@ public class Basket_Activity extends AppCompatActivity {
 
                 if(basketModelList.size()>0){
 
-                    Api.getService().get_pill().enqueue(new Callback<Pill>() {
-                        @Override
-                        public void onResponse(Call<Pill> call, Response<Pill> response) {
-                            if(response.isSuccessful()){
-                                Pill pill = response.body();
-                                pill_num = pill.pillNum;
-                                Log.v("pill_num",pill_num+"");
+
                                 Intent intent = new Intent(Basket_Activity.this,MapsActivity.class);
                                 intent.putExtra("type",type);
                                 intent.putExtra("user_id",USER_ID);
@@ -166,16 +160,13 @@ public class Basket_Activity extends AppCompatActivity {
                                 intent.putExtra("list",(Serializable) basketModelList);
                                 intent.putExtra("phone",phone);
                                 intent.putExtra("pill_num",pill_num);
+                                Log.v("pill_num2",pill_num+"");
                                 startActivity(intent);
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<Pill> call, Throwable t) {
-                            Log.v("error",t.getMessage());
-                        }
-                    });
-                }else {
+
+
+                else {
                     Toast.makeText(Basket_Activity.this,"there is no product in basket",Toast.LENGTH_LONG).show();
                 }
 

@@ -13,9 +13,13 @@ public class Pill {
     @Expose
     public Long pillNum;
 
-    public Pill withPillNum(Long pillNum) {
-        this.pillNum = pillNum;
-        return this;
+    public Long getPillNum() {
+        return pillNum;
     }
+
+    public void setPillNum(Long pillNum) {
+        this.pillNum = pillNum;
+    }
+
 
 }

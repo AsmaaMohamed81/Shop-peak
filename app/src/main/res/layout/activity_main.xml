@@ -155,37 +155,52 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="70dp"
             android:layout_below="@+id/delivary_tabs">
 
         </androidx.viewpager.widget.ViewPager>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_logout"
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_out"
-            app:fabCustomSize="50dp"
-            android:backgroundTint="@color/white"
-            app:borderWidth="3dp"
-            android:layout_marginEnd="20dp"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="30dp"
-            android:onClick="logout"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_profile"
-            android:layout_toStartOf="@+id/fab_logout"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_profile"
-            app:fabCustomSize="50dp"
-            android:backgroundTint="@color/white"
-            app:borderWidth="3dp"
-            android:layout_marginEnd="20dp"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="30dp"
-            android:onClick="go_to_profile"/>
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:id="@+id/fab_logout"
+                android:layout_alignParentEnd="true"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+               android:background="@drawable/txt_delivery"
+                android:drawableStart="@drawable/ic_out"
+                android:paddingStart="7dp"
+                android:layout_marginEnd="20dp"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:text="@string/logout"
+                android:textColor="@color/colorPrimary"
+                android:onClick="logout"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/fab_profile"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_profile"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/txt_delivery"
+                android:layout_marginStart="20dp"
+                android:text="@string/profile"
+                android:gravity="center"
+                android:drawableStart="@drawable/ic_profile"
+                android:paddingStart="7dp"
+                android:onClick="go_to_profile"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimary"/>
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

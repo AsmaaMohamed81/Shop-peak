@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String TAG="MainActivity";
     MediaPlayer mSong;
     Toolbar delivary_toolbar;
-    FloatingActionButton fab_out,fab_profile;
+    TextView fab_out,fab_profile;
     String Token;
     ViewPager viewPager;
     PagerAdapterTwo pagerAdapter;
@@ -615,12 +615,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         closeDrawer();
         return true;
     }
-    private void closeDrawer() {
+    private boolean closeDrawer() {
         drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
-    private void openDrawer() {
+    private boolean openDrawer() {
         drawerLayout.openDrawer(GravityCompat.START);
+        return true;
     }
 
     public void sendHomeItem(String[] image, List<Item> item, String sanf_name, String details, String price, String product_id, String rating, String store_id, String[] colors,String price_before_dis,String like) {
@@ -668,17 +670,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //selectedfragment=new HomeFragment();
         //getFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedfragment).commit();
         //bottomNavigationView.setSelectedItemId(R.id.nav_home);
-        new AlertDialog.Builder(this)
-                .setTitle("Really Exit?")
-                .setMessage(R.string.Really_Exit)
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                       finish();
-                    }
-                }).create().show();
-    }
+        if(openDrawer()==true){
+            closeDrawer();
+        }else {
+
+        }
+                new AlertDialog.Builder(this)
+                        .setTitle("Really Exit?")
+                        .setMessage(R.string.Really_Exit)
+                        .setNegativeButton(android.R.string.no, null)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        }).create().show();
+            }
+
+
 
 
 

@@ -34,8 +34,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alatheer.shop_peak.Local.MyAppDatabase;
+import com.alatheer.shop_peak.Model.BasketModel;
 import com.alatheer.shop_peak.Model.BasketModel2;
 import com.alatheer.shop_peak.Model.OrderItemList;
+import com.alatheer.shop_peak.Model.Pill;
 import com.alatheer.shop_peak.Model.RatingModel2;
 import com.alatheer.shop_peak.Model.SendNotify;
 import com.alatheer.shop_peak.Model.UserModel1;
@@ -99,6 +101,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     String Vlat, Vlang;
     MediaPlayer mSong;
     UserModel1 userModel1;
+    long pill_num;
     MySharedPreference mySharedPreference;
     int flag;
     String user_phone;
@@ -143,8 +146,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void initView() {
 
-        if(getIntent().getExtras() != null){
-            for(String key : getIntent().getExtras().keySet()){
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
                 String msg = getIntent().getExtras().getString(key);
 
             }
@@ -157,8 +160,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         log = findViewById(R.id.log);
         btn_continue = findViewById(R.id.btn_continue);
         btn_add_basket = findViewById(R.id.btn_add);
+        Vlat = lat.getText().toString();
+        Vlang = log.getText().toString();
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.press_anim);
         final Intent intent = getIntent();
+        Api.getService().get_pill().enqueue(new Callback<Pill>() {
+            @Override
+            public void onResponse(Call<Pill> call, Response<Pill> response) {
+                pill_num = response.body().getPillNum();
+                Log.v("pill_num",pill_num+"");
+            }
+
+            @Override
+            public void onFailure(Call<Pill> call, Throwable t) {
+
+            }
+        });
         flag = intent.getIntExtra("flag", 0);
         if (flag == 0) {
             btn_continue.setOnClickListener(new View.OnClickListener() {
@@ -167,13 +184,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     btn_continue.clearAnimation();
                     btn_continue.startAnimation(animation);
 
-                    Vlat = lat.getText().toString();
-                    Vlang = log.getText().toString();
+
 
                     Intent intent = new Intent();
                     intent.putExtra("lat", Vlat);
                     intent.putExtra("lang", Vlang);
-                    setResult(RESULT_OK,intent);
+                    setResult(RESULT_OK, intent);
                     finish();
 
                 }
@@ -186,90 +202,80 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 @Override
                 public void onClick(View view) {
 
-                    String type = intent.getStringExtra("type");
-                    String user_id = intent.getStringExtra("user_id");
-                    String name = intent.getStringExtra("name");
-                    String address = edit_address.getText().toString();
-                    List<OrderItemList> list = (List<OrderItemList>) intent.getExtras().getSerializable("list");
-                    user_phone = edit_phone.getText().toString();
-                    long pill_num = intent.getLongExtra("pill_num",0);
-                    Vlat = lat.getText().toString();
-                    Vlang = log.getText().toString();
-                    if(!TextUtils.isEmpty(user_phone)&& user_phone.length()==11){
-                        BasketModel2 basketModel2 = new BasketModel2(type, list, user_id, name, address
-                                , Vlat, Vlang, user_phone,pill_num);
 
-                        final ProgressDialog dialog = Common.createProgressDialog(MapsActivity.this, getString(R.string.waitt));
-                        dialog.setCancelable(true);
-                        dialog.setCanceledOnTouchOutside(false);
-                        dialog.show();
-                        Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
-                            @Override
-                            public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
-                                if (response.isSuccessful()) {
-
-                                    dialog.dismiss();
+                            String type = intent.getStringExtra("type");
+                            String user_id = intent.getStringExtra("user_id");
+                            String name = intent.getStringExtra("name");
+                            String address = edit_address.getText().toString();
+                            List<OrderItemList> list = (List<OrderItemList>) intent.getExtras().getSerializable("list");
+                            user_phone = edit_phone.getText().toString();
+                            if (!TextUtils.isEmpty(user_phone) && user_phone.length() == 11) {
+                                BasketModel2 basketModel2 = new BasketModel2(type, list, user_id, name, address
+                                        , Vlat, Vlang, user_phone, pill_num);
 
 
-                                    if (response.body().getSuccess() == 1) {
-                                        if(userModel1.getType().equals("1")){
-                                            LocalBroadcastManager.getInstance(MapsActivity.this).registerReceiver(mhandler,new IntentFilter("com.alatheer.shop_peak_FCM-MESSAGE"));
-                                            mSong = MediaPlayer.create(MapsActivity.this,R.raw.music);
+                                Save_Basket(basketModel2);
 
-
-                                        }
-
-                                        Api.getService().send_notification().enqueue(new Callback<SendNotify>() {
-                                            @Override
-                                            public void onResponse(Call<SendNotify> call, Response<SendNotify> response) {
-                                                CreateDialog();
-                                                myAppDatabase.dao().deleteproduct();
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<SendNotify> call, Throwable t) {
-
-                                            }
-                                        });
-
-
-
-                                    }
+                            }else{
+                                if (TextUtils.isEmpty(user_phone)) {
+                                    edit_phone.setError(getString(R.string.phone_req));
+                                } else {
+                                    edit_phone.setError(null);
+                                }
+                                if (user_phone.length() != 11) {
+                                    edit_phone.setError(getString(R.string.phone_error));
+                                } else {
+                                    edit_phone.setError(null);
                                 }
 
                             }
 
-                            @Override
-                            public void onFailure(Call<RatingModel2> call, Throwable t) {
-                                Log.v("eeee", t.getMessage());
-                                dialog.dismiss();
-
-
-                                Toast.makeText(MapsActivity.this, "Check Internet", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }else {
-                        if (TextUtils.isEmpty(user_phone)) {
-                            edit_phone.setError(getString(R.string.phone_req));
-                        } else {
-                            edit_phone.setError(null);
-                        }
-                        if(user_phone.length()!=11){
-                            edit_phone.setError(getString(R.string.phone_error));
-                        }else {
-                            edit_phone.setError(null);
                         }
 
-                    }
-                    }
+                    // long pill_num = intent.getLongExtra("pill_num",0);
+
+
 
 
 
             });
 
         }
+    }
+    private void Save_Basket(BasketModel2 basketModel2) {
+        final ProgressDialog dialog = Common.createProgressDialog(MapsActivity.this, getString(R.string.waitt));
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        Api.getService().add_to_basket(basketModel2).enqueue(new Callback<RatingModel2>() {
+
+            @Override
+            public void onResponse(Call<RatingModel2> call, Response<RatingModel2> response) {
+                dialog.dismiss();
+                if (response.isSuccessful()) {
+                    Api.getService().send_notification().enqueue(new Callback<SendNotify>() {
+                        @Override
+                        public void onResponse(Call<SendNotify> call, Response<SendNotify> response) {
+                            CreateDialog();
+                            myAppDatabase.dao().deleteproduct();
+                        }
+
+                        @Override
+                        public void onFailure(Call<SendNotify> call, Throwable t) {
+                            Log.v("error1",t.getMessage());
+                        }
+                    });
 
 
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RatingModel2> call, Throwable t) {
+                Log.v("error2",t.getMessage());
+                Toast.makeText(MapsActivity.this, "Check Internet", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     BroadcastReceiver mhandler = new BroadcastReceiver() {
         @Override
